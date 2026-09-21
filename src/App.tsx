@@ -14,8 +14,6 @@ import { Trackball } from "./Trackball";
 
 type DockMode = "collapsed" | "normal" | "expanded";
 
-const tiltFor = (index: number) => ["-1.1deg", "0.7deg", "-0.4deg", "1deg", "-0.7deg"][index % 5];
-
 function copyFallback(value: string) {
   const input = document.createElement("textarea");
   input.value = value;
@@ -324,7 +322,6 @@ export default function App() {
                   style={
                     {
                       "--card-ratio": preset.ratio,
-                      "--tilt": tiltFor(index),
                     } as CSSProperties
                   }
                   aria-label={`选择预设：${preset.name}`}

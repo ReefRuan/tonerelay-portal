@@ -308,7 +308,6 @@ input:focus-visible,
 
 .preset-card {
   --card-ratio: 4 / 5;
-  --tilt: 0deg;
   width: 100%;
   display: inline-block;
   break-inside: avoid;
@@ -319,8 +318,7 @@ input:focus-visible,
   padding: clamp(8px, 0.9vw, 13px) clamp(8px, 0.9vw, 13px) clamp(13px, 1.3vw, 19px);
   text-align: left;
   box-shadow: 0 12px 30px rgba(42, 45, 48, 0.08), 0 1px 1px #fff inset;
-  transform: rotate(var(--tilt));
-  transform-origin: center;
+  transform: none;
   transition:
     transform 0.27s ease,
     box-shadow 0.27s ease,
@@ -343,7 +341,7 @@ input:focus-visible,
 }
 
 .preset-card:hover {
-  transform: rotate(0deg) translateY(-5px);
+  transform: translateY(-5px);
   box-shadow: 0 20px 45px rgba(42, 45, 48, 0.15), 0 1px 1px #fff inset;
   z-index: 2;
 }
@@ -359,7 +357,7 @@ input:focus-visible,
 }
 
 .preset-card.is-selected {
-  transform: rotate(0deg) translateY(-7px);
+  transform: rotate(-1.1deg) translateY(-7px);
   border-color: #7ba8e1;
   background: #fff;
   box-shadow: 0 22px 48px rgba(48, 82, 124, 0.18), 0 1px 1px #fff inset;
@@ -1216,8 +1214,8 @@ kbd {
     box-shadow: 0 8px 20px rgba(42, 45, 48, 0.09);
   }
 
-  .preset-card:hover { transform: rotate(var(--tilt)); }
-  .preset-card.is-selected { transform: translateY(-3px); }
+  .preset-card:hover { transform: none; }
+  .preset-card.is-selected { transform: rotate(-0.7deg) translateY(-3px); }
   .preset-card::before { inset: -3px; }
   .selection-mark { width: 24px; height: 24px; top: 7px; right: 7px; }
   .card-caption { margin-top: 9px; gap: 5px; }
