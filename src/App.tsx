@@ -412,6 +412,26 @@ export default function App() {
                 </AnimatePresence>
                 <span>{selectedPreset.en}</span>
               </div>
+              <div className="reference-gallery" aria-label={`${selectedPreset.name} 真实参考图`}>
+                <div className="reference-heading">
+                  <span>REFERENCE EVIDENCE</span>
+                  <strong>真实参考 / {String(selectedPreset.references.length).padStart(2, "0")}</strong>
+                </div>
+                <div className="reference-list">
+                  {selectedPreset.references.map((reference, index) => (
+                    <a
+                      key={reference}
+                      href={reference}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`打开参考图 ${index + 1}`}
+                    >
+                      <img src={reference} alt="" loading="lazy" />
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
               <div className="detail-body">
                 <div className="detail-title-row">
                   <div>
