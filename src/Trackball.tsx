@@ -47,7 +47,7 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
 
   return (
     <div className={`trackball ${held ? "is-held" : ""}`}>
-      <span className="trackball-north">{detailOpen ? "VIEW" : "N"}</span>
+      <span className="trackball-north">{detailOpen ? "查看" : "上"}</span>
       <button
         className="trackball-socket"
         aria-label={
@@ -101,7 +101,7 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
           <b />
         </span>
       </button>
-      <span className="trackball-caption">{held ? "SELECTING" : "TRACKBALL"}</span>
+      <span className="trackball-caption">{held ? "选择中" : "方向球"}</span>
     </div>
   );
 }

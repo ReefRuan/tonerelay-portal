@@ -6,6 +6,8 @@ node_modules/
 dist/
 .next/
 coverage/
+output/playwright/
+.playwright-cli/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts

@@ -7,12 +7,20 @@ import {
   type CSSProperties,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { categories, presets, type Category, type Preset } from "./catalog";
+import { categories, visiblePresets as presets, type Category, type Preset } from "./catalog";
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
 import { Trackball } from "./Trackball";
+import { Documents, INSTALL_PROMPT, type PortalPage } from "./Documents";
 
 type DockMode = "collapsed" | "normal" | "expanded";
+
+function pageFromHash(): PortalPage {
+  const value = window.location.hash.slice(1);
+  return value === "experience" || value === "about" || value === "help"
+    ? "experience"
+    : "gallery";
+}
 
 function copyFallback(value: string) {
   const input = document.createElement("textarea");
@@ -37,6 +45,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState("");
+  const [page, setPage] = useState<PortalPage>(pageFromHash);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -50,6 +59,7 @@ export default function App() {
         preset.name,
         preset.en,
         preset.category,
+        preset.release,
         preset.description,
         ...preset.tags,
       ]
@@ -143,6 +153,15 @@ export default function App() {
     window.setTimeout(() => setCopied(false), 1600);
   }, [selectedPreset, showToast]);
 
+  const copyInstallPrompt = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(INSTALL_PROMPT);
+    } catch {
+      copyFallback(INSTALL_PROMPT);
+    }
+    showToast("安装提示词已复制");
+  }, [showToast]);
+
   const switchDetail = useCallback(
     (delta: number) => {
       if (!filteredPresets.length) return;
@@ -208,7 +227,20 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const onHashChange = () => {
+      const nextPage = pageFromHash();
+      setPage(nextPage);
+      setDetailOpen(false);
+      setDockMode("collapsed");
+      window.scrollTo({ top: 0, behavior: "auto" });
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (page !== "gallery") return;
       const target = event.target as HTMLElement;
       if (target.matches("input, textarea, select") || target.isContentEditable) {
         if (event.key === "Escape") {
@@ -261,49 +293,41 @@ export default function App() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [closeDetail, copyLink, detailOpen, dockMode, moveSelection, openController, openDetail, selectedPreset]);
+  }, [closeDetail, copyLink, detailOpen, dockMode, moveSelection, openController, openDetail, page, selectedPreset]);
 
   return (
-    <div className={`app-shell dock-${dockMode} ${detailOpen ? "has-detail" : ""}`}>
+    <div className={`app-shell page-${page} dock-${dockMode} ${detailOpen ? "has-detail" : ""}`}>
       <header className="site-header">
-        <a className="brand" href="/" aria-label="ToneRelay 首页">
+        <a className="brand" href="#gallery" aria-label="ToneRelay 画廊">
           <span className="brand-mark"><i /><i /><i /></span>
           <span>
             <strong>TONERELAY</strong>
-            <small>PRESET FIELD</small>
           </span>
         </a>
-        <div className="header-meta">
-          <span><i /> CATALOG ONLINE</span>
-          <span>{String(presets.length).padStart(2, "0")} PACKS</span>
-          <span>EST. 2026</span>
-        </div>
+        <nav className="site-nav" aria-label="主要导航">
+          <a href="#gallery" aria-current={page === "gallery" ? "page" : undefined}>画廊</a>
+          <a href="#experience" aria-current={page === "experience" ? "page" : undefined}>立即体验</a>
+        </nav>
       </header>
 
-      <main className="catalog-main" aria-hidden={detailOpen || undefined}>
+      {page === "gallery" ? <main className="catalog-main" aria-hidden={detailOpen || undefined}>
         <section className="intro" aria-labelledby="page-title">
-          <div className="intro-kicker">A FIELD GUIDE TO COLOR / 001</div>
           <h1 id="page-title">
-            找到一种光。<br />
-            <em>把它带回照片里。</em>
+            Reef 的 Lightroom MCP<br />
+            <em>风格画廊。</em>
           </h1>
           <p>
-            浏览 ToneRelay 风格预设。点击照片，或开启操控条，<br className="desktop-only" />
-            用方向键与轨迹球慢慢挑选。
+            浏览由 Reef 整理的 Lightroom 风格模板。点击卡片查看风格简介，
+            再把喜欢的模板交给 Agent 使用。
           </p>
-          <div className="intro-foot">
-            <span>SCROLL TO BROWSE</span>
-            <span>PRESS M TO CONTROL</span>
-          </div>
         </section>
 
         <div className="catalog-heading">
           <div>
-            <span>THE COLLECTION</span>
-            <h2>全部预设</h2>
+            <h2>全部模板</h2>
           </div>
           <div className="catalog-rule"><i /></div>
-          <p>{filteredPresets.length} / {presets.length}<br />STATIC CATALOG</p>
+          <p>{filteredPresets.length} 个模板</p>
         </div>
 
         {filteredPresets.length ? (
@@ -340,6 +364,9 @@ export default function App() {
                       draggable={false}
                     />
                     <span className="photo-shade" />
+                    <span className={`release-badge ${preset.release === "BETA" ? "is-beta" : "is-release"}`}>
+                      {preset.release}
+                    </span>
                     <span className="card-number">{preset.number}</span>
                     <span className="selection-mark"><Icon name="check" /></span>
                   </span>
@@ -350,30 +377,26 @@ export default function App() {
                     </span>
                     <span className="card-version">{preset.version}</span>
                   </span>
-                  <span className="card-meta">
-                    <span>{preset.category}</span>
-                    <span>{preset.tags[0]}</span>
-                  </span>
                 </motion.button>
               );
             })}
           </section>
         ) : (
           <section className="empty-state">
-            <span>NO MATCH / 00</span>
-            <h2>没有找到这种光。</h2>
+            <span>没有匹配结果</span>
+            <h2>没有找到这种风格。</h2>
             <button onClick={() => { setQuery(""); setCategory("全部"); }}>清除筛选</button>
           </section>
         )}
 
         <footer className="site-footer">
-          <span>TONE RELAY / COLOR AS A PLACE</span>
-          <span>浏览 · 选择 · 带走链接</span>
+          <span>Reef 的 Lightroom MCP 风格画廊</span>
+          <span>浏览 · 选择 · 应用</span>
         </footer>
-      </main>
+      </main> : <Documents onCopyPrompt={() => void copyInstallPrompt()} />}
 
       <AnimatePresence>
-        {detailOpen && selectedPreset && (
+        {page === "gallery" && detailOpen && selectedPreset && (
           <motion.div
             className="detail-layer"
             initial={{ opacity: 0 }}
@@ -395,7 +418,7 @@ export default function App() {
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
             >
               <div className="detail-topline">
-                <span>A CLOSER LOOK / {selectedPreset.number}</span>
+                <span>模板详情 / {selectedPreset.number}</span>
                 <button onClick={closeDetail} aria-label="放回预设"><Icon name="close" /></button>
               </div>
               <div className="detail-visual">
@@ -414,10 +437,10 @@ export default function App() {
               </div>
               <div className="reference-gallery" aria-label={`${selectedPreset.name} 真实参考图`}>
                 <div className="reference-heading">
-                  <span>REFERENCE EVIDENCE</span>
-                  <strong>真实参考 / {String(selectedPreset.references.length).padStart(2, "0")}</strong>
+                  <span>参考图</span>
+                  <strong>{selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : "视觉参考 / 准备中"}</strong>
                 </div>
-                <div className="reference-list">
+                {selectedPreset.references.length ? <div className="reference-list">
                   {selectedPreset.references.map((reference, index) => (
                     <a
                       key={reference}
@@ -430,19 +453,21 @@ export default function App() {
                       <span>{String(index + 1).padStart(2, "0")}</span>
                     </a>
                   ))}
-                </div>
+                </div> : <div className="reference-empty">
+                  <span>预览图</span>
+                  <p>这个模板的网页预览图正在准备中。</p>
+                </div>}
               </div>
               <div className="detail-body">
                 <div className="detail-title-row">
                   <div>
-                    <span>{selectedPreset.category} / {selectedPreset.version}</span>
+                    <span>{selectedPreset.release} / {selectedPreset.version}</span>
                     <h2 id="detail-title">{selectedPreset.name}</h2>
                     <p>{selectedPreset.description}</p>
                   </div>
                   <strong>{String(activeIndex + 1).padStart(2, "0")} / {String(filteredPresets.length).padStart(2, "0")}</strong>
                 </div>
-                <div className="detail-notes">
-                  <p>{selectedPreset.note}</p>
+                <div className="detail-notes is-palette-only">
                   <div className="palette" aria-label="色彩倾向">
                     {selectedPreset.palette.map((color) => <i key={color} style={{ background: color }} title={color} />)}
                   </div>
@@ -460,7 +485,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <aside className="controller" aria-label="预设操控条">
+      {page === "gallery" && <aside className="controller" aria-label="预设操控条">
         {dockMode === "collapsed" ? (
           <motion.button
             className="controller-wake"
@@ -471,7 +496,7 @@ export default function App() {
           >
             <span className="wake-symbol"><i /><i /><i /></span>
             <strong>操控</strong>
-            <small>CONTROL</small>
+            <small>控制</small>
           </motion.button>
         ) : (
           <div className={`controller-active ${dockMode === "expanded" ? "is-expanded" : ""}`}>
@@ -485,8 +510,8 @@ export default function App() {
                   transition={{ duration: reducedMotion ? 0 : 0.2 }}
                 >
                   <div className="panel-heading">
-                    <div><span>FIND A PRESET</span><strong>筛选这片色彩</strong></div>
-                    <span>{filteredPresets.length} MATCHES</span>
+                    <div><strong>筛选模板</strong></div>
+                    <span>{filteredPresets.length} 个结果</span>
                   </div>
                   <label className="search-box">
                     <Icon name="search" />
@@ -553,7 +578,7 @@ export default function App() {
                     <img src={selectedPreset.image} alt="" />
                     <span>
                       <strong>{detailOpen ? "正在查看 · " : "已选择 · "}{selectedPreset.name}</strong>
-                      <small>{selectedPreset.en} · {selectedPreset.version}</small>
+                      <small>{selectedPreset.en} · {selectedPreset.release} · {selectedPreset.version}</small>
                     </span>
                   </div>
                 ) : (
@@ -580,7 +605,7 @@ export default function App() {
             </div>
           </div>
         )}
-      </aside>
+      </aside>}
 
       <AnimatePresence>
         {toast && (

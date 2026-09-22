@@ -13,10 +13,14 @@ export type Preset = {
   palette: string[];
   link: string;
   number: string;
+  release: "正式版" | "BETA";
+  availability: "本地候选" | "公开预览";
 };
 
 const repoBase =
   "https://github.com/ReefRuan/lr-xmp-mimic-studio/tree/main/packages";
+const releaseRepoBase =
+  "https://github.com/ReefRuan/tonerelay-style-packs/tree/main/packages";
 const asset = (id: string, name = "cover.jpg") =>
   `${import.meta.env.BASE_URL}presets/${id}/${name}`;
 const references = (id: string) =>
@@ -24,9 +28,132 @@ const references = (id: string) =>
     asset(id, name),
   );
 
+const templateCover = (code: string, title: string, palette: string[]) => {
+  const [dark, mid, light] = palette;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${dark}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${light}"/></linearGradient></defs>
+    <rect width="900" height="1100" fill="url(#g)"/>
+    <path d="M80 140h740M80 960h740M150 70v960M750 70v960" stroke="white" stroke-opacity=".32"/>
+    <circle cx="450" cy="500" r="190" fill="none" stroke="white" stroke-opacity=".42"/>
+    <circle cx="450" cy="500" r="88" fill="white" fill-opacity=".12"/>
+    <text x="80" y="100" fill="white" font-family="sans-serif" font-size="22" letter-spacing="5">风格模板</text>
+    <text x="80" y="860" fill="white" font-family="serif" font-size="58">${title}</text>
+    <text x="80" y="918" fill="white" fill-opacity=".72" font-family="monospace" font-size="20" letter-spacing="4">${code}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
 export const presets: Preset[] = [
   {
     id: "fuji-film-c200",
+    name: "C200 日常彩负",
+    en: "FUJICOLOR C200",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-c200", "FUJICOLOR C200", ["#263e51", "#7f966e", "#e0b27c"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "服务于日常人物、旅行与环境叙事的清爽彩色负片关系。",
+    note: "适合日常人物、旅行与环境记录，颜色亲近、清爽，有生活感。",
+    tags: ["Film Stock", "Everyday"],
+    palette: ["#263e51", "#7f966e", "#c77950", "#e0b27c"],
+    link: `${releaseRepoBase}/fuji-film-c200`,
+    number: "R01",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "fuji-film-natura-1600",
+    name: "Natura 1600 高感纪实",
+    en: "FUJICOLOR NATURA 1600",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-natura-1600", "NATURA 1600", ["#111a24", "#436566", "#d09a67"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "在可用光有限、色温混杂或明暗跨度很大时保留现场关系。",
+    note: "适合可用光、夜间街景和混合光，保留环境的暗部重量与局部颜色。",
+    tags: ["Film Stock", "Low Light"],
+    palette: ["#111a24", "#30505b", "#8c5944", "#d09a67"],
+    link: `${releaseRepoBase}/fuji-film-natura-1600`,
+    number: "R02",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "fuji-film-pro-160ns",
+    name: "PRO 160NS 人像彩负",
+    en: "FUJIFILM PRO 160NS",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-pro-160ns", "PRO 160NS", ["#516b6e", "#ad9381", "#e5d0b9"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "以主体可读性、亮部余量和场景内颜色关系为先的彩色负片。",
+    note: "适合人物与高反差场景，保护肤色、白色材料和深色主体的层次。",
+    tags: ["Film Stock", "Portrait"],
+    palette: ["#516b6e", "#829184", "#ad9381", "#e5d0b9"],
+    link: `${releaseRepoBase}/fuji-film-pro-160ns`,
+    number: "R03",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "fuji-film-pro-400h",
+    name: "PRO 400H 柔和负片",
+    en: "FUJICOLOR PRO 400H",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-pro-400h", "PRO 400H", ["#37535a", "#7da08e", "#e4c9ae"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "柔和连续的色调为人物、白色材料与冷色环境留出各自位置。",
+    note: "适合人物、婚礼与柔和环境，色调连续但不会把所有画面染成同一种颜色。",
+    tags: ["Film Stock", "Soft"],
+    palette: ["#37535a", "#7da08e", "#bf9284", "#e4c9ae"],
+    link: `${releaseRepoBase}/fuji-film-pro-400h`,
+    number: "R04",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "fuji-film-provia-100f",
+    name: "Provia 100F 标准反转片",
+    en: "FUJICHROME PROVIA 100F",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-provia-100f", "PROVIA 100F", ["#183f63", "#629084", "#e1b36a"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "认真安排曝光位置，让现场暖色、冷色与中性物彼此清楚。",
+    note: "适合光线明确的风景与城市画面，颜色清楚、有边界，不过度追求饱和。",
+    tags: ["Slide Film", "Color"],
+    palette: ["#183f63", "#39789a", "#629084", "#e1b36a"],
+    link: `${releaseRepoBase}/fuji-film-provia-100f`,
+    number: "R05",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "fuji-film-superia-xtra-400",
+    name: "Superia X-TRA 400 日用彩负",
+    en: "FUJICOLOR SUPERIA X-TRA 400",
+    version: "v1.0.0",
+    category: "胶片",
+    image: templateCover("fuji-film-superia-xtra-400", "SUPERIA X-TRA 400", ["#233f4c", "#668a67", "#d79a59"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "为街头、旅行和家庭记录保留不同现场光线的日用负片观感。",
+    note: "适合街头、旅行和家庭记录，保留现场差异，带有自然的日常感。",
+    tags: ["Film Stock", "Everyday"],
+    palette: ["#233f4c", "#668a67", "#b96545", "#d79a59"],
+    link: `${releaseRepoBase}/fuji-film-superia-xtra-400`,
+    number: "R06",
+    release: "正式版",
+    availability: "本地候选",
+  },
+  {
+    id: "beta-fuji-film-c200",
     name: "C200 日常彩负",
     en: "FUJICOLOR C200",
     version: "v1.0",
@@ -39,7 +166,9 @@ export const presets: Preset[] = [
     tags: ["Color Negative", "Daylight", "Everyday"],
     palette: ["#314a60", "#718869", "#b76f4a", "#e7d3ae"],
     link: `${repoBase}/fuji-film-c200`,
-    number: "01",
+    number: "B01",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-film-superia-venus-800",
@@ -55,7 +184,9 @@ export const presets: Preset[] = [
     tags: ["High Speed Film", "Low Light", "Travel"],
     palette: ["#17222a", "#315f5a", "#a4674a", "#dcaf73"],
     link: `${repoBase}/fuji-film-superia-venus-800`,
-    number: "02",
+    number: "B02",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-astia",
@@ -71,7 +202,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Portrait", "Soft"],
     palette: ["#516d6c", "#a27c69", "#cfad91", "#ede0c9"],
     link: `${repoBase}/fuji-x100v-astia`,
-    number: "03",
+    number: "B03",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-classic-chrome",
@@ -87,7 +220,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Street", "Muted"],
     palette: ["#384247", "#727a73", "#9c8067", "#c7c1ae"],
     link: `${repoBase}/fuji-x100v-classic-chrome`,
-    number: "04",
+    number: "B04",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-classic-negative",
@@ -103,7 +238,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Negative", "Memory"],
     palette: ["#244e51", "#777951", "#b56f45", "#d7c4a1"],
     link: `${repoBase}/fuji-x100v-classic-negative`,
-    number: "05",
+    number: "B05",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-eterna",
@@ -119,7 +256,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Cinema", "Low Contrast"],
     palette: ["#2d4145", "#647775", "#9a8170", "#c8bca6"],
     link: `${repoBase}/fuji-x100v-eterna`,
-    number: "06",
+    number: "B06",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-monochrome",
@@ -135,7 +274,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Monochrome", "Structure"],
     palette: ["#242625", "#5f625f", "#9c9d96", "#dcdbd3"],
     link: `${repoBase}/fuji-x100v-monochrome`,
-    number: "07",
+    number: "B07",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-provia",
@@ -151,7 +292,9 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Standard", "Natural"],
     palette: ["#42647a", "#6f8a64", "#b06b48", "#d8c8a5"],
     link: `${repoBase}/fuji-x100v-provia`,
-    number: "08",
+    number: "B08",
+    release: "BETA",
+    availability: "公开预览",
   },
   {
     id: "fuji-x100v-velvia",
@@ -167,9 +310,14 @@ export const presets: Preset[] = [
     tags: ["Film Simulation", "Vivid", "Landscape"],
     palette: ["#245984", "#527d43", "#b33f32", "#e0ac36"],
     link: `${repoBase}/fuji-x100v-velvia`,
-    number: "09",
+    number: "B09",
+    release: "BETA",
+    availability: "公开预览",
   },
 ];
+
+// 保留 BETA 数据，等待再次开放；Portal 默认只展示正式版。
+export const visiblePresets = presets.filter((preset) => preset.release === "正式版");
 
 export const categories = ["全部", "胶片", "模拟", "黑白"] as const;
 export type Category = (typeof categories)[number];
