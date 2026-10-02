@@ -62,7 +62,7 @@ export const presets: Preset[] = [
     id: "skin-tone-adaptive-fidelity",
     name: "自适应肤色保护",
     en: "ADAPTIVE SKIN FIDELITY",
-    version: "v0.3.0",
+    version: "v0.4.0",
     category: "效果",
     kind: "effect",
     image: effectCover(),
