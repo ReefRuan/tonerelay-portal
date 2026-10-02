@@ -1,6 +1,6 @@
 # ToneRelay Portal image sources
 
-The catalog images in this directory are copied without pixel edits from the reviewed `1.0.0` packages in [`lr-xmp-mimic-studio/packages`](https://github.com/ReefRuan/lr-xmp-mimic-studio/tree/main/packages). CSS may crop images for presentation. Each portal package uses its package cover and reference images 02–04; the upstream `package.json` remains the authoritative provenance record.
+The catalog images in this directory come from the credited, openly licensed source pages listed below. CSS may crop images for presentation. These legacy BETA preview images are separate from the private Studio research workspace and from the new skin-tone effect candidate, which publishes no portrait images or color-chart data.
 
 Licenses: [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) · [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). No endorsement by the creators is implied. Share-alike and attribution terms continue to apply where noted.
 

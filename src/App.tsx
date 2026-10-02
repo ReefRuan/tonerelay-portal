@@ -478,7 +478,6 @@ export default function App() {
                 </div>
                 <div className="detail-actions">
                   <button onClick={() => void copyLink()}><Icon name="copy" />复制链接</button>
-                  {selectedPreset.kind !== "effect" && <a href={selectedPreset.link} target="_blank" rel="noreferrer"><Icon name="external" />打开模板库</a>}
                 </div>
               </div>
             </motion.article>
