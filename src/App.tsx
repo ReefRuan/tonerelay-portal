@@ -426,7 +426,7 @@ export default function App() {
                   <motion.img
                     key={selectedPreset.id}
                     src={selectedPreset.image}
-                    alt={`${selectedPreset.name} ${selectedPreset.kind === "effect" ? "示意封面" : "效果包封面"}`}
+                    alt={`${selectedPreset.name} ${selectedPreset.photoCredit ? "胶卷实拍预览" : selectedPreset.kind === "effect" ? "示意封面" : "效果包封面"}`}
                     initial={{ opacity: 0, scale: 1.025 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
@@ -435,10 +435,15 @@ export default function App() {
                 </AnimatePresence>
                 <span>{selectedPreset.en}</span>
               </div>
+              {selectedPreset.photoCredit && <p className="photo-credit">
+                胶卷实拍参考，并非模板处理结果 · <a href={selectedPreset.photoCredit.source} target="_blank" rel="noreferrer">{selectedPreset.photoCredit.author}</a>
+                {" · "}<a href={selectedPreset.photoCredit.licenseUrl} target="_blank" rel="noreferrer">{selectedPreset.photoCredit.license}</a>
+                {" · 缩放展示，卡片有裁切"}
+              </p>}
               <div className="reference-gallery" aria-label={`${selectedPreset.name} ${selectedPreset.kind === "effect" ? "使用依据" : "真实参考图"}`}>
                 <div className="reference-heading">
                   <span>{selectedPreset.kind === "effect" ? "使用依据" : "参考图"}</span>
-                  <strong>{selectedPreset.kind === "effect" ? "按当前照片判断" : selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : "视觉参考 / 准备中"}</strong>
+                  <strong>{selectedPreset.kind === "effect" ? "按当前照片判断" : selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : selectedPreset.photoCredit ? "封面实拍 / 01" : "视觉参考 / 准备中"}</strong>
                 </div>
                 {selectedPreset.references.length ? <div className="reference-list">
                   {selectedPreset.references.map((reference, index) => (
@@ -455,7 +460,7 @@ export default function App() {
                   ))}
                 </div> : <div className="reference-empty">
                   <span>{selectedPreset.kind === "effect" ? "当前照片" : "预览图"}</span>
-                  <p>{selectedPreset.kind === "effect" ? "以同一照片的前后结果、现场光和可信参照作判断；没有适用于所有人的目标肤色。" : "这个模板的网页预览图正在准备中。"}</p>
+                  <p>{selectedPreset.kind === "effect" ? "以同一照片的前后结果、现场光和可信参照作判断；没有适用于所有人的目标肤色。" : selectedPreset.photoCredit ? "封面已展示一张该胶卷的实拍样张；更多参考图后续补充。" : "这个模板的网页预览图正在准备中。"}</p>
                 </div>}
               </div>
               <div className="detail-body">

@@ -887,6 +887,19 @@ input:focus-visible,
   text-shadow: 0 1px 8px #000;
 }
 
+.photo-credit {
+  margin: 8px 17px 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.photo-credit a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .reference-gallery {
   margin: 14px 17px 0;
   padding: 14px;

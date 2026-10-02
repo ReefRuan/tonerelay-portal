@@ -16,6 +16,12 @@ export type Preset = {
   number: string;
   release: "正式版" | "BETA" | "候选";
   availability: "本地候选" | "公开预览" | "私有试用";
+  photoCredit?: {
+    author: string;
+    source: string;
+    license: string;
+    licenseUrl: string;
+  };
 };
 
 const portalDetail = (id: string) =>
@@ -26,21 +32,8 @@ const references = (id: string) =>
   ["reference-01.jpg", "reference-02.jpg", "reference-03.jpg"].map((name) =>
     asset(id, name),
   );
-
-const templateCover = (code: string, title: string, palette: string[]) => {
-  const [dark, mid, light] = palette;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${dark}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${light}"/></linearGradient></defs>
-    <rect width="900" height="1100" fill="url(#g)"/>
-    <path d="M80 140h740M80 960h740M150 70v960M750 70v960" stroke="white" stroke-opacity=".32"/>
-    <circle cx="450" cy="500" r="190" fill="none" stroke="white" stroke-opacity=".42"/>
-    <circle cx="450" cy="500" r="88" fill="white" fill-opacity=".12"/>
-    <text x="80" y="100" fill="white" font-family="sans-serif" font-size="22" letter-spacing="5">风格模板</text>
-    <text x="80" y="860" fill="white" font-family="serif" font-size="58">${title}</text>
-    <text x="80" y="918" fill="white" fill-opacity=".72" font-family="monospace" font-size="20" letter-spacing="4">${code}</text>
-  </svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-};
+const officialPreview = (id: string) =>
+  `${import.meta.env.BASE_URL}official-previews/${id}.jpg`;
 
 const effectCover = () => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
@@ -79,11 +72,11 @@ export const presets: Preset[] = [
   },
   {
     id: "fuji-film-c200",
-    name: "C200 日常彩负",
+    name: "C200",
     en: "FUJICOLOR C200",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-c200", "FUJICOLOR C200", ["#263e51", "#7f966e", "#e0b27c"]),
+    image: officialPreview("fuji-film-c200"),
     references: [],
     ratio: "4 / 5",
     description: "服务于日常人物、旅行与环境叙事的清爽彩色负片关系。",
@@ -94,14 +87,20 @@ export const presets: Preset[] = [
     number: "R01",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "Peter Back",
+      source: "https://commons.wikimedia.org/wiki/File:Montague_Street.jpg",
+      license: "CC BY-SA 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
+    },
   },
   {
     id: "fuji-film-natura-1600",
-    name: "Natura 1600 高感纪实",
+    name: "NATURA 1600",
     en: "FUJICOLOR NATURA 1600",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-natura-1600", "NATURA 1600", ["#111a24", "#436566", "#d09a67"]),
+    image: officialPreview("fuji-film-natura-1600"),
     references: [],
     ratio: "4 / 5",
     description: "在可用光有限、色温混杂或明暗跨度很大时保留现场关系。",
@@ -112,14 +111,20 @@ export const presets: Preset[] = [
     number: "R02",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "MIKI Yoshihito",
+      source: "https://commons.wikimedia.org/wiki/File:The_BON_festival_dance._(4893025553).jpg",
+      license: "CC BY 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
+    },
   },
   {
     id: "fuji-film-pro-160ns",
-    name: "PRO 160NS 人像彩负",
+    name: "PRO 160NS",
     en: "FUJIFILM PRO 160NS",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-pro-160ns", "PRO 160NS", ["#516b6e", "#ad9381", "#e5d0b9"]),
+    image: officialPreview("fuji-film-pro-160ns"),
     references: [],
     ratio: "4 / 5",
     description: "以主体可读性、亮部余量和场景内颜色关系为先的彩色负片。",
@@ -130,14 +135,20 @@ export const presets: Preset[] = [
     number: "R03",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "PxHere（作者未标注）",
+      source: "https://pxhere.com/en/photo/192059",
+      license: "CC0",
+      licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    },
   },
   {
     id: "fuji-film-pro-400h",
-    name: "PRO 400H 柔和负片",
+    name: "PRO 400H",
     en: "FUJICOLOR PRO 400H",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-pro-400h", "PRO 400H", ["#37535a", "#7da08e", "#e4c9ae"]),
+    image: officialPreview("fuji-film-pro-400h"),
     references: [],
     ratio: "4 / 5",
     description: "柔和连续的色调为人物、白色材料与冷色环境留出各自位置。",
@@ -148,14 +159,20 @@ export const presets: Preset[] = [
     number: "R04",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "Morgan Sherwood",
+      source: "https://commons.wikimedia.org/wiki/File:Sedona,_Bell_Rock.jpg",
+      license: "CC BY 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
+    },
   },
   {
     id: "fuji-film-provia-100f",
-    name: "Provia 100F 标准反转片",
+    name: "PROVIA 100F",
     en: "FUJICHROME PROVIA 100F",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-provia-100f", "PROVIA 100F", ["#183f63", "#629084", "#e1b36a"]),
+    image: officialPreview("fuji-film-provia-100f"),
     references: [],
     ratio: "4 / 5",
     description: "认真安排曝光位置，让现场暖色、冷色与中性物彼此清楚。",
@@ -166,14 +183,20 @@ export const presets: Preset[] = [
     number: "R05",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "Doug Dolde",
+      source: "https://commons.wikimedia.org/wiki/File:Grosvenor_Arch_(UT13M).jpg",
+      license: "公有领域",
+      licenseUrl: "https://commons.wikimedia.org/wiki/File:Grosvenor_Arch_(UT13M).jpg#Licensing",
+    },
   },
   {
     id: "fuji-film-superia-xtra-400",
-    name: "Superia X-TRA 400 日用彩负",
+    name: "SUPERIA X-TRA 400",
     en: "FUJICOLOR SUPERIA X-TRA 400",
     version: "v1.0.0",
     category: "胶片",
-    image: templateCover("fuji-film-superia-xtra-400", "SUPERIA X-TRA 400", ["#233f4c", "#668a67", "#d79a59"]),
+    image: officialPreview("fuji-film-superia-xtra-400"),
     references: [],
     ratio: "4 / 5",
     description: "为街头、旅行和家庭记录保留不同现场光线的日用负片观感。",
@@ -184,10 +207,16 @@ export const presets: Preset[] = [
     number: "R06",
     release: "正式版",
     availability: "本地候选",
+    photoCredit: {
+      author: "Jaroslav A. Polák",
+      source: "https://commons.wikimedia.org/wiki/File:Brno,_Furniture_Second-hand_Shop_on_Cejl_Street.jpg",
+      license: "CC0",
+      licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
+    },
   },
   {
     id: "beta-fuji-film-c200",
-    name: "C200 日常彩负",
+    name: "C200",
     en: "FUJICOLOR C200",
     version: "v1.0",
     category: "胶片",
@@ -205,7 +234,7 @@ export const presets: Preset[] = [
   },
   {
     id: "fuji-film-superia-venus-800",
-    name: "Venus 800 夜行",
+    name: "SUPERIA VENUS 800",
     en: "SUPERIA VENUS 800",
     version: "v1.0",
     category: "胶片",
