@@ -314,20 +314,20 @@ export default function App() {
         <section className="intro" aria-labelledby="page-title">
           <h1 id="page-title">
             Reef 的 Lightroom MCP<br />
-            <em>风格画廊。</em>
+            <em>风格与效果画廊。</em>
           </h1>
           <p>
-            浏览由 Reef 整理的 Lightroom 风格模板。点击卡片查看风格简介，
-            再把喜欢的模板交给 Agent 使用。
+            浏览由 Reef 整理的 Lightroom 风格模板与效果包。点击卡片查看适用场景，
+            再选择适合当前照片的内容。
           </p>
         </section>
 
         <div className="catalog-heading">
           <div>
-            <h2>全部模板</h2>
+            <h2>全部内容</h2>
           </div>
           <div className="catalog-rule"><i /></div>
-          <p>{filteredPresets.length} 个模板</p>
+          <p>{filteredPresets.length} 项内容</p>
         </div>
 
         {filteredPresets.length ? (
@@ -348,7 +348,7 @@ export default function App() {
                       "--card-ratio": preset.ratio,
                     } as CSSProperties
                   }
-                  aria-label={`选择预设：${preset.name}`}
+                  aria-label={`选择${preset.kind === "effect" ? "效果包" : "风格模板"}：${preset.name}`}
                   aria-pressed={selected}
                   onClick={() => {
                     setSelectedId(preset.id);
@@ -364,7 +364,7 @@ export default function App() {
                       draggable={false}
                     />
                     <span className="photo-shade" />
-                    <span className={`release-badge ${preset.release === "BETA" ? "is-beta" : "is-release"}`}>
+                    <span className={`release-badge ${preset.release === "正式版" ? "is-release" : "is-beta"}`}>
                       {preset.release}
                     </span>
                     <span className="card-number">{preset.number}</span>
@@ -384,14 +384,14 @@ export default function App() {
         ) : (
           <section className="empty-state">
             <span>没有匹配结果</span>
-            <h2>没有找到这种风格。</h2>
+            <h2>没有找到这种内容。</h2>
             <button onClick={() => { setQuery(""); setCategory("全部"); }}>清除筛选</button>
           </section>
         )}
 
         <footer className="site-footer">
-          <span>Reef 的 Lightroom MCP 风格画廊</span>
-          <span>浏览 · 选择 · 应用</span>
+          <span>Reef 的 Lightroom MCP 风格与效果画廊</span>
+          <span>浏览 · 选择 · 了解</span>
         </footer>
       </main> : <Documents onCopyPrompt={() => void copyInstallPrompt()} />}
 
@@ -418,7 +418,7 @@ export default function App() {
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
             >
               <div className="detail-topline">
-                <span>模板详情 / {selectedPreset.number}</span>
+                <span>{selectedPreset.kind === "effect" ? "效果详情" : "模板详情"} / {selectedPreset.number}</span>
                 <button onClick={closeDetail} aria-label="放回预设"><Icon name="close" /></button>
               </div>
               <div className="detail-visual">
@@ -426,7 +426,7 @@ export default function App() {
                   <motion.img
                     key={selectedPreset.id}
                     src={selectedPreset.image}
-                    alt={`${selectedPreset.name} 效果包封面`}
+                    alt={`${selectedPreset.name} ${selectedPreset.kind === "effect" ? "示意封面" : "效果包封面"}`}
                     initial={{ opacity: 0, scale: 1.025 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
@@ -435,10 +435,10 @@ export default function App() {
                 </AnimatePresence>
                 <span>{selectedPreset.en}</span>
               </div>
-              <div className="reference-gallery" aria-label={`${selectedPreset.name} 真实参考图`}>
+              <div className="reference-gallery" aria-label={`${selectedPreset.name} ${selectedPreset.kind === "effect" ? "使用依据" : "真实参考图"}`}>
                 <div className="reference-heading">
-                  <span>参考图</span>
-                  <strong>{selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : "视觉参考 / 准备中"}</strong>
+                  <span>{selectedPreset.kind === "effect" ? "使用依据" : "参考图"}</span>
+                  <strong>{selectedPreset.kind === "effect" ? "按当前照片判断" : selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : "视觉参考 / 准备中"}</strong>
                 </div>
                 {selectedPreset.references.length ? <div className="reference-list">
                   {selectedPreset.references.map((reference, index) => (
@@ -454,8 +454,8 @@ export default function App() {
                     </a>
                   ))}
                 </div> : <div className="reference-empty">
-                  <span>预览图</span>
-                  <p>这个模板的网页预览图正在准备中。</p>
+                  <span>{selectedPreset.kind === "effect" ? "当前照片" : "预览图"}</span>
+                  <p>{selectedPreset.kind === "effect" ? "以同一照片的前后结果、现场光和可信参照作判断；没有适用于所有人的目标肤色。" : "这个模板的网页预览图正在准备中。"}</p>
                 </div>}
               </div>
               <div className="detail-body">
@@ -464,20 +464,21 @@ export default function App() {
                     <span>{selectedPreset.release} / {selectedPreset.version}</span>
                     <h2 id="detail-title">{selectedPreset.name}</h2>
                     <p>{selectedPreset.description}</p>
+                    {selectedPreset.kind === "effect" && <p>{selectedPreset.note}</p>}
                   </div>
                   <strong>{String(activeIndex + 1).padStart(2, "0")} / {String(filteredPresets.length).padStart(2, "0")}</strong>
                 </div>
-                <div className="detail-notes is-palette-only">
+                {selectedPreset.kind !== "effect" && <div className="detail-notes is-palette-only">
                   <div className="palette" aria-label="色彩倾向">
                     {selectedPreset.palette.map((color) => <i key={color} style={{ background: color }} title={color} />)}
                   </div>
-                </div>
+                </div>}
                 <div className="detail-tags">
                   {selectedPreset.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
                 <div className="detail-actions">
                   <button onClick={() => void copyLink()}><Icon name="copy" />复制链接</button>
-                  <a href={selectedPreset.link} target="_blank" rel="noreferrer"><Icon name="external" />打开模板库</a>
+                  {selectedPreset.kind !== "effect" && <a href={selectedPreset.link} target="_blank" rel="noreferrer"><Icon name="external" />打开模板库</a>}
                 </div>
               </div>
             </motion.article>
@@ -510,7 +511,7 @@ export default function App() {
                   transition={{ duration: reducedMotion ? 0 : 0.2 }}
                 >
                   <div className="panel-heading">
-                    <div><strong>筛选模板</strong></div>
+                    <div><strong>筛选内容</strong></div>
                     <span>{filteredPresets.length} 个结果</span>
                   </div>
                   <label className="search-box">

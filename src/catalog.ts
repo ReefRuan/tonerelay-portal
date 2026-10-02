@@ -3,7 +3,8 @@ export type Preset = {
   name: string;
   en: string;
   version: string;
-  category: "胶片" | "模拟" | "黑白";
+  category: "胶片" | "模拟" | "黑白" | "效果";
+  kind?: "effect";
   image: string;
   references: string[];
   ratio: string;
@@ -13,8 +14,8 @@ export type Preset = {
   palette: string[];
   link: string;
   number: string;
-  release: "正式版" | "BETA";
-  availability: "本地候选" | "公开预览";
+  release: "正式版" | "BETA" | "候选";
+  availability: "本地候选" | "公开预览" | "私有试用";
 };
 
 const repoBase =
@@ -43,7 +44,41 @@ const templateCover = (code: string, title: string, palette: string[]) => {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
 
+const effectCover = () => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202c38"/><stop offset=".6" stop-color="#506d78"/><stop offset="1" stop-color="#b4a79a"/></linearGradient></defs>
+    <rect width="900" height="1100" fill="url(#g)"/>
+    <path d="M90 250h720M90 520h720M90 790h720" stroke="white" stroke-opacity=".28" stroke-width="2"/>
+    <circle cx="450" cy="520" r="230" fill="none" stroke="white" stroke-opacity=".58" stroke-width="3"/>
+    <circle cx="450" cy="520" r="135" fill="none" stroke="white" stroke-opacity=".32" stroke-width="3"/>
+    <circle cx="450" cy="520" r="9" fill="white"/>
+    <text x="90" y="105" fill="white" font-family="sans-serif" font-size="24" letter-spacing="7">效果包 · 私有候选</text>
+    <text x="90" y="940" fill="white" font-family="serif" font-size="64">自适应肤色</text>
+    <text x="90" y="994" fill="white" fill-opacity=".75" font-family="monospace" font-size="20" letter-spacing="5">ADAPTIVE SKIN FIDELITY</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
 export const presets: Preset[] = [
+  {
+    id: "skin-tone-adaptive-fidelity",
+    name: "自适应肤色保护",
+    en: "ADAPTIVE SKIN FIDELITY",
+    version: "v0.3.0",
+    category: "效果",
+    kind: "effect",
+    image: effectCover(),
+    references: [],
+    ratio: "4 / 5",
+    description: "按同场色卡、可信中性物和光源分区判断肤色；也能在风格化调色时保护人物与现场光。",
+    note: "私有候选：尚无多肤色、同拍色卡与 Lightroom 成对验证，不能宣称已实测提高色准。",
+    tags: ["Skin Tone", "Color Check", "Style Guard"],
+    palette: [],
+    link: "https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery",
+    number: "E01",
+    release: "候选",
+    availability: "私有试用",
+  },
   {
     id: "fuji-film-c200",
     name: "C200 日常彩负",
@@ -316,8 +351,8 @@ export const presets: Preset[] = [
   },
 ];
 
-// 保留 BETA 数据，等待再次开放；Portal 默认只展示正式版。
-export const visiblePresets = presets.filter((preset) => preset.release === "正式版");
+// 保留旧 BETA 数据；当前展示正式风格与标明状态的效果候选。
+export const visiblePresets = presets.filter((preset) => preset.release !== "BETA");
 
-export const categories = ["全部", "胶片", "模拟", "黑白"] as const;
+export const categories = ["全部", "胶片", "模拟", "黑白", "效果"] as const;
 export type Category = (typeof categories)[number];
