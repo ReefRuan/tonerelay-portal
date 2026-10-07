@@ -32,6 +32,38 @@ ToneRelay 通过本地 Runtime 和 Lightroom Classic 插件执行支持的操作
 
 只要求卸载时不重装。明确要求干净重装后，在同一任务完成卸载、新会话检查、安装和另一个新会话验证。
 
+### Windows：装完 Lightroom 插件却没反应？
+
+先确认本机桥在运行：`%SystemDrive%\ToneRelay\bin\tonerelay.cmd bridge status` 应显示 `listening`。插件靠轮询本机桥工作，桥不在时它不会响应。桥需要在普通终端里启动，安装器不注册开机自启，重启电脑后也要再启动一次。
+
+### Windows：提示插件探测超时就是没装上吗？
+
+不一定。那是短超时探测，刚重开 Lightroom 时插件可能还没进入轮询。正常退出并重开 Lightroom 后再看，不要靠反复重装解决；连续多次都超时才按连接问题排查。
+
+### Windows：需要手动把插件加进 Plug-in Manager 吗？
+
+安装器会在 `%APPDATA%\Adobe\Lightroom\Modules` 写入条目，Lightroom 启动时自动加载，一般不需要手动添加。这类自动发现的条目在 Plug-in Manager 里“移去”是灰的，属正常；不要为了“更像正式安装”去给它改名或换位置。
+
+### Windows：安装后提示需要修复或要求注册插件？
+
+先看桥是否在监听。桥没有运行时，状态会显示插件未加载，这不等于注册丢失；桥起来之后再判断。
+
+### Windows：退出不了 Lightroom？
+
+有对话框（例如 Plug-in Manager）开着时，关闭请求不会生效。先关掉对话框再正常退出；不要强制结束正在写 Catalog 的 Lightroom。
+
+### Windows：快速缩略图报错怎么办？
+
+这是已知的 Windows 缺陷，只出现在快速缩略图相关工具上；健康检查和当前选片读取不受影响。不要据此重装，等版本修复。
+
+### Windows：客户端应该用哪份 MCP 配置？
+
+用安装器打印的 `mcp_server` 条目。为 macOS 写的 `.mcp.json` 不能照搬到 Windows，否则连接一定失败。
+
+### 新会话里看不到 ToneRelay 工具？
+
+客户端不会热加载 MCP，需要新会话或重启客户端。安装会话里的成功结果不能代替新会话验证。
+
 ## 交互示意
 
 <!-- comparison-content:start -->
