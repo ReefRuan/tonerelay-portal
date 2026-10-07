@@ -11,7 +11,10 @@ import { categories, visiblePresets as presets, type Category, type Preset } fro
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
 import { Trackball } from "./Trackball";
-import { Documents, INSTALL_PROMPT, type PortalPage } from "./Documents";
+import { Documents, INSTALL_PROMPT, UNINSTALL_PROMPT, INSTALL_PROMPT_DOCUMENT, type PortalPage } from "./Documents";
+
+import { copyText } from "./clipboard";
+import { ManualCopyDialog } from "./ManualCopyDialog";
 
 type DockMode = "collapsed" | "normal" | "expanded";
 
@@ -20,17 +23,6 @@ function pageFromHash(): PortalPage {
   return value === "experience" || value === "about" || value === "help"
     ? "experience"
     : "gallery";
-}
-
-function copyFallback(value: string) {
-  const input = document.createElement("textarea");
-  input.value = value;
-  input.style.position = "fixed";
-  input.style.opacity = "0";
-  document.body.appendChild(input);
-  input.select();
-  document.execCommand("copy");
-  input.remove();
 }
 
 export default function App() {
@@ -45,6 +37,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState("");
+  const [manualCopy, setManualCopy] = useState<string | null>(null);
   const [page, setPage] = useState<PortalPage>(pageFromHash);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
@@ -141,26 +134,29 @@ export default function App() {
     window.requestAnimationFrame(() => detailPanelRef.current?.focus());
   }, []);
 
+  const copyValue = useCallback(async (value: string, message: string) => {
+    try {
+      await copyText(value);
+      showToast(message);
+      return true;
+    } catch {
+      setManualCopy(value);
+      showToast("复制失败，请在弹窗中手动复制");
+      return false;
+    }
+  }, [showToast]);
+
   const copyLink = useCallback(async () => {
     if (!selectedPreset) return;
-    try {
-      await navigator.clipboard.writeText(selectedPreset.link);
-    } catch {
-      copyFallback(selectedPreset.link);
+    if (await copyValue(selectedPreset.link, `已复制「${selectedPreset.name}」链接`)) {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
     }
-    setCopied(true);
-    showToast(`已复制「${selectedPreset.name}」链接`);
-    window.setTimeout(() => setCopied(false), 1600);
-  }, [selectedPreset, showToast]);
+  }, [selectedPreset, copyValue]);
 
-  const copyInstallPrompt = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(INSTALL_PROMPT);
-    } catch {
-      copyFallback(INSTALL_PROMPT);
-    }
-    showToast("安装提示词已复制");
-  }, [showToast]);
+  const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT, "安装提示词已复制"), [copyValue]);
+  const copyInstallPromptDocument = useCallback(() => copyValue(INSTALL_PROMPT_DOCUMENT, "完整安装与卸载文档已复制"), [copyValue]);
+  const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "卸载提示词已复制"), [copyValue]);
 
   const switchDetail = useCallback(
     (delta: number) => {
@@ -393,7 +389,11 @@ export default function App() {
           <span>Reef 的 Lightroom MCP 风格与效果画廊</span>
           <span>浏览 · 选择 · 了解</span>
         </footer>
-      </main> : <Documents onCopyPrompt={() => void copyInstallPrompt()} />}
+      </main> : <Documents
+        onCopyPrompt={() => void copyInstallPrompt()}
+        onCopyUninstall={() => void copyUninstallPrompt()}
+        onCopyDocument={() => void copyInstallPromptDocument()}
+      />}
 
       <AnimatePresence>
         {page === "gallery" && detailOpen && selectedPreset && (
@@ -613,6 +613,7 @@ export default function App() {
       </aside>}
 
       <AnimatePresence>
+        {manualCopy !== null && <ManualCopyDialog value={manualCopy} onClose={() => setManualCopy(null)} />}
         {toast && (
           <motion.div
             className="toast"
@@ -621,7 +622,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
           >
-            <Icon name="check" />{toast}
+            <Icon name={toast.startsWith("复制失败") ? "close" : "check"} />{toast}
           </motion.div>
         )}
       </AnimatePresence>
