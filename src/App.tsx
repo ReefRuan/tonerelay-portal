@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Reef Ruan
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import {
   useCallback,
   useEffect,
@@ -17,6 +20,9 @@ import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
 
 type DockMode = "collapsed" | "normal" | "expanded";
+
+const presetBadgeLabel = (preset: Preset) =>
+  preset.photoCredit ? "第三方图片" : preset.release;
 
 function pageFromHash(): PortalPage {
   const value = window.location.hash.slice(1);
@@ -80,6 +86,7 @@ export default function App() {
         preset.en,
         preset.category,
         preset.release,
+        presetBadgeLabel(preset),
         preset.description,
         ...preset.tags,
       ]
@@ -183,7 +190,7 @@ export default function App() {
     }
   }, [selectedPreset, copyValue]);
 
-  const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "安装提示词和常见问题已复制"), [copyValue]);
+  const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "已复制安装提示词和 FAQ，发给 Agent 开始安装"), [copyValue]);
 
   const switchDetail = useCallback(
     (delta: number) => {
@@ -331,6 +338,13 @@ export default function App() {
           <a href="#gallery" aria-current={page === "gallery" ? "page" : undefined}>画廊</a>
           <a href="#experience" aria-current={page === "experience" ? "page" : undefined}>立即体验</a>
         </nav>
+        {page === "experience" && <div className="site-header-actions">
+          <button className="header-action header-install" onClick={() => void copyInstallPrompt()} title="复制安装提示词和 FAQ，发给 Agent 开始安装">
+            <Icon name="copy" />一键安装
+          </button>
+          <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="打开 Portal / 风格包仓库，在 GitHub 点 Star"><Icon name="star" />Star Portal</a>
+          <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="MCP 仓库目前私有；公开后访客才能在 GitHub 点 Star" aria-label="ToneRelay MCP 仓库，当前私有，公开后可 Star"><Icon name="star" />Star MCP <small>私有</small></a>
+        </div>}
       </header>
 
       {page === "gallery" ? <main className="catalog-main" aria-hidden={detailOpen || undefined}>
@@ -360,6 +374,7 @@ export default function App() {
               return (
                 <motion.button
                   layout
+                  transition={{ layout: { duration: reducedMotion ? 0 : 0.18 } }}
                   key={preset.id}
                   ref={(node) => {
                     if (node) cardRefs.current.set(preset.id, node);
@@ -387,8 +402,8 @@ export default function App() {
                       draggable={false}
                     />
                     <span className="photo-shade" />
-                    <span className={`release-badge ${preset.release === "正式版" ? "is-release" : "is-beta"}`}>
-                      {preset.release}
+                    <span className={`release-badge ${preset.photoCredit ? "is-third-party" : "is-beta"}`}>
+                      {presetBadgeLabel(preset)}
                     </span>
                     <span className="card-number">{preset.number}</span>
                     <span className="selection-mark"><Icon name="check" /></span>
@@ -413,10 +428,10 @@ export default function App() {
         )}
 
         <footer className="site-footer">
-          <span>Reef 的 Lightroom MCP 风格与效果画廊</span>
-          <span>浏览 · 选择 · 了解</span>
+          <span>© 2026 Reef Ruan · ToneRelay</span>
+          <span><a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span>
         </footer>
-      </main> : <Documents onCopyPrompt={() => void copyInstallPrompt()} />}
+      </main> : <Documents />}
 
       <AnimatePresence>
         {page === "gallery" && detailOpen && selectedPreset && (
@@ -425,7 +440,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: reducedMotion ? 0 : 0.24 }}
+            transition={{ duration: reducedMotion ? 0 : 0.16 }}
           >
             <button className="detail-backdrop" aria-label="放回预设" onClick={closeDetail} />
             <motion.article
@@ -438,7 +453,7 @@ export default function App() {
               initial={reducedMotion ? false : { y: 80, scale: 0.88, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
               exit={reducedMotion ? { opacity: 0 } : { y: 70, scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              transition={{ type: "spring", stiffness: 370, damping: 32 }}
             >
               <div className="detail-topline">
                 <span>{selectedPreset.kind === "effect" ? "效果" : "风格包"} / {selectedPreset.number}</span>
@@ -493,6 +508,7 @@ export default function App() {
             aria-label="开启预设操控"
             initial={{ y: 18, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: reducedMotion ? 0 : 0.18 }}
           >
             <span className="wake-symbol"><i /><i /><i /></span>
             <strong>操控</strong>
@@ -507,7 +523,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 18, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 14, scale: 0.98 }}
-                  transition={{ duration: reducedMotion ? 0 : 0.2 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.15 }}
                 >
                   <div className="panel-heading">
                     <div><strong>筛选内容</strong></div>
@@ -578,7 +594,7 @@ export default function App() {
                     <img src={selectedPreset.image} alt="" />
                     <span>
                       <strong>{detailOpen ? "正在查看 · " : "已选择 · "}{selectedPreset.name}</strong>
-                      <small>{selectedPreset.en} · {selectedPreset.release} · {selectedPreset.version}</small>
+                      <small>{selectedPreset.en} · {presetBadgeLabel(selectedPreset)} · {selectedPreset.version}</small>
                     </span>
                   </div>
                 ) : (

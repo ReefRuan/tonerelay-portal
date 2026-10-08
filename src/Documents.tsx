@@ -1,7 +1,11 @@
+// SPDX-FileCopyrightText: 2026 Reef Ruan
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "./Icon";
 import installPrompt from "../docs/install-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
+import experienceIntroduction from "../docs/experience-introduction.md?raw";
 import { WorkflowComparisons } from "./WorkflowComparisons";
 
 export type PortalPage = "gallery" | "experience";
@@ -9,10 +13,11 @@ export type PortalPage = "gallery" | "experience";
 const WORKBUDDY_DOWNLOAD = "https://www.workbuddy.cn/work/";
 
 export const INSTALL_PROMPT = installPrompt.trim();
-
-type DocumentsProps = {
-  onCopyPrompt: () => void;
-};
+const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
+if (!heroMatch) throw new Error("docs/experience-introduction.md is missing its tool introduction");
+const heroTitle = heroMatch[1];
+const heroIntroduction = heroMatch[2];
+const heroTagline = heroMatch[3];
 
 const agents = [
   { name: "Codex" },
@@ -28,7 +33,7 @@ const faqItems = Array.from(
 );
 if (!faqItems.length) throw new Error("docs/faq.md has no FAQ entries");
 
-function faqAnswer(markdown: string): ReactNode[] {
+function inlineMarkdown(markdown: string): ReactNode[] {
   const parts: ReactNode[] = [];
   const tokens = /\[([^\]]+)\]\(([^\s)]+)\)|`([^`]+)`|\*\*([^*]+)\*\*/g;
   let cursor = 0;
@@ -116,9 +121,9 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
       <div className="agent-strip-heading">
         <div>
           <span className="eyebrow">工具介绍</span>
-          <h1 id="agent-strip-title">扩展 Agent 操作 Lightroom 的<br />能力。</h1>
-          <p className="agent-intro">ToneRelay 是面向 Lightroom Classic 的本地 MCP 工具套件。Agent 理解修图目标并决定下一步；ToneRelay 通过 MCP 与 Lightroom 插件执行操作、回读结果。</p>
-          <p className="agent-benefits">Catalog 批量操作 · Lightroom 渲染回读 · 图像测量与对比 · 多方案候选</p>
+          <h1 id="agent-strip-title">{heroTitle}</h1>
+          <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
+          <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
         </div>
       </div>
       <div className="agent-picker">
@@ -131,22 +136,6 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
         ))}
         </div>
         <button className="agent-help-link" onClick={onExplain}>什么是 Agent？</button>
-      </div>
-    </section>
-  );
-}
-
-function ActionBand({ onCopy }: { onCopy: () => void }) {
-  return (
-    <section className="experience-cta" aria-labelledby="experience-title">
-      <div>
-        <span className="eyebrow">安装介绍</span>
-        <h2 id="experience-title">复制提示词，<em>发给你的 Agent。</em></h2>
-        <p>把提示词交给你正在使用的客户端。它会核对固定版本和官方接入方式，并尽可能自主完成普通本机步骤；开发版测试必须由你明确授权。</p>
-      </div>
-      <div className="experience-cta-actions">
-        <button className="button-primary" onClick={onCopy}><Icon name="copy" />复制安装提示词</button>
-        <small>一次复制安装提示词和常见问题，包括 Windows 排障。Agent 会先核实公开发行版本。</small>
       </div>
     </section>
   );
@@ -168,7 +157,7 @@ function DialogueSection() {
               <strong>{item.question}</strong>
               <span className="dialogue-toggle" aria-hidden="true">＋</span>
             </summary>
-            <div className="dialogue-answer"><span>回答</span><p>{faqAnswer(item.answer)}</p></div>
+            <div className="dialogue-answer"><span>回答</span><p>{inlineMarkdown(item.answer)}</p></div>
           </details>
         ))}
       </div>
@@ -177,15 +166,14 @@ function DialogueSection() {
 }
 
 function DocumentFooter() {
-  return <footer className="document-footer"><span>ToneRelay · 先看照片，再做选择</span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
+  return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
 }
 
-export function Documents({ onCopyPrompt }: DocumentsProps) {
+export function Documents() {
   const [helpOpen, setHelpOpen] = useState(false);
   return (
     <main className="document-main experience-main">
       <AgentStrip onExplain={() => setHelpOpen(true)} />
-      <ActionBand onCopy={onCopyPrompt} />
       <WorkflowComparisons />
       <DialogueSection />
       <DocumentFooter />

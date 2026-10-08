@@ -12,7 +12,8 @@ export type IconName =
   | "external"
   | "filter"
   | "next"
-  | "search";
+  | "search"
+  | "star";
 
 export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGElement>) {
   const shared = {
@@ -41,6 +42,7 @@ export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGEle
     filter: <><path d="M4 6h16" /><path d="M7 12h10" /><path d="M10 18h4" /></>,
     next: <><path d="m8 5 7 7-7 7" /><path d="M16 5v14" /></>,
     search: <><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></>,
+    star: <path d="m12 3 2.8 5.68 6.27.91-4.54 4.42 1.07 6.24L12 17.3l-5.6 2.95 1.07-6.24-4.54-4.42 6.27-.91L12 3Z" />,
   };
 
   return <svg {...shared}>{paths[name]}</svg>;

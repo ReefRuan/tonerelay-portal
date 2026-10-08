@@ -64,72 +64,86 @@
 - 天空、深蓝车漆和水面若全部同色，或绿色变成荧光、砖红失去层次，停止全局 HSL，改为针对对象和受光的局部调整。
 - 任何只来自边框、灰尘、网页压缩、扫描纹理、长曝拖影或特定后期的“气氛”都不是必需目标；不要为复现它们而加入假颗粒、假漏光、假雾或统一色偏。
 
+## 蒸馏依据与摄影过程边界
+
+这份上下文综合了 Studio 对多位摄影师实拍作品的视觉研究；后附的公开参考图因再分发许可另行选取，**不是全部判断的唯一来源**。没有发布权的研究照片不进入本包。参考图适合观察人物、材质、光线与颜色之间的关系，不适合把某位作者的曝光、镜头、冲扫、扫描、后期或网页输出直接当作片基特征。
+
+- 明亮柔和的人像来自具体人物、服装、布光和曝光。借鉴其肤色与背景的分离，不把“奶油高调”设为所有场景的默认结果。
+- 强光、城市建筑或高饱和物体可显示较深的暗部与鲜明颜色；这些外观也受场景和数字化路径影响，不能推导固定的全局曲线或 HSL 数值。
+- 夜景、雾海、耀斑及浅景深是特殊拍摄条件。它们可以界定某种画面关系，但不应成为自动添加的特效。
+
+## 尚未能确定的部分
+
+- 现有研究不足以给不同肤色、年龄、妆容和所有室内光源建立统一参数；具体人像仍须以用户当前照片为准。
+- 缺少统一拍摄、冲扫与扫描的受控对照，不能声称固定颗粒、锐度、黑位、色偏或曝光宽容度数值。
+- 本包是给 Agent 判断方向的风格上下文，不是已在每类原图上验收的 Lightroom 预设。
+
 ## 公开参考图与使用边界
 
-以下样片由原作者标注为对应胶片拍摄，并按逐张核对过的 CC 许可再分发。不要从任一张样片单独推导固定色温、颗粒、扫描流程或 Lightroom 参数。作者、原图与许可见各图说明及 package.json。
+正文综合了 Studio 更广泛的胶片实拍研究；以下图片另经逐张许可核对，供公开展示和视觉对照，不是正文的唯一依据。摄影师的拍摄、曝光、冲扫、扫描与输出都会影响观感，不能从单张照片反推固定 Lightroom 数值。
 
-### 01 — Pick your own lavender
+### 01 — 150315B7528PN160NS
 
-![Pick your own lavender（brenkee）](references/01.jpg)
+![150315B7528PN160NS（doca doca）](references/01.jpg)
 
-摄影师：brenkee · [原图](https://www.flickr.com/photos/55128416@N05/27607395300) · [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+封面与硬光建筑场景：楼梯、人物、浅色天空和深暗部保持清楚的几何分界；胶片型号来自作者标题编码。 摄影师：[doca doca](https://www.flickr.com/photos/19924293@N08/16203711663/) · [原图](https://www.flickr.com/photos/19924293@N08/16203711663/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 02 — The first petals of the spring
+### 02 — Pick your own lavender
 
-![The first petals of the spring（brenkee）](references/02.jpg)
+![Pick your own lavender（brenkee）](references/02.jpg)
 
-摄影师：brenkee · [原图](https://www.flickr.com/photos/55128416@N05/25942361352) · [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+柔和户外人像：肤色、紫花与深绿植被同框，观察颜色如何保持主次。 摄影师：[brenkee](https://www.flickr.com/photos/55128416@N05/27607395300/) · [原图](https://www.flickr.com/photos/55128416@N05/27607395300/) · [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。
 
-### 03 — Mom picking lavender
+### 03 — 信号待ち、自転車の少女。その対角点にて
 
-![Mom picking lavender（brenkee）](references/03.jpg)
+![信号待ち、自転車の少女。その対角点にて（fukapon）](references/03.jpg)
 
-摄影师：brenkee · [原图](https://www.flickr.com/photos/55128416@N05/27309772244) · [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+街头人物与景深：浅色衣物、肤色和冷色街景的关系。型号来自作者标签；扫描和后期可能参与了最终颜色。 摄影师：[fukapon](https://www.flickr.com/photos/37259551@N00/4278021387/) · [原图](https://www.flickr.com/photos/37259551@N00/4278021387/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 04 — 2021-01-01 13-33-00-00
+### 04 — Fresca era ll'aria....
 
-![2021-01-01 13-33-00-00（othersmallcities）](references/04.jpg)
+![Fresca era ll'aria....（Matteo Bagnoli）](references/04.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51812793365) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+粉色玫瑰、蓝天与浅色墙面：明亮环境里保留鲜明但不过度统一的颜色。 摄影师：[Matteo Bagnoli](https://www.flickr.com/photos/46155474@N00/5778318842/) · [原图](https://www.flickr.com/photos/46155474@N00/5778318842/) · [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)。
 
-### 05 — 2021-01-01 13-51-00-00
+### 05 — without you
 
-![2021-01-01 13-51-00-00（othersmallcities）](references/05.jpg)
+![without you（tommy@chau）](references/05.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51812409679) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+树下人物、草地与广阔天空：观察低反差远景和环境人像的空间层次。 摄影师：[tommy@chau](https://www.flickr.com/photos/90975693@N05/29580739363/) · [原图](https://www.flickr.com/photos/90975693@N05/29580739363/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 06 — 2021-01-01 14-21-00-00
+### 06 — Casiers, ancienne Institution Saint-Joseph, Laxou, France, 2011
 
-![2021-01-01 14-21-00-00（othersmallcities）](references/06.jpg)
+![Casiers, ancienne Institution Saint-Joseph, Laxou, France, 2011（Thomas Claveirole）](references/06.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51812169403) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+室内格柜与散落纸张：浅色材料、暖光和暗角有明确层次；胶片型号来自作者标签，不把空间本身的旧色当成胶片特征。 摄影师：[Thomas Claveirole](https://www.flickr.com/photos/80318369@N00/6439022077/) · [原图](https://www.flickr.com/photos/80318369@N00/6439022077/) · [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)。
 
-### 07 — 2021-01-01 14-32-00-00
+### 07 — 朝に洗われて、
 
-![2021-01-01 14-32-00-00（othersmallcities）](references/07.jpg)
+![朝に洗われて、（yo___ko）](references/07.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51811106187) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+日出与湿沙倒影：暖光、冷天空和深色海面的层次；日出本身不是固定暖色预设。 摄影师：[yo___ko](https://www.flickr.com/photos/52730397@N05/7913235590/) · [原图](https://www.flickr.com/photos/52730397@N05/7913235590/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 08 — 2021-01-01 14-12-00-00
+### 08 — Kujukurihama Shirasato Beach
 
-![2021-01-01 14-12-00-00（othersmallcities）](references/08.jpg)
+![Kujukurihama Shirasato Beach（uemu）](references/08.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51811107222) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+雾天低反差边界：救生椅和海天仍有微差；雾与扫描路径不能推广为胶片常态。 摄影师：[uemu](https://www.flickr.com/photos/23959464@N00/7641788638/) · [原图](https://www.flickr.com/photos/23959464@N00/7641788638/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 09 — 2021-01-01 13-40-00-00
+### 09 — rollriflex protrait 160ns
 
-![2021-01-01 13-40-00-00（othersmallcities）](references/09.jpg)
+![rollriflex protrait 160ns（skha818）](references/09.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51812065601) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+自然光人像：肤色、浅蓝衣物和室内背景仍能分开。标题是作者的 160NS 标注；人物受光与扫描方式不等于胶片固定配方。 摄影师：[skha818](https://www.flickr.com/photos/27528003@N02/18396389728/) · [原图](https://www.flickr.com/photos/27528003@N02/18396389728/) · [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)。
 
-### 10 — 2021-01-01 14-25-00-00
+### 10 — FUJI PRO 160 NS
 
-![2021-01-01 14-25-00-00（othersmallcities）](references/10.jpg)
+![FUJI PRO 160 NS（snopy645）](references/10.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51811106307) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+树荫中的猫与石柱：用清楚的主体、浅色石材和绿叶观察柔光关系。型号来自作者标题。 摄影师：[snopy645](https://www.flickr.com/photos/94163348@N02/14794283730/) · [原图](https://www.flickr.com/photos/94163348@N02/14794283730/) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。
 
-### 11 — 2021-01-01 14-03-00-00
+### 11 — Mom picking lavender
 
-![2021-01-01 14-03-00-00（othersmallcities）](references/11.jpg)
+![Mom picking lavender（brenkee）](references/11.jpg)
 
-摄影师：othersmallcities · [原图](https://www.flickr.com/photos/45112004@N03/51812792420) · [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)。这是一张具体曝光与扫描条件下的实拍参考，不是该胶片的统一色彩标准。
+另一位人物在花田中的柔光对照：浅色衣物、肤色、紫花和绿色各留位置。 摄影师：[brenkee](https://www.flickr.com/photos/55128416@N05/27309772244/) · [原图](https://www.flickr.com/photos/55128416@N05/27309772244/) · [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)。

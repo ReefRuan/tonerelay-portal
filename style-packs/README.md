@@ -1,12 +1,14 @@
 # ToneRelay 风格包
 
+风格上下文的整理与蒸馏由 Reef Ruan 维护；参考照片的作者和许可逐张列在各包 `package.json`，不能将照片署名改成 Reef。
+
 这里是画廊所展示的六个可公开下载的风格上下文包。每包都包含 `package.json`、`style.md`、`cover.jpg` 和 `references/`；`downloads/` 提供按包打好的 ZIP。`catalog.json` 列出编号、版本和文件路径。
 
 | 编号 | 风格包 | 参考图 | 下载 |
 | --- | --- | ---: | --- |
 | R01 | [FUJICOLOR C200](packages/fuji-film-c200/) | 10 | [ZIP](downloads/fuji-film-c200-v1.1.0.zip) |
 | R02 | [FUJICOLOR NATURA 1600](packages/fuji-film-natura-1600/) | 12 | [ZIP](downloads/fuji-film-natura-1600-v1.1.0.zip) |
-| R03 | [FUJIFILM PRO 160NS](packages/fuji-film-pro-160ns/) | 11 | [ZIP](downloads/fuji-film-pro-160ns-v1.1.0.zip) |
+| R03 | [FUJIFILM PRO 160NS](packages/fuji-film-pro-160ns/) | 11 | [ZIP](downloads/fuji-film-pro-160ns-v1.2.0.zip) |
 | R04 | [FUJICOLOR PRO 400H](packages/fuji-film-pro-400h/) | 10 | [ZIP](downloads/fuji-film-pro-400h-v1.1.0.zip) |
 | R05 | [FUJICHROME PROVIA 100F](packages/fuji-film-provia-100f/) | 10 | [ZIP](downloads/fuji-film-provia-100f-v1.1.0.zip) |
 | R06 | [FUJICOLOR SUPERIA X-TRA 400](packages/fuji-film-superia-xtra-400/) | 11 | [ZIP](downloads/fuji-film-superia-xtra-400-v1.1.0.zip) |

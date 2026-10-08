@@ -17,6 +17,11 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
   const pointer = useRef({ id: -1, x: 0, y: 0 });
   const repeating = useRef<number | null>(null);
   const lastDirection = useRef<Direction | null>(null);
+  const navigateRef = useRef(onNavigate);
+
+  useEffect(() => {
+    navigateRef.current = onNavigate;
+  }, [onNavigate]);
 
   const stopRepeating = () => {
     if (repeating.current !== null) window.clearInterval(repeating.current);
@@ -30,8 +35,8 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
     if (lastDirection.current === direction) return;
     stopRepeating();
     lastDirection.current = direction;
-    onNavigate(direction);
-    repeating.current = window.setInterval(() => onNavigate(direction), 430);
+    navigateRef.current(direction);
+    repeating.current = window.setInterval(() => navigateRef.current(direction), 430);
   };
 
   const finish = (event: PointerEvent<HTMLButtonElement>) => {
@@ -47,7 +52,6 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
 
   return (
     <div className={`trackball ${held ? "is-held" : ""}`}>
-      <span className="trackball-north">{detailOpen ? "查看" : "上"}</span>
       <button
         className="trackball-socket"
         aria-label={
@@ -67,7 +71,7 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
           const dx = event.clientX - pointer.current.x;
           const dy = event.clientY - pointer.current.y;
           const length = Math.hypot(dx, dy);
-          const scale = length > 20 ? 20 / length : 1;
+          const scale = length > 16 ? 16 / length : 1;
           const next = { x: dx * scale, y: dy * scale };
           setOffset(next);
           if (length > 11) startRepeating(directionFromOffset(dx, dy));
@@ -87,7 +91,7 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
           if (!direction) return;
           event.preventDefault();
           event.stopPropagation();
-          onNavigate(direction);
+          navigateRef.current(direction);
         }}
       >
         <span className="trackball-ring" />
@@ -95,13 +99,9 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
           className="trackball-sphere"
           style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
         >
-          <i />
-          <i />
-          <i />
           <b />
         </span>
       </button>
-      <span className="trackball-caption">{held ? "选择中" : "方向球"}</span>
     </div>
   );
 }

@@ -24,11 +24,11 @@
     {
       "number": 1003,
       "package_id": "fuji-film-pro-160ns",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "runtime": ">=0.7.0 <0.8.0",
       "source_id": "portal-github",
       "path": "style-packs/packages/fuji-film-pro-160ns",
-      "archive_path": "style-packs/downloads/fuji-film-pro-160ns-v1.1.0.zip",
+      "archive_path": "style-packs/downloads/fuji-film-pro-160ns-v1.2.0.zip",
       "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-pro-160ns#gallery"
     },
     {

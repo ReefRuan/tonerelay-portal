@@ -2,13 +2,13 @@
   "schema_version": "style-context-package-v1",
   "id": "fuji-film-pro-160ns",
   "family": "film-stocks",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "FUJIFILM PRO 160NS",
   "summary": "把这支片理解为一套以主体可读性、亮部余量和场景内颜色关系为先的彩色负片意图，而不是一条固定的“粉彩”或“青橙”预设。柔和的人像可以明亮、轻盈而有亲近感；日照强烈、反差很大的车与建筑，也可以保留深黑、浓蓝、砖红和明确的方向性。共同目标是让肤色、白色材料、深色物体与环境色各有位置，而不把整幅画面压进同一种滤镜色调。",
   "language": "zh-CN",
   "status": "candidate",
-  "built_at": "2026-10-08T05:52:50.884Z",
-  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "built_at": "2026-10-08T10:01:05.195Z",
+  "public_release_note": "PRO 160NS visual recuration: 11 author-attributed, film-claimed CC photos selected across portraits, flora, street, architecture and coastal light. Distilled text retains its broader private research basis; private images are not included.",
   "content": {
     "style": "style.md",
     "cover": "cover.jpg",
@@ -29,180 +29,180 @@
   },
   "sources": [
     {
-      "id": "fuji-film-pro-160ns__flickr__27607395300",
-      "title": "Pick your own lavender",
-      "url": "https://www.flickr.com/photos/55128416@N05/27607395300",
-      "creator": "brenkee",
-      "license": "CC0 1.0",
-      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "id": "fuji-film-pro-160ns__flickr__16203711663",
+      "title": "150315B7528PN160NS",
+      "url": "https://www.flickr.com/photos/19924293@N08/16203711663/",
+      "creator": "doca doca",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
       "redistributable": true,
       "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
       "reference_files": [
         "references/01.jpg"
       ],
-      "image_url": "https://live.staticflickr.com/7236/27607395300_041d31f7d7_b.jpg",
-      "sha256": "072353fd5fccad0488358ddda72b88749f20fae4b335c417796514ebbbe011eb"
+      "image_url": "https://live.staticflickr.com/8592/16203711663_e2196ba9e9_b.jpg",
+      "sha256": "2985fcf51dfbda8b2b851bb907ea20a32bfa0bb7bb7e1b2d4557d12b09e6611e"
     },
     {
-      "id": "fuji-film-pro-160ns__flickr__25942361352",
-      "title": "The first petals of the spring",
-      "url": "https://www.flickr.com/photos/55128416@N05/25942361352",
+      "id": "fuji-film-pro-160ns__flickr__27607395300",
+      "title": "Pick your own lavender",
+      "url": "https://www.flickr.com/photos/55128416@N05/27607395300/",
       "creator": "brenkee",
       "license": "CC0 1.0",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "redistributable": true,
       "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
       "reference_files": [
         "references/02.jpg"
       ],
-      "image_url": "https://live.staticflickr.com/1559/25942361352_483cb35298_b.jpg",
-      "sha256": "89ebcdba357f414419049d9b31efa4fec2f8a1e6eab8fc84e04c85759aea2443"
+      "image_url": "https://live.staticflickr.com/7236/27607395300_041d31f7d7_b.jpg",
+      "sha256": "40790ca593653b4f7857b4a9d3195dea5baeb773f0cda0ab6ede6205a228bd4b"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__4278021387",
+      "title": "信号待ち、自転車の少女。その対角点にて",
+      "url": "https://www.flickr.com/photos/37259551@N00/4278021387/",
+      "creator": "fukapon",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/4062/4278021387_422e99aeab_b.jpg",
+      "sha256": "6bcd94de8b29a462d7b9d61aff03c15e00ccf1e9c414ae200eaad649e1b05bc7"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__5778318842",
+      "title": "Fresca era ll'aria....",
+      "url": "https://www.flickr.com/photos/46155474@N00/5778318842/",
+      "creator": "Matteo Bagnoli",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/2735/5778318842_2843504800_b.jpg",
+      "sha256": "59f6518bbcdba2bcd897916ac2bd3c5d2407e3dbe2b4b730640030ef4a4bb29a"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__29580739363",
+      "title": "without you",
+      "url": "https://www.flickr.com/photos/90975693@N05/29580739363/",
+      "creator": "tommy@chau",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7523/29580739363_4e2e007e6f_b.jpg",
+      "sha256": "e579f30c27576c7eb26446c2c56a2206f4cca3636cf5b809df0548773a39876e"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__6439022077",
+      "title": "Casiers, ancienne Institution Saint-Joseph, Laxou, France, 2011",
+      "url": "https://www.flickr.com/photos/80318369@N00/6439022077/",
+      "creator": "Thomas Claveirole",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7174/6439022077_325912540f_b.jpg",
+      "sha256": "d8187b7d5cf7f8746117c0f12514ef497497f0b7ac575303670af624023d675d"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__7913235590",
+      "title": "朝に洗われて、",
+      "url": "https://www.flickr.com/photos/52730397@N05/7913235590/",
+      "creator": "yo___ko",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8181/7913235590_07c54f4ddd_b.jpg",
+      "sha256": "bb903aa481d295b6e9d1c2fafb352af17010f59006c8906aa1f850197b24a8e3"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__7641788638",
+      "title": "Kujukurihama Shirasato Beach",
+      "url": "https://www.flickr.com/photos/23959464@N00/7641788638/",
+      "creator": "uemu",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8001/7641788638_27a04d12a4_b.jpg",
+      "sha256": "75b5f6551b501a3d6e82216c6c0f06e49830538e7f0d03e267e55e32af6bc179"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__18396389728",
+      "title": "rollriflex protrait 160ns",
+      "url": "https://www.flickr.com/photos/27528003@N02/18396389728/",
+      "creator": "skha818",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/560/18396389728_ca7733dbfc_b.jpg",
+      "sha256": "5505bbd05e59b85366d40880f7e84b5b39c8ef3f0abe1c325f1b9d46108c4820"
+    },
+    {
+      "id": "fuji-film-pro-160ns__flickr__14794283730",
+      "title": "FUJI PRO 160 NS",
+      "url": "https://www.flickr.com/photos/94163348@N02/14794283730/",
+      "creator": "snopy645",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3842/14794283730_8e84ac5401_b.jpg",
+      "sha256": "c2702e138015e0713c68fec197b48cc03adc33f804cf849286d57ee887b5679f"
     },
     {
       "id": "fuji-film-pro-160ns__flickr__27309772244",
       "title": "Mom picking lavender",
-      "url": "https://www.flickr.com/photos/55128416@N05/27309772244",
+      "url": "https://www.flickr.com/photos/55128416@N05/27309772244/",
       "creator": "brenkee",
       "license": "CC0 1.0",
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "redistributable": true,
       "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/03.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/7427/27309772244_c48c4d0624_b.jpg",
-      "sha256": "c02c45d708590a28f01b1e0fd0da50cc44549398d303be7f9d65e108a33bb7a2"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51812793365",
-      "title": "2021-01-01 13-33-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51812793365",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/04.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51812793365_67b5845c64_b.jpg",
-      "sha256": "d3812bd53f936774f4000584ec2286b90f8674227835a5c4194b1732748125f8"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51812409679",
-      "title": "2021-01-01 13-51-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51812409679",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/05.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51812409679_8886639795_b.jpg",
-      "sha256": "bc7a1272b22f816b657a617e034c65a2623753b8c6bdcbe9e8cf5500d896b2c2"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51812169403",
-      "title": "2021-01-01 14-21-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51812169403",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/06.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51812169403_c9fa782bd4_b.jpg",
-      "sha256": "01da0af67f986055d01188380ebc31e986a4a8d7dd243a5f23672aaa73eba575"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51811106187",
-      "title": "2021-01-01 14-32-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51811106187",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/07.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51811106187_39d1e35925_b.jpg",
-      "sha256": "5f59cc93ae122f492054f9ab46f95a594cd2f5f25f18d13d3bd534771a92dff8"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51811107222",
-      "title": "2021-01-01 14-12-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51811107222",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/08.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51811107222_2214f9178a_b.jpg",
-      "sha256": "33fde3c147f4c6439cdc476145d2b45c5148f7ce5c22c65bdc9aa0c99871bdbd"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51812065601",
-      "title": "2021-01-01 13-40-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51812065601",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/09.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51812065601_c10bb5cfd8_b.jpg",
-      "sha256": "5bf971546c5c9613828946072249c3a25670562824bb6038a8446401416b81e1"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51811106307",
-      "title": "2021-01-01 14-25-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51811106307",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
-      "reference_files": [
-        "references/10.jpg"
-      ],
-      "image_url": "https://live.staticflickr.com/65535/51811106307_bc0e3eef20_b.jpg",
-      "sha256": "b913f617742c2b7637e7cbfeca47164560f71ee31421287c4d140b6f8bbe1ff1"
-    },
-    {
-      "id": "fuji-film-pro-160ns__flickr__51812792420",
-      "title": "2021-01-01 14-03-00-00",
-      "url": "https://www.flickr.com/photos/45112004@N03/51812792420",
-      "creator": "othersmallcities",
-      "license": "CC BY 2.0",
-      "license_url": "https://creativecommons.org/licenses/by/2.0/",
-      "redistributable": true,
-      "film_stock_claim_checked": true,
-      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "rights_note": "Flickr source page and film claim checked 2026-10-08; resized to at most 1200 px, converted to sRGB JPEG, and generated a WebP page preview.",
       "reference_files": [
         "references/11.jpg"
       ],
-      "image_url": "https://live.staticflickr.com/65535/51812792420_4390a46f9d_b.jpg",
-      "sha256": "224c6a58ad4c410ecfdf10fb884f68ebe745098fecfc9752e77f398eb27064d2"
+      "image_url": "https://live.staticflickr.com/7427/27309772244_c48c4d0624_b.jpg",
+      "sha256": "b98f700223d02e2a68621dbbed917987b89f223106ad8616e7b0457c2f4e0ba4"
     }
   ]
 }

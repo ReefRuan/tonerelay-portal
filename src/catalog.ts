@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Reef Ruan
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import c200Package from "../style-packs/packages/fuji-film-c200/package.json";
 import naturaPackage from "../style-packs/packages/fuji-film-natura-1600/package.json";
 import pro160Package from "../style-packs/packages/fuji-film-pro-160ns/package.json";
@@ -46,6 +49,7 @@ const references = (id: string) =>
     asset(id, name),
   );
 type PublishedPack = {
+  version: string;
   content: { cover_reference: string; references: string[] };
   sources: Array<{ creator: string; url: string; license: string; license_url: string }>;
 };
@@ -79,7 +83,7 @@ const publishedCoverCredit = (id: string) => {
 const packageDirectory = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
 const packageDownload = (id: string) =>
-  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v1.1.0.zip`;
+  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 
 const effectCover = () => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
@@ -166,7 +170,7 @@ export const presets: Preset[] = [
     id: "fuji-film-pro-160ns",
     name: "PRO 160NS",
     en: "FUJIFILM PRO 160NS",
-    version: "v1.1.0",
+    version: "v1.2.0",
     category: "胶片",
     image: publishedCover("fuji-film-pro-160ns"),
     references: publishedReferences("fuji-film-pro-160ns"),
