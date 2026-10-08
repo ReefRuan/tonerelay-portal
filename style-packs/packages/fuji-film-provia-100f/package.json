@@ -1,0 +1,191 @@
+{
+  "schema_version": "style-context-package-v1",
+  "id": "fuji-film-provia-100f",
+  "family": "film-stocks",
+  "version": "1.1.0",
+  "title": "FUJICHROME Provia 100F",
+  "summary": "把目标理解为一张曝光位置被认真安排的反转片式画面：现场已有的暖色、冷色和中性物彼此清楚，亮处有位置，深处可以有重量，但不把画面套进统一的青绿、橙粉或怀旧色罩。它追求的是有边界的色相和明暗关系，而不是把所有颜色推到最大，或以抬黑、软焦和颗粒来制造“胶片感”。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "built_at": "2026-10-08T05:52:50.884Z",
+  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "content": {
+    "style": "style.md",
+    "cover": "cover.jpg",
+    "cover_reference": "references/10.jpg",
+    "references": [
+      "references/01.jpg",
+      "references/02.jpg",
+      "references/03.jpg",
+      "references/04.jpg",
+      "references/05.jpg",
+      "references/06.jpg",
+      "references/07.jpg",
+      "references/08.jpg",
+      "references/09.jpg",
+      "references/10.jpg"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fuji-film-provia-100f__flickr__49572465372",
+      "title": "Provia 100f test 1",
+      "url": "https://www.flickr.com/photos/95383788@N03/49572465372",
+      "creator": "Omar_Burgos_D",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/01.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/49572465372_7bd86b6881_b.jpg",
+      "sha256": "c2a0eac89f84524438b3e3fc35738223d8bb6a3e83322490170b75e54d5ec423"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__49572465772",
+      "title": "Provia 100f test 7",
+      "url": "https://www.flickr.com/photos/95383788@N03/49572465772",
+      "creator": "Omar_Burgos_D",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/02.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/49572465772_39acd0d2e5_b.jpg",
+      "sha256": "de2345812a89a34a751262724fb14d6b2f11b441b9d05ba16d950d0f8dfd1872"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__2624106079",
+      "title": "london",
+      "url": "https://www.flickr.com/photos/22633661@N08/2624106079",
+      "creator": "osamukaneko",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3109/2624106079_c1f5d74b97.jpg",
+      "sha256": "5e540b8a8227436d92f706160bb94242ef434e832b33b7c4c9091de6ede240ba"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__52526751259",
+      "title": "Room with a View - Costa Rica (GF670 / Provia)",
+      "url": "https://www.flickr.com/photos/65969414@N08/52526751259",
+      "creator": "Harald Philipp",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/52526751259_0cfa1de406_b.jpg",
+      "sha256": "c434f443156d83b406956add1bda75b14bd0b0084580805fd90d7f8ad7c2a206"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__52525793903",
+      "title": "Provia Sunrise (MF GF670 / Provia)",
+      "url": "https://www.flickr.com/photos/65969414@N08/52525793903",
+      "creator": "Harald Philipp",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/52525793903_ea6799d72f_b.jpg",
+      "sha256": "5bc5cb0feca6cdec914306b163aca6ab16eb351b14a20a0914e736a2d9521707"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__49572239236",
+      "title": "Provia 100f test 3",
+      "url": "https://www.flickr.com/photos/95383788@N03/49572239236",
+      "creator": "Omar_Burgos_D",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/49572239236_835f2ebb02_b.jpg",
+      "sha256": "d311a38e03d1879063a9a044aee7bd9e5495046a63d8d1942e942d21ce1ef102"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__49572239196",
+      "title": "Provia 100f test 4",
+      "url": "https://www.flickr.com/photos/95383788@N03/49572239196",
+      "creator": "Omar_Burgos_D",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/49572239196_4181d04e39_b.jpg",
+      "sha256": "715eb2bb365e7cbf203bb721fdf6a760bf78391f4f16b18a98eb3cc13201f719"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__49572465697",
+      "title": "Provia 100f test 2",
+      "url": "https://www.flickr.com/photos/95383788@N03/49572465697",
+      "creator": "Omar_Burgos_D",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/49572465697_8fe041146f_b.jpg",
+      "sha256": "903834933edb1d0aea048cfd6e22885fe09fe395ec75892602d487297f26a493"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__3047739994",
+      "title": "Pentax645+75mm Provia 09p.jpg",
+      "url": "https://www.flickr.com/photos/9802162@N03/3047739994",
+      "creator": "midorisyu",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3073/3047739994_643ff6a39e_b.jpg",
+      "sha256": "af1e124c7e8ff1f08fa9e796a27add307f46204772e623cbc5571f84f4815835"
+    },
+    {
+      "id": "fuji-film-provia-100f__flickr__18029320402",
+      "title": "3 colors and the moon",
+      "url": "https://www.flickr.com/photos/57688343@N00/18029320402",
+      "creator": "Un ragazzo chiamato Bi",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5333/18029320402_20cac81a52_b.jpg",
+      "sha256": "80ad3cf25449f861821fe2ce21379b096947d7b37875b8fbd7cf9a1e699b0396"
+    }
+  ]
+}

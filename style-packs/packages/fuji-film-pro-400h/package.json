@@ -1,0 +1,191 @@
+{
+  "schema_version": "style-context-package-v1",
+  "id": "fuji-film-pro-400h",
+  "family": "film-stocks",
+  "version": "1.1.0",
+  "title": "FUJICOLOR PRO 400H",
+  "summary": "Interpret FUJICOLOR PRO 400H as a scene-responsive color-negative look, not as a fixed mint, pink-wedding, cyan-shadow, or warm-brown preset. Its most defensible intent in this evidence is gentle tonal continuity with enough room for faces, white fabric, cool surroundings, foliage, and saturated accents to remain separately legible. A soft, airy result is appropriate when the original light and subject support it; the same interpretation must also be able to retain density, warm practical light, and meaningful shadow in a harder scene.",
+  "language": "en",
+  "status": "candidate",
+  "built_at": "2026-10-08T05:52:50.884Z",
+  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "content": {
+    "style": "style.md",
+    "cover": "cover.jpg",
+    "cover_reference": "references/01.jpg",
+    "references": [
+      "references/01.jpg",
+      "references/02.jpg",
+      "references/03.jpg",
+      "references/04.jpg",
+      "references/05.jpg",
+      "references/06.jpg",
+      "references/07.jpg",
+      "references/08.jpg",
+      "references/09.jpg",
+      "references/10.jpg"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fuji-film-pro-400h__flickr__13223092445",
+      "title": "Lisa",
+      "url": "https://www.flickr.com/photos/99473925@N07/13223092445",
+      "creator": "Ustynskyi",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/01.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3793/13223092445_d03a24f45d.jpg",
+      "sha256": "bcd8c9b54f949176b18dd5f87df786749ee1957372d13930b59c577a122c14ed"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__26276536681",
+      "title": "我 西門町 Taipei, Taiwan / FUJICOLOR PRO 400H / Lomo LC-A+",
+      "url": "https://www.flickr.com/photos/92438116@N00/26276536681",
+      "creator": "Toomore",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/02.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1650/26276536681_aba0c5a154_b.jpg",
+      "sha256": "c354ad2c542bdeee35c678d5c74632e3e10bdb8b4165b45cec06d509295429ce"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__30058122288",
+      "title": "Fuji Pro 400H - Takumar 28mm F3.5 - Praktica MTL5B 4",
+      "url": "https://www.flickr.com/photos/149409562@N06/30058122288",
+      "creator": "Mar Yung",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1819/30058122288_b57acdb81b_b.jpg",
+      "sha256": "136728438613422b9dc3f4a1e868f3a1be951d7f654cd1d3052890bc8f815ccc"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__26357279900",
+      "title": "小樽 天狗山 Otaru Japan / FUJICOLOR PRO 400H / Nikon FM2",
+      "url": "https://www.flickr.com/photos/92438116@N00/26357279900",
+      "creator": "Toomore",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1534/26357279900_a1496e9c8f_b.jpg",
+      "sha256": "7d9b30d9583f68ec6bf8fd83e8c5508af635bb799c856fa01404a5a602bbf050"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__43932067010",
+      "title": "Canon A-1 + Fuji Pro 400H",
+      "url": "https://www.flickr.com/photos/59016981@N07/43932067010",
+      "creator": "grenez",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1921/43932067010_3c3beb6e07_b.jpg",
+      "sha256": "cd4c76a064ee85e385fdbfc1818c77320c06ac6d563355c54fae2a98d3863fdf"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__43022366545",
+      "title": "Fuji Pro 400H - Takumar 28mm F3.5 - Praktica MTL5B 5",
+      "url": "https://www.flickr.com/photos/149409562@N06/43022366545",
+      "creator": "Mar Yung",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1814/43022366545_f8da72f238_b.jpg",
+      "sha256": "b8ef58af4a7558c3100e8347b673b10a7862de452f00168c676a726ad98b34be"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__43208974004",
+      "title": "Fuji Pro 400H - Takumar 28mm F3.5 - Praktica MTL5B 2",
+      "url": "https://www.flickr.com/photos/149409562@N06/43208974004",
+      "creator": "Mar Yung",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/854/43208974004_d01b421bbb_b.jpg",
+      "sha256": "479ae49b2c01be2cd0705661056dacbb4df86bbcd4f52c1d134863f901607511"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__31877934948",
+      "title": "Canon A-1 + Fuji Pro 400H",
+      "url": "https://www.flickr.com/photos/59016981@N07/31877934948",
+      "creator": "grenez",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/4908/31877934948_5622843200_b.jpg",
+      "sha256": "93add780bcae7c0676377a8792c33c874d906a9d1bdda2a121609c7466d1403f"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__43552234925",
+      "title": "Fuji Pro 400H - Takumar 28mm F3.5 - Praktica MTL5B",
+      "url": "https://www.flickr.com/photos/149409562@N06/43552234925",
+      "creator": "Mar Yung",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1898/43552234925_e441fa07e1_b.jpg",
+      "sha256": "ee23b10edf043f29e0e7bbc0cf3b358bdcd3edada7238aa3ccde45f144169880"
+    },
+    {
+      "id": "fuji-film-pro-400h__flickr__39255792534",
+      "title": "札幌 Sapporo Japan / FUJICOLOR PRO 400H / Nikon FM2",
+      "url": "https://www.flickr.com/photos/92438116@N00/39255792534",
+      "creator": "Toomore",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/4723/39255792534_812a4e52e9_b.jpg",
+      "sha256": "424e462e5e65d45d7f4f59e29010974a127e79da7da4ae6a3a3ea629a2862b1f"
+    }
+  ]
+}

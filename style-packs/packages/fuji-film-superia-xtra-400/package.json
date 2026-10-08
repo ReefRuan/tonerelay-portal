@@ -1,0 +1,208 @@
+{
+  "schema_version": "style-context-package-v1",
+  "id": "fuji-film-superia-xtra-400",
+  "family": "film-stocks",
+  "version": "1.1.0",
+  "title": "FUJICOLOR Superia X-TRA 400",
+  "summary": "把这款胶片理解为一种有边界的日用消费彩色负片观感，而不是固定的富士色彩预设。目标是在街头、旅行、家庭记录和园景中保留现场光线的差异：亮处有过渡，正常低至中反差场景的中间调仍能分开，冷的天空、水面或阴影可与土色、木材、红黄物体和肤色共存。画面可以有生活感和不完美，但不靠统一的青绿、洋红、橙色、厚颗粒或软焦来制造它。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "built_at": "2026-10-08T05:52:50.884Z",
+  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "content": {
+    "style": "style.md",
+    "cover": "cover.jpg",
+    "cover_reference": "references/01.jpg",
+    "references": [
+      "references/01.jpg",
+      "references/02.jpg",
+      "references/03.jpg",
+      "references/04.jpg",
+      "references/05.jpg",
+      "references/06.jpg",
+      "references/07.jpg",
+      "references/08.jpg",
+      "references/09.jpg",
+      "references/10.jpg",
+      "references/11.jpg"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__14360392248",
+      "title": "Lovers Bench Balatonszárszó",
+      "url": "https://www.flickr.com/photos/55128416@N05/14360392248",
+      "creator": "brenkee",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/01.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/2931/14360392248_387664b0e5_b.jpg",
+      "sha256": "389ce8153568ce2267b6c517b1741bff996df9df0738ed8fdd03b7c9c94e27c4"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__18279240273",
+      "title": "Budapest Eye",
+      "url": "https://www.flickr.com/photos/55128416@N05/18279240273",
+      "creator": "brenkee",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/02.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/470/18279240273_2626442dd1_b.jpg",
+      "sha256": "bcdb190a27f0c31fae5496a3a4eb84ed97b62a89bfc92cfcb997b4f544a31f4d"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__14666188844",
+      "title": "Loneliness",
+      "url": "https://www.flickr.com/photos/30719244@N06/14666188844",
+      "creator": "akio.takemoto",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/2928/14666188844_21a94fea8d_b.jpg",
+      "sha256": "440f91a2287b7b8f3b64e451f93f845e9c116fe6dcf05bc41c3ff2f0def89b4a"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__16028483951",
+      "title": "knot in the rain",
+      "url": "https://www.flickr.com/photos/55128416@N05/16028483951",
+      "creator": "brenkee",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8662/16028483951_609bff4e51_b.jpg",
+      "sha256": "3d294df45d8d706fb3246a685bf18f02b979bd9d19f07bfa2c4c84442e28a446"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__29448503100",
+      "title": "Kebabs on grill",
+      "url": "https://www.flickr.com/photos/55128416@N05/29448503100",
+      "creator": "brenkee",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8395/29448503100_c6cf648459_b.jpg",
+      "sha256": "4bbd5ef732cff66de3dfc5be2bed7faf6daa57ff52c64b862567e26c533d230d"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__14649070217",
+      "title": "M. vs. Candyfloss",
+      "url": "https://www.flickr.com/photos/30719244@N06/14649070217",
+      "creator": "akio.takemoto",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3863/14649070217_5011fb2450_b.jpg",
+      "sha256": "d86394cdf7f3a02b1aac9db73afedc9fff827d6f3991b77ec924580796c69583"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__44799930871",
+      "title": "My backyard",
+      "url": "https://www.flickr.com/photos/79157069@N03/44799930871",
+      "creator": "Matthew Paul Argall",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/1860/44799930871_a8c623bebf_b.jpg",
+      "sha256": "414b228b8041a3a2d0b7de83c60954ca97ab4829b7163e37c55f9ef16174fcd2"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__32894656316",
+      "title": "Wijmersweg vroeg in de morgen op een winterse dag",
+      "url": "https://www.flickr.com/photos/56603673@N03/32894656316",
+      "creator": "m66roepers",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/2803/32894656316_d506593731_b.jpg",
+      "sha256": "2706c5593a0710d7ea27ef18a23b615e3af02e8b3b2f71e2733e49e0b9e9a5a0"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__31167123626",
+      "title": "neon light",
+      "url": "https://www.flickr.com/photos/107205103@N02/31167123626",
+      "creator": "electrees",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5679/31167123626_36a37855d5_b.jpg",
+      "sha256": "1aa672789f7e429be4e0e48dba1315fbd382539939c778292d40c7175b55e5e3"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__32956726725",
+      "title": "Vorst en mist",
+      "url": "https://www.flickr.com/photos/56603673@N03/32956726725",
+      "creator": "m66roepers",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3817/32956726725_e3111a31ef_b.jpg",
+      "sha256": "5e3e96f9491274e1dfc4d5c7ac915d59d3cee51e1c5873d03cf7581512d3413f"
+    },
+    {
+      "id": "fuji-film-superia-xtra-400__flickr__31257861055",
+      "title": "street art museum",
+      "url": "https://www.flickr.com/photos/107205103@N02/31257861055",
+      "creator": "electrees",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/11.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5342/31257861055_7d31f9a32a_b.jpg",
+      "sha256": "f9b8df95e54bd5a27cf26ff9bb79029783ac095d5552a7d4e93f10100d928fe8"
+    }
+  ]
+}

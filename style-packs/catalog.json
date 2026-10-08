@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "packages": [
+    {
+      "number": 1001,
+      "package_id": "fuji-film-c200",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-c200",
+      "archive_path": "style-packs/downloads/fuji-film-c200-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-c200#gallery"
+    },
+    {
+      "number": 1002,
+      "package_id": "fuji-film-natura-1600",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-natura-1600",
+      "archive_path": "style-packs/downloads/fuji-film-natura-1600-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-natura-1600#gallery"
+    },
+    {
+      "number": 1003,
+      "package_id": "fuji-film-pro-160ns",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-pro-160ns",
+      "archive_path": "style-packs/downloads/fuji-film-pro-160ns-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-pro-160ns#gallery"
+    },
+    {
+      "number": 1004,
+      "package_id": "fuji-film-pro-400h",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-pro-400h",
+      "archive_path": "style-packs/downloads/fuji-film-pro-400h-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-pro-400h#gallery"
+    },
+    {
+      "number": 1005,
+      "package_id": "fuji-film-provia-100f",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-provia-100f",
+      "archive_path": "style-packs/downloads/fuji-film-provia-100f-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-provia-100f#gallery"
+    },
+    {
+      "number": 1006,
+      "package_id": "fuji-film-superia-xtra-400",
+      "version": "1.1.0",
+      "runtime": ">=0.7.0 <0.8.0",
+      "source_id": "portal-github",
+      "path": "style-packs/packages/fuji-film-superia-xtra-400",
+      "archive_path": "style-packs/downloads/fuji-film-superia-xtra-400-v1.1.0.zip",
+      "portal_url": "https://reefruan.github.io/tonerelay-portal/?preset=fuji-film-superia-xtra-400#gallery"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "schema_version": "style-context-package-v1",
+  "id": "fuji-film-natura-1600",
+  "family": "film-stocks",
+  "version": "1.1.0",
+  "title": "FUJICOLOR NATURA 1600",
+  "summary": "把 FUJICOLOR NATURA 1600 用作高感纪实关系，而不是一套固定的夜景滤镜。它的目标是在可用光有限、色温混杂或明暗跨度很大时，让人、食物、招牌、湿路、建筑或风景中的关键关系仍能被读到：环境可以暗，实用灯和局部颜色可以强，主体与空间却不应被压扁、磨平或统一染色。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "built_at": "2026-10-08T05:52:50.884Z",
+  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "content": {
+    "style": "style.md",
+    "cover": "cover.jpg",
+    "cover_reference": "references/01.jpg",
+    "references": [
+      "references/01.jpg",
+      "references/02.jpg",
+      "references/03.jpg",
+      "references/04.jpg",
+      "references/05.jpg",
+      "references/06.jpg",
+      "references/07.jpg",
+      "references/08.jpg",
+      "references/09.jpg",
+      "references/10.jpg",
+      "references/11.jpg",
+      "references/12.jpg"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fuji-film-natura-1600__flickr__9758617445",
+      "title": "nightwalk",
+      "url": "https://www.flickr.com/photos/79635710@N05/9758617445",
+      "creator": "Gemini st.",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/01.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3733/9758617445_7505cededb_b.jpg",
+      "sha256": "e80cba1a022c6e8cb9975dfb9de7743ec9df7cdf5e064dbd5b2f8e981dc4452f"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__14515642661",
+      "title": "Light from Window",
+      "url": "https://www.flickr.com/photos/54217251@N05/14515642661",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/02.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3844/14515642661_7be5f88b93_b.jpg",
+      "sha256": "59b21f822b58ecfbc8cf4d3c2a2cbefddc516cd8490fb7cb3eed3092782ccc4e"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__15109435924",
+      "title": "From the First Floor",
+      "url": "https://www.flickr.com/photos/54217251@N05/15109435924",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3942/15109435924_7182f9e69c_b.jpg",
+      "sha256": "0aff1c968e0399f0db57e3db2741ffc2d86888140d788d2d192cac9f9be996e0"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__16625241987",
+      "title": "静 (Sei)",
+      "url": "https://www.flickr.com/photos/54217251@N05/16625241987",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8616/16625241987_fd1772ac9a_b.jpg",
+      "sha256": "c80c6c0092e9760ab58eda8620827223378f57c8b6bae91052f6c4659c391569"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__7227526982",
+      "title": "Hiroshima #6",
+      "url": "https://www.flickr.com/photos/16877319@N07/7227526982",
+      "creator": "Guwashi999",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8028/7227526982_076823cc74_b.jpg",
+      "sha256": "a6d19f608cc69e248a777bed4ebc016b757c59ce049fed1e5749cbbb4d99eee9"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__14402622496",
+      "title": "Jena (2)",
+      "url": "https://www.flickr.com/photos/54217251@N05/14402622496",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/2909/14402622496_1b399dbbae_b.jpg",
+      "sha256": "7a6426cf132bb4353e4f2ccbaf62c8c467eeae97f24458ce1d2a815446cb8034"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__14818814190",
+      "title": "The Machine",
+      "url": "https://www.flickr.com/photos/54217251@N05/14818814190",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5588/14818814190_d44151e0c2_b.jpg",
+      "sha256": "d6fe1bbad2192e8fdca02da45e7f7d9d2178efdefc369d42e126e4cb675be318"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__7241912330",
+      "title": "Hiroshima #8",
+      "url": "https://www.flickr.com/photos/16877319@N07/7241912330",
+      "creator": "Guwashi999",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5079/7241912330_97ee777c12_b.jpg",
+      "sha256": "ea15cae90f4a10a29633c74916c432b19e916de2f5da3cceeb90762b9290e0d0"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__15546166020",
+      "title": "From the Second Floor",
+      "url": "https://www.flickr.com/photos/54217251@N05/15546166020",
+      "creator": "halfrain",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/3955/15546166020_3068d889fb_b.jpg",
+      "sha256": "a16b0f09eed3c946911d1618b510d41a3d15bb1fad7389b5215fb691a586eea2"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__11946449764",
+      "title": "twinkle lights & lives /Showa Kinen Park",
+      "url": "https://www.flickr.com/photos/79635710@N05/11946449764",
+      "creator": "Gemini st.",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7354/11946449764_82e7558cae_b.jpg",
+      "sha256": "398143f92f53dee357e45f02ce287e356d9875cefb020ff03a36c7f320a731e8"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__11946320514",
+      "title": "twinkle lights & lives /Showa Kinen Park",
+      "url": "https://www.flickr.com/photos/79635710@N05/11946320514",
+      "creator": "Gemini st.",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/11.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7435/11946320514_e9d860a00a_b.jpg",
+      "sha256": "f5aeda62dc23906ac369cee93754834cfa8b9ed6e6a56b0f74d17ee6e4f57f6c"
+    },
+    {
+      "id": "fuji-film-natura-1600__flickr__9758715595",
+      "title": "nightwalk",
+      "url": "https://www.flickr.com/photos/79635710@N05/9758715595",
+      "creator": "Gemini st.",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/12.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/5515/9758715595_142e727b32_b.jpg",
+      "sha256": "4bd618ed45954ca58efcedd1bd11b24a5f3c6aa02614c4e5eab0493cd559dba1"
+    }
+  ]
+}

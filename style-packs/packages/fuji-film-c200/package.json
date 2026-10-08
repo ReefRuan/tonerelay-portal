@@ -1,0 +1,191 @@
+{
+  "schema_version": "style-context-package-v1",
+  "id": "fuji-film-c200",
+  "family": "film-stocks",
+  "version": "1.1.0",
+  "title": "FUJICOLOR C200",
+  "summary": "把 FUJICOLOR C200 理解为一种服务于日常人物、旅行与环境叙事的颜色关系，而不是一个固定的综合色滤镜。优先让真实光线、人物和材料留在画面的中心：肤色、日照下的砂土、木材与红黄物件可以带有可触摸的暖意；天空、阴影、水面和植被则保留各自较冷或较绿的空间层次。整体应亲近、清爽且有生活感，不能被做成统一青绿、褪色棕褐或粉雾覆盖的“怀旧”效果。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "built_at": "2026-10-08T05:52:50.884Z",
+  "public_release_note": "64-image licensed public replacement set across six packages; original private reference files were not copied. Source-specific gallery observations were rewritten.",
+  "content": {
+    "style": "style.md",
+    "cover": "cover.jpg",
+    "cover_reference": "references/01.jpg",
+    "references": [
+      "references/01.jpg",
+      "references/02.jpg",
+      "references/03.jpg",
+      "references/04.jpg",
+      "references/05.jpg",
+      "references/06.jpg",
+      "references/07.jpg",
+      "references/08.jpg",
+      "references/09.jpg",
+      "references/10.jpg"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fuji-film-c200__flickr__48806348736",
+      "title": "離鄉 / FUJIFILM C200",
+      "url": "https://www.flickr.com/photos/130477966@N06/48806348736",
+      "creator": "Chipmunk LIN",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/01.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/48806348736_981e9a7844_b.jpg",
+      "sha256": "dc837d8640a2fc547c7841eda48c91dc46efa6c15610b29cf3d5c7f1d933ca60"
+    },
+    {
+      "id": "fuji-film-c200__flickr__48805907483",
+      "title": "公園的小柴柴 / FUJIFILM C200",
+      "url": "https://www.flickr.com/photos/130477966@N06/48805907483",
+      "creator": "Chipmunk LIN",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/02.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/48805907483_d68871a435_b.jpg",
+      "sha256": "82d5efd6e09d66d98578a0726f5845cb9eab772d1714c94327ecc5d6357e526c"
+    },
+    {
+      "id": "fuji-film-c200__flickr__8044297521",
+      "title": "...",
+      "url": "https://www.flickr.com/photos/34804966@N03/8044297521",
+      "creator": "Sudipta Arka Das",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/03.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8459/8044297521_1fb10bc82c_b.jpg",
+      "sha256": "11412336d9a2fbbebe916c7cf6eef0aed60b256a66cfcddc698d2223782f00e9"
+    },
+    {
+      "id": "fuji-film-c200__flickr__40348704133",
+      "title": "Edit -1-5",
+      "url": "https://www.flickr.com/photos/11028609@N05/40348704133",
+      "creator": "Dane Van",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/04.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7902/40348704133_bfc33c545a_b.jpg",
+      "sha256": "88bde845dfbc51a18f30504c2fdff87fac8bdb9cab2c4d18e3f3412a08c7e2d7"
+    },
+    {
+      "id": "fuji-film-c200__flickr__13442559963",
+      "title": "Jug and Glass",
+      "url": "https://www.flickr.com/photos/86543134@N03/13442559963",
+      "creator": "Toffee Maky",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/05.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7258/13442559963_497da56b71_b.jpg",
+      "sha256": "91bcdae07c99ee2eb858b59be11387094033bf8cd8d6c23dc0a0be78fb40e2fd"
+    },
+    {
+      "id": "fuji-film-c200__flickr__8128629297",
+      "title": "Postbox Trio",
+      "url": "https://www.flickr.com/photos/46644449@N02/8128629297",
+      "creator": "Chi Bellami",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/06.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8473/8128629297_5e431c5ddf_b.jpg",
+      "sha256": "7df24fa658f7e83c805d01d164fa658648a5fb41d8f2652b48be63c2e62a257e"
+    },
+    {
+      "id": "fuji-film-c200__flickr__13088517763",
+      "title": "Planned Nature",
+      "url": "https://www.flickr.com/photos/55128416@N05/13088517763",
+      "creator": "brenkee",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/07.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/7344/13088517763_cf6e9c1362_b.jpg",
+      "sha256": "0b6936faeca1c4b9278f25a0afa02da0ae7d733e46aa553e03a34a50de0735dc"
+    },
+    {
+      "id": "fuji-film-c200__flickr__39899830840",
+      "title": "Edit -1-9",
+      "url": "https://www.flickr.com/photos/11028609@N05/39899830840",
+      "creator": "Dane Van",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/08.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/869/39899830840_c9313f0479_b.jpg",
+      "sha256": "10f45ca715a58e2ee5cf945314fe89cf453975e5a35f8b07ae3fd90180e2c524"
+    },
+    {
+      "id": "fuji-film-c200__flickr__8284339196",
+      "title": "中央体育场 | 南京",
+      "url": "https://www.flickr.com/photos/50704193@N07/8284339196",
+      "creator": "+AARON++",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/09.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/8223/8284339196_aa2217c80f_b.jpg",
+      "sha256": "db1cb26eb9a65ea5effb6cdaf8ac6cc4253808d601bab273e5aa1d554154a784"
+    },
+    {
+      "id": "fuji-film-c200__flickr__46786107765",
+      "title": "RNLI Bembridge Lifeboat Station, Isle of Wight",
+      "url": "https://www.flickr.com/photos/46644449@N02/46786107765",
+      "creator": "Chi Bellami",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "redistributable": true,
+      "film_stock_claim_checked": true,
+      "rights_note": "Source page license checked 2026-10-08T05:52:50.884Z; Flickr JPEG downloaded as supplied, with no local image edits. Openverse index was used only for discovery.",
+      "reference_files": [
+        "references/10.jpg"
+      ],
+      "image_url": "https://live.staticflickr.com/65535/46786107765_724617fe2b_b.jpg",
+      "sha256": "96563a013b5df4450b8fb4f333f422a2da5d5c7146533edbaf6e2258f6de9a3d"
+    }
+  ]
+}
