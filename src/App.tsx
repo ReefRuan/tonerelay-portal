@@ -11,7 +11,7 @@ import { categories, visiblePresets as presets, type Category, type Preset } fro
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
 import { Trackball } from "./Trackball";
-import { Documents, INSTALL_PROMPT, UNINSTALL_PROMPT, INSTALL_PROMPT_DOCUMENT, type PortalPage } from "./Documents";
+import { Documents, INSTALL_PROMPT_WITH_FAQ, type PortalPage } from "./Documents";
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
@@ -154,9 +154,7 @@ export default function App() {
     }
   }, [selectedPreset, copyValue]);
 
-  const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT, "安装提示词已复制"), [copyValue]);
-  const copyInstallPromptDocument = useCallback(() => copyValue(INSTALL_PROMPT_DOCUMENT, "完整安装与卸载文档已复制"), [copyValue]);
-  const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "卸载提示词已复制"), [copyValue]);
+  const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "安装提示词和常见问题已复制"), [copyValue]);
 
   const switchDetail = useCallback(
     (delta: number) => {
@@ -389,11 +387,7 @@ export default function App() {
           <span>Reef 的 Lightroom MCP 风格与效果画廊</span>
           <span>浏览 · 选择 · 了解</span>
         </footer>
-      </main> : <Documents
-        onCopyPrompt={() => void copyInstallPrompt()}
-        onCopyUninstall={() => void copyUninstallPrompt()}
-        onCopyDocument={() => void copyInstallPromptDocument()}
-      />}
+      </main> : <Documents onCopyPrompt={() => void copyInstallPrompt()} />}
 
       <AnimatePresence>
         {page === "gallery" && detailOpen && selectedPreset && (

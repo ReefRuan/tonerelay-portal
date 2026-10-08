@@ -1,14 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { INSTALL_PROMPT, UNINSTALL_PROMPT, INSTALL_PROMPT_DOCUMENT } from "./Documents";
-describe("installation document payloads", () => {
-  it("copies only the installation section for installation", () => {
-    expect(INSTALL_PROMPT_DOCUMENT).toContain(INSTALL_PROMPT);
-    expect(INSTALL_PROMPT).not.toContain("## 卸载或干净重装准备");
-    expect(INSTALL_PROMPT).not.toContain(UNINSTALL_PROMPT);
-  });
-  it("keeps uninstallation separate from installation", () => {
-    expect(INSTALL_PROMPT_DOCUMENT).toContain(UNINSTALL_PROMPT);
-    expect(UNINSTALL_PROMPT).not.toContain(INSTALL_PROMPT);
-    expect(UNINSTALL_PROMPT).not.toContain("## 常见问题");
+import installDocument from "../docs/install-prompt.md?raw";
+import faqDocument from "../docs/faq.md?raw";
+import { INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ } from "./Documents";
+
+describe("installation copy payload", () => {
+  it("copies the standalone installation prompt and complete FAQ", () => {
+    expect(INSTALL_PROMPT).toBe(installDocument.trim());
+    expect(INSTALL_PROMPT_WITH_FAQ).toBe(`${installDocument.trim()}\n\n${faqDocument.trim()}`);
+    expect(INSTALL_PROMPT_WITH_FAQ).not.toContain("请卸载 ToneRelay");
   });
 });
