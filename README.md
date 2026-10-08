@@ -9,6 +9,6 @@
 - `style-packs/downloads/`：对应的逐包 ZIP 下载文件。
 - `docs/`：介绍、安装提示词与 FAQ。保持原路径，方便已有链接继续使用。
 
-本地预览：`pnpm install && pnpm dev`。发布前检查：`pnpm test && pnpm build`。
+本地预览：`pnpm install && pnpm dev`。发布前检查：`pnpm verify:packs && pnpm test && pnpm build`。
 
 第三方照片不适用任何未来的仓库级代码许可；请按每包 `package.json` 中的单图许可与署名使用。风格参考图是胶片样片，不是 ToneRelay 修图前后对比。

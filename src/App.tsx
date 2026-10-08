@@ -148,7 +148,9 @@ export default function App() {
 
   const copyLink = useCallback(async () => {
     if (!selectedPreset) return;
-    if (await copyValue(selectedPreset.link, `已复制「${selectedPreset.name}」链接`)) {
+    const url = selectedPreset.downloadUrl ?? selectedPreset.link;
+    const kind = selectedPreset.downloadUrl ? "下载链接" : "页面链接";
+    if (await copyValue(url, `已复制「${selectedPreset.name}」${kind}`)) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     }
@@ -443,19 +445,22 @@ export default function App() {
                   {selectedPreset.references.map((reference, index) => (
                     <a
                       key={reference}
-                      href={reference}
+                      href={selectedPreset.referenceCredits?.[index]?.source ?? reference}
                       target="_blank"
                       rel="noreferrer"
-                      aria-label={`打开参考图 ${index + 1}`}
+                      aria-label={`查看参考图 ${index + 1} 原始页面与许可`}
+                      title={selectedPreset.referenceCredits?.[index] ? `${selectedPreset.referenceCredits[index].author} · ${selectedPreset.referenceCredits[index].license}` : undefined}
                     >
                       <img src={reference} alt="" loading="lazy" />
                       <span>{String(index + 1).padStart(2, "0")}</span>
+                      {selectedPreset.referenceCredits?.[index] && <small>{selectedPreset.referenceCredits[index].author} · {selectedPreset.referenceCredits[index].license}</small>}
                     </a>
                   ))}
                 </div> : <div className="reference-empty">
                   <span>{selectedPreset.kind === "effect" ? "当前照片" : "预览图"}</span>
                   <p>{selectedPreset.kind === "effect" ? "以同一照片的前后结果、现场光和可信参照作判断；没有适用于所有人的目标肤色。" : selectedPreset.photoCredit ? "封面已展示一张该胶卷的实拍样张；更多参考图后续补充。" : "这个模板的网页预览图正在准备中。"}</p>
                 </div>}
+                {selectedPreset.packageUrl && <p className="reference-provenance">图片来自摄影师标注的对应胶片实拍；点击单张可查看原图与许可。网页展示图经过缩放，完整署名见风格包。</p>}
               </div>
               <div className="detail-body">
                 <div className="detail-title-row">
@@ -476,7 +481,9 @@ export default function App() {
                   {selectedPreset.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
                 <div className="detail-actions">
-                  <button onClick={() => void copyLink()}><Icon name="copy" />复制链接</button>
+                  {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看风格包</a>}
+                  <button onClick={() => void copyLink()}><Icon name="copy" />{selectedPreset.downloadUrl ? "复制下载链接" : "复制页面链接"}</button>
+                  {selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载风格包</a>}
                 </div>
               </div>
             </motion.article>

@@ -103,7 +103,7 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
             <a className="button-primary" href={WORKBUDDY_DOWNLOAD} target="_blank" rel="noreferrer">下载 WorkBuddy <Icon name="external" /></a>
             <a href="https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Model" target="_blank" rel="noreferrer">模型配置说明 <Icon name="arrow" /></a>
           </div>
-          <small>画廊展示风格方向；没有公开下载入口时，不要按编号安装模板。</small>
+          <small>画廊中的六个正式风格包可分别下载；是否能按编号自动安装，仍以当前 Runtime 版本为准。</small>
         </div>
       </section>
     </div>

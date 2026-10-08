@@ -1,6 +1,6 @@
 # ToneRelay 使用说明
 
-ToneRelay 通过本地 Runtime 和 Lightroom Classic 插件执行支持的操作。Agent 解释目标、决定参数并判断图像结果。画廊用于浏览风格方向，当前没有公开模板下载或按编号安装入口。
+ToneRelay 通过本地 Runtime 和 Lightroom Classic 插件执行支持的操作。Agent 解释目标、决定参数并判断图像结果。画廊可浏览并下载六个公开风格包；它们提供风格上下文，不代表 Runtime 已支持按编号自动安装。
 
 ## 交互示意
 

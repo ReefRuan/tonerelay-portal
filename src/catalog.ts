@@ -1,3 +1,17 @@
+import c200Package from "../style-packs/packages/fuji-film-c200/package.json";
+import naturaPackage from "../style-packs/packages/fuji-film-natura-1600/package.json";
+import pro160Package from "../style-packs/packages/fuji-film-pro-160ns/package.json";
+import pro400Package from "../style-packs/packages/fuji-film-pro-400h/package.json";
+import proviaPackage from "../style-packs/packages/fuji-film-provia-100f/package.json";
+import superiaPackage from "../style-packs/packages/fuji-film-superia-xtra-400/package.json";
+
+type PhotoCredit = {
+  author: string;
+  source: string;
+  license: string;
+  licenseUrl: string;
+};
+
 export type Preset = {
   id: string;
   name: string;
@@ -16,12 +30,10 @@ export type Preset = {
   number: string;
   release: "正式版" | "BETA" | "候选";
   availability: "本地候选" | "公开预览" | "私有试用";
-  photoCredit?: {
-    author: string;
-    source: string;
-    license: string;
-    licenseUrl: string;
-  };
+  photoCredit?: PhotoCredit;
+  referenceCredits?: PhotoCredit[];
+  downloadUrl?: string;
+  packageUrl?: string;
 };
 
 const portalDetail = (id: string) =>
@@ -32,8 +44,41 @@ const references = (id: string) =>
   ["reference-01.jpg", "reference-02.jpg", "reference-03.jpg"].map((name) =>
     asset(id, name),
   );
-const officialPreview = (id: string) =>
-  `${import.meta.env.BASE_URL}official-previews/${id}.jpg`;
+type PublishedPack = {
+  content: { cover_reference: string; references: string[] };
+  sources: Array<{ creator: string; url: string; license: string; license_url: string }>;
+};
+const publishedPacks: Record<string, PublishedPack> = {
+  "fuji-film-c200": c200Package,
+  "fuji-film-natura-1600": naturaPackage,
+  "fuji-film-pro-160ns": pro160Package,
+  "fuji-film-pro-400h": pro400Package,
+  "fuji-film-provia-100f": proviaPackage,
+  "fuji-film-superia-xtra-400": superiaPackage,
+};
+const previewAsset = (id: string, number: number) =>
+  `${import.meta.env.BASE_URL}previews/${id}/${String(number).padStart(2, "0")}.webp`;
+const publishedReferences = (id: string) =>
+  publishedPacks[id].content.references.map((_, index) => previewAsset(id, index + 1));
+const publishedCover = (id: string) => {
+  const number = Number(publishedPacks[id].content.cover_reference.match(/(\d+)\.jpg$/)?.[1] ?? "1");
+  return previewAsset(id, number);
+};
+const publishedCredits = (id: string): PhotoCredit[] =>
+  publishedPacks[id].sources.map((source) => ({
+    author: source.creator,
+    source: source.url,
+    license: source.license,
+    licenseUrl: source.license_url,
+  }));
+const publishedCoverCredit = (id: string) => {
+  const number = Number(publishedPacks[id].content.cover_reference.match(/(\d+)\.jpg$/)?.[1] ?? "1");
+  return publishedCredits(id)[number - 1];
+};
+const packageDirectory = (id: string) =>
+  `https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
+const packageDownload = (id: string) =>
+  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v1.1.0.zip`;
 
 const effectCover = () => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
@@ -74,10 +119,10 @@ export const presets: Preset[] = [
     id: "fuji-film-c200",
     name: "C200",
     en: "FUJICOLOR C200",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-c200"),
-    references: [],
+    image: publishedCover("fuji-film-c200"),
+    references: publishedReferences("fuji-film-c200"),
     ratio: "4 / 5",
     description: "服务于日常人物、旅行与环境叙事的清爽彩色负片关系。",
     note: "适合日常人物、旅行与环境记录，颜色亲近、清爽，有生活感。",
@@ -86,22 +131,20 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-c200"),
     number: "R01",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "Peter Back",
-      source: "https://commons.wikimedia.org/wiki/File:Montague_Street.jpg",
-      license: "CC BY-SA 2.0",
-      licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-c200"),
+    referenceCredits: publishedCredits("fuji-film-c200"),
+    downloadUrl: packageDownload("fuji-film-c200"),
+    packageUrl: packageDirectory("fuji-film-c200"),
   },
   {
     id: "fuji-film-natura-1600",
     name: "NATURA 1600",
     en: "FUJICOLOR NATURA 1600",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-natura-1600"),
-    references: [],
+    image: publishedCover("fuji-film-natura-1600"),
+    references: publishedReferences("fuji-film-natura-1600"),
     ratio: "4 / 5",
     description: "在可用光有限、色温混杂或明暗跨度很大时保留现场关系。",
     note: "适合可用光、夜间街景和混合光，保留环境的暗部重量与局部颜色。",
@@ -110,22 +153,20 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-natura-1600"),
     number: "R02",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "MIKI Yoshihito",
-      source: "https://commons.wikimedia.org/wiki/File:The_BON_festival_dance._(4893025553).jpg",
-      license: "CC BY 2.0",
-      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-natura-1600"),
+    referenceCredits: publishedCredits("fuji-film-natura-1600"),
+    downloadUrl: packageDownload("fuji-film-natura-1600"),
+    packageUrl: packageDirectory("fuji-film-natura-1600"),
   },
   {
     id: "fuji-film-pro-160ns",
     name: "PRO 160NS",
     en: "FUJIFILM PRO 160NS",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-pro-160ns"),
-    references: [],
+    image: publishedCover("fuji-film-pro-160ns"),
+    references: publishedReferences("fuji-film-pro-160ns"),
     ratio: "4 / 5",
     description: "以主体可读性、亮部余量和场景内颜色关系为先的彩色负片。",
     note: "适合人物与高反差场景，保护肤色、白色材料和深色主体的层次。",
@@ -134,22 +175,20 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-pro-160ns"),
     number: "R03",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "PxHere（作者未标注）",
-      source: "https://pxhere.com/en/photo/192059",
-      license: "CC0",
-      licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-pro-160ns"),
+    referenceCredits: publishedCredits("fuji-film-pro-160ns"),
+    downloadUrl: packageDownload("fuji-film-pro-160ns"),
+    packageUrl: packageDirectory("fuji-film-pro-160ns"),
   },
   {
     id: "fuji-film-pro-400h",
     name: "PRO 400H",
     en: "FUJICOLOR PRO 400H",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-pro-400h"),
-    references: [],
+    image: publishedCover("fuji-film-pro-400h"),
+    references: publishedReferences("fuji-film-pro-400h"),
     ratio: "4 / 5",
     description: "柔和连续的色调为人物、白色材料与冷色环境留出各自位置。",
     note: "适合人物、婚礼与柔和环境，色调连续但不会把所有画面染成同一种颜色。",
@@ -158,22 +197,20 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-pro-400h"),
     number: "R04",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "Morgan Sherwood",
-      source: "https://commons.wikimedia.org/wiki/File:Sedona,_Bell_Rock.jpg",
-      license: "CC BY 2.0",
-      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-pro-400h"),
+    referenceCredits: publishedCredits("fuji-film-pro-400h"),
+    downloadUrl: packageDownload("fuji-film-pro-400h"),
+    packageUrl: packageDirectory("fuji-film-pro-400h"),
   },
   {
     id: "fuji-film-provia-100f",
     name: "PROVIA 100F",
     en: "FUJICHROME PROVIA 100F",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-provia-100f"),
-    references: [],
+    image: publishedCover("fuji-film-provia-100f"),
+    references: publishedReferences("fuji-film-provia-100f"),
     ratio: "4 / 5",
     description: "认真安排曝光位置，让现场暖色、冷色与中性物彼此清楚。",
     note: "适合光线明确的风景与城市画面，颜色清楚、有边界，不过度追求饱和。",
@@ -182,22 +219,20 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-provia-100f"),
     number: "R05",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "Doug Dolde",
-      source: "https://commons.wikimedia.org/wiki/File:Grosvenor_Arch_(UT13M).jpg",
-      license: "公有领域",
-      licenseUrl: "https://commons.wikimedia.org/wiki/File:Grosvenor_Arch_(UT13M).jpg#Licensing",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-provia-100f"),
+    referenceCredits: publishedCredits("fuji-film-provia-100f"),
+    downloadUrl: packageDownload("fuji-film-provia-100f"),
+    packageUrl: packageDirectory("fuji-film-provia-100f"),
   },
   {
     id: "fuji-film-superia-xtra-400",
     name: "SUPERIA X-TRA 400",
     en: "FUJICOLOR SUPERIA X-TRA 400",
-    version: "v1.0.0",
+    version: "v1.1.0",
     category: "胶片",
-    image: officialPreview("fuji-film-superia-xtra-400"),
-    references: [],
+    image: publishedCover("fuji-film-superia-xtra-400"),
+    references: publishedReferences("fuji-film-superia-xtra-400"),
     ratio: "4 / 5",
     description: "为街头、旅行和家庭记录保留不同现场光线的日用负片观感。",
     note: "适合街头、旅行和家庭记录，保留现场差异，带有自然的日常感。",
@@ -206,13 +241,11 @@ export const presets: Preset[] = [
     link: portalDetail("fuji-film-superia-xtra-400"),
     number: "R06",
     release: "正式版",
-    availability: "本地候选",
-    photoCredit: {
-      author: "Jaroslav A. Polák",
-      source: "https://commons.wikimedia.org/wiki/File:Brno,_Furniture_Second-hand_Shop_on_Cejl_Street.jpg",
-      license: "CC0",
-      licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
-    },
+    availability: "公开预览",
+    photoCredit: publishedCoverCredit("fuji-film-superia-xtra-400"),
+    referenceCredits: publishedCredits("fuji-film-superia-xtra-400"),
+    downloadUrl: packageDownload("fuji-film-superia-xtra-400"),
+    packageUrl: packageDirectory("fuji-film-superia-xtra-400"),
   },
   {
     id: "beta-fuji-film-c200",

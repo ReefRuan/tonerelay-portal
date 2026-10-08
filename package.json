@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit -p tsconfig.app.json && vite build",
+    "verify:packs": "node scripts/verify-public-style-packs.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run"
   },
