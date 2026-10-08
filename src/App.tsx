@@ -25,6 +25,33 @@ function pageFromHash(): PortalPage {
     : "gallery";
 }
 
+function StyleMarkdown({ preset, onCopy }: {
+  preset: Preset;
+  onCopy: (value: string, message: string) => Promise<boolean>;
+}) {
+  const [markdown, setMarkdown] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
+  const loading = useRef(false);
+
+  const load = () => {
+    if (!preset.loadStyleMarkdown || markdown !== null || loading.current) return;
+    loading.current = true;
+    void preset.loadStyleMarkdown().then(setMarkdown).catch(() => setFailed(true)).finally(() => {
+      loading.current = false;
+    });
+  };
+
+  return <details className="style-markdown" onToggle={(event) => { if (event.currentTarget.open) load(); }}>
+    <summary><span>风格说明</span><span>style.md</span></summary>
+    <div className="style-markdown-content">
+      {markdown !== null ? <>
+        <button onClick={() => void onCopy(markdown, "已复制 style.md")}>复制 Markdown</button>
+        <pre>{markdown}</pre>
+      </> : failed ? <p>无法加载。{preset.packageUrl && <a href={`${preset.packageUrl.replace("/tree/", "/blob/")}/style.md`} target="_blank" rel="noreferrer">在 GitHub 查看 style.md</a>}</p> : <p>载入中…</p>}
+    </div>
+  </details>;
+}
+
 export default function App() {
   const initialPreset = new URLSearchParams(window.location.search).get("preset");
   const validInitial = presets.some((preset) => preset.id === initialPreset)
@@ -414,72 +441,39 @@ export default function App() {
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
             >
               <div className="detail-topline">
-                <span>{selectedPreset.kind === "effect" ? "效果详情" : "模板详情"} / {selectedPreset.number}</span>
+                <span>{selectedPreset.kind === "effect" ? "效果" : "风格包"} / {selectedPreset.number}</span>
                 <button onClick={closeDetail} aria-label="放回预设"><Icon name="close" /></button>
               </div>
-              <div className="detail-visual">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={selectedPreset.id}
-                    src={selectedPreset.image}
-                    alt={`${selectedPreset.name} ${selectedPreset.photoCredit ? "胶卷实拍预览" : selectedPreset.kind === "effect" ? "示意封面" : "效果包封面"}`}
-                    initial={{ opacity: 0, scale: 1.025 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: reducedMotion ? 0 : 0.28 }}
-                  />
-                </AnimatePresence>
-                <span>{selectedPreset.en}</span>
-              </div>
-              {selectedPreset.photoCredit && <p className="photo-credit">
-                胶卷实拍参考，并非模板处理结果 · <a href={selectedPreset.photoCredit.source} target="_blank" rel="noreferrer">{selectedPreset.photoCredit.author}</a>
-                {" · "}<a href={selectedPreset.photoCredit.licenseUrl} target="_blank" rel="noreferrer">{selectedPreset.photoCredit.license}</a>
-                {" · 缩放展示，卡片有裁切"}
-              </p>}
-              <div className="reference-gallery" aria-label={`${selectedPreset.name} ${selectedPreset.kind === "effect" ? "使用依据" : "真实参考图"}`}>
-                <div className="reference-heading">
-                  <span>{selectedPreset.kind === "effect" ? "使用依据" : "参考图"}</span>
-                  <strong>{selectedPreset.kind === "effect" ? "按当前照片判断" : selectedPreset.references.length ? `真实参考 / ${String(selectedPreset.references.length).padStart(2, "0")}` : selectedPreset.photoCredit ? "封面实拍 / 01" : "视觉参考 / 准备中"}</strong>
-                </div>
-                {selectedPreset.references.length ? <div className="reference-list">
-                  {selectedPreset.references.map((reference, index) => (
-                    <a
-                      key={reference}
-                      href={selectedPreset.referenceCredits?.[index]?.source ?? reference}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`查看参考图 ${index + 1} 原始页面与许可`}
-                      title={selectedPreset.referenceCredits?.[index] ? `${selectedPreset.referenceCredits[index].author} · ${selectedPreset.referenceCredits[index].license}` : undefined}
-                    >
-                      <img src={reference} alt="" loading="lazy" />
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      {selectedPreset.referenceCredits?.[index] && <small>{selectedPreset.referenceCredits[index].author} · {selectedPreset.referenceCredits[index].license}</small>}
-                    </a>
-                  ))}
-                </div> : <div className="reference-empty">
-                  <span>{selectedPreset.kind === "effect" ? "当前照片" : "预览图"}</span>
-                  <p>{selectedPreset.kind === "effect" ? "以同一照片的前后结果、现场光和可信参照作判断；没有适用于所有人的目标肤色。" : selectedPreset.photoCredit ? "封面已展示一张该胶卷的实拍样张；更多参考图后续补充。" : "这个模板的网页预览图正在准备中。"}</p>
-                </div>}
-                {selectedPreset.packageUrl && <p className="reference-provenance">图片来自摄影师标注的对应胶片实拍；点击单张可查看原图与许可。网页展示图经过缩放，完整署名见风格包。</p>}
-              </div>
               <div className="detail-body">
-                <div className="detail-title-row">
+                <header className="detail-title-row">
                   <div>
-                    <span>{selectedPreset.release} / {selectedPreset.version}</span>
                     <h2 id="detail-title">{selectedPreset.name}</h2>
-                    <p>{selectedPreset.description}</p>
-                    {selectedPreset.kind === "effect" && <p>{selectedPreset.note}</p>}
+                    <p>{selectedPreset.en}</p>
                   </div>
-                  <strong>{String(activeIndex + 1).padStart(2, "0")} / {String(filteredPresets.length).padStart(2, "0")}</strong>
-                </div>
-                {selectedPreset.kind !== "effect" && <div className="detail-notes is-palette-only">
-                  <div className="palette" aria-label="色彩倾向">
-                    {selectedPreset.palette.map((color) => <i key={color} style={{ background: color }} title={color} />)}
-                  </div>
-                </div>}
-                <div className="detail-tags">
-                  {selectedPreset.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                </div>
+                  {selectedPreset.references.length > 0 && <span>{selectedPreset.references.length} 张参考图</span>}
+                </header>
+                <section className="reference-gallery" aria-label={`${selectedPreset.name} 参考图`}>
+                  {selectedPreset.references.length ? <div className="reference-list">
+                    {selectedPreset.references.map((reference, index) => (
+                      <a
+                        key={reference}
+                        href={selectedPreset.referenceCredits?.[index]?.source ?? reference}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`查看参考图 ${index + 1} 的来源`}
+                        title={selectedPreset.referenceCredits?.[index] ? `${selectedPreset.referenceCredits[index].author} · ${selectedPreset.referenceCredits[index].license}` : undefined}
+                      >
+                        <img src={reference} alt={`${selectedPreset.name} 参考图 ${index + 1}`} loading="lazy" />
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        {selectedPreset.referenceCredits?.[index] && <small>{selectedPreset.referenceCredits[index].author} · {selectedPreset.referenceCredits[index].license}</small>}
+                      </a>
+                    ))}
+                  </div> : <div className="reference-pending">
+                    <img src={selectedPreset.image} alt={`${selectedPreset.name} 封面`} />
+                    <span>参考图尚未发布</span>
+                  </div>}
+                </section>
+                {selectedPreset.loadStyleMarkdown && <StyleMarkdown key={selectedPreset.id} preset={selectedPreset} onCopy={copyValue} />}
                 <div className="detail-actions">
                   {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看风格包</a>}
                   <button onClick={() => void copyLink()}><Icon name="copy" />{selectedPreset.downloadUrl ? "复制下载链接" : "复制页面链接"}</button>

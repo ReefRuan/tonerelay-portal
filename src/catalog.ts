@@ -34,6 +34,7 @@ export type Preset = {
   referenceCredits?: PhotoCredit[];
   downloadUrl?: string;
   packageUrl?: string;
+  loadStyleMarkdown?: () => Promise<string>;
 };
 
 const portalDetail = (id: string) =>
@@ -136,6 +137,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-c200"),
     downloadUrl: packageDownload("fuji-film-c200"),
     packageUrl: packageDirectory("fuji-film-c200"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-c200/style.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-natura-1600",
@@ -158,6 +160,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-natura-1600"),
     downloadUrl: packageDownload("fuji-film-natura-1600"),
     packageUrl: packageDirectory("fuji-film-natura-1600"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-natura-1600/style.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-pro-160ns",
@@ -180,6 +183,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-pro-160ns"),
     downloadUrl: packageDownload("fuji-film-pro-160ns"),
     packageUrl: packageDirectory("fuji-film-pro-160ns"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-pro-160ns/style.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-pro-400h",
@@ -202,6 +206,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-pro-400h"),
     downloadUrl: packageDownload("fuji-film-pro-400h"),
     packageUrl: packageDirectory("fuji-film-pro-400h"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-pro-400h/style.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-provia-100f",
@@ -224,6 +229,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-provia-100f"),
     downloadUrl: packageDownload("fuji-film-provia-100f"),
     packageUrl: packageDirectory("fuji-film-provia-100f"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-provia-100f/style.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-superia-xtra-400",
@@ -246,6 +252,7 @@ export const presets: Preset[] = [
     referenceCredits: publishedCredits("fuji-film-superia-xtra-400"),
     downloadUrl: packageDownload("fuji-film-superia-xtra-400"),
     packageUrl: packageDirectory("fuji-film-superia-xtra-400"),
+    loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-superia-xtra-400/style.md?raw").then((module) => module.default),
   },
   {
     id: "beta-fuji-film-c200",
