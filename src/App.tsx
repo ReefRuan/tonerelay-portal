@@ -14,7 +14,7 @@ import { categories, visiblePresets as presets, type Category, type Preset } fro
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
 import { Trackball } from "./Trackball";
-import { Documents, INSTALL_PROMPT_WITH_FAQ, type PortalPage } from "./Documents";
+import { Documents, INSTALL_PROMPT_WITH_FAQ, UNINSTALL_PROMPT, type PortalPage } from "./Documents";
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
@@ -191,6 +191,7 @@ export default function App() {
   }, [selectedPreset, copyValue]);
 
   const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "已复制安装提示词和 FAQ，发给 Agent 开始安装"), [copyValue]);
+  const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "已复制卸载提示词，发给 Agent 核对并卸载"), [copyValue]);
 
   const switchDetail = useCallback(
     (delta: number) => {
@@ -431,7 +432,7 @@ export default function App() {
           <span>© 2026 Reef Ruan · ToneRelay</span>
           <span><a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span>
         </footer>
-      </main> : <Documents />}
+      </main> : <Documents onCopyUninstall={copyUninstallPrompt} />}
 
       <AnimatePresence>
         {page === "gallery" && detailOpen && selectedPreset && (

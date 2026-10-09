@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "./Icon";
 import installPrompt from "../docs/install-prompt.md?raw";
+import uninstallPrompt from "../docs/uninstall-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
 import experienceIntroduction from "../docs/experience-introduction.md?raw";
 import { WorkflowComparisons } from "./WorkflowComparisons";
@@ -13,6 +14,7 @@ export type PortalPage = "gallery" | "experience";
 const WORKBUDDY_DOWNLOAD = "https://www.workbuddy.cn/work/";
 
 export const INSTALL_PROMPT = installPrompt.trim();
+export const UNINSTALL_PROMPT = uninstallPrompt.trim();
 const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
 if (!heroMatch) throw new Error("docs/experience-introduction.md is missing its tool introduction");
 const heroTitle = heroMatch[1];
@@ -32,6 +34,9 @@ const faqItems = Array.from(
   (match) => ({ question: match[1].trim(), answer: match[2].trim() }),
 );
 if (!faqItems.length) throw new Error("docs/faq.md has no FAQ entries");
+const platformFaq = faqItems.find((item) => item.question === "Windows 和 macOS 的卸载能力一样吗？");
+if (!platformFaq) throw new Error("docs/faq.md is missing its platform notice");
+const platformNotice = { question: platformFaq.question, answer: platformFaq.answer };
 
 function inlineMarkdown(markdown: string): ReactNode[] {
   const parts: ReactNode[] = [];
@@ -141,13 +146,17 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
   );
 }
 
-function DialogueSection() {
+function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<boolean> }) {
   return (
     <section className="dialogue-section" aria-labelledby="dialogue-title">
       <header className="experience-section-heading">
         <span className="eyebrow">对话</span>
         <h2 id="dialogue-title">有疑问，直接问。</h2>
         <p>从最常问的问题开始，点开一条就能看到回答。复制安装提示词时，这些回答也会一并交给 Agent。</p>
+        {onCopyUninstall && <div className="dialogue-actions">
+          <button className="prompt-copy-button" onClick={() => void onCopyUninstall()}><Icon name="copy" />复制卸载提示词</button>
+          <span>发给 Agent，由它核对范围并完成卸载。</span>
+        </div>}
       </header>
       <div className="dialogue-list">
         {faqItems.map((item, index) => (
@@ -169,13 +178,17 @@ function DocumentFooter() {
   return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
 }
 
-export function Documents() {
+export function Documents({ onCopyUninstall }: { onCopyUninstall?: () => Promise<boolean> } = {}) {
   const [helpOpen, setHelpOpen] = useState(false);
   return (
     <main className="document-main experience-main">
       <AgentStrip onExplain={() => setHelpOpen(true)} />
+      <aside className="platform-notice" aria-labelledby="platform-notice-title">
+        <strong id="platform-notice-title">{platformNotice.question}</strong>
+        <p>{inlineMarkdown(platformNotice.answer)}</p>
+      </aside>
       <WorkflowComparisons />
-      <DialogueSection />
+      <DialogueSection onCopyUninstall={onCopyUninstall} />
       <DocumentFooter />
       {helpOpen && <AgentHelpDialog onClose={() => setHelpOpen(false)} />}
     </main>

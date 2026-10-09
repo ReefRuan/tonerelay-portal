@@ -1864,6 +1864,16 @@ kbd {
 
 .agent-strip-heading strong { color: var(--blue); font-weight: 720; }
 
+.platform-notice {
+  margin-top: 16px;
+  padding: 18px 22px;
+  border-left: 2px solid var(--blue);
+  background: var(--paper-deep);
+}
+.platform-notice > strong { color: var(--ink); font-size: 14px; }
+.platform-notice p { margin: 8px 0 0; max-width: 85ch; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.platform-notice code { color: var(--ink); font-family: var(--mono); }
+
 .agent-picker {
   position: relative;
   z-index: 1;
@@ -1991,6 +2001,11 @@ kbd {
   border-top: 1px solid var(--line);
 }
 .dialogue-section .experience-section-heading { margin-bottom: 42px; }
+.dialogue-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 22px; }
+.dialogue-actions > span { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.prompt-copy-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid var(--line); background: var(--paper-deep); color: var(--ink); font-size: 13px; cursor: pointer; transition: border-color 160ms ease; }
+.prompt-copy-button:hover { border-color: var(--blue); }
+.prompt-copy-button svg { width: 16px; height: 16px; }
 .dialogue-list { display: grid; gap: 10px; }
 .dialogue-list details { border: 1px solid #36414b; background: #151b21; transition: border-color 160ms ease; }
 .dialogue-list details[open] { border-color: #6c9dd0; }
