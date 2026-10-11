@@ -362,7 +362,7 @@ export default function App() {
 
         <div className="catalog-heading">
           <div>
-            <h2>全部内容</h2>
+            <h2>互联网蒸馏预设</h2>
           </div>
           <div className="catalog-rule"><i /></div>
           <p>{filteredPresets.length} 项内容</p>
