@@ -1982,6 +1982,13 @@ kbd {
   stroke-linejoin: round;
 }
 
+/* Without backdrop-filter the glass would be too sheer for white copy to stay
+   readable, so fall back to a more opaque base. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-hint { background: rgba(22, 30, 40, 0.92); }
+  .header-panel { background: rgba(20, 27, 36, 0.95); }
+}
+
 @media (min-width: 768px) and (max-width: 1200px) {
   .header-star-group { gap: 6px; }
   .install-split .install-caret { min-width: 24px; padding: 0 5px; }
