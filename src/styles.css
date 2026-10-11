@@ -2091,16 +2091,6 @@ kbd {
 
 .agent-strip-heading strong { color: var(--blue); font-weight: 720; }
 
-.platform-notice {
-  margin-top: 16px;
-  padding: 18px 22px;
-  border-left: 2px solid var(--blue);
-  background: var(--paper-deep);
-}
-.platform-notice > strong { color: var(--ink); font-size: 14px; }
-.platform-notice p { margin: 8px 0 0; max-width: 85ch; color: var(--muted); font-size: 13px; line-height: 1.8; }
-.platform-notice code { color: var(--ink); font-family: var(--mono); }
-
 .agent-picker {
   position: relative;
   z-index: 1;

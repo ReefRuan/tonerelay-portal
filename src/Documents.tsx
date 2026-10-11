@@ -34,9 +34,6 @@ const faqItems = Array.from(
   (match) => ({ question: match[1].trim(), answer: match[2].trim() }),
 );
 if (!faqItems.length) throw new Error("docs/faq.md has no FAQ entries");
-const platformFaq = faqItems.find((item) => item.question === "Windows 和 macOS 的卸载能力一样吗？");
-if (!platformFaq) throw new Error("docs/faq.md is missing its platform notice");
-const platformNotice = { question: platformFaq.question, answer: platformFaq.answer };
 
 function inlineMarkdown(markdown: string): ReactNode[] {
   const parts: ReactNode[] = [];
@@ -183,10 +180,6 @@ export function Documents({ onCopyUninstall }: { onCopyUninstall?: () => Promise
   return (
     <main className="document-main experience-main">
       <AgentStrip onExplain={() => setHelpOpen(true)} />
-      <aside className="platform-notice" aria-labelledby="platform-notice-title">
-        <strong id="platform-notice-title">{platformNotice.question}</strong>
-        <p>{inlineMarkdown(platformNotice.answer)}</p>
-      </aside>
       <WorkflowComparisons />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <DocumentFooter />
