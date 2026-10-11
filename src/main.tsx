@@ -4,7 +4,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { installWebFont } from "./fonts";
 import "./styles.css";
+
+installWebFont();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -4,6 +4,7 @@ export type IconName =
   | "arrow"
   | "back"
   | "check"
+  | "chevron-down"
   | "close"
   | "collapse"
   | "controller"
@@ -13,6 +14,7 @@ export type IconName =
   | "filter"
   | "next"
   | "search"
+  | "shield"
   | "star";
 
 export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGElement>) {
@@ -33,6 +35,7 @@ export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGEle
     arrow: <><path d="M5 12h13" /><path d="m14 7 5 5-5 5" /></>,
     back: <><path d="M19 12H6" /><path d="m10 7-5 5 5 5" /></>,
     check: <path d="m5 12 4 4L19 6" />,
+    "chevron-down": <path d="m6 9 6 6 6-6" />,
     close: <><path d="m6 6 12 12" /><path d="M18 6 6 18" /></>,
     collapse: <><path d="M7 9h10" /><path d="m9 13 3 3 3-3" /></>,
     controller: <><path d="M4 8.5h16" /><path d="M7 12h10" /><path d="M9.5 15.5h5" /></>,
@@ -42,6 +45,7 @@ export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGEle
     filter: <><path d="M4 6h16" /><path d="M7 12h10" /><path d="M10 18h4" /></>,
     next: <><path d="m8 5 7 7-7 7" /><path d="M16 5v14" /></>,
     search: <><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></>,
+    shield: <><path d="M12 3.5 5.5 6.3v4.9c0 4.1 2.7 7.4 6.5 8.8 3.8-1.4 6.5-4.7 6.5-8.8V6.3L12 3.5Z" /><path d="m9.2 11.8 2 2 3.6-4" /></>,
     star: <path d="m12 3 2.8 5.68 6.27.91-4.54 4.42 1.07 6.24L12 17.3l-5.6 2.95 1.07-6.24-4.54-4.42 6.27-.91L12 3Z" />,
   };
 

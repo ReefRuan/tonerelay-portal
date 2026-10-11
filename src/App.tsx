@@ -18,6 +18,8 @@ import { Documents, INSTALL_PROMPT_WITH_FAQ, UNINSTALL_PROMPT, type PortalPage }
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
+import { HeaderHint, useOnboardingHints } from "./HeaderHints";
+import { InstallAction, PrivacyAction } from "./HeaderPanels";
 
 type DockMode = "collapsed" | "normal" | "expanded";
 
@@ -75,7 +77,16 @@ export default function App() {
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
+  const installAnchorRef = useRef<HTMLDivElement | null>(null);
+  const starAnchorRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
+
+  const hints = useOnboardingHints(page === "experience", detailOpen);
+  const hintAnchor = hints.active === "install"
+    ? installAnchorRef.current
+    : hints.active === "star"
+      ? starAnchorRef.current
+      : null;
 
   const filteredPresets = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -192,6 +203,12 @@ export default function App() {
 
   const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "已复制安装提示词和 FAQ，发给 Agent 开始安装"), [copyValue]);
   const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "已复制卸载提示词，发给 Agent 核对并卸载"), [copyValue]);
+
+  const resolveInstallHint = useCallback(() => hints.resolve("install", "done"), [hints]);
+  const resolveStarHint = useCallback(() => hints.resolve("star", "done"), [hints]);
+  const dismissActiveHint = useCallback(() => {
+    if (hints.active) hints.dismiss(hints.active);
+  }, [hints]);
 
   const switchDetail = useCallback(
     (delta: number) => {
@@ -340,13 +357,29 @@ export default function App() {
           <a href="#experience" aria-current={page === "experience" ? "page" : undefined}>立即体验</a>
         </nav>
         {page === "experience" && <div className="site-header-actions">
-          <button className="header-action header-install" onClick={() => void copyInstallPrompt()} title="复制安装提示词和 FAQ，发给 Agent 开始安装">
-            <Icon name="copy" />一键安装
-          </button>
-          <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="打开 Portal / 风格包仓库，在 GitHub 点 Star"><Icon name="star" />Star Portal</a>
-          <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="MCP 仓库目前私有；公开后访客才能在 GitHub 点 Star" aria-label="ToneRelay MCP 仓库，当前私有，公开后可 Star"><Icon name="star" />Star MCP <small>私有</small></a>
+          <PrivacyAction />
+          <InstallAction
+            anchorRef={installAnchorRef}
+            onCopy={copyInstallPrompt}
+            onComplete={resolveInstallHint}
+          />
+          <div className="header-star-group" ref={starAnchorRef}>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="打开 Portal / 风格包仓库，在 GitHub 点 Star" onClick={resolveStarHint}><Icon name="star" />Star Portal</a>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="MCP 仓库目前私有；公开后访客才能在 GitHub 点 Star" aria-label="ToneRelay MCP 仓库，当前私有，公开后可 Star" onClick={resolveStarHint}><Icon name="star" />Star MCP <small>私有</small></a>
+          </div>
         </div>}
       </header>
+
+      <AnimatePresence>
+        {hints.active && (
+          <HeaderHint
+            key={hints.active}
+            id={hints.active}
+            anchor={hintAnchor}
+            onDismiss={dismissActiveHint}
+          />
+        )}
+      </AnimatePresence>
 
       {page === "gallery" ? <main className="catalog-main" aria-hidden={detailOpen || undefined}>
         <section className="intro" aria-labelledby="page-title">
