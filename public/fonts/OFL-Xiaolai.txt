@@ -1,21 +1,25 @@
-LXGW WenKai / 霞鹜文楷 — font licensing
-======================================
+Xiaolai / 小赖字体 — font licensing
+===================================
 
-This directory contains `lxgw-wenkai-subset.woff2`, a character-subset build of
-"LXGW WenKai" (霞鹜文楷) Regular, trimmed for the onboarding copy used on this
-site.
+This directory contains `xiaolai-subset.woff2`, a character-subset build of
+"Xiaolai" (小赖字体) Regular, trimmed for the onboarding copy used on this site.
 
-Upstream project : https://github.com/lxgw/LxgwWenKai
-Upstream release : v1.522 (LXGWWenKai-Regular.ttf)
+Upstream project : https://github.com/lxgw/kose-font  (小赖字体 / Xiaolai)
+Obtained via     : https://github.com/ChewKeanHo/visuals-fonts-xiaolai (v1.0.0 mirror)
+Font version     : 3.126 (September 10, 2025)
 License          : SIL Open Font License, Version 1.1 (OFL-1.1)
-Subsetting tool   : fontTools `pyftsubset` (woff2 flavor)
+Subsetting tool  : fontTools `pyftsubset` (woff2 flavor)
 
-The Reserved Font Name declared by the original authors is preserved. This
+Xiaolai is derived from SetoFont by Nozomi Seto and is distributed under the
+OFL-1.1; the upstream copyright notices below are preserved.
+
+The reserved font names declared by the original authors are preserved. This
 subset is distributed under the same OFL-1.1 terms reproduced below; the subset
 itself is not sold and any derivative must keep the same license.
 
 ------------------------------------------------------------------------------
-Copyright (c) 2021, LXGW WenKai Project Authors (https://github.com/lxgw/LxgwWenKai)
+Copyright 2020-2024 LXGW (https://github.com/lxgw/kose-font)
+Copyright 2014 Nozomi Seto (https://ja.osdn.net/projects/setofont/)
 ------------------------------------------------------------------------------
 
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
