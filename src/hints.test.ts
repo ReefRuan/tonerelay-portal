@@ -3,6 +3,7 @@
 
 import { describe, expect, it } from "vitest";
 import {
+  HINT_COPY,
   HINT_DELAY_MS,
   HINT_STORAGE_KEYS,
   getBrowserHintStorage,
@@ -47,6 +48,17 @@ describe("hint keys and delays", () => {
     expect(HINT_DELAY_MS.star).toBe(8000);
     expect(hintDelay("install")).toBe(5000);
     expect(hintDelay("star")).toBe(8000);
+  });
+});
+
+describe("HINT_COPY", () => {
+  // The copy is finalised: lock it so an accidental edit has to be deliberate.
+  it("keeps the reviewed install hint copy verbatim", () => {
+    expect(HINT_COPY.install).toBe("还没装？点「一键安装」复制提示词，把提示词发给你的 Agent 就行");
+  });
+
+  it("keeps the reviewed star hint copy verbatim", () => {
+    expect(HINT_COPY.star).toBe("点击 ⭐ 支持作者");
   });
 });
 

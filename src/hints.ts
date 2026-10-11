@@ -17,7 +17,7 @@ export type HintStatus = "done" | "dismissed";
 /** Hint copy is final and must not be edited. */
 export const HINT_COPY: Record<HintId, string> = {
   install: "还没装？点「一键安装」复制提示词，把提示词发给你的 Agent 就行",
-  star: "用着顺的话，去 GitHub 点个 Star ⭐",
+  star: "点击 ⭐ 支持作者",
 };
 
 /** localStorage keys, prefixed so they never clash with unrelated state. */
