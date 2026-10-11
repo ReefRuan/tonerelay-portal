@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
 import {
   HINT_COPY,
@@ -136,7 +136,6 @@ export function HeaderHint({ id, anchor, onDismiss }: {
       style={{ top: position.top, left: position.left, width: position.width }}
       initial={reducedMotion ? false : { opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -4 }}
       transition={{ duration: reducedMotion ? 0 : 0.2 }}
     >
       <svg

@@ -61,19 +61,23 @@ function StyleMarkdown({ preset, onCopy }: {
 }
 
 export default function App() {
+  const initialPage = pageFromHash();
   const initialPreset = new URLSearchParams(window.location.search).get("preset");
   const validInitial = presets.some((preset) => preset.id === initialPreset)
     ? initialPreset
     : null;
-  const [dockMode, setDockMode] = useState<DockMode>(validInitial ? "normal" : "collapsed");
-  const [selectedId, setSelectedId] = useState<string | null>(validInitial);
-  const [detailOpen, setDetailOpen] = useState(Boolean(validInitial));
+  // The detail panel only exists on the gallery page, so a `?preset=` deep link
+  // arriving on the experience page must not leave `detailOpen` stuck on.
+  const initialDetailOpen = Boolean(validInitial) && initialPage === "gallery";
+  const [dockMode, setDockMode] = useState<DockMode>(validInitial && initialPage === "gallery" ? "normal" : "collapsed");
+  const [selectedId, setSelectedId] = useState<string | null>(initialDetailOpen ? validInitial : null);
+  const [detailOpen, setDetailOpen] = useState(initialDetailOpen);
   const [category, setCategory] = useState<Category>("全部");
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState("");
   const [manualCopy, setManualCopy] = useState<string | null>(null);
-  const [page, setPage] = useState<PortalPage>(pageFromHash);
+  const [page, setPage] = useState<PortalPage>(initialPage);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -370,16 +374,17 @@ export default function App() {
         </div>}
       </header>
 
-      <AnimatePresence>
-        {hints.active && (
-          <HeaderHint
-            key={hints.active}
-            id={hints.active}
-            anchor={hintAnchor}
-            onDismiss={dismissActiveHint}
-          />
-        )}
-      </AnimatePresence>
+      {/* Rendered without AnimatePresence so a resolved hint unmounts
+          deterministically — exit animations stall when a target="_blank"
+          link (e.g. a Star link) backgrounds the tab. */}
+      {hints.active && (
+        <HeaderHint
+          key={hints.active}
+          id={hints.active}
+          anchor={hintAnchor}
+          onDismiss={dismissActiveHint}
+        />
+      )}
 
       {page === "gallery" ? <main className="catalog-main" aria-hidden={detailOpen || undefined}>
         <section className="intro" aria-labelledby="page-title">

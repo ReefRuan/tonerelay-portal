@@ -9,7 +9,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
 import { INSTALL_PROMPT_WITH_FAQ } from "./Documents";
 
@@ -61,7 +61,13 @@ function usePopoverDismiss(open: boolean, rootRef: Ref<HTMLDivElement>, onClose:
   }, [open, rootRef, onClose]);
 }
 
-/** Animated popover shell anchored to the bottom-right of its group. */
+/**
+ * Popover shell anchored to the bottom-right of its group.
+ *
+ * Rendered with a plain conditional (no `AnimatePresence`) so closing is
+ * deterministic: an interrupted/mislayed exit animation must never strand a
+ * panel in the DOM where it would keep intercepting pointer events.
+ */
 function HeaderPopover({ open, panelRef, label, className, children }: {
   open: boolean;
   panelRef: Ref<HTMLDivElement>;
@@ -70,24 +76,20 @@ function HeaderPopover({ open, panelRef, label, className, children }: {
   children: ReactNode;
 }) {
   const reducedMotion = useReducedMotion();
+  if (!open) return null;
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          ref={panelRef}
-          className={`header-panel ${className}`}
-          role="dialog"
-          aria-label={label}
-          tabIndex={-1}
-          initial={reducedMotion ? false : { opacity: 0, y: -6, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.985 }}
-          transition={{ duration: reducedMotion ? 0 : 0.16 }}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      ref={panelRef}
+      className={`header-panel ${className}`}
+      role="dialog"
+      aria-label={label}
+      tabIndex={-1}
+      initial={reducedMotion ? false : { opacity: 0, y: -6, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: reducedMotion ? 0 : 0.16 }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
