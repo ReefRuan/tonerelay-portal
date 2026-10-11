@@ -15,7 +15,7 @@ describe("installation copy payload", () => {
   it("shows the concise tool introduction without a separate installation section", () => {
     const html = renderToStaticMarkup(createElement(Documents));
     expect(html).toContain("扩展 Agent 操作 Lightroom 的能力。");
-    expect(html).toContain("<strong>Catalog 批量操作</strong>");
+    expect(html).toContain("<strong>相比 computer use 直接操作界面</strong>");
     expect(html).not.toContain("安装介绍");
   });
 });

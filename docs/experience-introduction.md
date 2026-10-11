@@ -4,9 +4,9 @@
 
 ### 扩展 Agent 操作 Lightroom 的能力。
 
-ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**。Agent 理解目标、决定下一步；ToneRelay **执行操作、回读真实渲染**，并提供图像预处理、测量与对比。
+ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**。Agent 理解目标、决定下一步；ToneRelay **执行操作、回读真实渲染**，并提供批量执行、图像预处理、测量与对比、后台多方案试色。
 
-**Catalog 批量操作** · **真实原彩渲染回读** · **图像测量与对比** · **后台多方案试色**
+**相比 computer use 直接操作界面** · **省去截图、视觉定位和逐步确认** · **直接操作 Catalog、内存回读** · **更快、更省 Token**
 
 ## 说出目标，看见结果。
 
