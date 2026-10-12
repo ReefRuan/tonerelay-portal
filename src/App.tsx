@@ -524,9 +524,23 @@ export default function App() {
                     ))}
                   </div> : <div className="reference-pending">
                     <img src={selectedPreset.image} alt={`${selectedPreset.name} 封面`} />
-                    <span>参考图尚未发布</span>
+                    <span>{selectedPreset.sourceLinks?.length ? "包内参考图尚未获公开发布许可；可在下方教程原页查看真实照片。" : "参考图尚未发布"}</span>
                   </div>}
                 </section>
+                {selectedPreset.kind === "effect" && <section className="effect-overview" aria-label="效果包说明">
+                  <p>{selectedPreset.description}</p>
+                  <p className="effect-status">{selectedPreset.note}</p>
+                  {selectedPreset.adjustmentHints && <div className="effect-adjustments">
+                    <h3>可以对 Agent 这样说</h3>
+                    <ul>{selectedPreset.adjustmentHints.map((hint) => <li key={hint}>“{hint}”</li>)}</ul>
+                  </div>}
+                  {selectedPreset.sourceLinks && <div className="effect-sources">
+                    <h3>在教程原页查看参考照片</h3>
+                    <ul>{selectedPreset.sourceLinks.map((source) => <li key={source.url}>
+                      <a href={source.url} target="_blank" rel="noreferrer">{source.label}</a>
+                    </li>)}</ul>
+                  </div>}
+                </section>}
                 {selectedPreset.loadStyleMarkdown && <StyleMarkdown key={selectedPreset.id} preset={selectedPreset} onCopy={copyValue} />}
                 <div className="detail-actions">
                   {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看风格包</a>}
