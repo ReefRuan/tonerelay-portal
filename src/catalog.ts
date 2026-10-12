@@ -30,6 +30,7 @@ export type Preset = {
   tags: string[];
   palette: string[];
   link: string;
+  linkBackup?: string;
   number: string;
   release: "正式版" | "BETA" | "候选";
   availability: "本地候选" | "公开预览" | "私有试用";
@@ -89,6 +90,8 @@ const packageDownload = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 const packageDownloadBackup = (id: string) =>
   `https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
+const packageMirror = (id: string) =>
+  `https://gitee.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
 
 const effectCover = (title: string, subtitle: string, status: string, colors: [string, string, string]) => {
   const [dark, middle, light] = colors;
@@ -122,6 +125,7 @@ export const presets: Preset[] = [
     tags: ["Skin Tone", "Color Check", "Style Guard"],
     palette: [],
     link: portalDetail("skin-tone-adaptive-fidelity"),
+    linkBackup: packageMirror("skin-tone-adaptive-fidelity"),
     number: "E01",
     release: "候选",
     availability: "私有试用",
@@ -141,6 +145,7 @@ export const presets: Preset[] = [
     tags: ["Glow", "Mist", "Portrait", "Forest", "Black Mist", "Gold Mist", "White Mist"],
     palette: [],
     link: portalDetail("luminous-mist-portrait"),
+    linkBackup: packageMirror("luminous-mist-portrait"),
     number: "E02",
     release: "候选",
     availability: "本地候选",

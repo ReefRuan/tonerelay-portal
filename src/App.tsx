@@ -210,7 +210,13 @@ export default function App() {
       }
       return;
     }
-    if (await copyValue(selectedPreset.link, `已复制「${selectedPreset.name}」页面链接`)) {
+    const linkBackup = selectedPreset.linkBackup;
+    const lines = [
+      `「${selectedPreset.name}」页面链接${linkBackup ? "（主源 + 国内备用）" : ""}：`,
+      `主源：${selectedPreset.link}`,
+      ...(linkBackup ? [`国内备用：${linkBackup}`] : []),
+    ];
+    if (await copyValue(lines.join("\n"), linkBackup ? `已复制「${selectedPreset.name}」页面链接（主源 + 国内备用）` : `已复制「${selectedPreset.name}」页面链接`)) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     }
