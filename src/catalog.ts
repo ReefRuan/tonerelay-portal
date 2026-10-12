@@ -35,6 +35,8 @@ export type Preset = {
   availability: "本地候选" | "公开预览" | "私有试用";
   photoCredit?: PhotoCredit;
   referenceCredits?: PhotoCredit[];
+  sourceLinks?: Array<{ label: string; url: string }>;
+  adjustmentHints?: string[];
   downloadUrl?: string;
   downloadUrlBackup?: string;
   packageUrl?: string;
@@ -88,17 +90,18 @@ const packageDownload = (id: string) =>
 const packageDownloadBackup = (id: string) =>
   `https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 
-const effectCover = () => {
+const effectCover = (title: string, subtitle: string, status: string, colors: [string, string, string]) => {
+  const [dark, middle, light] = colors;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202c38"/><stop offset=".6" stop-color="#506d78"/><stop offset="1" stop-color="#b4a79a"/></linearGradient></defs>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${dark}"/><stop offset=".6" stop-color="${middle}"/><stop offset="1" stop-color="${light}"/></linearGradient></defs>
     <rect width="900" height="1100" fill="url(#g)"/>
     <path d="M90 250h720M90 520h720M90 790h720" stroke="white" stroke-opacity=".28" stroke-width="2"/>
     <circle cx="450" cy="520" r="230" fill="none" stroke="white" stroke-opacity=".58" stroke-width="3"/>
     <circle cx="450" cy="520" r="135" fill="none" stroke="white" stroke-opacity=".32" stroke-width="3"/>
     <circle cx="450" cy="520" r="9" fill="white"/>
-    <text x="90" y="105" fill="white" font-family="sans-serif" font-size="24" letter-spacing="7">效果包 · 私有候选</text>
-    <text x="90" y="940" fill="white" font-family="serif" font-size="64">自适应肤色</text>
-    <text x="90" y="994" fill="white" fill-opacity=".75" font-family="monospace" font-size="20" letter-spacing="5">ADAPTIVE SKIN FIDELITY</text>
+    <text x="90" y="105" fill="white" font-family="sans-serif" font-size="24" letter-spacing="7">效果包 · ${status}</text>
+    <text x="90" y="940" fill="white" font-family="serif" font-size="64">${title}</text>
+    <text x="90" y="994" fill="white" fill-opacity=".75" font-family="monospace" font-size="20" letter-spacing="5">${subtitle}</text>
   </svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
@@ -111,7 +114,7 @@ export const presets: Preset[] = [
     version: "v0.6.2",
     category: "效果",
     kind: "effect",
-    image: effectCover(),
+    image: effectCover("自适应肤色", "ADAPTIVE SKIN FIDELITY", "私有候选", ["#202c38", "#506d78", "#b4a79a"]),
     references: [],
     ratio: "4 / 5",
     description: "用同图数字采样板观察肤色变化，并检查背景与蒙版边缘；结合同光区参照和风格目标，辅助判断人物自然度与背景保护。",
@@ -122,6 +125,31 @@ export const presets: Preset[] = [
     number: "E01",
     release: "候选",
     availability: "私有试用",
+  },
+  {
+    id: "luminous-mist-portrait",
+    name: "朦胧发光人像",
+    en: "LUMINOUS MIST PORTRAIT",
+    version: "v0.1.0",
+    category: "效果",
+    kind: "effect",
+    image: effectCover("朦胧发光", "LUMINOUS MIST PORTRAIT", "本地候选", ["#222932", "#6d756f", "#d2bc9a"]),
+    references: [],
+    ratio: "4 / 5",
+    description: "从照片已有的亮源塑造柔和光晕与空气感，保留人物清晰度、自然肤色和背景层次；可单独使用，也可与风格包组合。",
+    note: "本地候选：完整提示词和六张教程页面 JPEG 照片目前只用于本地研究；照片的再分发许可和 Lightroom 成对效果尚未核实，网页不提供图片或下载。黑柔、金柔、白柔只是可选观感方向，尚无实体滤镜的同场对照。",
+    tags: ["Glow", "Mist", "Portrait", "Forest", "Black Mist", "Gold Mist", "White Mist"],
+    palette: [],
+    link: portalDetail("luminous-mist-portrait"),
+    number: "E02",
+    release: "候选",
+    availability: "本地候选",
+    adjustmentHints: ["高光更发光", "更朦胧，但人清楚", "更黑柔", "更金柔", "更白柔", "更森系", "肤色自然，背景少动"],
+    sourceLinks: [
+      { label: "PHLEARN：人像高光泛光前后图（Photoshop）", url: "https://phlearn.com/tutorial/cinematic-highlight-glow-in-photoshop/" },
+      { label: "蜂鸟网／新浪：复古柔焦人像", url: "https://tech.sina.cn/digi/dc/2017-07-04/detail-ifyhrxsk1681640.d.html?vt=4" },
+      { label: "PHLEARN：森系人像蒙版塑光前后图（Lightroom）", url: "https://phlearn.com/tutorial/30-days-lightroom-day-6/" },
+    ],
   },
   {
     id: "fuji-film-c200",

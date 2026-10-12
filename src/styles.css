@@ -1029,6 +1029,23 @@ input:focus-visible,
   white-space: nowrap;
 }
 
+.effect-overview {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.effect-overview p { margin: 0 0 12px; }
+.effect-overview .effect-status { color: var(--muted); }
+.effect-overview h3 { margin: 20px 0 9px; font: 600 12px var(--mono); }
+.effect-overview ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.effect-adjustments li { border: 1px solid var(--line); padding: 5px 9px; }
+.effect-sources ul { display: block; }
+.effect-sources li { margin: 5px 0; }
+.effect-sources a { color: var(--blue); text-underline-offset: 3px; }
+
 .style-markdown {
   margin-top: 24px;
   border: 1px solid var(--line);

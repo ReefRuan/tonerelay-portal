@@ -29,6 +29,8 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 风格包是供 Agent 阅读的 Markdown 与参考图，不等于 Lightroom 预设，也不代表安装了 MCP。六个公开包的目录、版本及下载入口见 [style-packs/README.md](style-packs/README.md)。
 
+画廊中的 [朦胧发光人像候选](https://reefruan.github.io/tonerelay-portal/?preset=luminous-mist-portrait#gallery) 只展示用途、可调整的方向和原教程入口。其参考照片的再分发许可与 Lightroom 成对效果尚未核实，完整包暂不在 Portal 提供下载。
+
 ## 仓库内容与本地预览
 
 | 路径 | 内容 |

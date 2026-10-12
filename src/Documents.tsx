@@ -103,7 +103,7 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
           </div>
           <ol>
             <li><span>1</span><div><strong>确认客户端</strong><p>明确你使用的是 Codex、WorkBuddy、Kimi Work，还是独立的 Kimi Code CLI。</p></div></li>
-            <li><span>2</span><div><strong>复制安装提示词</strong><p>它会核对固定版本和对应客户端路径，并尽可能自主完成普通本机安装。</p></div></li>
+            <li><span>2</span><div><strong>复制安装提示词</strong><p>Agent 会先告知安装路径，再完成普通安装。找不到 Lightroom 时请你手动打开；Catalog 未绑定时，确认名称并回复“绑定”即可继续。</p></div></li>
             <li><span>3</span><div><strong>区分发行版与开发版</strong><p>没有公开发行物时不称一键成功；本机 checkout 只在你明确授权后用于开发版测试。</p></div></li>
           </ol>
           <div className="agent-dialog-actions">
