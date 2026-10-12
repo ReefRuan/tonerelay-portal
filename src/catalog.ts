@@ -36,6 +36,7 @@ export type Preset = {
   photoCredit?: PhotoCredit;
   referenceCredits?: PhotoCredit[];
   downloadUrl?: string;
+  downloadUrlBackup?: string;
   packageUrl?: string;
   loadStyleMarkdown?: () => Promise<string>;
 };
@@ -84,6 +85,8 @@ const packageDirectory = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
 const packageDownload = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
+const packageDownloadBackup = (id: string) =>
+  `https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 
 const effectCover = () => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
@@ -140,6 +143,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-c200"),
     referenceCredits: publishedCredits("fuji-film-c200"),
     downloadUrl: packageDownload("fuji-film-c200"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-c200"),
     packageUrl: packageDirectory("fuji-film-c200"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-c200/style.md?raw").then((module) => module.default),
   },
@@ -163,6 +167,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-natura-1600"),
     referenceCredits: publishedCredits("fuji-film-natura-1600"),
     downloadUrl: packageDownload("fuji-film-natura-1600"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-natura-1600"),
     packageUrl: packageDirectory("fuji-film-natura-1600"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-natura-1600/style.md?raw").then((module) => module.default),
   },
@@ -186,6 +191,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-pro-160ns"),
     referenceCredits: publishedCredits("fuji-film-pro-160ns"),
     downloadUrl: packageDownload("fuji-film-pro-160ns"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-pro-160ns"),
     packageUrl: packageDirectory("fuji-film-pro-160ns"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-pro-160ns/style.md?raw").then((module) => module.default),
   },
@@ -209,6 +215,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-pro-400h"),
     referenceCredits: publishedCredits("fuji-film-pro-400h"),
     downloadUrl: packageDownload("fuji-film-pro-400h"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-pro-400h"),
     packageUrl: packageDirectory("fuji-film-pro-400h"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-pro-400h/style.md?raw").then((module) => module.default),
   },
@@ -232,6 +239,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-provia-100f"),
     referenceCredits: publishedCredits("fuji-film-provia-100f"),
     downloadUrl: packageDownload("fuji-film-provia-100f"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-provia-100f"),
     packageUrl: packageDirectory("fuji-film-provia-100f"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-provia-100f/style.md?raw").then((module) => module.default),
   },
@@ -255,6 +263,7 @@ export const presets: Preset[] = [
     photoCredit: publishedCoverCredit("fuji-film-superia-xtra-400"),
     referenceCredits: publishedCredits("fuji-film-superia-xtra-400"),
     downloadUrl: packageDownload("fuji-film-superia-xtra-400"),
+    downloadUrlBackup: packageDownloadBackup("fuji-film-superia-xtra-400"),
     packageUrl: packageDirectory("fuji-film-superia-xtra-400"),
     loadStyleMarkdown: () => import("../style-packs/packages/fuji-film-superia-xtra-400/style.md?raw").then((module) => module.default),
   },

@@ -197,9 +197,20 @@ export default function App() {
 
   const copyLink = useCallback(async () => {
     if (!selectedPreset) return;
-    const url = selectedPreset.downloadUrl ?? selectedPreset.link;
-    const kind = selectedPreset.downloadUrl ? "下载链接" : "页面链接";
-    if (await copyValue(url, `已复制「${selectedPreset.name}」${kind}`)) {
+    if (selectedPreset.downloadUrl) {
+      const backup = selectedPreset.downloadUrlBackup;
+      const lines = [
+        `「${selectedPreset.name}」风格包下载${backup ? "（两个地址内容一致，任选其一）" : ""}：`,
+        `主源：${selectedPreset.downloadUrl}`,
+        ...(backup ? [`国内备用：${backup}`] : []),
+      ];
+      if (await copyValue(lines.join("\n"), `已复制「${selectedPreset.name}」下载地址（主源 + 国内备用）`)) {
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1600);
+      }
+      return;
+    }
+    if (await copyValue(selectedPreset.link, `已复制「${selectedPreset.name}」页面链接`)) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     }
@@ -532,6 +543,7 @@ export default function App() {
                   {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看风格包</a>}
                   <button onClick={() => void copyLink()}><Icon name="copy" />{selectedPreset.downloadUrl ? "复制下载链接" : "复制页面链接"}</button>
                   {selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载风格包</a>}
+                  {selectedPreset.downloadUrlBackup && <a href={selectedPreset.downloadUrlBackup} title="国内镜像下载（Gitee，内容一致）">国内下载</a>}
                 </div>
               </div>
             </motion.article>

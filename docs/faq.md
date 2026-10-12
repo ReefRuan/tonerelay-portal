@@ -32,6 +32,10 @@ pip、Python 和依赖可能使用各自的默认缓存或系统临时目录，�
 
 六个正式风格包可在画廊详情中分别下载，也可以复制各自的 ZIP 下载链接。每包包含 `style.md`、封面、参考图和逐图许可记录；公开文件位于 [Portal 的风格包目录](https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages)。下载风格包不等于 Runtime 已安装或支持按编号自动安装，使用前仍应核对当前版本的安装说明。
 
+## 国内网络访问 GitHub 慢、打不开时怎么下载？
+
+门户仓库有国内镜像，内容一致：https://gitee.com/ReefRuan/tonerelay-portal 。文档与 FAQ 可直接在镜像查看；风格包下载用镜像直链 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/（文件名与 GitHub 相同），画廊详情里复制的下载内容也会同时给出主源与国内备用两个地址。
+
 ## 安装为什么还需要真人授权？
 
 普通安装步骤应沿用授权连续完成；登录、系统密码或工具要求本人确认时，Agent 会说明具体动作、原因和最小操作，并保存断点。
