@@ -488,17 +488,22 @@ export default function App() {
           </section>
         )}
 
-        <nav className="public-page-index" aria-label="公开风格与效果包文字索引">
-          <span>网页介绍</span>
-          <a href={`${import.meta.env.BASE_URL}experience/`}>ToneRelay 使用说明</a>
-          {presets.filter((preset) => preset.packageUrl).map((preset) => (
-            <a key={preset.id} href={publicPageUrl(preset)}>{preset.name}</a>
-          ))}
-        </nav>
-
         <footer className="site-footer">
           <span>© 2026 Reef Ruan · ToneRelay</span>
-          <span><a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span>
+          <div className="site-footer-meta">
+            <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a>
+            <span aria-hidden="true">·</span>
+            <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a>
+            <details className="footer-page-index">
+              <summary>网页介绍</summary>
+              <nav aria-label="公开风格与效果包文字索引">
+                <a href={`${import.meta.env.BASE_URL}experience/`}>ToneRelay 使用说明</a>
+                {presets.filter((preset) => preset.packageUrl).map((preset) => (
+                  <a key={preset.id} href={publicPageUrl(preset)}>{preset.name}</a>
+                ))}
+              </nav>
+            </details>
+          </div>
         </footer>
       </main> : <Documents onCopyUninstall={copyUninstallPrompt} />}
 

@@ -43,7 +43,7 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 ## 搜索引擎入口
 
-构建会为首页、ToneRelay 使用说明、六个公开胶片风格包和 E02 朦胧发光人像效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。独立页面使用自己的标题、摘要和 canonical URL；首页与画廊的普通链接指向这些页面。E01 肤色保护仍是私有候选，不进入公开页面索引。
+构建会为首页、ToneRelay 使用说明、六个公开胶片风格包和 E02 朦胧发光人像效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。独立页面使用自己的标题、摘要和 canonical URL；首页静态内容、画廊详情及页脚收起的“网页介绍”都链接到这些页面。E01 肤色保护仍是私有候选，不进入公开页面索引。
 
 这些页面由 `pnpm build` 写入 `dist/`；本地查看独立页面请在构建后运行 `pnpm preview`。`pnpm dev` 只提供交互式画廊源码预览。
 
