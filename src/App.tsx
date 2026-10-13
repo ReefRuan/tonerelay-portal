@@ -37,6 +37,7 @@ function StyleMarkdown({ preset, onCopy }: {
   preset: Preset;
   onCopy: (value: string, message: string) => Promise<boolean>;
 }) {
+  const fileName = preset.kind === "effect" ? "effect.md" : "style.md";
   const [markdown, setMarkdown] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
   const loading = useRef(false);
@@ -50,12 +51,12 @@ function StyleMarkdown({ preset, onCopy }: {
   };
 
   return <details className="style-markdown" onToggle={(event) => { if (event.currentTarget.open) load(); }}>
-    <summary><span>风格说明</span><span>style.md</span></summary>
+    <summary><span>{preset.kind === "effect" ? "效果提示词" : "风格说明"}</span><span>{fileName}</span></summary>
     <div className="style-markdown-content">
       {markdown !== null ? <>
-        <button onClick={() => void onCopy(markdown, "已复制 style.md")}>复制 Markdown</button>
+        <button onClick={() => void onCopy(markdown, `已复制 ${fileName}`)}>复制 Markdown</button>
         <pre>{markdown}</pre>
-      </> : failed ? <p>无法加载。{preset.packageUrl && <a href={`${preset.packageUrl.replace("/tree/", "/blob/")}/style.md`} target="_blank" rel="noreferrer">在 GitHub 查看 style.md</a>}</p> : <p>载入中…</p>}
+      </> : failed ? <p>无法加载。{preset.packageUrl && <a href={`${preset.packageUrl.replace("/tree/", "/blob/")}/${fileName}`} target="_blank" rel="noreferrer">在 GitHub 查看 {fileName}</a>}</p> : <p>载入中…</p>}
     </div>
   </details>;
 }
@@ -198,13 +199,14 @@ export default function App() {
   const copyLink = useCallback(async () => {
     if (!selectedPreset) return;
     if (selectedPreset.downloadUrl) {
+      const packageKind = selectedPreset.kind === "effect" ? "效果包" : "风格包";
       const backup = selectedPreset.downloadUrlBackup;
       const lines = [
-        `「${selectedPreset.name}」风格包下载${backup ? "（两个地址内容一致，任选其一）" : ""}：`,
+        `「${selectedPreset.name}」${packageKind}下载${backup ? "（两个地址内容一致，任选其一）" : ""}：`,
         `主源：${selectedPreset.downloadUrl}`,
         ...(backup ? [`国内备用：${backup}`] : []),
       ];
-      if (await copyValue(lines.join("\n"), `已复制「${selectedPreset.name}」下载地址（主源 + 国内备用）`)) {
+      if (await copyValue(lines.join("\n"), backup ? `已复制「${selectedPreset.name}」下载地址（主源 + 国内备用）` : `已复制「${selectedPreset.name}」下载地址`)) {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1600);
       }
@@ -521,7 +523,8 @@ export default function App() {
                     <h2 id="detail-title">{selectedPreset.name}</h2>
                     <p>{selectedPreset.en}</p>
                   </div>
-                  {selectedPreset.references.length > 0 && <span>{selectedPreset.references.length} 张参考图</span>}
+                  {selectedPreset.references.length > 0 ? <span>{selectedPreset.references.length} 张参考图</span>
+                    : selectedPreset.photoLinks?.length ? <span>{selectedPreset.photoLinks.length} 张原站照片链接</span> : null}
                 </header>
                 <section className="reference-gallery" aria-label={`${selectedPreset.name} 参考图`}>
                   {selectedPreset.references.length ? <div className="reference-list">
@@ -541,7 +544,7 @@ export default function App() {
                     ))}
                   </div> : <div className="reference-pending">
                     <img src={selectedPreset.image} alt={`${selectedPreset.name} 封面`} />
-                    <span>{selectedPreset.sourceLinks?.length ? "包内参考图尚未获公开发布许可；可在下方教程原页查看真实照片。" : "参考图尚未发布"}</span>
+                    <span>{selectedPreset.photoLinks?.length ? "照片由原站提供；下方有逐张直链和教程原页。本包不含照片文件。" : selectedPreset.sourceLinks?.length ? "包内参考图尚未获公开发布许可；可在下方教程原页查看真实照片。" : "参考图尚未发布"}</span>
                   </div>}
                 </section>
                 {selectedPreset.kind === "effect" && <section className="effect-overview" aria-label="效果包说明">
@@ -550,6 +553,13 @@ export default function App() {
                   {selectedPreset.adjustmentHints && <div className="effect-adjustments">
                     <h3>可以对 Agent 这样说</h3>
                     <ul>{selectedPreset.adjustmentHints.map((hint) => <li key={hint}>“{hint}”</li>)}</ul>
+                  </div>}
+                  {selectedPreset.photoLinks && <div className="effect-sources effect-photo-links">
+                    <h3>逐张查看原站照片</h3>
+                    <ul>{selectedPreset.photoLinks.map((photo) => <li key={photo.url}>
+                      <a href={photo.url} target="_blank" rel="noreferrer">{photo.label}</a>
+                      <small>{photo.credit}</small>
+                    </li>)}</ul>
                   </div>}
                   {selectedPreset.sourceLinks && <div className="effect-sources">
                     <h3>在教程原页查看参考照片</h3>
@@ -560,9 +570,9 @@ export default function App() {
                 </section>}
                 {selectedPreset.loadStyleMarkdown && <StyleMarkdown key={selectedPreset.id} preset={selectedPreset} onCopy={copyValue} />}
                 <div className="detail-actions">
-                  {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看风格包</a>}
+                  {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看{selectedPreset.kind === "effect" ? "效果包" : "风格包"}</a>}
                   <button onClick={() => void copyLink()}><Icon name="copy" />{selectedPreset.downloadUrl ? "复制下载链接" : "复制页面链接"}</button>
-                  {selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载风格包</a>}
+                  {selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载{selectedPreset.kind === "effect" ? "效果包" : "风格包"}</a>}
                   {selectedPreset.downloadUrlBackup && <a href={selectedPreset.downloadUrlBackup} title="国内镜像下载（Gitee，内容一致）">国内下载</a>}
                 </div>
               </div>

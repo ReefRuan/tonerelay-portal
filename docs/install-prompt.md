@@ -6,7 +6,7 @@
 
 常见问题与 Windows 排障文档：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.md 。网页复制按钮会把该 FAQ 正文附在本提示词后面；安装或排错时先参考附带内容，必要时再查看文档的最新版本。
 
-资源来源说明：本提示词涉及的门户资源（仓库、文档、FAQ、风格包）有国内镜像，内容与 GitHub 一致：https://gitee.com/ReefRuan/tonerelay-portal 。GitHub 访问失败、超时或中断时，改用镜像的同路径链接继续（raw 下载链接形如 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/<原路径> ）；不要因单一来源不可达而中止，也不要改用未经验证的第三方来源。
+资源来源说明：门户仓库有国内镜像 https://gitee.com/ReefRuan/tonerelay-portal ，但同步可能滞后。GitHub 访问失败、超时或中断时，可检查镜像的同路径链接（raw 下载链接形如 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/<原路径> ）；必须核对目标文件存在、版本与固定发行物一致，不能把旧镜像当最新版。单一来源不可达时继续查核官方镜像或如实报告，不改用未经验证的第三方来源。
 
 仅使用当前系统与固定版本支持的入口；macOS 的命令、安装清单和卸载保护不能默认用于 Windows，未验证的平台能力如实标记。
 

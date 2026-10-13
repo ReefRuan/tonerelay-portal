@@ -7,6 +7,7 @@ import pro160Package from "../style-packs/packages/fuji-film-pro-160ns/package.j
 import pro400Package from "../style-packs/packages/fuji-film-pro-400h/package.json";
 import proviaPackage from "../style-packs/packages/fuji-film-provia-100f/package.json";
 import superiaPackage from "../style-packs/packages/fuji-film-superia-xtra-400/package.json";
+import luminousPackage from "../style-packs/packages/luminous-mist-portrait/package.json";
 
 type PhotoCredit = {
   author: string;
@@ -37,6 +38,7 @@ export type Preset = {
   photoCredit?: PhotoCredit;
   referenceCredits?: PhotoCredit[];
   sourceLinks?: Array<{ label: string; url: string }>;
+  photoLinks?: Array<{ label: string; url: string; credit: string }>;
   adjustmentHints?: string[];
   downloadUrl?: string;
   downloadUrlBackup?: string;
@@ -90,8 +92,10 @@ const packageDownload = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 const packageDownloadBackup = (id: string) =>
   `https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
-const packageMirror = (id: string) =>
-  `https://gitee.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
+const effectPackageDirectory = (id: string) =>
+  `https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
+const effectPackageDownload = (id: string, version: string) =>
+  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${version}-links.zip`;
 
 const effectCover = (title: string, subtitle: string, status: string, colors: [string, string, string]) => {
   const [dark, middle, light] = colors;
@@ -125,7 +129,6 @@ export const presets: Preset[] = [
     tags: ["Skin Tone", "Color Check", "Style Guard"],
     palette: [],
     link: portalDetail("skin-tone-adaptive-fidelity"),
-    linkBackup: packageMirror("skin-tone-adaptive-fidelity"),
     number: "E01",
     release: "候选",
     availability: "私有试用",
@@ -134,27 +137,37 @@ export const presets: Preset[] = [
     id: "luminous-mist-portrait",
     name: "朦胧发光人像",
     en: "LUMINOUS MIST PORTRAIT",
-    version: "v0.1.0",
+    version: `v${luminousPackage.version}`,
     category: "效果",
     kind: "effect",
-    image: effectCover("朦胧发光", "LUMINOUS MIST PORTRAIT", "本地候选", ["#222932", "#6d756f", "#d2bc9a"]),
+    image: effectCover("朦胧发光", "LUMINOUS MIST PORTRAIT", "链接版候选", ["#222932", "#6d756f", "#d2bc9a"]),
     references: [],
     ratio: "4 / 5",
     description: "从照片已有的亮源塑造柔和光晕与空气感，保留人物清晰度、自然肤色和背景层次；可单独使用，也可与风格包组合。",
-    note: "本地候选：完整提示词和六张教程页面 JPEG 照片目前只用于本地研究；照片的再分发许可和 Lightroom 成对效果尚未核实，网页不提供图片或下载。黑柔、金柔、白柔只是可选观感方向，尚无实体滤镜的同场对照。",
+    note: "公开链接版候选：可阅读或下载完整提示词，并从原站直链查看六张教程照片；包与网页均不托管这些照片。Lightroom 成对效果尚未验证。黑柔、金柔、白柔只是可选观感方向，尚无实体滤镜的同场对照。",
     tags: ["Glow", "Mist", "Portrait", "Forest", "Black Mist", "Gold Mist", "White Mist"],
     palette: [],
     link: portalDetail("luminous-mist-portrait"),
-    linkBackup: packageMirror("luminous-mist-portrait"),
     number: "E02",
     release: "候选",
-    availability: "本地候选",
+    availability: "公开预览",
     adjustmentHints: ["高光更发光", "更朦胧，但人清楚", "更黑柔", "更金柔", "更白柔", "更森系", "肤色自然，背景少动"],
+    photoLinks: [
+      { label: "01 · 高光泛光成片", url: "https://phlearn.com/wp-content/uploads/2026/08/top-image-after-4.jpg", credit: "PHLEARN；照片署名 A.C.／Hannah Popowski，单张待核" },
+      { label: "02 · 同图编辑前", url: "https://phlearn.com/wp-content/uploads/2026/08/top-image-before-4.jpg", credit: "PHLEARN；照片署名 A.C.／Hannah Popowski，单张待核" },
+      { label: "03 · 柔焦人像", url: "https://k.sinaimg.cn/n/tech/crawl/20170704/q6nC-fyhskrq2572915.jpg/w700d1q75cms.jpg?by=cms_fixed_width", credit: "蜂鸟网／新浪；摄影师待核" },
+      { label: "04 · 同教程近肖像", url: "https://k.sinaimg.cn/n/tech/crawl/20170704/U3Q2-fyhskrq2572944.jpg/w700d1q75cms.jpg?by=cms_fixed_width", credit: "蜂鸟网／新浪；摄影师待核" },
+      { label: "05 · 森林暖光成片", url: "https://phlearn.com/wp-content/uploads/2025/02/top-image-after_f20559.jpg", credit: "PHLEARN；照片 Luca Storelli" },
+      { label: "06 · 同图编辑前", url: "https://phlearn.com/wp-content/uploads/2025/02/top-image-before_cca829.jpg", credit: "PHLEARN；照片 Luca Storelli" },
+    ],
     sourceLinks: [
       { label: "PHLEARN：人像高光泛光前后图（Photoshop）", url: "https://phlearn.com/tutorial/cinematic-highlight-glow-in-photoshop/" },
       { label: "蜂鸟网／新浪：复古柔焦人像", url: "https://tech.sina.cn/digi/dc/2017-07-04/detail-ifyhrxsk1681640.d.html?vt=4" },
       { label: "PHLEARN：森系人像蒙版塑光前后图（Lightroom）", url: "https://phlearn.com/tutorial/30-days-lightroom-day-6/" },
     ],
+    packageUrl: effectPackageDirectory("luminous-mist-portrait"),
+    downloadUrl: effectPackageDownload("luminous-mist-portrait", luminousPackage.version),
+    loadStyleMarkdown: () => import("../style-packs/packages/luminous-mist-portrait/effect.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-c200",

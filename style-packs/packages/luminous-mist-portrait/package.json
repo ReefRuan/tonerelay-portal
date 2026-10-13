@@ -1,0 +1,79 @@
+{
+  "schema_version": "effect-context-package-v2",
+  "id": "luminous-mist-portrait",
+  "family": "diffusion-glow",
+  "version": "0.1.1",
+  "title": "朦胧发光人像",
+  "summary": "从真实亮源建立可控柔光和空气感，按画面选择森系、黑柔、金柔或白柔方向；公开链接版提供完整提示词及六张教程照片的原站直链，不包含照片文件。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "use_modes": [
+    "standalone",
+    "with-style"
+  ],
+  "content": {
+    "effect": "effect.md",
+    "sources": "sources.md"
+  },
+  "evidence": {
+    "basis": "用户认可的法式朦胧与逆光人像教程；Sina/Fengniao 柔焦肖像两张、PHLEARN Photoshop 高光泛光同图前后、PHLEARN Lightroom 森林蒙版同图前后，共六张实际打开的真实教程照片；按来源层级区分 LR、PS 与拍摄操作。",
+    "limitations": "公开包只含文字及原站照片链接，原站可能更换链接；未取得照片再分发权；只有三组独立场景，黑/金/白柔缺少同拍光学对照；尚未在 Lightroom 真机完成成对验证。"
+  },
+  "validation": {
+    "lightroom_paired_test": "pending",
+    "representative_scene_coverage": "pending"
+  },
+  "sources": [
+    {
+      "title": "如何拍出复古朦胧感风格人像",
+      "url": "https://tech.sina.cn/digi/dc/2017-07-04/detail-ifyhrxsk1681640.d.html?vt=4",
+      "creator": "蜂鸟网（新浪转载）；摄影者待核",
+      "role": "镜前柔焦与暖亮人像、暗背景的参考；两张肖像非严格前后对照",
+      "rights_status": "unverified"
+    },
+    {
+      "title": "How to Get Cinematic Highlight Glow in Photoshop",
+      "url": "https://phlearn.com/tutorial/cinematic-highlight-glow-in-photoshop/",
+      "creator": "Aaron Nace / PHLEARN；照片页署名 A.C. 与 Hannah Popowski",
+      "role": "真实照片的泛光前后视觉锚点；空间散射步骤为 Photoshop 专属",
+      "rights_status": "unverified"
+    },
+    {
+      "title": "How to Add and Subtract Masks in Lightroom Classic – Day 6",
+      "url": "https://phlearn.com/tutorial/30-days-lightroom-day-6/",
+      "creator": "Aaron Nace / PHLEARN；照片 Luca Storelli",
+      "role": "森林人像的 Lightroom 蒙版塑光前后视觉锚点",
+      "rights_status": "unverified"
+    },
+    {
+      "title": "法式朦胧复古人像色调与 PS 后期发光",
+      "url": "https://www.bilibili.com/video/BV1pa411A7Kv/",
+      "creator": "阿堞",
+      "role": "用户认可的目标方向；仅页面标题/简介已核，视频步骤未逐帧核对"
+    },
+    {
+      "title": "制作复古朦胧感风格人像",
+      "url": "https://www.sohu.com/a/679154227_121119287",
+      "creator": "蠢夏天（转载页署名）",
+      "role": "法式朦胧人像的视觉来源索引；本轮图片受阻未入包"
+    },
+    {
+      "title": "朦胧发光的复古人像",
+      "url": "https://www.16xx8.com/photoshop/jiaocheng/2019/148332_all.html",
+      "creator": "风柜来de人",
+      "role": "红裙与绿植的颜色关系、肤色与 PS/Exposure 发光分层"
+    },
+    {
+      "title": "胶片色，LR 调出通透的胶片风人像照片",
+      "url": "https://www.16xx8.com/photoshop/jiaocheng/2017/143672_all.html",
+      "creator": "丹尼斯secondlife",
+      "role": "暖色、曲线、肤色/绿植与颗粒的胶片色底座"
+    },
+    {
+      "title": "夏日朦胧感发光发丝：拍摄和调色教程",
+      "url": "https://www.bilibili.com/video/BV1ti4y1U726/",
+      "creator": "B站视频作者待核",
+      "role": "逆光发丝场景索引；具体视频步骤未核实"
+    }
+  ]
+}

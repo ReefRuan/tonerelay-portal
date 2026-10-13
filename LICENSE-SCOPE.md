@@ -8,6 +8,8 @@ Copyright (C) 2026 Reef Ruan.
 
 第三方照片**不受仓库级 AGPL 授权**。`style-packs/packages/*/references/*.jpg`、相同照片的 `cover.jpg`、对应 `public/previews/**/*.webp` 及打包 ZIP 内的这些照片，分别遵循所属 `package.json` 记录的摄影师、原图页面和 CC 许可。预览图仅做尺寸、格式转换；转载时仍须履行原图许可的署名及相同方式共享条件。`public/presets/` 和 `public/official-previews/` 的外部素材也不因本仓库的 AGPL 声明获得新授权；使用前须分别核对各目录来源记录。
 
+`style-packs/packages/luminous-mist-portrait/` 的公开链接版仅包含项目作者撰写的文字、元数据和指向教程原站照片的超链接；该目录和对应 ZIP 不包含这些第三方照片的文件。超链接不改变原照片的权利状态，也不授予下载、修改或再分发许可。
+
 `docs/assets/portal-gallery.webp` 是网页截图，其中嵌入的第三方封面照片仍遵循各自的 CC 许可；截图在根目录 README 中标明可见照片的作者、原图与许可。`docs/assets/portal-experience.webp` 同样是页面截图，不会改变其中任何外部素材的原有权利。
 
 依赖库、字体及其他第三方内容保留各自许可。ToneRelay 名称和标识的使用问题不由 AGPL 自动解决。

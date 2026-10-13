@@ -1045,6 +1045,9 @@ input:focus-visible,
 .effect-sources ul { display: block; }
 .effect-sources li { margin: 5px 0; }
 .effect-sources a { color: var(--blue); text-underline-offset: 3px; }
+.effect-photo-links ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }
+.effect-photo-links li { margin: 0; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.effect-photo-links small { display: block; color: var(--muted); font-size: 11px; }
 
 .style-markdown {
   margin-top: 24px;
@@ -1666,6 +1669,7 @@ kbd {
   .detail-title-row { gap: 12px; }
   .detail-title-row h2 { font-size: 38px; }
   .detail-title-row > span { align-self: end; font-size: 10px; }
+  .effect-photo-links ul { grid-template-columns: 1fr; }
   .reference-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
   .reference-list a > small { font-size: 8px; }
   .detail-actions { justify-content: stretch; }
