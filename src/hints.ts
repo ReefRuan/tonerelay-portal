@@ -2,33 +2,30 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 /**
- * Pure state logic for the two one-off onboarding hints (install + star).
+ * Pure state logic for the one-off Star hint.
  *
  * The React glue lives in `HeaderHints.tsx`; everything here is side-effect free and
  * unit tested in `hints.test.ts`. Storage access is injected so the module can
  * be exercised without a browser.
  */
 
-export type HintId = "install" | "star";
+export type HintId = "star";
 
 /** Terminal states persisted to storage. */
 export type HintStatus = "done" | "dismissed";
 
-/** Hint copy is final and must not be edited. */
+/** Copy for the remaining one-off hint. */
 export const HINT_COPY: Record<HintId, string> = {
-  install: "还没装？点「一键安装」复制提示词，把提示词发给你的 Agent 就行",
   star: "点击 ⭐ 支持作者",
 };
 
 /** localStorage keys, prefixed so they never clash with unrelated state. */
 export const HINT_STORAGE_KEYS: Record<HintId, string> = {
-  install: "tr.hint.install",
   star: "tr.hint.star",
 };
 
 /** Delay before each hint is offered. */
 export const HINT_DELAY_MS: Record<HintId, number> = {
-  install: 5000,
   star: 8000,
 };
 
@@ -39,7 +36,6 @@ export interface HintStorage {
 }
 
 export interface HintStatuses {
-  install: HintStatus | null;
   star: HintStatus | null;
 }
 
@@ -64,10 +60,9 @@ export function readHintStatus(storage: HintStorage | null, id: HintId): HintSta
   }
 }
 
-/** Reads both hint statuses. */
+/** Reads the Star hint status. */
 export function readHintStatuses(storage: HintStorage | null): HintStatuses {
   return {
-    install: readHintStatus(storage, "install"),
     star: readHintStatus(storage, "star"),
   };
 }
@@ -89,12 +84,8 @@ export function isResolved(status: HintStatus | null): boolean {
 
 /**
  * The single hint that may be offered next.
- *
- * Install always takes priority; the star hint only becomes eligible once the
- * install hint is resolved, which also guarantees at most one hint at a time.
  */
 export function nextHint(statuses: HintStatuses): HintId | null {
-  if (!isResolved(statuses.install)) return "install";
   if (!isResolved(statuses.star)) return "star";
   return null;
 }

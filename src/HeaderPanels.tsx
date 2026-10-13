@@ -26,18 +26,6 @@ export const PRIVACY_STATEMENT = {
 
 export const INSTALL_PANEL_LEAD = "复制下面全部内容，发给你的 Agent 即可开始安装";
 
-/** Assigns a value to a (possibly callback) React ref. */
-function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
-  if (!ref) return;
-  if (typeof ref === "function") ref(value);
-  else (ref as { current: T | null }).current = value;
-}
-
-/** Merges several refs into one callback ref. */
-function mergeRefs<T>(...refs: (Ref<T> | undefined)[]): (value: T | null) => void {
-  return (value) => refs.forEach((ref) => assignRef(ref, value));
-}
-
 /** Shared outside-click + Escape dismissal for header popovers. */
 function usePopoverDismiss(open: boolean, rootRef: Ref<HTMLDivElement>, onClose: () => void) {
   useEffect(() => {
@@ -98,10 +86,8 @@ function HeaderPopover({ open, panelRef, label, className, children }: {
  * original copy behaviour and whose caret half opens an inline popover with the
  * full install prompt.
  */
-export function InstallAction({ anchorRef, onCopy, onComplete }: {
-  anchorRef?: Ref<HTMLDivElement>;
+export function InstallAction({ onCopy }: {
   onCopy: () => Promise<boolean>;
-  onComplete?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -119,16 +105,13 @@ export function InstallAction({ anchorRef, onCopy, onComplete }: {
   }, [open]);
 
   return (
-    <div className="header-action-group" ref={mergeRefs(rootRef, anchorRef)}>
+    <div className="header-action-group" ref={rootRef}>
       <div className="install-split">
         <button
           type="button"
           className="header-action header-install install-main"
           title="复制安装提示词和 FAQ，发给 Agent 开始安装"
-          onClick={() => {
-            void onCopy();
-            onComplete?.();
-          }}
+          onClick={() => void onCopy()}
         >
           <Icon name="copy" />一键安装
         </button>
@@ -139,10 +122,7 @@ export function InstallAction({ anchorRef, onCopy, onComplete }: {
           aria-label="展开安装提示词"
           aria-expanded={open}
           title="展开安装提示词"
-          onClick={() => setOpen((current) => {
-            if (!current) onComplete?.();
-            return !current;
-          })}
+          onClick={() => setOpen((current) => !current)}
         >
           <Icon name="chevron-down" />
         </button>

@@ -31,4 +31,4 @@
 
 ## 更新效果包
 
-Studio 的 `templatepackages/<effect-id>/` 是效果包内容源。公开时只复制可分发的包文件与已核对许可的照片，并把仅供 Studio 使用的相对研究链接改成公开可访问的一手来源链接。更新版本后，同步本目录的包、`downloads/` ZIP、`effect-catalog.json` 和画廊入口；`pnpm build` 会据清单生成独立网页与 sitemap。E01 的实体色卡照片保留原始 JPEG 及逐图署名；E02 的教程照片仍只提供原站链接。公开下载与 `candidate` 验证状态是两件事，未完成 Lightroom 成对验证时不要修改验证结论。
+Studio 的 `templatepackages/<effect-id>/` 是效果包内容源。公开时只复制可分发的包文件与已核对许可的照片，并把仅供 Studio 使用的相对研究链接改成公开可访问的一手来源链接。更新版本后，同步本目录的包、`downloads/` ZIP、`effect-catalog.json` 和画廊入口；`effect-catalog.json` 的 `portal_url` 指向画廊详情，`pnpm build` 仍生成供搜索引擎读取的 HTML 与 sitemap。E01 的实体色卡照片保留原始 JPEG 及逐图署名；E02 的教程照片仍只提供原站链接。公开下载与 `candidate` 验证状态是两件事，未完成 Lightroom 成对验证时不要修改验证结论。

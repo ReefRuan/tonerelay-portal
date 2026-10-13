@@ -126,6 +126,9 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
           <h1 id="agent-strip-title">{heroTitle}</h1>
           <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
           <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
+          <a className="author-contact" href="mailto:leningruan1@gmail.com">
+            联系作者 <Icon name="arrow" />
+          </a>
         </div>
       </div>
       <div className="agent-picker">

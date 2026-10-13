@@ -20,14 +20,12 @@ import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
 import { HeaderHint, useOnboardingHints } from "./HeaderHints";
 import { InstallAction, PrivacyAction } from "./HeaderPanels";
+import { IntroSignature } from "./IntroSignature";
 
 type DockMode = "collapsed" | "normal" | "expanded";
 
 const presetBadgeLabel = (preset: Preset) =>
   preset.photoCredit ? "第三方图片" : preset.release;
-
-const publicPageUrl = (preset: Preset) =>
-  `${import.meta.env.BASE_URL}${preset.kind === "effect" ? "effects" : "styles"}/${preset.id}/`;
 
 function pageFromHash(): PortalPage {
   const value = window.location.hash.slice(1);
@@ -36,30 +34,41 @@ function pageFromHash(): PortalPage {
     : "gallery";
 }
 
-function StyleMarkdown({ preset, onCopy }: {
-  preset: Preset;
+function markdownWithExternalLinks(markdown: string) {
+  return markdown.split(/(\[[^\]]+\]\(https?:\/\/[^\s)]+\))/g).map((part, index) => {
+    const link = /^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/.exec(part);
+    return link
+      ? <a key={index} href={link[2]} target="_blank" rel="noreferrer">{link[1]}</a>
+      : part;
+  });
+}
+
+function PackageMarkdown({ title, fileName, loader, packageUrl, onCopy }: {
+  title: string;
+  fileName: string;
+  loader: () => Promise<string>;
+  packageUrl?: string;
   onCopy: (value: string, message: string) => Promise<boolean>;
 }) {
-  const fileName = preset.kind === "effect" ? "effect.md" : "style.md";
   const [markdown, setMarkdown] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
   const loading = useRef(false);
 
   const load = () => {
-    if (!preset.loadStyleMarkdown || markdown !== null || loading.current) return;
+    if (markdown !== null || loading.current) return;
     loading.current = true;
-    void preset.loadStyleMarkdown().then(setMarkdown).catch(() => setFailed(true)).finally(() => {
+    void loader().then(setMarkdown).catch(() => setFailed(true)).finally(() => {
       loading.current = false;
     });
   };
 
   return <details className="style-markdown" onToggle={(event) => { if (event.currentTarget.open) load(); }}>
-    <summary><span>{preset.kind === "effect" ? "效果提示词" : "风格说明"}</span><span>{fileName}</span></summary>
+    <summary><span>{title}</span><span>{fileName}</span></summary>
     <div className="style-markdown-content">
       {markdown !== null ? <>
         <button onClick={() => void onCopy(markdown, `已复制 ${fileName}`)}>复制 Markdown</button>
-        <pre>{markdown}</pre>
-      </> : failed ? <p>无法加载。{preset.packageUrl && <a href={`${preset.packageUrl.replace("/tree/", "/blob/")}/${fileName}`} target="_blank" rel="noreferrer">在 GitHub 查看 {fileName}</a>}</p> : <p>载入中…</p>}
+        <pre>{markdownWithExternalLinks(markdown)}</pre>
+      </> : failed ? <p>无法加载。{packageUrl && <a href={`${packageUrl.replace("/tree/", "/blob/")}/${fileName}`} target="_blank" rel="noreferrer">在 GitHub 查看 {fileName}</a>}</p> : <p>载入中…</p>}
     </div>
   </details>;
 }
@@ -85,16 +94,11 @@ export default function App() {
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const installAnchorRef = useRef<HTMLDivElement | null>(null);
   const starAnchorRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
 
   const hints = useOnboardingHints(page === "experience", detailOpen);
-  const hintAnchor = hints.active === "install"
-    ? installAnchorRef.current
-    : hints.active === "star"
-      ? starAnchorRef.current
-      : null;
+  const hintAnchor = hints.active === "star" ? starAnchorRef.current : null;
 
   const filteredPresets = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -230,7 +234,6 @@ export default function App() {
   const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "已复制安装提示词和 FAQ，发给 Agent 开始安装"), [copyValue]);
   const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "已复制卸载提示词，发给 Agent 核对并卸载"), [copyValue]);
 
-  const resolveInstallHint = useCallback(() => hints.resolve("install", "done"), [hints]);
   const resolveStarHint = useCallback(() => hints.resolve("star", "done"), [hints]);
   const dismissActiveHint = useCallback(() => {
     if (hints.active) hints.dismiss(hints.active);
@@ -382,13 +385,10 @@ export default function App() {
           <a href="#gallery" aria-current={page === "gallery" ? "page" : undefined}>画廊</a>
           <a href="#experience" aria-current={page === "experience" ? "page" : undefined}>立即体验</a>
         </nav>
+        {page === "gallery" && <IntroSignature />}
         {page === "experience" && <div className="site-header-actions">
           <PrivacyAction />
-          <InstallAction
-            anchorRef={installAnchorRef}
-            onCopy={copyInstallPrompt}
-            onComplete={resolveInstallHint}
-          />
+          <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group" ref={starAnchorRef}>
             <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="打开 Portal / 风格包仓库，在 GitHub 点 Star" onClick={resolveStarHint}><Icon name="star" />Star Portal</a>
             <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="MCP 仓库目前私有；公开后访客才能在 GitHub 点 Star" aria-label="ToneRelay MCP 仓库，当前私有，公开后可 Star" onClick={resolveStarHint}><Icon name="star" />Star MCP <small>私有</small></a>
@@ -494,15 +494,6 @@ export default function App() {
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a>
             <span aria-hidden="true">·</span>
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a>
-            <details className="footer-page-index">
-              <summary>网页介绍</summary>
-              <nav aria-label="公开风格与效果包文字索引">
-                <a href={`${import.meta.env.BASE_URL}experience/`}>ToneRelay 使用说明</a>
-                {presets.filter((preset) => preset.packageUrl).map((preset) => (
-                  <a key={preset.id} href={publicPageUrl(preset)}>{preset.name}</a>
-                ))}
-              </nav>
-            </details>
           </div>
         </footer>
       </main> : <Documents onCopyUninstall={copyUninstallPrompt} />}
@@ -566,6 +557,13 @@ export default function App() {
                 {selectedPreset.kind === "effect" && <section className="effect-overview" aria-label="效果包说明">
                   <p>{selectedPreset.description}</p>
                   <p className="effect-status">{selectedPreset.note}</p>
+                  {selectedPreset.downloadUrl && <div className="effect-package-access">
+                    <div>
+                      <strong>{selectedPreset.name} · {selectedPreset.version}</strong>
+                      <p>{selectedPreset.packageContents}</p>
+                    </div>
+                    <a href={selectedPreset.downloadUrl}>{selectedPreset.downloadLabel ?? "下载效果包 ZIP"}</a>
+                  </div>}
                   {selectedPreset.adjustmentHints && <div className="effect-adjustments">
                     <h3>可以对 Agent 这样说</h3>
                     <ul>{selectedPreset.adjustmentHints.map((hint) => <li key={hint}>“{hint}”</li>)}</ul>
@@ -584,12 +582,26 @@ export default function App() {
                     </li>)}</ul>
                   </div>}
                 </section>}
-                {selectedPreset.loadStyleMarkdown && <StyleMarkdown key={selectedPreset.id} preset={selectedPreset} onCopy={copyValue} />}
+                {selectedPreset.loadStyleMarkdown && <PackageMarkdown
+                  key={`${selectedPreset.id}-prompt`}
+                  title={selectedPreset.kind === "effect" ? "效果提示词" : "风格说明"}
+                  fileName={selectedPreset.kind === "effect" ? "effect.md" : "style.md"}
+                  loader={selectedPreset.loadStyleMarkdown}
+                  packageUrl={selectedPreset.packageUrl}
+                  onCopy={copyValue}
+                />}
+                {selectedPreset.loadSourcesMarkdown && <PackageMarkdown
+                  key={`${selectedPreset.id}-sources`}
+                  title="来源与照片署名"
+                  fileName="sources.md"
+                  loader={selectedPreset.loadSourcesMarkdown}
+                  packageUrl={selectedPreset.packageUrl}
+                  onCopy={copyValue}
+                />}
                 <div className="detail-actions">
-                  {selectedPreset.packageUrl && <a href={publicPageUrl(selectedPreset)}>阅读网页介绍</a>}
                   {selectedPreset.packageUrl && <a href={selectedPreset.packageUrl} target="_blank" rel="noreferrer">查看{selectedPreset.kind === "effect" ? "效果包" : "风格包"}</a>}
                   <button onClick={() => void copyLink()}><Icon name="copy" />{selectedPreset.downloadUrl ? "复制下载链接" : "复制页面链接"}</button>
-                  {selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载{selectedPreset.kind === "effect" ? "效果包" : "风格包"}</a>}
+                  {selectedPreset.kind !== "effect" && selectedPreset.downloadUrl && <a href={selectedPreset.downloadUrl}>下载风格包</a>}
                   {selectedPreset.downloadUrlBackup && <a href={selectedPreset.downloadUrlBackup} title="国内镜像下载（Gitee，内容一致）">国内下载</a>}
                 </div>
               </div>

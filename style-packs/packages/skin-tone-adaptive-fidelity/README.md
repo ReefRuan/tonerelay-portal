@@ -4,7 +4,7 @@
 
 包内有 `package.json`、[效果提示词](effect.md)、[来源与照片署名](sources.md)及两张实体色卡外观照片。提示词按同场色卡、可信中性物、混合光和无可信参照四种情况选择路径，并用本张照片的数字采样板、蒙版边缘和背景哨点观察前后变化。数字变化本身不等于肤色自然或绝对色准。
 
-[打开网页介绍](https://reefruan.github.io/tonerelay-portal/effects/skin-tone-adaptive-fidelity/) · [下载完整效果包 ZIP](https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/skin-tone-adaptive-fidelity-v0.6.2.zip)
+[在画廊详情查看效果包](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) · [下载完整效果包 ZIP](https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/skin-tone-adaptive-fidelity-v0.6.2.zip)
 
 ## 包内照片
 

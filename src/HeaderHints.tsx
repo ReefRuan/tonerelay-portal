@@ -28,11 +28,9 @@ export interface OnboardingHints {
 }
 
 /**
- * Drives the two one-off hints.
+ * Drives the one-off Star hint.
  *
- * - Install hint is offered after 5s; the star hint only becomes eligible once
- *   the install hint is resolved (so at most one hint shows at a time) and is
- *   then offered after a further 8s.
+ * - The Star hint is offered after 8s on the experience page.
  * - While a detail panel is open hints are suppressed but not resolved, so they
  *   re-appear when the panel closes.
  */

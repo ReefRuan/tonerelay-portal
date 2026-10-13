@@ -43,10 +43,13 @@ export type Preset = {
   sourceLinks?: Array<{ label: string; url: string }>;
   photoLinks?: Array<{ label: string; url: string; credit: string }>;
   adjustmentHints?: string[];
+  packageContents?: string;
+  downloadLabel?: string;
   downloadUrl?: string;
   downloadUrlBackup?: string;
   packageUrl?: string;
   loadStyleMarkdown?: () => Promise<string>;
+  loadSourcesMarkdown?: () => Promise<string>;
 };
 
 const portalDetail = (id: string) =>
@@ -128,7 +131,7 @@ export const presets: Preset[] = [
     references: [skinChartClassic, skinChartPassport],
     ratio: "4 / 5",
     description: "用同图数字采样板观察肤色变化，并检查背景与蒙版边缘；结合同光区参照和风格目标，辅助判断人物自然度与背景保护。",
-    note: "公开候选：可下载完整提示词、来源索引和两张获许可的实体色卡外观照片。照片不是厂商标准色值或目标肤色；尚无多肤色、同拍色卡与 Lightroom 成对验证，不能宣称已实测提高色准。",
+    note: "公开候选。色卡照片仅展示实体卡外观，不能作为厂商标准色值或目标肤色；多肤色、同拍色卡与 Lightroom 成对验证尚未完成，不能宣称已实测提高色准。",
     tags: ["Skin Tone", "Color Check", "Style Guard"],
     palette: [],
     link: portalDetail("skin-tone-adaptive-fidelity"),
@@ -140,9 +143,12 @@ export const presets: Preset[] = [
       { author: "Robert Cooke", source: "https://commons.wikimedia.org/wiki/File:X-Rite_ColorChecker_Passport_-_27_Jan._2013.jpg", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" },
     ],
     adjustmentHints: ["肤色自然，背景少动", "保留现在的风格，只修正脸颈断色", "按同场色卡检查色准", "混合光按人物和光区分别处理"],
+    packageContents: "包含效果提示词、来源与照片署名、两张获许可的实体色卡外观照片；色卡照片不提供标准色值。",
+    downloadLabel: "下载完整效果包 ZIP",
     packageUrl: effectPackageDirectory("skin-tone-adaptive-fidelity"),
     downloadUrl: effectPackageDownload("skin-tone-adaptive-fidelity", skinPackage.version),
     loadStyleMarkdown: () => import("../style-packs/packages/skin-tone-adaptive-fidelity/effect.md?raw").then((module) => module.default),
+    loadSourcesMarkdown: () => import("../style-packs/packages/skin-tone-adaptive-fidelity/sources.md?raw").then((module) => module.default),
   },
   {
     id: "luminous-mist-portrait",
@@ -176,9 +182,12 @@ export const presets: Preset[] = [
       { label: "蜂鸟网／新浪：复古柔焦人像", url: "https://tech.sina.cn/digi/dc/2017-07-04/detail-ifyhrxsk1681640.d.html?vt=4" },
       { label: "PHLEARN：森系人像蒙版塑光前后图（Lightroom）", url: "https://phlearn.com/tutorial/30-days-lightroom-day-6/" },
     ],
+    packageContents: "包含效果提示词、来源索引和六张教程照片的原站链接；ZIP 不包含照片文件。",
+    downloadLabel: "下载文字链接包 ZIP",
     packageUrl: effectPackageDirectory("luminous-mist-portrait"),
     downloadUrl: effectPackageDownload("luminous-mist-portrait", luminousPackage.version, true),
     loadStyleMarkdown: () => import("../style-packs/packages/luminous-mist-portrait/effect.md?raw").then((module) => module.default),
+    loadSourcesMarkdown: () => import("../style-packs/packages/luminous-mist-portrait/sources.md?raw").then((module) => module.default),
   },
   {
     id: "fuji-film-c200",

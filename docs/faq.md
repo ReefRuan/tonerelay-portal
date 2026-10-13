@@ -60,7 +60,7 @@ pip、Python 和依赖可能使用各自的默认缓存或系统临时目录，�
 
 六个正式风格包可在画廊详情中分别下载，也可以复制各自的 ZIP 下载链接。每包包含 `style.md`、封面、参考图和逐图许可记录；公开文件位于 [Portal 的风格包目录](https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages)。下载风格包不等于 Runtime 已安装或支持按编号自动安装，使用前仍应核对当前版本的安装说明。
 
-[E01 自适应肤色保护](https://reefruan.github.io/tonerelay-portal/effects/skin-tone-adaptive-fidelity/) 有完整候选效果包可下载，包含提示词、来源索引及两张已核对许可的实体色卡照片；照片不是标准色值，Lightroom 成对效果仍待验证。[E02 朦胧发光人像](https://reefruan.github.io/tonerelay-portal/effects/luminous-mist-portrait/) 则提供文字链接版候选包，六张教程参考照片只以原站链接出现，不在 ZIP 或网页中托管。两个效果包均不按风格包编号自动安装。
+[E01 自适应肤色保护](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) 的画廊详情可直接阅读提示词与来源索引并下载完整候选效果包，包含两张已核对许可的实体色卡照片；照片不是标准色值，Lightroom 成对效果仍待验证。[E02 朦胧发光人像](https://reefruan.github.io/tonerelay-portal/?preset=luminous-mist-portrait#gallery) 的详情提供文字链接版候选包，六张教程参考照片只以原站链接出现，不在 ZIP 或网页中托管。两个效果包均不按风格包编号自动安装。
 
 ## 国内网络访问 GitHub 慢、打不开时怎么下载？
 

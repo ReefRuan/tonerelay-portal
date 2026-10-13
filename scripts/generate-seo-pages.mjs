@@ -223,10 +223,10 @@ for (const entry of effectCatalog.packages) {
   });
   const markdown = await readText(`${entry.path}/${pkg.content.effect}`);
   const canonical = absolute(`effects/${id}/`);
-  if (entry.portal_url !== canonical) throw new Error(`Effect catalog URL must match canonical URL: ${id}`);
+  const appUrl = absolute(`?preset=${id}#gallery`);
+  if (entry.portal_url !== appUrl) throw new Error(`Effect catalog URL must match gallery detail URL: ${id}`);
   const title = `${pkg.title}｜可调 Lightroom 效果提示词 · ToneRelay`;
   const description = shortDescription(pkg.summary);
-  const appUrl = absolute(`?preset=${id}#gallery`);
   const packageUrl = `${repo}/tree/main/${entry.path}`;
   const downloadUrl = `${repo}/raw/refs/heads/main/${entry.archive_path}`;
   const sources = pkg.sources.map((source) => `<li><a href="${safeUrl(source.url)}">${escapeHtml(source.title)}</a> · ${escapeHtml(source.creator)}<br><span class="muted">${escapeHtml(source.role)}</span></li>`).join("\n");
