@@ -8,6 +8,9 @@ import pro400Package from "../style-packs/packages/fuji-film-pro-400h/package.js
 import proviaPackage from "../style-packs/packages/fuji-film-provia-100f/package.json";
 import superiaPackage from "../style-packs/packages/fuji-film-superia-xtra-400/package.json";
 import luminousPackage from "../style-packs/packages/luminous-mist-portrait/package.json";
+import skinPackage from "../style-packs/packages/skin-tone-adaptive-fidelity/package.json";
+import skinChartClassic from "../style-packs/packages/skin-tone-adaptive-fidelity/references/01.jpg?url";
+import skinChartPassport from "../style-packs/packages/skin-tone-adaptive-fidelity/references/02.jpg?url";
 
 type PhotoCredit = {
   author: string;
@@ -94,8 +97,8 @@ const packageDownloadBackup = (id: string) =>
   `https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/${id}-v${publishedPacks[id].version}.zip`;
 const effectPackageDirectory = (id: string) =>
   `https://github.com/ReefRuan/tonerelay-portal/tree/main/style-packs/packages/${id}`;
-const effectPackageDownload = (id: string, version: string) =>
-  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${version}-links.zip`;
+const effectPackageDownload = (id: string, version: string, linksOnly = false) =>
+  `https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/${id}-v${version}${linksOnly ? "-links" : ""}.zip`;
 
 const effectCover = (title: string, subtitle: string, status: string, colors: [string, string, string]) => {
   const [dark, middle, light] = colors;
@@ -118,20 +121,28 @@ export const presets: Preset[] = [
     id: "skin-tone-adaptive-fidelity",
     name: "自适应肤色保护",
     en: "ADAPTIVE SKIN FIDELITY",
-    version: "v0.6.2",
+    version: `v${skinPackage.version}`,
     category: "效果",
     kind: "effect",
-    image: effectCover("自适应肤色", "ADAPTIVE SKIN FIDELITY", "私有候选", ["#202c38", "#506d78", "#b4a79a"]),
-    references: [],
+    image: effectCover("自适应肤色", "ADAPTIVE SKIN FIDELITY", "公开候选", ["#202c38", "#506d78", "#b4a79a"]),
+    references: [skinChartClassic, skinChartPassport],
     ratio: "4 / 5",
     description: "用同图数字采样板观察肤色变化，并检查背景与蒙版边缘；结合同光区参照和风格目标，辅助判断人物自然度与背景保护。",
-    note: "私有候选：尚无多肤色、同拍色卡与 Lightroom 成对验证，不能宣称已实测提高色准。",
+    note: "公开候选：可下载完整提示词、来源索引和两张获许可的实体色卡外观照片。照片不是厂商标准色值或目标肤色；尚无多肤色、同拍色卡与 Lightroom 成对验证，不能宣称已实测提高色准。",
     tags: ["Skin Tone", "Color Check", "Style Guard"],
     palette: [],
     link: portalDetail("skin-tone-adaptive-fidelity"),
     number: "E01",
     release: "候选",
-    availability: "私有试用",
+    availability: "公开预览",
+    referenceCredits: [
+      { author: "ColorScientist", source: "https://commons.wikimedia.org/wiki/File:ColorChecker100423.jpg", license: "Public domain (PD-self)", licenseUrl: "https://commons.wikimedia.org/wiki/File:ColorChecker100423.jpg" },
+      { author: "Robert Cooke", source: "https://commons.wikimedia.org/wiki/File:X-Rite_ColorChecker_Passport_-_27_Jan._2013.jpg", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" },
+    ],
+    adjustmentHints: ["肤色自然，背景少动", "保留现在的风格，只修正脸颈断色", "按同场色卡检查色准", "混合光按人物和光区分别处理"],
+    packageUrl: effectPackageDirectory("skin-tone-adaptive-fidelity"),
+    downloadUrl: effectPackageDownload("skin-tone-adaptive-fidelity", skinPackage.version),
+    loadStyleMarkdown: () => import("../style-packs/packages/skin-tone-adaptive-fidelity/effect.md?raw").then((module) => module.default),
   },
   {
     id: "luminous-mist-portrait",
@@ -166,7 +177,7 @@ export const presets: Preset[] = [
       { label: "PHLEARN：森系人像蒙版塑光前后图（Lightroom）", url: "https://phlearn.com/tutorial/30-days-lightroom-day-6/" },
     ],
     packageUrl: effectPackageDirectory("luminous-mist-portrait"),
-    downloadUrl: effectPackageDownload("luminous-mist-portrait", luminousPackage.version),
+    downloadUrl: effectPackageDownload("luminous-mist-portrait", luminousPackage.version, true),
     loadStyleMarkdown: () => import("../style-packs/packages/luminous-mist-portrait/effect.md?raw").then((module) => module.default),
   },
   {

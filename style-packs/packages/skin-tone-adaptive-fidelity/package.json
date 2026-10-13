@@ -1,0 +1,40 @@
+{
+  "schema_version": "effect-context-package-v1",
+  "id": "skin-tone-adaptive-fidelity",
+  "family": "skin-tone",
+  "version": "0.6.2",
+  "title": "自适应肤色与色彩忠实度",
+  "summary": "按同场色卡、可信中性物、混合光及风格意图选择肤色校正路径；用同图数字采样板和蒙版边缘/背景哨点检查自然度与背景保护，在参照完整时评估色准变化。",
+  "language": "zh-CN",
+  "status": "candidate",
+  "use_modes": ["standalone", "with-style"],
+  "content": {"effect": "effect.md", "sources": "sources.md", "references": ["references/01.jpg", "references/02.jpg"]},
+  "evidence": {
+    "basis": "本地 skin-calibration、industrial-charts、portrait-workflows、portrait-references、colorcards P1/P2 审核记录中的 CIE 色度条件、厂商色卡说明、一手人像工作流、馆藏风格参照及两张获许可的实体卡外观照片；另有四张未校准胶片人像视觉分析",
+    "limitations": "色卡参考文件、人体图像和馆藏作品没有取得再分发许可；缺少同拍 RAW/色卡、多肤色 Lightroom 成对验证和受控风格兼容评估，尚不能宣称该包已实测提高色准"
+  },
+  "validation": {"lightroom_paired_test": "pending", "diverse_skin_tones": "pending"},
+  "sources": [
+    {"title": "New Color Specifications for ColorChecker SG and Classic Charts", "url": "https://www.xrite.com/service-support/new_color_specifications_for_colorchecker_sg_and_classic_charts", "creator": "X-Rite", "role": "色卡批次与参考值匹配"},
+    {"title": "ColorChecker Passport Photo 2 Guide", "url": "https://calibrite.com/wp-content/uploads/2023/08/ColorChecker-Passport-Photo-2-Guide_-EN_0123.pdf", "creator": "Calibrite", "role": "同光拍卡、中性与创意暖化分离"},
+    {"title": "What do the color patches of the SpyderCHECKR represent?", "url": "https://spyder-support.datacolor.com/hc/en-us/articles/4406336795794-What-do-the-color-patches-of-the-SpyderCHECKR-Spyder-Checkr-Photo-SpyderCHECKR-24-represent", "creator": "Datacolor", "role": "第三种工业色卡的样块范围与局限"},
+    {"title": "SpyderCHECKR Color Data V2", "url": "https://www.datacolor.com/spyder/downloads/SpyderCheckr_Color_Data_V2.pdf", "creator": "Datacolor", "role": "官方数据文件入口；数值条件和许可须先核对"},
+    {"title": "Specification of sRGB", "url": "https://registry.color.org/rgb-registry/files/sRGB.pdf", "creator": "International Color Consortium", "role": "数字色卡 RGB 编码、D65 白点与颜色转换规范"},
+    {"title": "Colorimetry Part 6: CIEDE2000 Colour-Difference Formula", "url": "https://www.cie.co.at/publications/colorimetry-part-6-ciede2000-colour-difference-formula-1", "creator": "CIE", "role": "数字色卡逐块颜色差计算依据；前后变化不等于绝对色准"},
+    {"title": "Measurement of Human Skin Colour", "url": "https://www.cie.co.at/publications/measurement-human-skin-colour-0", "creator": "CIE", "role": "人体肤色的个体、部位和测量条件差异；不设统一 sRGB 目标"},
+    {"title": "Preferred skin reproduction of different skin groups", "url": "https://pubmed.ncbi.nlm.nih.gov/36905780/", "creator": "Peng et al., Vision Research 2023", "role": "主观偏好肤色是依人像而异的区域，不可凭单个数字认定自然"},
+    {"title": "Correlated colour temperature", "url": "https://www.cie.co.at/eilvterm/17-23-068", "creator": "CIE", "role": "CCT 定义及单一 K 值的解释边界"},
+    {"title": "Colorimetry Part 1: CIE Standard Colorimetric Observers", "url": "https://www.cie.co.at/publications/colorimetry-part-1-cie-standard-colorimetric-observers-0", "creator": "CIE", "role": "观察者条件"},
+    {"title": "Colorimetry Part 2: CIE Standard Illuminants", "url": "https://www.cie.co.at/publications/colorimetry-part-2-cie-standard-illuminants-0", "creator": "CIE", "role": "照明体与白点条件"},
+    {"title": "Image tone and color in Lightroom Classic", "url": "https://helpx.adobe.com/lightroom-classic/desktop/process-and-develop-photos/image-tone-color.html", "creator": "Adobe", "role": "配置文件、RAW 与渲染图白平衡边界"},
+    {"title": "Lightroom Classic Masking tool", "url": "https://helpx.adobe.com/dk/lightroom-classic/desktop/process-and-develop-photos/masking.html", "creator": "Adobe", "role": "局部蒙版与覆盖检查的产品能力；Runtime 自动蒙版仍需单独验证"},
+    {"title": "Color adjustments in Camera Raw", "url": "https://helpx.adobe.com/camera-raw/desktop/using/make-color-tonal-adjustments-camera.html", "creator": "Adobe", "role": "肤色线作为诊断辅助"},
+    {"title": "Achieving perfect skin tones using Capture One", "url": "https://www.captureone.com/blog/achieving-perfect-skin-tones-using-capture-one", "creator": "Capture One", "role": "皮肤局部范围与妆容排除"},
+    {"title": "Measuring Skin Colour: Human Skin Colour Database", "url": "https://www.cie.co.at/publications/measuring-skin-colour/dataset1-humanskincolourdatabase", "creator": "CIE", "role": "人体肤色测量的多样性和条件"},
+    {"title": "Segregation Story, 1956", "url": "https://www.gordonparksfoundation.org/gordon-parks/photography-archive/segregation-story-1956/gordon-parks", "creator": "Gordon Parks Foundation", "role": "彩色纪实人像的风格压力案例，非色准真值"},
+    {"title": "Barbara and Mother", "url": "https://www.cartermuseum.org/collection/barbara-and-mother-p202144", "creator": "Amon Carter Museum", "role": "深肤色室内人像的明暗与环境色案例，非色准真值"},
+    {"title": "Almerisa, Leidschendam, The Netherlands", "url": "https://www.metmuseum.org/art/collection/search/294427", "creator": "Metropolitan Museum of Art", "role": "简洁环境彩色人像案例，非色准真值"},
+    {"title": "ColorChecker100423.jpg", "url": "https://commons.wikimedia.org/wiki/File:ColorChecker100423.jpg", "creator": "ColorScientist", "role": "Classic 实体卡外观与 24 色块布局的视觉参考；非色值真值", "license": "Public domain (PD-self)", "attribution": "ColorScientist, ColorChecker100423.jpg, via Wikimedia Commons; public domain; unmodified original JPEG", "reference_files": ["references/01.jpg"]},
+    {"title": "X-Rite ColorChecker Passport - 27 Jan. 2013.jpg", "url": "https://commons.wikimedia.org/wiki/File:X-Rite_ColorChecker_Passport_-_27_Jan._2013.jpg", "creator": "Robert Cooke", "role": "2013 年旧版 Passport 实体卡外观与布局的视觉参考；非 Photo 2、非色值真值", "license": "CC BY 2.0 https://creativecommons.org/licenses/by/2.0/", "attribution": "Robert Cooke, Colour checker passport (2013), via Wikimedia Commons, CC BY 2.0; unmodified original JPEG", "reference_files": ["references/02.jpg"]}
+  ]
+}

@@ -29,6 +29,8 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 风格包是供 Agent 阅读的 Markdown 与参考图，不等于 Lightroom 预设，也不代表安装了 MCP。六个公开包的目录、版本及下载入口见 [style-packs/README.md](style-packs/README.md)。
 
+[自适应肤色保护 E01](https://reefruan.github.io/tonerelay-portal/effects/skin-tone-adaptive-fidelity/) 现已公开完整候选效果包，可下载提示词、来源索引和两张获许可的实体色卡外观照片。它以同图数字采样板检查肤色和背景变化；色卡照片不是厂家标准色值，Lightroom 成对效果仍待验证。
+
 画廊中的 [朦胧发光人像候选](https://reefruan.github.io/tonerelay-portal/effects/luminous-mist-portrait/) 提供完整提示词、自然语言调整方向和六张教程照片的原站直链。[文字链接版效果包](style-packs/packages/luminous-mist-portrait/)可单独下载；网页和 ZIP 均不包含这些照片的文件。照片再分发许可与 Lightroom 成对效果尚未核实，因此仍标为候选。
 
 ## 仓库内容与本地预览
@@ -36,14 +38,14 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 | 路径 | 内容 |
 | --- | --- |
 | `src/`、`public/` | 网页源码和轻量预览图 |
-| `style-packs/packages/` | 六个正式风格包的 Markdown、封面与获许可参考图；另含 E02 文字链接版效果包 |
+| `style-packs/packages/` | 六个正式风格包，以及 E01 完整肤色效果包与 E02 文字链接版效果包 |
 | `style-packs/downloads/` | 按包提供的 ZIP |
-| `style-packs/effect-catalog.json` | 独立的效果包目录；链接版效果包不进入风格包自动安装清单 |
+| `style-packs/effect-catalog.json` | 独立的公开效果包目录；效果包不进入风格包自动安装清单 |
 | `docs/` | 页面介绍、安装提示词、FAQ 与卸载提示词 |
 
 ## 搜索引擎入口
 
-构建会为首页、ToneRelay 使用说明、六个公开胶片风格包和 E02 朦胧发光人像效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。独立页面使用自己的标题、摘要和 canonical URL；首页静态内容、画廊详情及页脚收起的“网页介绍”都链接到这些页面。E01 肤色保护仍是私有候选，不进入公开页面索引。
+构建会为首页、ToneRelay 使用说明、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。独立页面使用自己的标题、摘要和 canonical URL；首页静态内容、画廊详情及页脚收起的“网页介绍”都链接到这些页面。
 
 这些页面由 `pnpm build` 写入 `dist/`；本地查看独立页面请在构建后运行 `pnpm preview`。`pnpm dev` 只提供交互式画廊源码预览。
 

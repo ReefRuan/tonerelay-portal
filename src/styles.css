@@ -956,6 +956,9 @@ input:focus-visible,
   gap: 10px;
 }
 
+.reference-gallery.is-chart .reference-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.reference-gallery.is-chart .reference-list img { object-fit: contain; background: var(--paper); }
+
 .reference-list a {
   aspect-ratio: 4 / 3;
   position: relative;

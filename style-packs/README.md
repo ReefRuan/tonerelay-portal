@@ -1,4 +1,4 @@
-# ToneRelay 风格包
+# ToneRelay 风格与效果包
 
 风格上下文的整理与蒸馏由 Reef Ruan 维护；参考照片的作者和许可逐张列在各包 `package.json`，不能将照片署名改成 Reef。
 
@@ -21,8 +21,14 @@
 
 下载风格包只取得上下文文件，**不代表 Runtime 已支持按编号自动安装**。安装 ToneRelay 本体请看 [安装提示词](../docs/install-prompt.md) 与 [常见问题](../docs/faq.md)。
 
-## 链接版效果包
+## 公开候选效果包
 
-[E02 朦胧发光人像](packages/luminous-mist-portrait/) 是 `candidate` 效果上下文包，目录见 [独立效果清单](effect-catalog.json)，可下载[仅含提示词与来源链接的 ZIP](downloads/luminous-mist-portrait-v0.1.1-links.zip)。六张参考照片通过文字超链接指向教程原站；网页与 ZIP 不包含照片文件。它不进入上方六个风格包的 `catalog.json`，Runtime 也不按编号自动安装此效果包。照片的再分发许可和 Lightroom 成对效果尚未核实。
+[E01 自适应肤色保护](packages/skin-tone-adaptive-fidelity/) 可下载[完整效果包 ZIP](downloads/skin-tone-adaptive-fidelity-v0.6.2.zip)，包含 `package.json`、`effect.md`、`sources.md`、README 与两张获许可的实体色卡照片。照片仅用于辨认实体卡外观，不是厂商标准色值或人像肤色目标。包可独立使用或作为风格包之后的肤色保护步骤；多肤色、同拍色卡和 Lightroom 成对效果尚未验证，故仍标为 `candidate`。
 
-上述六个正式风格包的摄影作品权利仍属于各自作者；仓库代码将来的许可声明不能覆盖图片各自的 CC 条款。转载或修改这些风格包的图片时请保留每张图的署名、来源和相应许可，特别注意 CC BY-SA 的相同方式共享要求。E02 链接版中的教程照片许可尚未核实，不能沿用上述 CC 许可结论。
+[E02 朦胧发光人像](packages/luminous-mist-portrait/) 是 `candidate` 效果上下文包，可下载[仅含提示词与来源链接的 ZIP](downloads/luminous-mist-portrait-v0.1.1-links.zip)。六张参考照片通过文字超链接指向教程原站；网页与 ZIP 不包含照片文件。照片的再分发许可和 Lightroom 成对效果尚未核实。
+
+两个效果包都列在 [effect-catalog.json](effect-catalog.json)，不进入六个风格包的 `catalog.json`，Runtime 也不按编号自动安装。上述六个正式风格包的摄影作品权利仍属于各自作者；仓库代码的 AGPL 声明不能覆盖照片各自的许可。转载或修改图片时请保留逐图署名、来源和适用许可。E01 两张照片分别为公有领域和 CC BY 2.0；E02 原站教程照片的再分发许可尚未核实，不能沿用 E01 或风格包的许可结论。
+
+## 更新效果包
+
+Studio 的 `templatepackages/<effect-id>/` 是效果包内容源。公开时只复制可分发的包文件与已核对许可的照片，并把仅供 Studio 使用的相对研究链接改成公开可访问的一手来源链接。更新版本后，同步本目录的包、`downloads/` ZIP、`effect-catalog.json` 和画廊入口；`pnpm build` 会据清单生成独立网页与 sitemap。E01 的实体色卡照片保留原始 JPEG 及逐图署名；E02 的教程照片仍只提供原站链接。公开下载与 `candidate` 验证状态是两件事，未完成 Lightroom 成对验证时不要修改验证结论。

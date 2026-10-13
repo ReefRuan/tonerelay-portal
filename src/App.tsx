@@ -542,7 +542,7 @@ export default function App() {
                   {selectedPreset.references.length > 0 ? <span>{selectedPreset.references.length} 张参考图</span>
                     : selectedPreset.photoLinks?.length ? <span>{selectedPreset.photoLinks.length} 张原站照片链接</span> : null}
                 </header>
-                <section className="reference-gallery" aria-label={`${selectedPreset.name} 参考图`}>
+                <section className={`reference-gallery ${selectedPreset.id === "skin-tone-adaptive-fidelity" ? "is-chart" : ""}`} aria-label={`${selectedPreset.name} 参考图`}>
                   {selectedPreset.references.length ? <div className="reference-list">
                     {selectedPreset.references.map((reference, index) => (
                       <a

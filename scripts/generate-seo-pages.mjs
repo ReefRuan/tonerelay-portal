@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Reef Ruan
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { copyFile, readFile, mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,18 +38,27 @@ const publicId = (id) => {
   return id;
 };
 
-const inline = (text) => escapeHtml(text)
+const inline = (text, links = {}) => escapeHtml(text)
   .replace(/!\[([^\]]*)\]\((?:https?:\/\/[^\s)]+|[^)]+)\)/g, "$1")
-  .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|sources\.md)\)/g, (_, label, href) => {
-    const target = href === "sources.md"
-      ? `${repo}/blob/main/style-packs/packages/luminous-mist-portrait/sources.md`
-      : href.replace(/&amp;/g, "&");
-    return `<a href="${safeUrl(target)}">${label}</a>`;
+  .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|sources\.md|references\/[0-9]{2}\.jpg)\)/g, (_, label, href) => {
+    if (href === "sources.md" && links.packagePath) {
+      return `<a href="${safeUrl(`${repo}/blob/main/${links.packagePath}/sources.md`)}">${label}</a>`;
+    }
+    if (href.startsWith("references/") && links.references?.has(href)) {
+      return `<a href="./${href}">${label}</a>`;
+    }
+    if (href.startsWith("references/")) {
+      throw new Error(`Effect Markdown links to an unpublished reference: ${href}`);
+    }
+    if (href === "sources.md") {
+      throw new Error("Relative sources.md link needs package context");
+    }
+    return `<a href="${safeUrl(href.replace(/&amp;/g, "&"))}">${label}</a>`;
   })
   .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
   .replace(/`([^`]+)`/g, "<code>$1</code>");
 
-function renderMarkdown(markdown) {
+function renderMarkdown(markdown, links = {}) {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const output = [];
   let index = 0;
@@ -61,7 +70,7 @@ function renderMarkdown(markdown) {
     const heading = line.match(/^(#{2,3})\s+(.+)$/);
     if (heading) {
       const tag = heading[1].length === 2 ? "h2" : "h3";
-      output.push(`<${tag}>${inline(heading[2])}</${tag}>`);
+      output.push(`<${tag}>${inline(heading[2], links)}</${tag}>`);
       index++;
       continue;
     }
@@ -79,7 +88,7 @@ function renderMarkdown(markdown) {
       index += 2;
       const rows = [];
       while (index < lines.length && lines[index].trim().startsWith("|")) rows.push(cells(lines[index++]));
-      output.push(`<div class="table-scroll"><table><thead><tr>${header.map((cell) => `<th>${inline(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${inline(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+      output.push(`<div class="table-scroll"><table><thead><tr>${header.map((cell) => `<th>${inline(cell, links)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${inline(cell, links)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
       continue;
     }
     const list = line.match(/^(\s*[-*] |\s*\d+\. )/);
@@ -90,7 +99,7 @@ function renderMarkdown(markdown) {
         items.push(lines[index++].replace(/^\s*(?:[-*]|\d+\.)\s+/, ""));
       }
       const tag = ordered ? "ol" : "ul";
-      output.push(`<${tag}>${items.map((item) => `<li>${inline(item)}</li>`).join("")}</${tag}>`);
+      output.push(`<${tag}>${items.map((item) => `<li>${inline(item, links)}</li>`).join("")}</${tag}>`);
       continue;
     }
     const paragraph = [line];
@@ -98,7 +107,7 @@ function renderMarkdown(markdown) {
     while (index < lines.length && lines[index].trim() && !isBoundary(lines[index].trim())) {
       paragraph.push(lines[index++].trim());
     }
-    output.push(`<p>${inline(paragraph.join(" "))}</p>`);
+    output.push(`<p>${inline(paragraph.join(" "), links)}</p>`);
   }
   return output.join("\n");
 }
@@ -117,7 +126,8 @@ h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin:.35em 0}.lead{font-s
 .prose code{background:#e9efeb;padding:.1em .3em;border-radius:4px}.prose pre code{padding:0}.table-scroll{overflow-x:auto}
 table{border-collapse:collapse;min-width:680px;width:100%}td,th{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid #d5ddd6}th{background:#e9efeb}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin:24px 0}
-figure{margin:0;background:#fff;border:1px solid #dce3dc;border-radius:14px;overflow:hidden}figure img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}figcaption{font-size:.9rem;line-height:1.65;padding:12px}
+figure{margin:0;background:#fff;border:1px solid #dce3dc;border-radius:14px;overflow:hidden}figure img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.chart-gallery figure img{object-fit:contain;background:#f2f4f1}figcaption{font-size:.9rem;line-height:1.65;padding:12px}
+.chart-gallery figure img{object-fit:contain;background:#fff}
 .source-list li{margin:.7em 0}.related{margin-top:64px;padding-top:24px;border-top:1px solid #d8ded8}.related ul{columns:2;line-height:2}
 footer{border-top:1px solid #d8ded8;padding:24px 0 38px;color:#5c6d65;font-size:.9rem}@media(max-width:640px){.nav{gap:10px}.related ul{columns:1}}`;
 
@@ -185,6 +195,32 @@ for (const entry of effectCatalog.packages) {
   if (pkg.id !== id || !pkg.content?.effect || !Array.isArray(pkg.sources)) {
     throw new Error(`Incomplete public effect package: ${id}`);
   }
+  const embeddedCharts = entry.media === "embedded-cleared-chart-photos";
+  if (!embeddedCharts && entry.media !== "external-links-only") {
+    throw new Error(`Unsupported public effect media: ${id} ${entry.media}`);
+  }
+  const references = embeddedCharts ? pkg.content.references : [];
+  if (embeddedCharts && (!Array.isArray(references) || references.length === 0)) {
+    throw new Error(`Embedded chart effect has no reference photos: ${id}`);
+  }
+  const referenceCards = (references ?? []).map((reference) => {
+    if (!/^references\/[0-9]{2}\.jpg$/.test(reference)) {
+      throw new Error(`Invalid public chart reference path: ${id} ${reference}`);
+    }
+    const source = pkg.sources.find((item) => item.reference_files?.includes(reference));
+    if (!source?.creator || !source?.title || !source?.url || !source?.license) {
+      throw new Error(`Public chart reference lacks author, source, or license: ${id} ${reference}`);
+    }
+    const licenseUrl = source.license_url ?? source.license.match(/https?:\/\/\S+/)?.[0];
+    const licenseLabel = licenseUrl ? source.license.replace(licenseUrl, "").trim() : source.license;
+    const license = licenseUrl
+      ? `<a href="${safeUrl(licenseUrl)}">${escapeHtml(licenseLabel)}</a>`
+      : escapeHtml(licenseLabel);
+    return {
+      reference,
+      html: `<figure><a href="./${reference}"><img src="./${reference}" alt="${escapeHtml(`${source.title}，摄影 ${source.creator}`)}" loading="lazy"></a><figcaption>${escapeHtml(source.creator)} · <a href="${safeUrl(source.url)}">${escapeHtml(source.title)}</a> · ${license}</figcaption></figure>`,
+    };
+  });
   const markdown = await readText(`${entry.path}/${pkg.content.effect}`);
   const canonical = absolute(`effects/${id}/`);
   if (entry.portal_url !== canonical) throw new Error(`Effect catalog URL must match canonical URL: ${id}`);
@@ -194,11 +230,22 @@ for (const entry of effectCatalog.packages) {
   const packageUrl = `${repo}/tree/main/${entry.path}`;
   const downloadUrl = `${repo}/raw/refs/heads/main/${entry.archive_path}`;
   const sources = pkg.sources.map((source) => `<li><a href="${safeUrl(source.url)}">${escapeHtml(source.title)}</a> · ${escapeHtml(source.creator)}<br><span class="muted">${escapeHtml(source.role)}</span></li>`).join("\n");
-  const body = `<p class="eyebrow">候选效果包 · ${escapeHtml(pkg.version)} · 原站照片链接版</p><h1>${escapeHtml(pkg.title)}</h1>
-<p class="lead">${escapeHtml(pkg.summary)}</p><div class="actions"><a class="button primary" href="${appUrl}">在画廊中查看</a><a class="button" href="${safeUrl(downloadUrl)}">下载文字链接包</a><a class="button" href="${safeUrl(packageUrl)}">查看包文件</a></div>
-<article class="prose" aria-label="效果提示词">${renderMarkdown(markdown)}</article>
-<section aria-labelledby="sources-heading"><h2 id="sources-heading">参考教程</h2><p>参考照片通过提示词中的原站直链查看。照片不在本站托管，原站图片的再分发许可未核实。</p><ul class="source-list">${sources}</ul></section>`;
-  await writePage(`effects/${id}`, page({ title, description, canonical, type: "article", body, stylesheet: "../../seo.css" }));
+  const chartSection = embeddedCharts
+    ? `<section aria-labelledby="charts-heading"><h2 id="charts-heading">实体色卡外观参考照片</h2><p class="muted">这些照片只帮助辨认实体色卡的外观和布局；照片像素受现场光、相机与编码影响，不是色卡的数值参考值，也不是任何人的肤色目标。不能用它们的像素计算色准。</p><div class="gallery chart-gallery">${referenceCards.map((card) => card.html).join("\n")}</div></section>`
+    : "";
+  const sourceIntro = embeddedCharts
+    ? "以下资料用于解释同场色卡、色度条件和人像修图；内置照片的作者、原图和许可已逐张标明。"
+    : "参考照片通过提示词中的原站直链查看。照片不在本站托管，原站图片的再分发许可未核实。";
+  const body = `<p class="eyebrow">候选效果包 · ${escapeHtml(pkg.version)} · ${embeddedCharts ? "附实体色卡外观照片" : "原站照片链接版"}</p><h1>${escapeHtml(pkg.title)}</h1>
+<p class="lead">${escapeHtml(pkg.summary)}</p><div class="actions"><a class="button primary" href="${appUrl}">在画廊中查看</a><a class="button" href="${safeUrl(downloadUrl)}">${embeddedCharts ? "下载效果包 ZIP" : "下载文字链接包"}</a><a class="button" href="${safeUrl(packageUrl)}">查看包文件</a></div>
+<article class="prose" aria-label="效果提示词">${renderMarkdown(markdown, { packagePath: entry.path, references: new Set(referenceCards.map((card) => card.reference)) })}</article>
+${chartSection}<section aria-labelledby="sources-heading"><h2 id="sources-heading">${embeddedCharts ? "参考来源" : "参考教程"}</h2><p>${sourceIntro}</p><ul class="source-list">${sources}</ul></section>`;
+  await writePage(`effects/${id}`, page({ title, description, canonical, type: "article", body, image: embeddedCharts ? absolute(`effects/${id}/${referenceCards[0].reference}`) : undefined, stylesheet: "../../seo.css" }));
+  for (const { reference } of referenceCards) {
+    const destination = join(dist, "effects", id, reference);
+    await mkdir(dirname(destination), { recursive: true });
+    await copyFile(join(root, entry.path, reference), destination);
+  }
   publicEffects.push({ id, title: pkg.title, summary: pkg.summary, url: canonical });
 }
 
