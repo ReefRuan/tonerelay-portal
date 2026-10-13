@@ -2,7 +2,7 @@
 
 Reef 的 Lightroom MCP 风格与效果画廊。浏览参考图、了解风格包，再把想要的效果带进与 Agent 的对话。
 
-[打开网页](https://reefruan.github.io/tonerelay-portal/) · [了解 ToneRelay](https://reefruan.github.io/tonerelay-portal/#experience) · [浏览风格包](style-packs/README.md) · [安装提示词](docs/install-prompt.md) · [常见问题](docs/faq.md)
+[打开网页](https://reefruan.github.io/tonerelay-portal/) · [联系作者／海面名片](https://reefruan.github.io/tonerelay-portal/contact.html) · [了解 ToneRelay](https://reefruan.github.io/tonerelay-portal/#experience) · [浏览风格包](style-packs/README.md) · [安装提示词](docs/install-prompt.md) · [常见问题](docs/faq.md)
 
 ![ToneRelay 风格与效果画廊，展示可浏览的风格包卡片](docs/assets/portal-gallery.webp)
 
@@ -37,7 +37,7 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 | 路径 | 内容 |
 | --- | --- |
-| `src/`、`public/` | 网页源码和轻量预览图 |
+| `src/`、`public/` | 网页源码、轻量预览图，以及独立海面名片页 `src/author-sea/` |
 | `style-packs/packages/` | 六个正式风格包，以及 E01 完整肤色效果包与 E02 文字链接版效果包 |
 | `style-packs/downloads/` | 按包提供的 ZIP |
 | `style-packs/effect-catalog.json` | 独立的公开效果包目录；效果包不进入风格包自动安装清单 |
@@ -45,9 +45,9 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 ## 搜索引擎入口
 
-构建会为首页、ToneRelay 使用说明、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些 HTML 地址供搜索引擎读取；访客从画廊卡片直接进入详情弹窗，不需要经过独立介绍页。
+构建会为首页、海面名片、ToneRelay 使用说明、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些 HTML 地址供搜索引擎读取；访客从画廊卡片直接进入详情弹窗，不需要经过独立介绍页。
 
-这些页面由 `pnpm build` 写入 `dist/`；本地查看独立页面请在构建后运行 `pnpm preview`。`pnpm dev` 只提供交互式画廊源码预览。
+这些页面由 `pnpm build` 写入 `dist/`；本地查看构建后的页面请运行 `pnpm preview`。`pnpm dev` 可预览交互式画廊和 `contact.html`，其余搜索引擎专用页面需要先构建。
 
 搜索引擎收录仍取决于爬取与站长平台。站点位于 GitHub Pages 的 `/tonerelay-portal/` 项目路径；项目内的 `robots.txt` 不能代替域名根目录的 `https://reefruan.github.io/robots.txt`，因此本仓库不声明已配置根目录 robots 规则。站点所有权验证完成后，可把上述 sitemap URL 提交给 Google Search Console、Bing Webmaster Tools 或百度搜索资源平台。
 
@@ -57,6 +57,8 @@ pnpm dev
 ```
 
 发布前运行 `pnpm verify:packs && pnpm test && pnpm build`。
+
+「联系作者」现在跳转到同站的 `contact.html`，本地和正式构建均不依赖独立的 5175 原型服务。该页面是 BLOG 工作区 `prototypes/008-dither-sea-single-page/demo` 的独立快照，后续海面改动需同步到 `src/author-sea/`；Portal 的 `public/author-sea/` 保存其 Bayer 阈值图。页面中的 WebGL 海面有静态降级背景。
 
 ## 作者与许可
 

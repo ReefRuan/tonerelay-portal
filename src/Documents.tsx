@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "./Icon";
 import installPrompt from "../docs/install-prompt.md?raw";
 import uninstallPrompt from "../docs/uninstall-prompt.md?raw";
@@ -11,7 +12,8 @@ import { WorkflowComparisons } from "./WorkflowComparisons";
 
 export type PortalPage = "gallery" | "experience";
 
-const WORKBUDDY_DOWNLOAD = "https://www.workbuddy.cn/work/";
+const WORKBUDDY_INVITE_URL = "https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w";
+const AUTHOR_CONTACT_URL = "./contact.html";
 
 export const INSTALL_PROMPT = installPrompt.trim();
 export const UNINSTALL_PROMPT = uninstallPrompt.trim();
@@ -21,9 +23,9 @@ const heroTitle = heroMatch[1];
 const heroIntroduction = heroMatch[2];
 const heroTagline = heroMatch[3];
 
-const agents = [
+const agents: { name: string; href?: string }[] = [
   { name: "Codex" },
-  { name: "WorkBuddy" },
+  { name: "WorkBuddy", href: WORKBUDDY_INVITE_URL },
   { name: "Kimi Work" },
 ];
 
@@ -90,27 +92,28 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
       <button className="agent-dialog-backdrop" aria-label="关闭说明" onClick={onClose} />
       <section ref={dialogRef} className="agent-dialog" role="dialog" aria-modal="true" aria-labelledby="agent-dialog-title">
         <div className="agent-dialog-topline">
-          <span>还没有 Agent？从这里开始</span>
+          <span>Agent / ToneRelay / Lightroom</span>
           <button ref={closeRef} onClick={onClose} aria-label="关闭"><Icon name="close" /></button>
         </div>
         <div className="agent-dialog-body">
           <span className="eyebrow">第一次使用？从这里开始</span>
-          <h2 id="agent-dialog-title">还没有 Agent？<br />先装一个。</h2>
-          <p className="agent-dialog-lead">Agent 负责理解你的话、制定步骤、调用工具并判断结果。各客户端的接入方式不同；先用提示词确认是否已有固定版本发行物。</p>
-          <div className="agent-connection-guide">
-            <strong>它怎样接入 ToneRelay？</strong>
-            <p>Codex 使用 Plugin；WorkBuddy 使用官方文档支持的用户级 MCP；Kimi Work 的个人插件与 Kimi Code CLI 本地 MCP 不同。请勿互相替代。</p>
-          </div>
-          <ol>
-            <li><span>1</span><div><strong>确认客户端</strong><p>明确你使用的是 Codex、WorkBuddy、Kimi Work，还是独立的 Kimi Code CLI。</p></div></li>
-            <li><span>2</span><div><strong>复制安装提示词</strong><p>Agent 会先告知安装路径，再完成普通安装。找不到 Lightroom 时请你手动打开；Catalog 未绑定时，确认名称并回复“绑定”即可继续。</p></div></li>
-            <li><span>3</span><div><strong>区分发行版与开发版</strong><p>没有公开发行物时不称一键成功；本机 checkout 只在你明确授权后用于开发版测试。</p></div></li>
-          </ol>
+          <h2 id="agent-dialog-title">什么是 Agent？</h2>
+          <p className="agent-dialog-lead">Agent 是能理解你的目标、选择工具、执行步骤，并根据返回结果继续判断的 AI 助手。ToneRelay 不是 Agent，而是让 Agent 操作 Lightroom 的本地工具。</p>
+          <p className="agent-model-tip">推荐使用能看图的多模态模型</p>
+          <figure className="agent-architecture" aria-label="Agent、ToneRelay MCP、Lightroom 插件与 Lightroom Classic 的连接">
+            <div className="agent-architecture-flow">
+              <div className="agent-architecture-node"><strong>Agent</strong><span>理解与判断</span></div>
+              <span className="agent-architecture-arrow" aria-hidden="true">⇄</span>
+              <div className="agent-architecture-node"><strong>ToneRelay MCP</strong><span>传递操作与预览</span></div>
+              <span className="agent-architecture-arrow" aria-hidden="true">⇄</span>
+              <div className="agent-architecture-node"><strong>Lightroom 插件</strong><span>执行与回读</span></div>
+              <span className="agent-architecture-arrow" aria-hidden="true">⇄</span>
+              <div className="agent-architecture-node"><strong>Lightroom</strong><span>Classic · 照片与 Catalog</span></div>
+            </div>
+          </figure>
           <div className="agent-dialog-actions">
-            <a className="button-primary" href={WORKBUDDY_DOWNLOAD} target="_blank" rel="noreferrer">下载 WorkBuddy <Icon name="external" /></a>
-            <a href="https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Model" target="_blank" rel="noreferrer">模型配置说明 <Icon name="arrow" /></a>
+            <a className="button-primary workbuddy-download" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">立即下载 WorkBuddy <Icon name="external" /></a>
           </div>
-          <small>画廊中的六个正式风格包可分别下载；是否能按编号自动安装，仍以当前 Runtime 版本为准。</small>
         </div>
       </section>
     </div>
@@ -126,7 +129,7 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
           <h1 id="agent-strip-title">{heroTitle}</h1>
           <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
           <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
-          <a className="author-contact" href="mailto:leningruan1@gmail.com">
+          <a className="author-contact" href={AUTHOR_CONTACT_URL}>
             联系作者 <Icon name="arrow" />
           </a>
         </div>
@@ -134,11 +137,13 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
       <div className="agent-picker">
         <span className="agent-list-label">推荐的客户端</span>
         <div className="agent-list" aria-label="推荐的客户端">
-        {agents.map((agent) => (
-          <div className="agent-chip" key={agent.name}>
-            <strong>{agent.name}</strong>
-          </div>
-        ))}
+          {agents.map((agent) => agent.href ? (
+            <a className="agent-chip agent-chip-link" href={agent.href} target="_blank" rel="noopener noreferrer" key={agent.name}>
+              <strong>{agent.name}</strong><Icon name="external" />
+            </a>
+          ) : (
+            <div className="agent-chip" key={agent.name}><strong>{agent.name}</strong></div>
+          ))}
         </div>
         <button className="agent-help-link" onClick={onExplain}>什么是 Agent？</button>
       </div>
@@ -186,7 +191,10 @@ export function Documents({ onCopyUninstall }: { onCopyUninstall?: () => Promise
       <WorkflowComparisons />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <DocumentFooter />
-      {helpOpen && <AgentHelpDialog onClose={() => setHelpOpen(false)} />}
+      {helpOpen && typeof document !== "undefined" && createPortal(
+        <AgentHelpDialog onClose={() => setHelpOpen(false)} />,
+        document.body,
+      )}
     </main>
   );
 }

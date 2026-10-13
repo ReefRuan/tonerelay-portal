@@ -278,7 +278,7 @@ if (!rootPattern.test(index)) throw new Error("Cannot find empty #root in Vite i
 await writeFile(indexPath, index.replace(rootPattern, `<div id="root">${staticRoot}</div>`), "utf8");
 
 await writeFile(join(dist, "seo.css"), css, "utf8");
-const sitemapUrls = [site, absolute("experience/"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
+const sitemapUrls = [site, absolute("experience/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`).join("\n")}\n</urlset>\n`;
 await writeFile(join(dist, "sitemap.xml"), sitemap, "utf8");
 console.log(`Generated ${publicStyles.length} style pages, ${publicEffects.length} effect pages, experience page, homepage fallback, and sitemap.`);

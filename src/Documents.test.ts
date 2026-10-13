@@ -17,5 +17,7 @@ describe("installation copy payload", () => {
     expect(html).toContain("扩展 Agent 操作 Lightroom 的能力。");
     expect(html).toContain("<strong>相比 computer use 直接操作界面</strong>");
     expect(html).not.toContain("安装介绍");
+    expect(html).toContain('href="./contact.html"');
+    expect(html).toContain('href="https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w"');
   });
 });
