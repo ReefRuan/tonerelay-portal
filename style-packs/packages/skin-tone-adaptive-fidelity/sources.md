@@ -1,4 +1,4 @@
-# 自适应肤色效果包 · 原始来源入口（2026-10-02）
+# 自适应肤色效果包 · 原始来源与证据边界
 
 本索引与 `package.json`、`effect.md`、`references/` 一起放在公开的 `skin-tone-adaptive-fidelity/` 包内。以下链接直达教程、厂商、标准机构和馆藏原站。公开包不包含内部蒸馏记录、教程网页/PDF 原件、厂商参考色值或第三方人像作品；`references/` 仅保存两张许可核对过的实体色卡照片。来源被列出不表示本效果的色准性能已验证。
 
@@ -18,6 +18,8 @@ v0.6 的主要数字色卡是**一张用户照片自己的基线区域记录**�
 v0.6.1 为数字记录加入白平衡上下文。[CIE《Measurement of Human Skin Colour》](https://www.cie.co.at/publications/measurement-human-skin-colour-0)说明人类肤色测量受人群、年龄、部位及测量方法影响，因此没有一组适用于所有肖像的 sRGB 真值。[CIE 相关色温定义](https://www.cie.co.at/eilvterm/17-23-068)把 CCT 定义为色品与普朗克轨迹的关系；一个 K 值不足以说明光谱、绿色/品红偏移或混合光。[Adobe Lightroom Classic 色彩与白平衡说明](https://helpx.adobe.com/lightroom-classic/desktop/process-and-develop-photos/image-tone-color.html)区分 RAW 的 Kelvin 设置与 JPEG/TIFF/PSD 的相对色温滑块。版本快照中的数字是 Lightroom 调色回读，不能宣称已测得人物处光源 CCT；同光区中性格及风格锚点需随人物格一起记录。
 
 v0.6.2 把“数字色卡”限定为照片自己的**数字采样板**。[Peng 等人的人像肤色偏好实验](https://pubmed.ncbi.nlm.nih.gov/36905780/)用不同人物照片与多种 Lab 变体测试主观偏好，结果按照片建模为偏好区域；这支持把数字作为筛查线索而非统一自然度靶值，但实验结果不能直接成为本包性能证据。[Adobe Lightroom Classic 蒙版文档](https://helpx.adobe.com/dk/lightroom-classic/desktop/process-and-develop-photos/masking.html)说明局部选择可分离人物与背景；具体蒙版生成、覆盖边缘及 Runtime 写回能力仍须逐次核验。本包新增蒙版边缘外侧、远处背景、近肤色非皮肤物体的前后哨点，和整图视觉检查配合；少数哨点没变并不能证明其余背景没变。
+
+v0.7.0 增加优先核验原生主体蒙版的操作路径。Lightroom Classic 的[蒙版功能说明](https://helpx.adobe.com/dk/lightroom-classic/desktop/process-and-develop-photos/masking.html)是产品能力依据；ToneRelay 的 `trlr_native_mask` 已有单张照片的 `subject` 创建和局部参数回读记录。该单例记录只证明那次主体分割与参数回读，不证明选区恰好覆盖皮肤，也不能外推到其它版本、人物或光线；`sky` 和 `background` 类型尚无同等实机验证。提示词因此要求先确认独立工作虚拟副本，再用每次写入前的新 token、分割数据回读、叠加层或小幅试调观察边缘与衣物，并复核同图背景哨点。当前 MCP 没有通用副本创建工具；零调整预览不能证明覆盖；导出路径不等于客户端已读取 JPEG；独立副本不能直接作为只接受已保存 Session/Episode 渲染的成对比较工具输入。它不把 XMP 描述符当成原生分割，也不把工作副本写入当成 Episode 版本提交。多肤色、同拍色卡及受控 Lightroom 成对结果仍待验证。
 
 ## 主流人像修图教程：`portrait-workflows__20261002__01`
 

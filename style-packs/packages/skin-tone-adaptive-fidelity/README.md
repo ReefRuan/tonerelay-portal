@@ -1,10 +1,10 @@
 # 自适应肤色与色彩忠实度 · 公开候选
 
-版本 `0.6.2`，状态 `candidate`。这是供 Agent 阅读的效果上下文包，可独立使用，也可在风格包之后用于保护人物肤色和背景关系。它不是可直接导入 Lightroom 的 XMP，也不代表 Runtime 已支持按编号自动安装。
+版本 `0.7.0`，状态 `candidate`。这是供 Agent 阅读的效果上下文包，可独立使用，也可在风格包之后用于保护人物肤色和背景关系。它不是可直接导入 Lightroom 的 XMP，也不代表 Runtime 已支持按编号自动安装。
 
-包内有 `package.json`、[效果提示词](effect.md)、[来源与照片署名](sources.md)及两张实体色卡外观照片。提示词按同场色卡、可信中性物、混合光和无可信参照四种情况选择路径，并用本张照片的数字采样板、蒙版边缘和背景哨点观察前后变化。数字变化本身不等于肤色自然或绝对色准。
+包内有 `package.json`、[效果提示词](effect.md)、[来源与照片署名](sources.md)及两张实体色卡外观照片。提示词按同场色卡、可信中性物、混合光和无可信参照四种情况选择路径。人物整体偏色而背景需保持时，仅在已有经确认的独立工作虚拟副本上核验 `trlr_native_mask` 的主体蒙版，再小步调整局部色温或色调，并用本张照片的数字采样板、蒙版边缘和背景哨点观察前后变化。当前 MCP 没有通用的独立工作副本创建工具；缺少工作副本就停止这条路径。主体蒙版不等于皮肤选区；衣物、头发或多个人物被覆盖时须细化或停止。数字变化本身不等于肤色自然或绝对色准。
 
-[在画廊详情查看效果包](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) · [下载完整效果包 ZIP](https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/skin-tone-adaptive-fidelity-v0.6.2.zip)
+[在画廊详情查看效果包](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) · [下载完整效果包 ZIP](https://github.com/ReefRuan/tonerelay-portal/raw/refs/heads/main/style-packs/downloads/skin-tone-adaptive-fidelity-v0.7.0.zip)
 
 ## 包内照片
 

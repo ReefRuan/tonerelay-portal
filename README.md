@@ -29,7 +29,7 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 风格包是供 Agent 阅读的 Markdown 与参考图，不等于 Lightroom 预设，也不代表安装了 MCP。六个公开包的目录、版本及下载入口见 [style-packs/README.md](style-packs/README.md)。
 
-[自适应肤色保护 E01](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) 的画廊详情可直接阅读提示词与来源索引、查看两张色卡外观照片，并下载完整候选效果包。它以同图数字采样板检查肤色和背景变化；色卡照片不是厂家标准色值，Lightroom 成对效果仍待验证。
+[自适应肤色保护 E01](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) 的画廊详情可直接阅读提示词与来源索引、查看两张色卡外观照片，并下载完整候选效果包。人物整体偏色且背景应保留时，提示词优先核验 Lightroom 原生主体蒙版，再小步调整局部色温或色调，并以同图数字采样板检查肤色与背景变化。主体分割不等于皮肤分割；色卡照片不是厂家标准色值，Lightroom 成对效果仍待验证。
 
 画廊中的 [朦胧发光人像候选](https://reefruan.github.io/tonerelay-portal/?preset=luminous-mist-portrait#gallery) 详情提供完整提示词、自然语言调整方向和六张教程照片的原站直链。[文字链接版效果包](style-packs/packages/luminous-mist-portrait/)可单独下载；网页和 ZIP 均不包含这些照片的文件。照片再分发许可与 Lightroom 成对效果尚未核实，因此仍标为候选。
 

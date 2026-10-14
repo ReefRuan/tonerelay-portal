@@ -23,7 +23,7 @@
 
 ## 公开候选效果包
 
-[E01 自适应肤色保护](packages/skin-tone-adaptive-fidelity/) 可下载[完整效果包 ZIP](downloads/skin-tone-adaptive-fidelity-v0.6.2.zip)，包含 `package.json`、`effect.md`、`sources.md`、README 与两张获许可的实体色卡照片。照片仅用于辨认实体卡外观，不是厂商标准色值或人像肤色目标。包可独立使用或作为风格包之后的肤色保护步骤；多肤色、同拍色卡和 Lightroom 成对效果尚未验证，故仍标为 `candidate`。
+[E01 自适应肤色保护](packages/skin-tone-adaptive-fidelity/) 可下载[完整效果包 ZIP](downloads/skin-tone-adaptive-fidelity-v0.7.0.zip)，包含 `package.json`、`effect.md`、`sources.md`、README 与两张获许可的实体色卡照片。照片仅用于辨认实体卡外观，不是厂商标准色值或人像肤色目标。包可独立使用或作为风格包之后的肤色保护步骤；人物整体偏色且背景需要保持时，会提示 Agent 在已有独立工作副本上核验原生主体蒙版，检查衣物、边缘和背景后再小步调整局部参数。当前 MCP 没有通用独立工作副本创建工具，缺少副本就停止这条路径。主体分割不等于皮肤分割；多肤色、同拍色卡和 Lightroom 成对效果尚未验证，故仍标为 `candidate`。
 
 [E02 朦胧发光人像](packages/luminous-mist-portrait/) 是 `candidate` 效果上下文包，可下载[仅含提示词与来源链接的 ZIP](downloads/luminous-mist-portrait-v0.1.1-links.zip)。六张参考照片通过文字超链接指向教程原站；网页与 ZIP 不包含照片文件。照片的再分发许可和 Lightroom 成对效果尚未核实。
 
