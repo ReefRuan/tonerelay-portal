@@ -17,25 +17,39 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
 <!-- comparison-content:start -->
 ```json
 {
-  "photoAlt": "人物站在薰衣草花田中，示意照片",
-  "note": "图片和候选色彩不是 ToneRelay 实测结果；速度与 Token 收益尚未量化",
+  "note": "01 / 02 为实际工作流截图，照片来自作者的 Lightroom 目录；03 为界面示意。速度与 Token 收益尚未量化。",
+  "shots": {
+    "compare": {
+      "alt": "Lightroom Classic 中同一张照片的修改前与修改后对比",
+      "caption": "Lightroom Classic · 修改前 / 修改后"
+    },
+    "retouch": {
+      "alt": "Agent 对话截图：说出修图目标后，Agent 借助 ToneRelay 调整 Lightroom 并带回照片预览",
+      "caption": "Agent 对话 · 说出目标，带回结果"
+    },
+    "loupe": {
+      "alt": "Lightroom Classic 放大视图与底部胶片网格，逐张浏览照片",
+      "caption": "Lightroom Classic · 逐张浏览"
+    },
+    "rating": {
+      "alt": "Agent 对话截图：对整组照片逐张评分，返回星级分布并写回目录",
+      "caption": "Agent 对话 · 整组评分，写回目录"
+    }
+  },
   "first": {
     "number": "01",
     "label": "对话修图",
     "title": "从想要的画面开始。",
     "description": "说出想要的效果，看看照片，再接着说哪里要改。",
     "beforeLabel": "手动操作",
-    "beforeTitle": "逐项调整滑块",
+    "beforeTitle": "逐项调整，前后对比",
     "beforeFooter": "调整 → 预览 → 再调整",
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "描述目标，继续对话",
     "afterFooter": "描述 → 执行 → 查看结果",
-    "goal": "让人物肤色自然，保留花田的柔和气氛。",
-    "reply": "已返回 Lightroom 渲染结果，请看是否符合预期。",
     "followups": [
-      "放大看看人物脸部的细节。",
+      "放大看看局部细节。",
       "把这一版和调整前放在一起比较。",
-      "这张图带了什么色彩配置？",
       "背景再柔和一点。"
     ],
     "takeaway": "每次调整都有可查看的实际结果，下一步仍由 Agent 和你决定。",
@@ -45,25 +59,15 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "number": "02",
     "label": "批量操作",
     "title": "一组照片，也能用对话处理。",
-    "description": "看图、挑片、整组调整、给单张照片试色，都能一句句交代。",
+    "description": "看图、挑片、逐张评分，都能一句句交代。",
     "beforeLabel": "逐张查看",
     "beforeTitle": "打开、判断、再切换",
     "beforeFooter": "逐张打开 → 标记 → 反复比较",
     "afterLabel": "Agent + ToneRelay",
-    "afterTitle": "从挑片到调整",
-    "afterFooter": "看图 → 挑片 → 逐张调整 → 试色",
-    "requests": [
-      "先给我看看这一组照片。",
-      "找出看起来模糊的照片，先给我确认。",
-      "把选中的照片统一调暖一点，肤色保持自然。",
-      "在选中的这张上，试几种色彩方向。"
-    ],
-    "selectionNote": "已整理待确认的照片",
-    "groupNote": "这一组会逐张调整，完成后分别看效果",
-    "versions": ["自然", "暖调", "低饱和"],
-    "candidateNote": "同一张照片的候选示意 · 非实测渲染",
-    "takeaway": "一组照片也可以分步处理，做完一件，再看结果继续说。",
-    "benefits": ["批量看图", "找出模糊照片", "逐张调整", "多方案试色"]
+    "afterTitle": "看图、评分、写回目录",
+    "afterFooter": "看图 → 评分 → 写回 Lightroom",
+    "takeaway": "一组照片也可以分步处理：先看，再评分，结果写回 Lightroom 再接着说。",
+    "benefits": ["批量看图", "按意义评分", "写回目录"]
   },
   "computer": {
     "number": "03",
@@ -93,8 +97,8 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "takeaway": "每轮都看实际渲染，再对照参考图决定下一步；比反复截图找滑块更顺畅，也有助于节省时间与 Token。",
     "benefits": ["参考图仿色", "多轮观察", "结果可回读"]
   },
-  "previewLabel": "渲染位置示意",
-  "imageCredit": "展示照片：Lavender field / PxHere · CC0",
+  "photoAlt": "人物站在薰衣草花田中，示意照片",
+  "imageCredit": "03 示意照片：Lavender field / PxHere · CC0",
   "imageCreditUrl": "https://pxhere.com/en/photo/192059"
 }
 ```

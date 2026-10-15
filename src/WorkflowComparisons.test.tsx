@@ -15,27 +15,31 @@ describe("workflow examples", () => {
     expect(heading).not.toContain("交互示意");
   });
 
-  it("shows local inspection and before-after comparison as separate requests", () => {
+  it("shows conversational editing with real Lightroom and conversation screenshots", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
-    const conversation = html.match(/workflow-figure ".*?workflow-figure-batch/s)?.[0];
+    const first = html.match(/workflow-figure "[\s\S]*?workflow-figure-batch/)?.[0];
 
-    expect(conversation?.match(/class="study-message study-message-user/g)).toHaveLength(5);
-    expect(conversation).toContain("放大看看人物脸部的细节。");
-    expect(conversation).toContain("把这一版和调整前放在一起比较。");
-    expect(conversation).toContain("这张图带了什么色彩配置？");
-    expect(conversation).toContain("背景再柔和一点。");
+    expect(first).toContain("experience/lr-compare.webp");
+    expect(first).toContain("experience/conversation-retouch.webp");
+    expect(first).toContain("Lightroom Classic · 修改前 / 修改后");
+    expect(first).toContain("Agent 对话 · 说出目标，带回结果");
+    expect(first).toContain("接着说");
+    expect(first).toContain("放大看看局部细节。");
+    expect(first).toContain("把这一版和调整前放在一起比较。");
+    expect(first).toContain("背景再柔和一点。");
+    expect(first).not.toContain("study-message");
   });
 
-  it("shows batch requests as four separate chat bubbles", () => {
+  it("shows batch work with real browsing and rating screenshots", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const batch = html.match(/workflow-figure-batch[\s\S]*?workflow-figure-computer/)?.[0];
 
     expect(batch).toBeDefined();
-    expect(batch?.match(/class="study-message study-message-user"/g)).toHaveLength(4);
-    expect(batch).toContain("先给我看看这一组照片。");
-    expect(batch).toContain("找出看起来模糊的照片");
-    expect(batch).toContain("把选中的照片统一调暖一点");
-    expect(batch).toContain("在选中的这张上，试几种色彩方向。");
+    expect(batch).toContain("experience/lr-loupe.webp");
+    expect(batch).toContain("experience/conversation-rating.webp");
+    expect(batch).toContain("Lightroom Classic · 逐张浏览");
+    expect(batch).toContain("Agent 对话 · 整组评分，写回目录");
+    expect(batch).not.toContain("batch-thumb");
   });
 
   it("shows reference matching as two observe-and-adjust rounds", () => {
