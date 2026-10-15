@@ -6,13 +6,11 @@ import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
 import {
   HINT_COPY,
-  getBrowserHintStorage,
   hintDelay,
+  initialHintStatuses,
   nextHint,
-  readHintStatuses,
   resolveHint as resolveHintStatuses,
   shouldShowHint,
-  writeHintStatus,
   type HintId,
   type HintStatus,
   type HintStatuses,
@@ -21,25 +19,25 @@ import {
 export interface OnboardingHints {
   /** The hint that should currently be visible, or null. */
   active: HintId | null;
-  /** Persist a terminal state (done/dismissed) and advance the sequence. */
+  /** Resolve the hint for this page load (done/dismissed). */
   resolve: (id: HintId, status: HintStatus) => void;
   /** Convenience wrapper for the close button. */
   dismiss: (id: HintId) => void;
 }
 
 /**
- * Drives the one-off Star hint.
+ * Drives the Star hint once per page load.
  *
- * - The Star hint is offered after 8s on the experience page.
+ * - The Star hint is offered after 2s on the experience page.
+ * - Dismissing or clicking Star hides it until the next full page reload.
  * - While a detail panel is open hints are suppressed but not resolved, so they
  *   re-appear when the panel closes.
  */
 export function useOnboardingHints(enabled: boolean, detailOpen: boolean): OnboardingHints {
-  const [statuses, setStatuses] = useState<HintStatuses>(() => readHintStatuses(getBrowserHintStorage()));
+  const [statuses, setStatuses] = useState<HintStatuses>(initialHintStatuses);
   const [offered, setOffered] = useState<HintId | null>(null);
 
   const resolve = useCallback((id: HintId, status: HintStatus) => {
-    writeHintStatus(getBrowserHintStorage(), id, status);
     setStatuses((current) => resolveHintStatuses(current, id, status));
     setOffered((current) => (current === id ? null : current));
   }, []);
