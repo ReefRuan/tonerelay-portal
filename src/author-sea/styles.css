@@ -181,34 +181,43 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   align-items: center;
   min-height: 44px;
   padding: 0 14px;
-  border: 1px solid #9dafaa;
+  border: 1px solid #b4c3ba;
   border-radius: 2px;
-  background: #fffffff0;
+  background: #fbfcf9;
   color: var(--ink);
   font: 12px var(--mono);
   text-decoration: none;
+  filter: url("#ui-screen-dither");
   transition: background 180ms ease, border-color 180ms ease;
 }
 .back-link:hover,
-.sea-controls button:hover { border-color: #4c6f75; background: #f2f7f3; }
+.sea-controls button:hover { background: #e9f0ea; }
+.back-link:hover { border-color: #4c6f75; }
+.back-link:focus-visible,
+.sea-controls button:focus-visible { outline-offset: -4px; }
 .sea-controls {
   position: absolute;
   right: 24px;
   bottom: max(24px, env(safe-area-inset-bottom));
-  display: flex;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(2, 44px);
+  border: 1px solid #b4c3ba;
+  border-radius: 2px;
+  background: #fbfcf9;
+  box-shadow: 0 8px 24px #243f461c;
+  filter: url("#ui-screen-dither");
 }
 .sea-controls button {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 10px;
-  border: 1px solid #9dafaa;
-  border-radius: 2px;
-  background: #fffffff0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--ink);
-  font: 13px var(--mono);
-  transition: background 180ms ease, border-color 180ms ease;
+  font: 23px/1 var(--mono);
+  transition: background 180ms ease;
 }
+.sea-controls button + button { border-left: 1px solid #b4c3ba; }
 .scene-reveal {
   position: absolute;
   z-index: 40;

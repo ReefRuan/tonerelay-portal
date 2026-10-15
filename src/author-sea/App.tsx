@@ -475,9 +475,8 @@ export function App() {
         <span className="brand">ReeF</span>
         <a className="back-link" href="./">← 返回画廊</a>
         <div className="sea-controls" role="group" aria-label="海面视角">
-          <button type="button" onClick={() => zoomBy(1 / 1.2)} aria-label="缩小海面" title="缩小">−</button>
-          <button type="button" onClick={resetView} aria-label="归位海面视角" title="归位">归位</button>
           <button type="button" onClick={() => zoomBy(1.2)} aria-label="放大海面" title="放大">＋</button>
+          <button type="button" onClick={() => zoomBy(1 / 1.2)} aria-label="缩小海面" title="缩小">−</button>
         </div>
       </div>
 
