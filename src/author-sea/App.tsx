@@ -5,6 +5,7 @@ import { createSeaRenderer } from "./dither/seaRenderer";
 
 type Origin = { left: number; top: number; width: number; height: number };
 type OpenCard = { origin: Origin };
+type ZoomMotion = { start: number; x: number; y: number; zoom: number; targetZoom: number };
 
 const transformTo = (origin: Origin, target: DOMRect) =>
   `translate(${origin.left - target.left}px, ${origin.top - target.top}px) scale(${origin.width / target.width}, ${origin.height / target.height})`;
@@ -15,8 +16,17 @@ const qq = "1843727310";
 function ContactDetails() {
   return (
     <dl className="contact-details">
-      <div><dt>EMAIL</dt><dd><a href={`mailto:${email}`}>{email}</a></dd></div>
-      <div><dt>QQ</dt><dd>{qq}</dd></div>
+      <div>
+        <dt>EMAIL</dt>
+        <dd>
+          <a href={`mailto:${email}`}>{email}</a>
+          <small>可能看得慢，回复不稳定</small>
+        </dd>
+      </div>
+      <div>
+        <dt>QQ</dt>
+        <dd>{qq}<small>消息秒回</small></dd>
+      </div>
     </dl>
   );
 }
@@ -39,9 +49,13 @@ export function App() {
   const closingRef = useRef<Animation | null>(null);
   const restoreFocusRef = useRef(false);
   const expandedRef = useRef(false);
+  const zoomMotionRef = useRef<ZoomMotion | null>(null);
+  const resumeSceneRef = useRef<(() => void) | null>(null);
+  const weatherTargetRef = useRef(1);
   const [expanded, setExpanded] = useState<OpenCard | null>(null);
   const [dragging, setDragging] = useState(false);
-  const [webglReady, setWebglReady] = useState(true);
+  const [webglReady, setWebglReady] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
 
   expandedRef.current = expanded !== null;
 
@@ -52,6 +66,7 @@ export function App() {
     const px = (clientX ?? rect.left + rect.width / 2) - rect.left - rect.width / 2;
     const py = (clientY ?? rect.top + rect.height / 2) - rect.top - rect.height / 2;
     const camera = cameraRef.current;
+    zoomMotionRef.current = null;
     const nextZoom = clamp(camera.targetZoom * factor, 0.6, 2.35);
     const worldX = (px - camera.targetX) / camera.targetZoom;
     const worldY = (py - camera.targetY) / camera.targetZoom;
@@ -62,12 +77,37 @@ export function App() {
   }, []);
 
   const resetView = useCallback(() => {
+    zoomMotionRef.current = null;
     const camera = cameraRef.current;
     camera.targetX = 0;
     camera.targetY = 0;
     camera.targetZoom = 1;
     camera.pulse = 0.65;
   }, []);
+
+  const animateZoomTo = (targetZoom: number) => {
+    if (expandedRef.current) return;
+    const camera = cameraRef.current;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      camera.x = camera.targetX = 0;
+      camera.y = camera.targetY = 0;
+      camera.zoom = camera.targetZoom = targetZoom;
+      camera.pulse = 0;
+      zoomMotionRef.current = null;
+      return;
+    }
+    zoomMotionRef.current = {
+      start: performance.now(), x: camera.x, y: camera.y,
+      zoom: camera.zoom, targetZoom,
+    };
+    camera.pulse = 0;
+  };
+
+  const toggleReefZoom = () => {
+    const nextZoom = zoomMotionRef.current?.targetZoom
+      ?? (cameraRef.current.targetZoom < 0.8 ? 0.6 : 1);
+    animateZoomTo(nextZoom === 0.6 ? 1 : 0.6);
+  };
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -76,20 +116,28 @@ export function App() {
     if (!scene || !canvas || !world) return;
 
     let renderer: ReturnType<typeof createSeaRenderer> = null;
+    let firstFramePending = true;
     const startRenderer = () => {
       try {
         renderer = createSeaRenderer(canvas);
-        setWebglReady(!!renderer);
+        firstFramePending = true;
+        setWebglReady(false);
         renderer?.resize(scene.clientWidth, scene.clientHeight);
+        if (!renderer) setSceneReady(true);
       } catch (error) {
         console.warn("Sea shader unavailable; using static background.", error);
         renderer = null;
         setWebglReady(false);
+        setSceneReady(true);
       }
     };
     startRenderer();
 
-    const resize = () => renderer?.resize(scene.clientWidth, scene.clientHeight);
+    let sizeDirty = false;
+    const resize = () => {
+      renderer?.resize(scene.clientWidth, scene.clientHeight);
+      sizeDirty = true;
+    };
     const observer = new ResizeObserver(resize);
     observer.observe(scene);
     const onContextLost = (event: Event) => {
@@ -109,33 +157,94 @@ export function App() {
     let lastTick = 0;
     let lastDraw = 0;
     let seaTime = 0;
+    let weatherMix = 1;
+    let lastDrawnX = NaN;
+    let lastDrawnY = NaN;
+    let lastDrawnZoom = NaN;
+    let lastDrawnPulse = NaN;
+    let lastDrawnWeather = NaN;
+    let lastWorldX = NaN;
+    let lastWorldY = NaN;
+    let lastWorldZoom = NaN;
     const tick = (now: number) => {
+      animationFrame = 0;
+      if (expandedRef.current || document.hidden) return;
       const dt = Math.min(48, now - (lastTick || now));
       lastTick = now;
-      if (!expandedRef.current) {
-        const camera = cameraRef.current;
+      const camera = cameraRef.current;
+      const zoomMotion = zoomMotionRef.current;
+      if (zoomMotion) {
+        const progress = clamp((now - zoomMotion.start) / 3000, 0, 1);
+        const eased = progress * progress * (3 - 2 * progress);
+        camera.x = camera.targetX = zoomMotion.x * (1 - eased);
+        camera.y = camera.targetY = zoomMotion.y * (1 - eased);
+        camera.zoom = camera.targetZoom = zoomMotion.zoom
+          + (zoomMotion.targetZoom - zoomMotion.zoom) * eased;
+        if (progress >= 1) zoomMotionRef.current = null;
+      } else {
         const ease = reduced ? 1 : 1 - Math.exp(-dt * 0.012);
         camera.x += (camera.targetX - camera.x) * ease;
         camera.y += (camera.targetY - camera.y) * ease;
         camera.zoom += (camera.targetZoom - camera.zoom) * ease;
-        camera.pulse *= reduced ? 0 : Math.exp(-dt * 0.0045);
-        if (!reduced && !document.hidden) seaTime += dt / 1000;
+      }
+      const weatherChanging = Math.abs(weatherMix - weatherTargetRef.current) > 0.001;
+      weatherMix += (weatherTargetRef.current - weatherMix)
+        * (reduced ? 1 : 1 - Math.exp(-dt * 0.005));
+      camera.pulse *= reduced ? 0 : Math.exp(-dt * 0.0045);
+      if (!reduced) seaTime += dt / 1000;
 
+      if (camera.x !== lastWorldX || camera.y !== lastWorldY || camera.zoom !== lastWorldZoom) {
         world.style.transform = `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.zoom})`;
-        const cameraMoving =
-          Math.abs(camera.x - camera.targetX) > 0.02 ||
-          Math.abs(camera.y - camera.targetY) > 0.02 ||
-          Math.abs(camera.zoom - camera.targetZoom) > 0.001 ||
-          camera.pulse > 0.003;
-        if (renderer && !document.hidden && now - lastDraw >= 33 &&
-            (!reduced || cameraMoving || lastDraw === 0)) {
-          renderer.render({ x: camera.x, y: camera.y, zoom: camera.zoom, pulse: camera.pulse, time: seaTime });
-          lastDraw = now;
+        lastWorldX = camera.x;
+        lastWorldY = camera.y;
+        lastWorldZoom = camera.zoom;
+      }
+      const cameraMoving =
+        Math.abs(camera.x - camera.targetX) > 0.02 ||
+        Math.abs(camera.y - camera.targetY) > 0.02 ||
+        Math.abs(camera.zoom - camera.targetZoom) > 0.001 ||
+        camera.pulse > 0.003 || !!zoomMotionRef.current || weatherChanging;
+      const frameChanged = sizeDirty ||
+        camera.x !== lastDrawnX || camera.y !== lastDrawnY ||
+        camera.zoom !== lastDrawnZoom || camera.pulse !== lastDrawnPulse ||
+        weatherMix !== lastDrawnWeather;
+      if (renderer && now - lastDraw >= 33 &&
+          (!reduced || cameraMoving || frameChanged || firstFramePending)) {
+        renderer.render({
+          x: camera.x, y: camera.y, zoom: camera.zoom,
+          pulse: camera.pulse, time: seaTime, clearWeather: weatherMix,
+        });
+        lastDraw = now;
+        lastDrawnX = camera.x;
+        lastDrawnY = camera.y;
+        lastDrawnZoom = camera.zoom;
+        lastDrawnPulse = camera.pulse;
+        lastDrawnWeather = weatherMix;
+        sizeDirty = false;
+        if (firstFramePending) {
+          firstFramePending = false;
+          setWebglReady(true);
+          setSceneReady(true);
         }
       }
       animationFrame = requestAnimationFrame(tick);
     };
-    animationFrame = requestAnimationFrame(tick);
+    const resume = () => {
+      if (animationFrame || document.hidden || expandedRef.current) return;
+      if (lastTick) lastTick = performance.now();
+      animationFrame = requestAnimationFrame(tick);
+    };
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      } else {
+        resume();
+      }
+    };
+    resumeSceneRef.current = resume;
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    resume();
 
     const onWheel = (event: WheelEvent) => {
       if (expandedRef.current) return;
@@ -146,6 +255,8 @@ export function App() {
     scene.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       cancelAnimationFrame(animationFrame);
+      resumeSceneRef.current = null;
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       scene.removeEventListener("wheel", onWheel);
       observer.disconnect();
       reducedQuery.removeEventListener("change", onMotionChange);
@@ -155,9 +266,14 @@ export function App() {
     };
   }, [zoomBy]);
 
+  useEffect(() => {
+    if (!expanded) resumeSceneRef.current?.();
+  }, [expanded]);
+
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (expandedRef.current || (event.target as HTMLElement).closest("button, a, .sea-card")) return;
     if (event.button !== 0 && event.pointerType !== "touch") return;
+    zoomMotionRef.current = null;
     pointerRef.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
     setDragging(true);
@@ -185,9 +301,14 @@ export function App() {
   };
 
   const openCard = () => {
+    if (expandedRef.current) return;
     closingRef.current?.cancel();
+    zoomMotionRef.current = null;
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
+    // The sea freezes under the open card; the next weather arrives as the
+    // card is put back. One complete visit advances the two-weather cycle.
+    weatherTargetRef.current = 1 - weatherTargetRef.current;
     const camera = cameraRef.current;
     camera.targetX = camera.x;
     camera.targetY = camera.y;
@@ -308,7 +429,8 @@ export function App() {
         </div>
       </div>
 
-      <button className="brand" type="button" aria-label="ReeF，归位海面" onClick={() => { if (expanded) closePage(); resetView(); }}>ReeF</button>
+      <button className="brand" type="button" aria-label="ReeF，切换海面远近"
+        title="远眺／归位 · 3 秒" onClick={toggleReefZoom}>ReeF</button>
 
       {expanded && (
         <div className="reader-layer">
@@ -328,6 +450,7 @@ export function App() {
           </div>
         </div>
       )}
+      <div className={`scene-reveal ${sceneReady ? "is-ready" : ""}`} aria-hidden="true" />
     </div>
   );
 }

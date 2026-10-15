@@ -44,9 +44,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 .sea-canvas,
 .card-filter-layer { position: absolute; inset: 0; }
 .sea-fallback {
-  background:
-    radial-gradient(circle at 36% 48%, #d9e4df 0 1px, transparent 1.3px) 0 0 / 8px 8px,
-    repeating-linear-gradient(172deg, #f9fbf7 0 38px, #dbe5df 56px 82px, #f9fbf7 118px 154px);
+  background: radial-gradient(ellipse at 50% 75%, #e5ece7 0%, #f7f9f5 72%);
 }
 .sea-canvas {
   display: block;
@@ -137,6 +135,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 }
 .contact-details dt { color: var(--muted); font-size: 10px; letter-spacing: .08em; }
 .contact-details dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
+.contact-details small {
+  display: block;
+  margin-top: 3px;
+  color: #52656b;
+  font: 10px/1.45 var(--mono);
+}
 .contact-details a { color: inherit; text-decoration-color: #97a9a6; text-underline-offset: 3px; }
 .contact-details a:hover { text-decoration-color: currentColor; }
 .sea-card .contact-details { max-width: calc(100% - 18px); }
@@ -168,8 +172,20 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   font: 700 25px/1 var(--mono);
   letter-spacing: .04em;
   mix-blend-mode: difference;
+  transition: transform 240ms ease, opacity 240ms ease;
 }
-.brand:hover { opacity: .75; }
+.brand:hover { opacity: .75; transform: scale(1.06); }
+.scene-reveal {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  background: #f7f9f5;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity 1000ms ease-in-out, visibility 0s linear 1000ms;
+}
+.scene-reveal.is-ready { opacity: 0; visibility: hidden; }
 
 .reader-layer { position: absolute; z-index: 30; inset: 0; display: grid; place-items: center; padding: 18px 16px 20px; }
 .reader-backdrop { position: absolute; inset: 0; background: #f1f5f0c9; backdrop-filter: blur(5px); animation: reader-backdrop-in 260ms ease-out both; }
@@ -219,6 +235,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 .contact-article .contact-details > div { grid-template-columns: 92px minmax(0, 1fr); gap: 20px; padding: 20px 0; border-bottom: 1px solid #d4ded7; }
 .contact-article .contact-details dt { font-size: 11px; }
 .contact-article .contact-details dd { font-size: clamp(14px, 2vw, 18px); }
+.contact-article .contact-details small { font-size: 12px; }
 
 @media (max-width: 720px) {
   .brand { top: 18px; left: 18px; font-size: 20px; }

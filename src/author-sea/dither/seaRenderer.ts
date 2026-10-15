@@ -4,6 +4,7 @@ export type SeaFrame = {
   zoom: number;
   pulse: number;
   time: number;
+  clearWeather: number;
 };
 
 const vertexSource = `
@@ -20,6 +21,7 @@ uniform vec2 u_pan;
 uniform float u_zoom;
 uniform float u_time;
 uniform float u_pulse;
+uniform float u_clear;
 
 // A 64-step Bayer ramp changes density more gradually than the former 16-step
 // tile. Its 2px cells are still locked to screen pixels, not sea coordinates.
@@ -41,6 +43,58 @@ float hash12(vec2 point) {
   vec3 value = fract(vec3(point.xyx) * 0.1031);
   value += dot(value, value.yzx + 33.33);
   return fract((value.x + value.y) * value.z);
+}
+
+float valueNoise(vec2 point) {
+  vec2 cell = floor(point);
+  vec2 local = fract(point);
+  local = local * local * (3.0 - 2.0 * local);
+  return mix(
+    mix(hash12(cell), hash12(cell + vec2(1.0, 0.0)), local.x),
+    mix(hash12(cell + vec2(0.0, 1.0)),
+      hash12(cell + vec2(1.0, 1.0)), local.x),
+    local.y
+  );
+}
+
+// Keep the rich cloud and star layers on one diagonal spine. The far-left end
+// bends gently toward the sea, while its center stays above the horizon.
+vec3 milkyWay(vec2 direction) {
+  float largeCloud = valueNoise(direction * vec2(0.085, 0.13)
+    + vec2(7.1, 2.4));
+  float leftDip = 3.5 * (1.0 - smoothstep(-58.0, -12.0, direction.x));
+  float spine = max(5.8, 15.0 + direction.x * 0.11 - leftDip);
+  float offset = direction.y - spine;
+  float filaments = valueNoise(direction * vec2(0.33, 0.44)
+    + vec2(13.3, 5.7));
+  float grain = valueNoise(direction * vec2(0.88, 1.12)
+    + vec2(1.8, 9.1));
+  float cloud = 0.23 + 0.54 * filaments + 0.23 * grain;
+  float broad = exp(-offset * offset / 72.0);
+  float spineCloud = exp(-offset * offset / 15.0);
+  float bulge = exp(-pow((direction.x - 12.0) / 32.0, 2.0));
+  float coreWindow = exp(-pow((direction.x - 10.0) / 44.0, 2.0));
+  // One uninterrupted star belt grows from the left edge through the core.
+  // Its broad, noisy footprint suggests an arm without drawing an outline.
+  float starBelt = exp(-offset * offset / 104.0)
+    * smoothstep(-105.0, 20.0, direction.x)
+    * (1.0 - smoothstep(40.0, 88.0, direction.x))
+    * (0.40 + 0.60 * largeCloud);
+  float outerWisp = exp(-pow((offset + 6.0 + 2.0 * filaments) / 3.7, 2.0));
+  float dustCenter = -0.8 + (filaments - 0.5) * 2.8;
+  float dustLane = exp(-pow((offset - dustCenter) / 1.25, 2.0))
+    * (0.45 + 0.55 * largeCloud);
+  float light = coreWindow * (
+    broad * (0.01 + 0.07 * cloud)
+    + spineCloud * bulge * (0.10 + 0.16 * cloud)
+    + outerWisp * 0.03 * filaments
+  ) * (1.0 - 0.91 * dustLane);
+  float brightPockets = smoothstep(0.44, 0.69,
+    0.70 * largeCloud + 0.30 * filaments);
+  light += 0.10 * starBelt * broad * brightPockets;
+  float coreStars = exp(-offset * offset / 52.0) * coreWindow
+    * (0.62 + 0.38 * cloud) * (1.0 - 0.70 * dustLane);
+  return vec3(light, coreStars, starBelt);
 }
 
 // Keep the sky's 2px dots fixed to the screen. Offset each Bayer tile and
@@ -129,19 +183,19 @@ void main() {
   vec3 ray = vec3(film.x, -sine - film.y * cosine, cosine - film.y * sine);
   vec3 paper = vec3(0.973, 0.982, 0.968);
   vec3 blueInk = vec3(0.105, 0.165, 0.19);
-  float threshold = thresholdAt(screen);
 
-  // Raise the middle of the distant sky/sea transition just a little. A
-  // screen-wide shallow arc reads more deliberately than several wandering
-  // sine bends, while the dither still keeps it from becoming a drawn line.
-  float horizontal = (screen.x - u_resolution.x * 0.5) / (u_resolution.x * 0.5);
-  float horizonArc = lift * 14.0 * horizontal * horizontal;
-  float horizonGap = screen.y - horizonY - lift * 36.0 - horizonArc;
-  // Keep one compact tonal transition, rather than stacking a long dusk ramp,
-  // a second fog ramp and moving veils across most of the visible sky.
-  float seaBlend = smoothstep(-12.0, 58.0, horizonGap);
-  float skyRise = smoothstep(-120.0, -15.0, horizonGap);
-  float skyLight = mix(0.004, 0.76, skyRise);
+  // The sea/sky boundary is level across the whole viewport; only the
+  // dithered tonal transition softens it, never a decorative wave or arc.
+  float horizonGap = screen.y - horizonY - lift * 36.0;
+  // Let one longer density ramp bridge sky and sea without a hard dot band.
+  // Its geometric horizon stays level; only the number of paper cells changes.
+  float seaBlend = mix(
+    smoothstep(-36.0, 65.0, horizonGap),
+    smoothstep(-18.0, 50.0, horizonGap), u_clear);
+  float skyRise = mix(
+    smoothstep(-80.0, -12.0, horizonGap),
+    smoothstep(-70.0, -10.0, horizonGap), u_clear);
+  float skyLight = mix(0.004, mix(0.32, 0.28, u_clear), skyRise);
   if (seaBlend < 0.001) {
     // Use angular sky coordinates, not the unnormalised camera ray's x/y.
     // Camera pitch can then move the constellation without squeezing its
@@ -153,20 +207,40 @@ void main() {
       0.07, 0.12, u_time) * 0.60;
     float guideStars = starLayer(skyDirection * 0.68, 0.992, 0.15,
       0.25, 0.42, u_time);
-    float starFade = 1.0 - smoothstep(-120.0, -50.0, horizonGap);
+    float starFade = 1.0 - smoothstep(-95.0, -20.0, horizonGap);
     skyLight = mix(skyLight, 0.996,
       max(max(brightStars, smallStars), guideStars) * starFade);
-    // The gradient, veils and stars are all expressed only as ink/paper dots;
-    // there is no smooth RGB sky layer behind the star shapes.
+    vec3 galaxy = milkyWay(skyDirection);
+    // Both star scales stay on the same straight band while their density
+    // increases continuously toward the bright core.
+    float starField = starLayer(skyDirection * 2.35,
+      0.997 - 0.32 * galaxy.y - 0.21 * galaxy.z,
+      0.15, 0.055, 0.18, u_time);
+    float coreSparks = starLayer(skyDirection * 1.16,
+      0.998 - 0.14 * galaxy.y - 0.08 * galaxy.z,
+      0.14, 0.18, 0.38, u_time);
+    skyLight = clamp(skyLight + u_clear * galaxy.x
+      * (1.0 - smoothstep(-34.0, -5.0, horizonGap)), 0.0, 1.0);
+    skyLight = mix(skyLight, 0.996,
+      max(starField * 0.90, coreSparks) * u_clear * starFade);
+    // One brighter fixed star gives the broken water glints a clear source.
+    float beaconDistance = length(skyDirection - vec2(8.0, 9.0));
+    float beacon = 1.0 - smoothstep(0.12, 0.62, beaconDistance);
+    skyLight = mix(skyLight, 0.996, beacon * u_clear * starFade);
+    skyLight += 0.14 * exp(-beaconDistance * beaconDistance / 2.0)
+      * u_clear * starFade;
+    // The galaxy, sky and stars all pass through screen-locked dither;
+    // no smooth RGB glow or image overlay sits behind them.
     float skyDot = step(skyThresholdAt(screen), clamp(skyLight, 0.0, 1.0));
     gl_FragColor = vec4(mix(blueInk, paper, skyDot), 1.0);
     return;
   }
 
+  float threshold = thresholdAt(screen);
   float travel = min(cameraHeight / max(-ray.y, 0.004), 30000.0);
   vec2 world = vec2(ray.x * travel, -(cameraZ + ray.z * travel)) - u_pan / u_zoom;
   float smallWave = 1.0 - smoothstep(1.5, 6.0, travel / focal);
-  // One height correction adds parallax; the correction fades in the far haze.
+  // One height correction adds parallax; the correction fades at long range.
   float height = surfaceHeight(world, u_time, smallWave)
     * (1.0 - smoothstep(6000.0, 18000.0, travel));
   travel = min((cameraHeight - height) / max(-ray.y, 0.004), 30000.0);
@@ -243,7 +317,10 @@ void main() {
     * sin(world.y * 0.052 - u_time * 1.25);
   light += 0.014 * ripple * fineDetail;
   light += u_pulse * 0.014 * sin(world.y * 0.032 + world.x * 0.018 - u_time) * fineDetail;
-  light = mix(light, 0.957, smoothstep(16.0, 72.0, footprint));
+  // Retain the original misty sea as one weather, but remove nearly all of
+  // that distance wash in clear weather.
+  light = mix(light, 0.957,
+    smoothstep(16.0, 72.0, footprint) * (1.0 - 0.92 * u_clear));
   // A lifted camera should see broad quiet water near the horizon, not every
   // foam contour compressed into a noisy strip beneath the sky transition.
   float farCalm = lift * smoothstep(6.0, 18.0, footprint);
@@ -252,14 +329,43 @@ void main() {
   // breaker detail stays concentrated in the middle distance.
   float nearCalm = lift * (1.0 - smoothstep(1.8, 5.0, footprint));
   light = mix(light, 0.992, nearCalm * 0.84);
+  float glintPaper = 0.0;
+  if (u_clear > 0.001 && lift > 0.05 && horizonGap < 520.0) {
+    // Only paper-white flecks: dense near the distant horizon, gradually
+    // sparse toward the viewer. No dark outline or visible central trail.
+    float waterDistance = max(horizonGap, 0.0);
+    float reflectionReach = smoothstep(6.0, 24.0, horizonGap)
+      * (1.0 - smoothstep(340.0, 520.0, waterDistance));
+    float drift = 5.0 * sin(world.y * 0.006 + u_time * 0.44)
+      + 2.0 * sin(world.y * 0.019 - u_time * 0.72);
+    float center = u_resolution.x * 0.5
+      + focal * tan(8.0 / 92.0) * 1.03 + drift;
+    float width = 32.0 + waterDistance * 0.22;
+    float lane = exp(-pow((screen.x - center) / width, 2.0));
+    vec2 glintSpace = vec2(screen.x / 9.0, waterDistance / 8.0);
+    vec2 glintCell = floor(glintSpace);
+    vec2 offset = (fract(glintSpace) - vec2(
+      0.2 + 0.6 * hash12(glintCell + vec2(31.0, 7.0)),
+      0.2 + 0.6 * hash12(glintCell + vec2(5.0, 47.0)))) * vec2(9.0, 8.0);
+    float seed = hash12(glintCell + vec2(19.0, 83.0));
+    float density = mix(0.03, 0.88,
+      1.0 - smoothstep(15.0, 380.0, waterDistance));
+    float active = step(1.0 - density * lane * reflectionReach
+      * u_clear * lift, seed);
+    float pointRadius = mix(0.9, 2.0,
+      hash12(glintCell + vec2(67.0, 13.0)));
+    glintPaper = active * (1.0 - step(pointRadius, length(offset)));
+  }
   light = clamp(light, 0.32, 0.996);
 
-  // Avoid whole 4x4 blocks flipping in one frame during a slow camera move.
-  float ink = smoothstep(light - 0.016, light + 0.016, threshold);
-  vec3 seaColor = mix(paper, blueInk, ink);
-  vec3 skyColor = mix(blueInk, paper,
-    step(skyThresholdAt(screen), clamp(skyLight, 0.0, 1.0)));
-  gl_FragColor = vec4(mix(skyColor, seaColor, seaBlend), 1.0);
+  // Dither the combined light once. Selecting between two already-dithered
+  // layers with a third Bayer mask made a dense, abrupt stipple band.
+  float transitionThreshold = mix(skyThresholdAt(screen), threshold,
+    smoothstep(0.78, 1.0, seaBlend));
+  float paperCell = step(transitionThreshold,
+    clamp(mix(skyLight, light, pow(seaBlend, 0.48)), 0.0, 1.0));
+  paperCell = max(paperCell, glintPaper);
+  gl_FragColor = vec4(mix(blueInk, paper, paperCell), 1.0);
 }`;
 
 function compile(gl: WebGLRenderingContext, type: number, source: string) {
@@ -319,13 +425,21 @@ export function createSeaRenderer(canvas: HTMLCanvasElement) {
   const zoom = gl.getUniformLocation(program, "u_zoom");
   const time = gl.getUniformLocation(program, "u_time");
   const pulse = gl.getUniformLocation(program, "u_pulse");
+  const clear = gl.getUniformLocation(program, "u_clear");
+  let lastWidth = -1;
+  let lastHeight = -1;
 
   return {
     resize(width: number, height: number) {
-      canvas.width = Math.max(1, Math.round(width));
-      canvas.height = Math.max(1, Math.round(height));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(resolution, canvas.width, canvas.height);
+      const nextWidth = Math.max(1, Math.round(width));
+      const nextHeight = Math.max(1, Math.round(height));
+      if (nextWidth === lastWidth && nextHeight === lastHeight) return;
+      if (canvas.width !== nextWidth) canvas.width = nextWidth;
+      if (canvas.height !== nextHeight) canvas.height = nextHeight;
+      gl.viewport(0, 0, nextWidth, nextHeight);
+      gl.uniform2f(resolution, nextWidth, nextHeight);
+      lastWidth = nextWidth;
+      lastHeight = nextHeight;
     },
     render(frame: SeaFrame) {
       gl.useProgram(program);
@@ -333,6 +447,7 @@ export function createSeaRenderer(canvas: HTMLCanvasElement) {
       gl.uniform1f(zoom, frame.zoom);
       gl.uniform1f(time, frame.time);
       gl.uniform1f(pulse, frame.pulse);
+      gl.uniform1f(clear, frame.clearWeather);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     },
     dispose() {
