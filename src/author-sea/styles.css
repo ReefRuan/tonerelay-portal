@@ -143,13 +143,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 }
 .contact-details a { color: inherit; text-decoration-color: #97a9a6; text-underline-offset: 3px; }
 .contact-details a:hover { text-decoration-color: currentColor; }
-.sea-card .contact-details { max-width: calc(100% - 18px); }
-.sea-card .contact-details > div { grid-template-columns: 47px minmax(0, 1fr); gap: 8px; padding: 6px 0; }
-.sea-card .contact-details dt { font-size: 10px; }
-.sea-card .contact-details dd { font-size: 13px; }
-.sea-card .contact-details a:hover { color: #375f69; }
 .sea-card-action {
   margin-top: auto;
+  min-height: 44px;
   padding: 12px 0 0;
   border-top: 1px solid #c9d3cc;
   border-right: 0;
@@ -160,21 +156,59 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   font-size: 10px;
 }
 .sea-card-action > span { font-size: 17px; line-height: 12px; }
-.brand {
+.scene-ui {
   position: absolute;
   z-index: 20;
+  inset: 0;
+  pointer-events: none;
+}
+.scene-ui > * { pointer-events: auto; }
+.brand {
+  position: absolute;
   top: 24px;
   left: 30px;
-  padding: 0;
-  border: 0;
-  background: transparent;
   color: #fff;
   font: 700 25px/1 var(--mono);
   letter-spacing: .04em;
   mix-blend-mode: difference;
-  transition: transform 240ms ease, opacity 240ms ease;
+  pointer-events: none;
 }
-.brand:hover { opacity: .75; transform: scale(1.06); }
+.back-link {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #9dafaa;
+  border-radius: 2px;
+  background: #fffffff0;
+  color: var(--ink);
+  font: 12px var(--mono);
+  text-decoration: none;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+.back-link:hover,
+.sea-controls button:hover { border-color: #4c6f75; background: #f2f7f3; }
+.sea-controls {
+  position: absolute;
+  right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  gap: 6px;
+}
+.sea-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid #9dafaa;
+  border-radius: 2px;
+  background: #fffffff0;
+  color: var(--ink);
+  font: 13px var(--mono);
+  transition: background 180ms ease, border-color 180ms ease;
+}
 .scene-reveal {
   position: absolute;
   z-index: 40;
@@ -226,7 +260,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   font: 9px var(--mono);
   letter-spacing: .06em;
 }
-.reader-topline button { display: flex; align-items: center; gap: 7px; padding: 4px 7px; border: 1px solid #b9c7c0; background: #fff; font-size: 16px; line-height: 1; }
+.reader-topline button { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 4px 10px; border: 1px solid #b9c7c0; background: #fff; font-size: 16px; line-height: 1; }
 .reader-topline button span { font: 10px var(--mono); }
 .reading-article { width: min(590px, 100%); min-height: calc(100% - 48px); margin: auto; padding: 52px 30px 72px; background: #fff; }
 .reading-kicker { color: #405660; font: 10px var(--mono); letter-spacing: .08em; }
@@ -235,10 +269,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 .contact-article .contact-details > div { grid-template-columns: 92px minmax(0, 1fr); gap: 20px; padding: 20px 0; border-bottom: 1px solid #d4ded7; }
 .contact-article .contact-details dt { font-size: 11px; }
 .contact-article .contact-details dd { font-size: clamp(14px, 2vw, 18px); }
+.contact-article .contact-details a { display: inline-flex; align-items: center; min-height: 40px; }
 .contact-article .contact-details small { font-size: 12px; }
 
 @media (max-width: 720px) {
   .brand { top: 18px; left: 18px; font-size: 20px; }
+  .back-link { top: 10px; right: 12px; }
+  .sea-controls { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
   .sea-card-profile { width: min(340px, calc(100vw - 60px)); min-height: 242px; }
   .sea-card-profile strong { font-size: 29px; }
   .reader-layer { padding: 9px 8px 12px; }
@@ -252,5 +289,5 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

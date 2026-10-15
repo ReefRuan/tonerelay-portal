@@ -5,7 +5,6 @@ import { createSeaRenderer } from "./dither/seaRenderer";
 
 type Origin = { left: number; top: number; width: number; height: number };
 type OpenCard = { origin: Origin };
-type ZoomMotion = { start: number; x: number; y: number; zoom: number; targetZoom: number };
 
 const transformTo = (origin: Origin, target: DOMRect) =>
   `translate(${origin.left - target.left}px, ${origin.top - target.top}px) scale(${origin.width / target.width}, ${origin.height / target.height})`;
@@ -49,7 +48,6 @@ export function App() {
   const closingRef = useRef<Animation | null>(null);
   const restoreFocusRef = useRef(false);
   const expandedRef = useRef(false);
-  const zoomMotionRef = useRef<ZoomMotion | null>(null);
   const resumeSceneRef = useRef<(() => void) | null>(null);
   const weatherTargetRef = useRef(1);
   const [expanded, setExpanded] = useState<OpenCard | null>(null);
@@ -59,6 +57,15 @@ export function App() {
 
   expandedRef.current = expanded !== null;
 
+  const clampCameraPosition = useCallback((x: number, y: number, zoom: number) => {
+    const scene = sceneRef.current;
+    const card = cardRef.current;
+    if (!scene || !card) return { x, y };
+    const maxX = Math.max(0, (scene.clientWidth - card.offsetWidth * zoom) / 2 - 16);
+    const maxY = Math.max(0, (scene.clientHeight - card.offsetHeight * zoom) / 2 - 16);
+    return { x: clamp(x, -maxX, maxX), y: clamp(y, -maxY, maxY) };
+  }, []);
+
   const zoomBy = useCallback((factor: number, clientX?: number, clientY?: number) => {
     const scene = sceneRef.current;
     if (!scene || expandedRef.current) return;
@@ -66,48 +73,23 @@ export function App() {
     const px = (clientX ?? rect.left + rect.width / 2) - rect.left - rect.width / 2;
     const py = (clientY ?? rect.top + rect.height / 2) - rect.top - rect.height / 2;
     const camera = cameraRef.current;
-    zoomMotionRef.current = null;
     const nextZoom = clamp(camera.targetZoom * factor, 0.6, 2.35);
     const worldX = (px - camera.targetX) / camera.targetZoom;
     const worldY = (py - camera.targetY) / camera.targetZoom;
-    camera.targetX = px - worldX * nextZoom;
-    camera.targetY = py - worldY * nextZoom;
+    const position = clampCameraPosition(px - worldX * nextZoom, py - worldY * nextZoom, nextZoom);
+    camera.targetX = position.x;
+    camera.targetY = position.y;
     camera.targetZoom = nextZoom;
     camera.pulse = 1;
-  }, []);
+  }, [clampCameraPosition]);
 
   const resetView = useCallback(() => {
-    zoomMotionRef.current = null;
     const camera = cameraRef.current;
     camera.targetX = 0;
     camera.targetY = 0;
     camera.targetZoom = 1;
     camera.pulse = 0.65;
   }, []);
-
-  const animateZoomTo = (targetZoom: number) => {
-    if (expandedRef.current) return;
-    const camera = cameraRef.current;
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      camera.x = camera.targetX = 0;
-      camera.y = camera.targetY = 0;
-      camera.zoom = camera.targetZoom = targetZoom;
-      camera.pulse = 0;
-      zoomMotionRef.current = null;
-      return;
-    }
-    zoomMotionRef.current = {
-      start: performance.now(), x: camera.x, y: camera.y,
-      zoom: camera.zoom, targetZoom,
-    };
-    camera.pulse = 0;
-  };
-
-  const toggleReefZoom = () => {
-    const nextZoom = zoomMotionRef.current?.targetZoom
-      ?? (cameraRef.current.targetZoom < 0.8 ? 0.6 : 1);
-    animateZoomTo(nextZoom === 0.6 ? 1 : 0.6);
-  };
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -136,6 +118,13 @@ export function App() {
     let sizeDirty = false;
     const resize = () => {
       renderer?.resize(scene.clientWidth, scene.clientHeight);
+      const camera = cameraRef.current;
+      const current = clampCameraPosition(camera.x, camera.y, camera.zoom);
+      const target = clampCameraPosition(camera.targetX, camera.targetY, camera.targetZoom);
+      camera.x = current.x;
+      camera.y = current.y;
+      camera.targetX = target.x;
+      camera.targetY = target.y;
       sizeDirty = true;
     };
     const observer = new ResizeObserver(resize);
@@ -172,21 +161,10 @@ export function App() {
       const dt = Math.min(48, now - (lastTick || now));
       lastTick = now;
       const camera = cameraRef.current;
-      const zoomMotion = zoomMotionRef.current;
-      if (zoomMotion) {
-        const progress = clamp((now - zoomMotion.start) / 3000, 0, 1);
-        const eased = progress * progress * (3 - 2 * progress);
-        camera.x = camera.targetX = zoomMotion.x * (1 - eased);
-        camera.y = camera.targetY = zoomMotion.y * (1 - eased);
-        camera.zoom = camera.targetZoom = zoomMotion.zoom
-          + (zoomMotion.targetZoom - zoomMotion.zoom) * eased;
-        if (progress >= 1) zoomMotionRef.current = null;
-      } else {
-        const ease = reduced ? 1 : 1 - Math.exp(-dt * 0.012);
-        camera.x += (camera.targetX - camera.x) * ease;
-        camera.y += (camera.targetY - camera.y) * ease;
-        camera.zoom += (camera.targetZoom - camera.zoom) * ease;
-      }
+      const ease = reduced ? 1 : 1 - Math.exp(-dt * 0.012);
+      camera.x += (camera.targetX - camera.x) * ease;
+      camera.y += (camera.targetY - camera.y) * ease;
+      camera.zoom += (camera.targetZoom - camera.zoom) * ease;
       const weatherChanging = Math.abs(weatherMix - weatherTargetRef.current) > 0.001;
       weatherMix += (weatherTargetRef.current - weatherMix)
         * (reduced ? 1 : 1 - Math.exp(-dt * 0.005));
@@ -203,7 +181,7 @@ export function App() {
         Math.abs(camera.x - camera.targetX) > 0.02 ||
         Math.abs(camera.y - camera.targetY) > 0.02 ||
         Math.abs(camera.zoom - camera.targetZoom) > 0.001 ||
-        camera.pulse > 0.003 || !!zoomMotionRef.current || weatherChanging;
+        camera.pulse > 0.003 || weatherChanging;
       const frameChanged = sizeDirty ||
         camera.x !== lastDrawnX || camera.y !== lastDrawnY ||
         camera.zoom !== lastDrawnZoom || camera.pulse !== lastDrawnPulse ||
@@ -264,7 +242,7 @@ export function App() {
       canvas.removeEventListener("webglcontextrestored", onContextRestored);
       renderer?.dispose();
     };
-  }, [zoomBy]);
+  }, [zoomBy, clampCameraPosition]);
 
   useEffect(() => {
     if (!expanded) resumeSceneRef.current?.();
@@ -273,7 +251,6 @@ export function App() {
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (expandedRef.current || (event.target as HTMLElement).closest("button, a, .sea-card")) return;
     if (event.button !== 0 && event.pointerType !== "touch") return;
-    zoomMotionRef.current = null;
     pointerRef.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
     setDragging(true);
@@ -285,10 +262,9 @@ export function App() {
     const dx = event.clientX - pointer.x;
     const dy = event.clientY - pointer.y;
     const camera = cameraRef.current;
-    camera.x += dx;
-    camera.y += dy;
-    camera.targetX += dx;
-    camera.targetY += dy;
+    const position = clampCameraPosition(camera.targetX + dx, camera.targetY + dy, camera.targetZoom);
+    camera.x = camera.targetX = position.x;
+    camera.y = camera.targetY = position.y;
     pointer.x = event.clientX;
     pointer.y = event.clientY;
   };
@@ -303,7 +279,6 @@ export function App() {
   const openCard = () => {
     if (expandedRef.current) return;
     closingRef.current?.cancel();
-    zoomMotionRef.current = null;
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
     // The sea freezes under the open card; the next weather arrives as the
@@ -384,7 +359,22 @@ export function App() {
   useEffect(() => {
     if (!expanded) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closePage();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closePage();
+      }
+      if (event.key !== "Tab") return;
+      const controls = readerRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex="0"]');
+      if (!controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === readerRef.current)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !readerRef.current?.contains(document.activeElement))) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -420,8 +410,7 @@ export function App() {
             >
               <div className="sea-card-top"><span>CONTACT / 名片</span><span>REEF</span></div>
               <strong>REEF.</strong>
-              <ContactDetails />
-              <button ref={cardOpenButtonRef} className="sea-card-action" type="button">
+              <button ref={cardOpenButtonRef} className="sea-card-action" type="button" onClick={(event) => { event.stopPropagation(); openCard(); }}>
                 展开名片<span aria-hidden="true">↗</span>
               </button>
             </article>
@@ -429,21 +418,28 @@ export function App() {
         </div>
       </div>
 
-      <button className="brand" type="button" aria-label="ReeF，切换海面远近"
-        title="远眺／归位 · 3 秒" onClick={toggleReefZoom}>ReeF</button>
+      <div className="scene-ui" inert={!!expanded}>
+        <span className="brand">ReeF</span>
+        <a className="back-link" href="./">← 返回画廊</a>
+        <div className="sea-controls" role="group" aria-label="海面视角">
+          <button type="button" onClick={() => zoomBy(1 / 1.2)} aria-label="缩小海面" title="缩小">−</button>
+          <button type="button" onClick={resetView} aria-label="归位海面视角" title="归位">归位</button>
+          <button type="button" onClick={() => zoomBy(1.2)} aria-label="放大海面" title="放大">＋</button>
+        </div>
+      </div>
 
       {expanded && (
         <div className="reader-layer">
           <div ref={backdropRef} className="reader-backdrop" onClick={closePage} aria-hidden="true" />
           <div ref={readerMotionRef} className="reader-motion">
-            <section ref={readerRef} className="reader-panel" tabIndex={-1} aria-label="联系方式">
+            <section ref={readerRef} className="reader-panel" role="dialog" aria-modal="true" aria-labelledby="contact-dialog-title" tabIndex={-1}>
               <div className="reader-topline">
                 <span>CONTACT / 名片</span>
                 <button type="button" onClick={closePage} aria-label="放回海面">× <span>放回</span></button>
               </div>
               <article className="reading-article contact-article">
                 <span className="reading-kicker">REEF / CONTACT</span>
-                <h1>REEF.</h1>
+                <h1 id="contact-dialog-title">REEF.</h1>
                 <ContactDetails />
               </article>
             </section>

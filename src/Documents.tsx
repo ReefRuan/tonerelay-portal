@@ -165,7 +165,7 @@ function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<
       </header>
       <div className="dialogue-list">
         {faqItems.map((item, index) => (
-          <details key={item.question} open={index === 0}>
+          <details key={item.question} name="experience-faq" open={index === 0}>
             <summary>
               <span className="dialogue-number">{String(index + 1).padStart(2, "0")}</span>
               <strong>{item.question}</strong>

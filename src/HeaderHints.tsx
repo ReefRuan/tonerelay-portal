@@ -1,9 +1,10 @@
 // SPDX-FileCopyrightText: 2026 Reef Ruan
 // SPDX-License-Identifier: AGPL-3.0-only
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
+import { HEADER_PANEL_STATE_EVENT } from "./HeaderPanels";
 import {
   HINT_COPY,
   hintDelay,
@@ -105,7 +106,9 @@ export function HeaderHint({ id, anchor, onDismiss }: {
 }) {
   const reducedMotion = useReducedMotion();
   const [position, setPosition] = useState<HintPosition | null>(() => measureHint(anchor));
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const [panelOpen, setPanelOpen] = useState(() =>
+    typeof document !== "undefined" && !!document.querySelector(".header-panel"),
+  );
 
   useEffect(() => {
     const update = () => setPosition(measureHint(anchor));
@@ -119,10 +122,13 @@ export function HeaderHint({ id, anchor, onDismiss }: {
   }, [anchor]);
 
   useEffect(() => {
-    window.requestAnimationFrame(() => closeRef.current?.focus({ preventScroll: true }));
+    const update = () => setPanelOpen(!!document.querySelector(".header-panel"));
+    document.addEventListener(HEADER_PANEL_STATE_EVENT, update);
+    update();
+    return () => document.removeEventListener(HEADER_PANEL_STATE_EVENT, update);
   }, []);
 
-  if (!position) return null;
+  if (!position || panelOpen) return null;
 
   return (
     <motion.div
@@ -146,7 +152,7 @@ export function HeaderHint({ id, anchor, onDismiss }: {
         <path d="M22 4 l 6 6" />
       </svg>
       <p>{HINT_COPY[id]}</p>
-      <button ref={closeRef} className="header-hint-close" type="button" aria-label="关闭提示" onClick={onDismiss}>
+      <button className="header-hint-close" type="button" aria-label="关闭提示" onClick={onDismiss}>
         <Icon name="close" />
       </button>
     </motion.div>

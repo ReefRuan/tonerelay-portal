@@ -33,9 +33,16 @@ const block = introduction.match(/<!-- comparison-content:start -->\s*```json\s*
 if (!block) throw new Error("Missing comparison content in experience-introduction.md");
 const copy: Content = JSON.parse(block[1]);
 const photo = `${import.meta.env.BASE_URL}official-previews/fuji-film-pro-160ns.jpg`;
+const referencePhoto = `${import.meta.env.BASE_URL}previews/fuji-film-pro-160ns/02.webp`;
+const batchPhotos = [
+  "previews/fuji-film-pro-160ns/01.webp",
+  "previews/fuji-film-c200/02.webp",
+  "previews/fuji-film-provia-100f/03.webp",
+  "previews/fuji-film-superia-xtra-400/05.webp",
+].map(path => `${import.meta.env.BASE_URL}${path}`);
 
-function Photo({ small = false, alt = copy.photoAlt }: { small?: boolean; alt?: string }) {
-  return <img className={small ? "workflow-photo workflow-photo-small" : "workflow-photo"} src={photo} alt={alt} loading="lazy" width="600" height="600" />;
+function Photo({ small = false, alt = copy.photoAlt, src = photo }: { small?: boolean; alt?: string; src?: string }) {
+  return <img className={small ? "workflow-photo workflow-photo-small" : "workflow-photo"} src={src} alt={alt} loading="lazy" width="600" height="600" />;
 }
 
 function WindowBar({ name }: { name: string }) {
@@ -49,7 +56,7 @@ function Lightroom({ compact = false }: { compact?: boolean }) {
       <strong>基本调整</strong>
       {["曝光", "高光", "阴影", "色温", "饱和度"].map((label, index) => <div className="study-slider" key={label}><span>{label}</span><div><i style={{ left: `${[62, 28, 72, 57, 38][index]}%` }} /></div></div>)}
     </div></div>
-    <div className="lr-filmstrip" aria-hidden="true">{[0, 1, 2, 3, 4].map(n => <img src={photo} alt="" key={n} loading="lazy" />)}</div>
+    <div className="lr-filmstrip" aria-hidden="true">{[photo, ...batchPhotos].map(src => <img src={src} alt="" key={src} loading="lazy" />)}</div>
   </div>;
 }
 
@@ -76,8 +83,8 @@ function ManualBatch() {
 function BatchFlow() {
   return <div className="relay-study candidate-study"><WindowBar name="ToneRelay / 批量浏览与试色" /><div className="relay-study-body">
     <div className="study-message study-message-user">{copy.batch.requests[0]}</div>
-    <div className="batch-contact-sheet" role="img" aria-label="四张不同照片的缩略图占位示意">
-      {[1, 2, 3, 4].map((n) => <div className="batch-thumb" key={n}><div className="batch-thumb-art" /><span>{String(n).padStart(2, "0")}</span></div>)}
+    <div className="batch-contact-sheet" role="img" aria-label="四张不同照片的缩略图示意">
+      {batchPhotos.map((src, i) => <div className="batch-thumb" key={src}><img className="batch-thumb-art" src={src} alt="" loading="lazy" width="200" height="167" /><span>{String(i + 1).padStart(2, "0")}</span></div>)}
     </div>
     <div className="study-message study-message-user">{copy.batch.requests[1]}</div>
     <div className="batch-selection-note"><i className="status-dot" aria-hidden="true" />{copy.batch.selectionNote}</div>
@@ -93,7 +100,7 @@ function ToolFlow() {
   return <div className="relay-study tool-flow"><WindowBar name="ToneRelay / 参考图仿色" /><div className="relay-study-body">
     <div className="study-message study-message-user">{copy.computer.request}</div>
     <div className="match-inputs">
-      <div className="match-input match-reference"><Photo alt="参考图，色调示意" /><span>{copy.computer.referenceLabel}</span></div>
+      <div className="match-input match-reference"><Photo src={referencePhoto} alt="参考图，色调示意" /><span>{copy.computer.referenceLabel}</span></div>
       <div className="match-input"><Photo alt="等待调整的照片，示意" /><span>{copy.computer.sourceLabel}</span></div>
     </div>
     {copy.computer.rounds.map((round, i) => <div className={`study-message study-message-agent match-round match-round-${i + 1}`} key={round.label}>

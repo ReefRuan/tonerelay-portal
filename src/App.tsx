@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { categories, visiblePresets as presets, type Category, type Preset } from "./catalog";
@@ -85,6 +86,7 @@ export default function App() {
   const [dockMode, setDockMode] = useState<DockMode>(validInitial && initialPage === "gallery" ? "normal" : "collapsed");
   const [selectedId, setSelectedId] = useState<string | null>(initialDetailOpen ? validInitial : null);
   const [detailOpen, setDetailOpen] = useState(initialDetailOpen);
+  const [detailBackdropActive, setDetailBackdropActive] = useState(initialDetailOpen);
   const [category, setCategory] = useState<Category>("全部");
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState(false);
@@ -93,6 +95,7 @@ export default function App() {
   const [page, setPage] = useState<PortalPage>(initialPage);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const detailPanelRef = useRef<HTMLElement | null>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const starAnchorRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
@@ -176,20 +179,63 @@ export default function App() {
     const url = new URL(window.location.href);
     url.searchParams.delete("preset");
     window.history.replaceState({}, "", url);
-    window.requestAnimationFrame(() => {
-      if (selectedId) cardRefs.current.get(selectedId)?.focus({ preventScroll: true });
-    });
-  }, [selectedId]);
+  }, []);
 
   const openDetail = useCallback((preset: Preset) => {
+    returnFocusRef.current = document.activeElement instanceof HTMLElement && document.activeElement !== document.body
+      ? document.activeElement
+      : null;
     setSelectedId(preset.id);
     setDockMode("normal");
+    setDetailBackdropActive(true);
     setDetailOpen(true);
     const url = new URL(window.location.href);
     url.searchParams.set("preset", preset.id);
     window.history.pushState({}, "", url);
-    window.requestAnimationFrame(() => detailPanelRef.current?.focus());
   }, []);
+
+  useEffect(() => {
+    if (!detailOpen) return;
+    const frame = window.requestAnimationFrame(() => detailPanelRef.current?.focus({ preventScroll: true }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [detailOpen]);
+
+  useEffect(() => {
+    if (!detailBackdropActive) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [detailBackdropActive]);
+
+  useEffect(() => {
+    if (dockMode !== "expanded" || detailOpen || page !== "gallery") return;
+    // The collapsed dock exits before the expanded dock mounts.
+    const timer = window.setTimeout(() => searchRef.current?.focus({ preventScroll: true }), reducedMotion ? 0 : 210);
+    return () => window.clearTimeout(timer);
+  }, [detailOpen, dockMode, page, reducedMotion]);
+
+  const trapDetailFocus = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Tab" || manualCopy !== null) return;
+    const panel = detailPanelRef.current;
+    if (!panel) return;
+    const focusable = Array.from(panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+    )).filter((item) => item.getClientRects().length > 0);
+    if (!focusable.length) {
+      event.preventDefault();
+      panel.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   const copyValue = useCallback(async (value: string, message: string) => {
     try {
@@ -245,6 +291,7 @@ export default function App() {
       const index = activeIndex < 0 ? 0 : activeIndex;
       const next = filteredPresets[(index + delta + filteredPresets.length) % filteredPresets.length];
       setSelectedId(next.id);
+      detailPanelRef.current?.scrollTo({ top: 0, behavior: "auto" });
       const url = new URL(window.location.href);
       url.searchParams.set("preset", next.id);
       window.history.replaceState({}, "", url);
@@ -291,9 +338,10 @@ export default function App() {
     const onPopState = () => {
       const id = new URLSearchParams(window.location.search).get("preset");
       const preset = presets.find((entry) => entry.id === id);
-      if (preset) {
+      if (preset && pageFromHash() === "gallery") {
         setSelectedId(preset.id);
         setDockMode("normal");
+        setDetailBackdropActive(true);
         setDetailOpen(true);
       } else {
         setDetailOpen(false);
@@ -317,24 +365,30 @@ export default function App() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (page !== "gallery") return;
-      const target = event.target as HTMLElement;
-      if (target.matches("input, textarea, select") || target.isContentEditable) {
-        if (event.key === "Escape") {
-          target.blur();
+      if (page !== "gallery" || manualCopy !== null || event.defaultPrevented || event.isComposing) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target instanceof Element ? event.target : null;
+      const editing = target?.closest('input, textarea, select, [contenteditable="true"]');
+      if (editing) {
+        if (event.key === "Escape" && !detailOpen) {
+          (editing as HTMLElement).blur();
           setDockMode("normal");
         }
-        return;
-      }
-      if (event.key.toLowerCase() === "m" && dockMode === "collapsed") {
-        event.preventDefault();
-        openController();
         return;
       }
       if (event.key === "Escape") {
         if (detailOpen) closeDetail();
         else if (dockMode === "expanded") setDockMode("normal");
         else if (dockMode === "normal") setDockMode("collapsed");
+        return;
+      }
+      const cardHasFocus = Boolean(target?.closest(".preset-card"));
+      if (target?.closest("a, button, summary, [role='button'], [role='link']") && !cardHasFocus) return;
+      if (detailOpen && target !== detailPanelRef.current) return;
+      if (event.shiftKey) return;
+      if (event.key.toLowerCase() === "m" && dockMode === "collapsed") {
+        event.preventDefault();
+        openController();
         return;
       }
       if (dockMode === "collapsed") return;
@@ -359,7 +413,7 @@ export default function App() {
       } else if (event.key.toLowerCase() === "c") {
         event.preventDefault();
         void copyLink();
-      } else if (event.key === "Enter" && selectedPreset && !detailOpen) {
+      } else if (event.key === "Enter" && selectedPreset && !detailOpen && !cardHasFocus) {
         event.preventDefault();
         openDetail(selectedPreset);
       } else if (event.key === "/" && !detailOpen) {
@@ -370,11 +424,11 @@ export default function App() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [closeDetail, copyLink, detailOpen, dockMode, moveSelection, openController, openDetail, page, selectedPreset]);
+  }, [closeDetail, copyLink, detailOpen, dockMode, manualCopy, moveSelection, openController, openDetail, page, selectedPreset]);
 
   return (
-    <div className={`app-shell page-${page} dock-${dockMode} ${detailOpen ? "has-detail" : ""}`}>
-      <header className="site-header">
+    <div className={`app-shell page-${page} dock-${dockMode} ${detailBackdropActive ? "has-detail" : ""}`}>
+      <header className="site-header" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <a className="brand" href="#gallery" aria-label="ToneRelay 画廊">
           <span className="brand-mark"><i /><i /><i /></span>
           <span>
@@ -408,7 +462,7 @@ export default function App() {
         />
       )}
 
-      {page === "gallery" ? <main className="catalog-main" aria-hidden={detailOpen || undefined}>
+      {page === "gallery" ? <main className="catalog-main" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <section className="intro" aria-labelledby="page-title">
           <h1 id="page-title">
             Reef 的 Lightroom MCP<br />
@@ -425,7 +479,12 @@ export default function App() {
             <h2>互联网蒸馏预设</h2>
           </div>
           <div className="catalog-rule"><i /></div>
-          <p>{filteredPresets.length} 项内容</p>
+          <div className="catalog-tools">
+            <p>{filteredPresets.length} 项内容</p>
+            <button type="button" onClick={() => setDockMode((mode) => mode === "expanded" ? "normal" : "expanded")} aria-label="筛选内容" aria-expanded={dockMode === "expanded"} aria-controls="preset-filter-panel">
+              <Icon name="filter" /><span>筛选</span>
+            </button>
+          </div>
         </div>
 
         {filteredPresets.length ? (
@@ -447,13 +506,8 @@ export default function App() {
                       "--card-ratio": preset.ratio,
                     } as CSSProperties
                   }
-                  aria-label={`选择${preset.kind === "effect" ? "效果包" : "风格模板"}：${preset.name}`}
-                  aria-pressed={selected}
-                  onClick={() => {
-                    setSelectedId(preset.id);
-                    if (dockMode === "collapsed") setDockMode("normal");
-                  }}
-                  onDoubleClick={() => openDetail(preset)}
+                  aria-label={`查看${preset.kind === "effect" ? "效果包" : "风格模板"}详情：${preset.name}`}
+                  onClick={() => openDetail(preset)}
                 >
                   <span className="photo-frame">
                     <img
@@ -498,7 +552,13 @@ export default function App() {
         </footer>
       </main> : <Documents onCopyUninstall={copyUninstallPrompt} />}
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => {
+        if (detailOpen) return;
+        setDetailBackdropActive(false);
+        const previous = returnFocusRef.current;
+        const fallback = selectedId ? cardRefs.current.get(selectedId) : null;
+        window.requestAnimationFrame(() => (previous?.isConnected ? previous : fallback)?.focus({ preventScroll: true }));
+      }}>
         {page === "gallery" && detailOpen && selectedPreset && (
           <motion.div
             className="detail-layer"
@@ -515,6 +575,7 @@ export default function App() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="detail-title"
+              onKeyDown={trapDetailFocus}
               initial={reducedMotion ? false : { y: 80, scale: 0.88, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
               exit={reducedMotion ? { opacity: 0 } : { y: 70, scale: 0.9, opacity: 0 }}
@@ -522,7 +583,11 @@ export default function App() {
             >
               <div className="detail-topline">
                 <span>{selectedPreset.kind === "effect" ? "效果" : "风格包"} / {selectedPreset.number}</span>
-                <button onClick={closeDetail} aria-label="放回预设"><Icon name="close" /></button>
+                <div className="detail-topline-actions">
+                  <button onClick={() => switchDetail(-1)} aria-label="上一个预设"><Icon name="back" /></button>
+                  <button onClick={() => switchDetail(1)} aria-label="下一个预设"><Icon name="arrow" /></button>
+                  <button onClick={closeDetail} aria-label="放回预设"><Icon name="close" /></button>
+                </div>
               </div>
               <div className="detail-body">
                 <header className="detail-title-row">
@@ -610,14 +675,17 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {page === "gallery" && <aside className="controller" aria-label="预设操控条">
+      {page === "gallery" && <aside className="controller" aria-label="预设操控条" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
+        <AnimatePresence mode="wait" initial={false}>
         {dockMode === "collapsed" ? (
           <motion.button
+            key="controller-wake"
             className="controller-wake"
             onClick={openController}
             aria-label="开启预设操控"
             initial={{ y: 18, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 16, opacity: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.18 }}
           >
             <span className="wake-symbol"><i /><i /><i /></span>
@@ -625,11 +693,19 @@ export default function App() {
             <small>控制</small>
           </motion.button>
         ) : (
-          <div className={`controller-active ${dockMode === "expanded" ? "is-expanded" : ""}`}>
+          <motion.div
+            key="controller-active"
+            className={`controller-active ${dockMode === "expanded" ? "is-expanded" : ""}`}
+            initial={{ y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 16, opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.18 }}
+          >
             <AnimatePresence>
               {dockMode === "expanded" && !detailOpen && (
                 <motion.section
                   className="controller-panel"
+                  id="preset-filter-panel"
                   initial={{ opacity: 0, y: 18, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 14, scale: 0.98 }}
@@ -729,8 +805,9 @@ export default function App() {
               </div>
               <Trackball onNavigate={moveSelection} detailOpen={detailOpen} />
             </div>
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </aside>}
 
       <AnimatePresence>

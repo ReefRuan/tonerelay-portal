@@ -26,18 +26,37 @@ export const PRIVACY_STATEMENT = {
 
 export const INSTALL_PANEL_LEAD = "复制下面全部内容，发给你的 Agent 即可开始安装";
 
+export const HEADER_PANEL_STATE_EVENT = "tonerelay:header-panel-state";
+const HEADER_POPOVER_OPEN_EVENT = "tonerelay:header-popover-open";
+
+/** Only one header popover can remain open at a time. */
+function useExclusiveHeaderPopover(id: string, open: boolean, setOpen: (open: boolean) => void) {
+  useEffect(() => {
+    const closeForOther = (event: Event) => {
+      if ((event as CustomEvent<string>).detail !== id) setOpen(false);
+    };
+    document.addEventListener(HEADER_POPOVER_OPEN_EVENT, closeForOther);
+    return () => document.removeEventListener(HEADER_POPOVER_OPEN_EVENT, closeForOther);
+  }, [id, setOpen]);
+
+  useEffect(() => {
+    if (open) document.dispatchEvent(new CustomEvent(HEADER_POPOVER_OPEN_EVENT, { detail: id }));
+    document.dispatchEvent(new Event(HEADER_PANEL_STATE_EVENT));
+  }, [id, open]);
+}
+
 /** Shared outside-click + Escape dismissal for header popovers. */
-function usePopoverDismiss(open: boolean, rootRef: Ref<HTMLDivElement>, onClose: () => void) {
+function usePopoverDismiss(open: boolean, rootRef: Ref<HTMLDivElement>, onClose: (reason: "outside" | "escape") => void) {
   useEffect(() => {
     if (!open) return;
     const root = rootRef && typeof rootRef === "object" ? rootRef.current : null;
     const handlePointerDown = (event: MouseEvent) => {
-      if (!root || !root.contains(event.target as Node)) onClose();
+      if (!root || !root.contains(event.target as Node)) onClose("outside");
     };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.stopPropagation();
-        onClose();
+        onClose("escape");
       }
     };
     document.addEventListener("mousedown", handlePointerDown);
@@ -94,11 +113,13 @@ export function InstallAction({ onCopy }: {
   const panelRef = useRef<HTMLDivElement>(null);
   const caretRef = useRef<HTMLButtonElement>(null);
 
-  const close = useCallback(() => {
+  const close = useCallback((reason?: "outside" | "escape") => {
     setOpen(false);
+    if (reason === "escape") window.requestAnimationFrame(() => caretRef.current?.focus({ preventScroll: true }));
   }, []);
 
   usePopoverDismiss(open, rootRef, close);
+  useExclusiveHeaderPopover("install", open, setOpen);
 
   useEffect(() => {
     if (open) window.requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
@@ -153,9 +174,13 @@ export function PrivacyAction() {
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback((reason?: "outside" | "escape") => {
+    setOpen(false);
+    if (reason === "escape") window.requestAnimationFrame(() => triggerRef.current?.focus({ preventScroll: true }));
+  }, []);
 
   usePopoverDismiss(open, rootRef, close);
+  useExclusiveHeaderPopover("privacy", open, setOpen);
 
   useEffect(() => {
     if (open) window.requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
