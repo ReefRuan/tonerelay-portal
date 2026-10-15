@@ -276,6 +276,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   .brand { top: 18px; left: 18px; font-size: 20px; }
   .back-link { top: 10px; right: 12px; }
   .sea-controls { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
+  .sea-card { touch-action: none; user-select: none; }
   .sea-card-profile { width: min(340px, calc(100vw - 60px)); min-height: 242px; }
   .sea-card-profile strong { font-size: 29px; }
   .reader-layer { padding: 9px 8px 12px; }

@@ -5,6 +5,15 @@ import { createSeaRenderer } from "./dither/seaRenderer";
 
 type Origin = { left: number; top: number; width: number; height: number };
 type OpenCard = { origin: Origin };
+type ScenePointer = {
+  id: number;
+  x: number;
+  y: number;
+  startX: number;
+  startY: number;
+  touch: boolean;
+  mode: "pending" | "zoom" | "pan";
+};
 
 const transformTo = (origin: Origin, target: DOMRect) =>
   `translate(${origin.left - target.left}px, ${origin.top - target.top}px) scale(${origin.width / target.width}, ${origin.height / target.height})`;
@@ -43,7 +52,8 @@ export function App() {
   const cardRef = useRef<HTMLElement>(null);
   const cardOpenButtonRef = useRef<HTMLButtonElement>(null);
   const cameraRef = useRef({ x: 0, y: 0, zoom: 1, targetX: 0, targetY: 0, targetZoom: 1, pulse: 0 });
-  const pointerRef = useRef({ id: -1, x: 0, y: 0 });
+  const pointerRef = useRef<ScenePointer>({ id: -1, x: 0, y: 0, startX: 0, startY: 0, touch: false, mode: "pending" });
+  const suppressCardClickRef = useRef(false);
   const openingRef = useRef<Animation | null>(null);
   const closingRef = useRef<Animation | null>(null);
   const restoreFocusRef = useRef(false);
@@ -249,22 +259,59 @@ export function App() {
   }, [expanded]);
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (expandedRef.current || (event.target as HTMLElement).closest("button, a, .sea-card")) return;
+    if (expandedRef.current) return;
+    if (event.pointerType === "touch" && !event.isPrimary) {
+      pointerRef.current.id = -1;
+      suppressCardClickRef.current = true;
+      setDragging(false);
+      return;
+    }
+    suppressCardClickRef.current = false;
+    const target = event.target as HTMLElement;
+    if (target.closest("a") || (event.pointerType !== "touch" && target.closest("button"))) return;
     if (event.button !== 0 && event.pointerType !== "touch") return;
-    pointerRef.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setDragging(true);
+    if (pointerRef.current.id !== -1) return;
+    const touch = event.pointerType === "touch";
+    if (!touch && target.closest(".sea-card")) return;
+    pointerRef.current = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      startX: event.clientX,
+      startY: event.clientY,
+      touch,
+      mode: touch ? "pending" : "pan",
+    };
+    if (!touch) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+      setDragging(true);
+    }
   };
   const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (expandedRef.current) return;
     const pointer = pointerRef.current;
     if (pointer.id !== event.pointerId) return;
+    if (pointer.touch && pointer.mode === "pending") {
+      const totalX = event.clientX - pointer.startX;
+      const totalY = event.clientY - pointer.startY;
+      if (Math.hypot(totalX, totalY) < 8) return;
+      pointer.mode = Math.abs(totalY) >= Math.abs(totalX) ? "zoom" : "pan";
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      suppressCardClickRef.current = true;
+      if (pointer.mode === "pan") setDragging(true);
+      return;
+    }
     const dx = event.clientX - pointer.x;
     const dy = event.clientY - pointer.y;
-    const camera = cameraRef.current;
-    const position = clampCameraPosition(camera.targetX + dx, camera.targetY + dy, camera.targetZoom);
-    camera.x = camera.targetX = position.x;
-    camera.y = camera.targetY = position.y;
+    if (pointer.touch && pointer.mode === "zoom") {
+      zoomBy(Math.exp(-clamp(dy, -60, 60) * 0.004), pointer.startX, pointer.startY);
+    } else {
+      const camera = cameraRef.current;
+      const position = clampCameraPosition(camera.targetX + dx, camera.targetY + dy, camera.targetZoom);
+      camera.x = camera.targetX = position.x;
+      camera.y = camera.targetY = position.y;
+    }
     pointer.x = event.clientX;
     pointer.y = event.clientY;
   };
@@ -404,6 +451,12 @@ export function App() {
             <article
               ref={cardRef}
               className="sea-card sea-card-profile"
+              onClickCapture={(event) => {
+                if (!suppressCardClickRef.current) return;
+                suppressCardClickRef.current = false;
+                event.preventDefault();
+                event.stopPropagation();
+              }}
               onClick={(event) => {
                 if (!(event.target as HTMLElement).closest("a") && !window.getSelection()?.toString()) openCard();
               }}
