@@ -2565,30 +2565,8 @@ kbd {
 .workflow-side > header > span { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; letter-spacing: .025em; color: #b5c0c9; }
 .workflow-after > header > span { color: #416250; }
 .workflow-side h4 { margin: 12px 0 0; font-size: clamp(20px, 2.3vw, 28px); font-weight: 500; line-height: 1.4; letter-spacing: -.035em; }
-.workflow-window-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 36px; padding: 0 12px; border-bottom: 1px solid #ffffff12; color: #b6c1ca; background: #20282f; font: 10px var(--mono); }
 .window-dots { display: flex; gap: 4px; }
 .window-dots i { width: 5px; height: 5px; border-radius: 50%; background: #62707b; }
-.window-mode { font: 9px "Avenir Next", "PingFang SC", sans-serif; opacity: .8; }
-.lr-study, .relay-study { border: 1px solid #354049; border-radius: 7px; overflow: hidden; box-shadow: 0 8px 18px #0002; }
-.lr-study { background: #10151a; }
-.lr-study-body { display: grid; grid-template-columns: minmax(0, 1fr) 90px; padding: 12px; gap: 12px; }
-.workflow-photo { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: center 38%; }
-.lr-study-body > .workflow-photo { aspect-ratio: 1; }
-.lr-study-controls { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
-.lr-study-controls strong { color: #b7c2cb; font-size: 10px; font-weight: 500; padding-bottom: 6px; border-bottom: 1px solid #303940; }
-.study-slider > span { display: block; color: #a4b0ba; font-size: 9px; margin-bottom: 9px; }
-.study-slider > div { height: 2px; background: #4a545e; position: relative; }
-.study-slider i { position: absolute; top: -3px; width: 7px; height: 7px; background: #c2cbd2; border-radius: 50%; }
-.lr-filmstrip { display: flex; gap: 6px; padding: 8px 12px; border-top: 1px solid #2c343c; }
-.lr-filmstrip img { width: 33px; height: 28px; object-fit: cover; opacity: .45; border: 1px solid transparent; }
-.lr-filmstrip img:first-child { opacity: 1; border-color: #bdc8d0; }
-.relay-study { background: #f9faf7; border-color: #c3cdc5; }
-.relay-study .workflow-window-bar { background: #eef1eb; border-color: #d5ddd4; color: #4c6255; }
-.relay-study .window-dots i { background: #a9b8ae; }
-.relay-study-body { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-.study-message { max-width: 94%; padding: 11px 14px; border-radius: 10px 10px 2px 10px; font-size: 12px; line-height: 1.7; }
-.study-message-user { align-self: flex-end; background: #e3ebe1; color: #314a3c; }
-.study-message-agent { align-self: flex-start; background: #f0f3ed; border: 1px solid #d7e0d5; border-radius: 10px 10px 10px 2px; color: #45614f; }
 .status-dot { display: inline-block; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #507e5f; }
 .workflow-shot { margin: 0; border: 1px solid #354049; border-radius: 10px; overflow: hidden; background: #10151a; box-shadow: 0 8px 18px #0002; }
 .workflow-shot img { display: block; width: 100%; height: auto; }
@@ -2608,40 +2586,11 @@ kbd {
 .workflow-summary ul { list-style: none; display: flex; flex-wrap: wrap; gap: 14px; margin: 0; padding: 0; }
 .workflow-summary li { color: var(--muted); font-size: 11px; }
 .workflow-summary li > span { margin-right: 6px; color: var(--study-accent); }
-.screen-loop { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
-.lr-study-compact .lr-study-body > .workflow-photo { aspect-ratio: 1.6; }
-.lr-study-compact .lr-study-controls { gap: 10px; }
-.lr-study-compact .lr-filmstrip { display: none; }
-.screen-loop-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
-.screen-loop-steps li { display: flex; align-items: center; gap: 9px; font-size: 11px; color: #bcc6ce; padding: 11px 10px; border: 1px solid #34404a; border-radius: 4px; }
-.screen-loop-steps li > span { color: #8395a4; font: 9px var(--mono); }
-.screen-loop-steps b { margin-left: auto; font-size: 12px; color: #8c9caa; font-weight: 400; }
-.tool-flow .relay-study-body { gap: 12px; }
-.match-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.match-input, .match-round-image { position: relative; overflow: hidden; border: 1px solid #cfd8cc; border-radius: 4px; background: #dae3d7; }
-.match-input { aspect-ratio: 1.65; }
-.match-input .workflow-photo, .match-round-image .workflow-photo { width: 100%; height: 100%; }
-.match-input > span, .match-round-image > span { position: absolute; left: 7px; bottom: 7px; padding: 4px 6px; border-radius: 2px; color: #fff; background: #1c302ac9; font-size: 10px; }
-.match-reference .workflow-photo { filter: sepia(.18) saturate(.72) contrast(.94) brightness(1.05); }
-.match-round { display: flex; flex-direction: column; gap: 9px; width: min(88%, 420px); }
-.match-round p { margin: 0; }
-.match-round-image { width: 100%; aspect-ratio: 2.4; }
-.match-round-1 .workflow-photo { filter: sepia(.07) saturate(.95) brightness(1.03); }
-.match-round-2 .workflow-photo { filter: sepia(.15) saturate(.78) contrast(.96) brightness(1.05); }
-.tool-flow .study-message-agent { max-width: none; }
+.workflow-pending { margin: 0; padding: clamp(36px, 5vw, 60px); border: 1px dashed var(--study-border); border-radius: 14px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .workflow-source { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.7; }
-.workflow-source a { text-underline-offset: 4px; }
 @media (min-width: 768px) {
   .workflow-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .workflow-side { gap: 24px; }
-  .lr-study-body { grid-template-columns: minmax(0, 1fr) 104px; }
-  .workflow-figure-computer .workflow-side { min-height: 465px; }
-}
-@media (min-width: 1024px) {
-  .lr-study-controls { gap: 22px; }
-  .study-message { font-size: 13px; }
-  .relay-study-body { padding: 20px; }
-  .lr-study-body { padding: 16px; gap: 18px; }
 }
 @media (max-width: 639px) {
   .workflow-section { margin-top: 76px; padding-top: 48px; }
@@ -2651,12 +2600,7 @@ kbd {
   .workflow-figure { margin-bottom: 48px; }
   .workflow-board { border-radius: 9px; }
   .workflow-summary ul { gap: 12px; }
-  .workflow-window-bar { font-size: 9px; }
-  .match-round-image { aspect-ratio: 1.9; }
 }
-/* Visual style directions only; these are not Lightroom-rendered edits. */
-.candidate-photo:nth-child(2) .workflow-photo { filter: sepia(.16) saturate(.85) brightness(1.06); }
-.candidate-photo:nth-child(3) .workflow-photo { filter: saturate(.38) contrast(.92) brightness(1.05); }
 
 .manual-copy-dialog { padding: 24px; }
 .manual-copy-dialog textarea { width: 100%; min-height: 240px; max-height: 50vh; resize: vertical; font: inherit; }

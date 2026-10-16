@@ -17,7 +17,7 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
 <!-- comparison-content:start -->
 ```json
 {
-  "note": "01 / 02 为实际工作流截图，照片来自作者的 Lightroom 目录；03 为界面示意。速度与 Token 收益尚未量化。",
+  "note": "01 / 02 为实际工作流截图，照片来自作者的 Lightroom 目录；03 的实录截图筹备中。速度与 Token 收益尚未量化。",
   "shots": {
     "compare": {
       "alt": "Lightroom Classic 中同一张照片的修改前与修改后对比",
@@ -80,26 +80,10 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "参考图仿色",
     "afterFooter": "参考图 → 首轮渲染 → 观察 → 再调整",
-    "steps": ["截图观察", "定位控件", "调整滑块", "再次截图"],
-    "request": "参考这张照片，给我的照片调出相近的色调。",
-    "referenceLabel": "参考图",
-    "sourceLabel": "我的照片",
-    "rounds": [
-      {
-        "label": "首次预览",
-        "observation": "先看渲染结果：整体偏暖，背景紫色比参考图更浓。下一轮收一点暖色和饱和度。"
-      },
-      {
-        "label": "调整后预览",
-        "observation": "再看一次：肤色更自然，背景也更接近参考图。你来决定是否保留。"
-      }
-    ],
     "takeaway": "每轮都看实际渲染，再对照参考图决定下一步；比反复截图找滑块更顺畅，也有助于节省时间与 Token。",
     "benefits": ["参考图仿色", "多轮观察", "结果可回读"]
   },
-  "photoAlt": "人物站在薰衣草花田中，示意照片",
-  "imageCredit": "03 示意照片：Lavender field / PxHere · CC0",
-  "imageCreditUrl": "https://pxhere.com/en/photo/192059"
+  "pendingNote": "参考图仿色的实录截图整理中，稍后补上"
 }
 ```
 <!-- comparison-content:end -->

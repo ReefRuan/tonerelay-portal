@@ -42,17 +42,18 @@ describe("workflow examples", () => {
     expect(batch).not.toContain("batch-thumb");
   });
 
-  it("shows reference matching as two observe-and-adjust rounds", () => {
+  it("keeps reference matching as copy while its real captures are pending", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
-    const matching = html.match(/workflow-figure-computer[\s\S]*?workflow-source/)?.[0];
+    const pending = html.match(/workflow-figure-computer[\s\S]*?workflow-source/)?.[0];
 
-    expect(matching).toContain("参考这张照片，给我的照片调出相近的色调。");
-    expect(matching).toContain("参考图");
-    expect(matching).toContain("我的照片");
-    expect(matching).toContain("首次预览");
-    expect(matching).toContain("调整后预览");
-    expect(matching).toContain("参考图仿色");
-    expect(matching?.match(/class="study-message study-message-agent match-round/g)).toHaveLength(2);
-    expect(matching?.match(/class="match-round-image"/g)).toHaveLength(2);
+    expect(pending).toBeDefined();
+    expect(pending).toContain("少截图，少来回找按钮。");
+    expect(pending).toContain("模仿参考图调色时");
+    expect(pending).toContain("参考图仿色");
+    expect(pending).toContain("结果可回读");
+    expect(pending).toContain("实录截图整理中");
+    expect(pending).not.toContain("match-round-image");
+    expect(pending).not.toContain("screen-loop");
+    expect(pending).not.toContain("workflow-board");
   });
 });
