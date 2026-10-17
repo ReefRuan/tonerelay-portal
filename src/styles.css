@@ -2303,65 +2303,6 @@ kbd {
 
 .author-contact svg { width: 16px; height: 16px; }
 
-/* 典型用法（AgentStrip 介绍区）：编号 mono 蓝 + 名称衬线 + 说明 muted + 例句 code。
-   四层均为 portal 既有 idiom（.eyebrow / .agent-chip strong / FAQ code），无新色。 */
-.scene-entries-label {
-  display: block;
-  margin-top: 28px;
-}
-
-.scene-entries {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-  max-width: 680px;
-}
-
-.scene-entry {
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-  gap: 12px;
-  padding: 11px 0;
-  border-top: 1px solid rgba(150, 174, 199, 0.18);
-}
-
-.scene-entry:first-child {
-  border-top: 0;
-  padding-top: 4px;
-}
-
-.scene-no {
-  font: 11px/1.7 var(--mono);
-  letter-spacing: 0.08em;
-  color: var(--blue);
-}
-
-.scene-body {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 3px 10px;
-}
-
-.agent-strip-heading .scene-body strong {
-  font: 400 15px/1.4 var(--serif);
-  color: var(--ink);
-}
-
-.scene-desc {
-  font-size: 12px;
-  line-height: 1.4;
-  color: #aebac6;
-}
-
-.scene-body code {
-  flex-basis: 100%;
-  font: 11px/1.6 var(--mono);
-  color: #b7d5fa;
-  letter-spacing: 0.02em;
-  overflow-wrap: anywhere;
-}
-
 .intro-cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -2681,7 +2622,7 @@ kbd {
   }
 }
 
-/* Editorial workflow comparisons. 01 / 02 use real session screenshots; 03 frames are illustrative. */
+/* Editorial workflow comparisons. All three groups use real session screenshots. */
 .workflow-section {
   --study-bg: #151b21;
   --study-border: #303b45;
@@ -2696,6 +2637,18 @@ kbd {
 .workflow-section .experience-section-heading h2 { margin: 0 0 18px; }
 .workflow-section .experience-section-heading > p { max-width: 930px; color: #d2dde8; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.7; }
 .workflow-section .experience-section-heading > p + p { margin-top: 14px; }
+/* 典型用法（工作流区）：编号 mono 蓝 + 名称衬线 + 说明 muted + 例句 code。
+   四层均为 portal 既有 idiom（.eyebrow / .scene-body strong / FAQ code），无新色。 */
+.workflow-scene-entries { margin-bottom: 56px; }
+.scene-entries-label { display: block; margin-top: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; }
+.scene-entries { list-style: none; margin: 14px 0 0; padding: 0; max-width: 680px; }
+.scene-entry { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 11px 0; border-top: 1px solid rgba(150, 174, 199, 0.18); }
+.scene-entry:first-child { border-top: 0; padding-top: 4px; }
+.scene-no { font: 11px/1.7 var(--mono); letter-spacing: 0.08em; color: var(--blue); }
+.scene-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; }
+.scene-body strong { font: 400 15px/1.4 var(--serif); color: var(--ink); }
+.scene-desc { font-size: 12px; line-height: 1.4; color: #aebac6; }
+.scene-body code { flex-basis: 100%; font: 11px/1.6 var(--mono); color: #b7d5fa; letter-spacing: 0.02em; overflow-wrap: anywhere; }
 .workflow-figure { margin: 0 0 64px; }
 .workflow-caption { margin-bottom: 26px; }
 .workflow-index { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 12px; }
@@ -2730,7 +2683,6 @@ kbd {
 .workflow-summary ul { list-style: none; display: flex; flex-wrap: wrap; gap: 14px; margin: 0; padding: 0; }
 .workflow-summary li { color: var(--muted); font-size: 11px; }
 .workflow-summary li > span { margin-right: 6px; color: var(--study-accent); }
-.workflow-pending { margin: 0; padding: clamp(36px, 5vw, 60px); border: 1px dashed var(--study-border); border-radius: 14px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .workflow-source { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.7; }
 @media (min-width: 768px) {
   .workflow-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2744,6 +2696,19 @@ kbd {
   .workflow-figure { margin-bottom: 48px; }
   .workflow-board { border-radius: 9px; }
   .workflow-summary ul { gap: 12px; }
+}
+
+/* Solo figure (03): one centered card with the real capture, and the manual /
+   computer-use way compressed into a contrast strip below it. */
+.workflow-board.workflow-board-solo { grid-template-columns: minmax(0, 1fr); width: min(560px, 100%); margin: 0 auto; }
+.workflow-contrast { display: flex; align-items: center; gap: 14px; padding: 16px clamp(18px, 3vw, 36px) 18px; background: var(--study-bg); }
+.workflow-contrast-mark { flex-shrink: 0; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #46525d; border-radius: 50%; color: #8d99a3; font-size: 12px; line-height: 1; }
+.workflow-contrast-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.workflow-contrast-body strong { font-size: 13px; font-weight: 500; color: #b5c0c9; }
+.workflow-contrast-body span { color: #8d99a3; font-size: 12px; }
+@media (max-width: 639px) {
+  .workflow-scene-entries { margin-bottom: 40px; }
+  .scene-entries { margin-top: 12px; }
 }
 
 .manual-copy-dialog { padding: 24px; }

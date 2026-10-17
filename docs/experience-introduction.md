@@ -17,15 +17,38 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
 <!-- comparison-content:start -->
 ```json
 {
-  "note": "01 / 02 为实际工作流截图，照片来自作者的 Lightroom 目录；03 的实录截图筹备中。速度与 Token 收益尚未量化。",
-  "shots": {
-    "compare": {
-      "alt": "Lightroom Classic 中同一张照片的修改前与修改后对比",
-      "caption": "Lightroom Classic · 修改前 / 修改后"
+  "note": "三组均为实际工作流截图，照片来自作者的 Lightroom 目录。速度与 Token 收益尚未量化。",
+  "sceneEntries": [
+    {
+      "no": "01",
+      "name": "看目录",
+      "desc": "一句话连接 LR，总览当前目录与选片",
+      "prompts": ["连接lr，我看看当前目录"]
     },
-    "retouch": {
-      "alt": "Agent 对话截图：说出修图目标后，Agent 借助 ToneRelay 调整 Lightroom 并带回照片预览",
-      "caption": "Agent 对话 · 说出目标，带回结果"
+    {
+      "no": "02",
+      "name": "评分排废片",
+      "desc": "整组逐张评分、打星标旗，结果写回目录",
+      "prompts": ["给这个lr目录的照片评分。模糊/意义不明的照片标排除"]
+    },
+    {
+      "no": "03",
+      "name": "仿色与精调",
+      "desc": "甩参考图逐张仿色，接着说「再突出光斑」",
+      "prompts": [
+        "使用这些参考图，对目录每一张图片调色，每一张图片都要选择合适的参考图",
+        "继续修改，突出/调整风格/影调/还原肤色等，看看前后对比"
+      ]
+    }
+  ],
+  "shots": {
+    "sliders": {
+      "alt": "Lightroom Classic 修改照片模块：右侧参数面板布满滑块，一个大光标停在曝光度滑块上",
+      "caption": "Lightroom Classic · 逐项调整滑块"
+    },
+    "refine": {
+      "alt": "Agent 对话截图：说出修图目标并拿到第一版结果后，接着说「感觉暗部太黑了，提亮，注意色调」，Agent 再带回调整后的版本",
+      "caption": "Agent 对话 · 说出目标，接着说再改"
     },
     "loupe": {
       "alt": "Lightroom Classic 放大视图与底部胶片网格，逐张浏览照片",
@@ -34,6 +57,10 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "rating": {
       "alt": "Agent 对话截图：对整组照片逐张评分，返回星级分布并写回目录",
       "caption": "Agent 对话 · 整组评分，写回目录"
+    },
+    "color": {
+      "alt": "Agent 对话截图：用户给出 9 张参考图与修图目标，Agent 按每张照片的光线分别选择参考图，完成 14 张浓郁风格修图并逐张带回渲染预览",
+      "caption": "Agent 对话 · 参考图仿色，逐张回读"
     }
   },
   "first": {
@@ -42,7 +69,7 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "title": "从想要的画面开始。",
     "description": "说出想要的效果，看看照片，再接着说哪里要改。",
     "beforeLabel": "手动操作",
-    "beforeTitle": "逐项调整，前后对比",
+    "beforeTitle": "逐项调整，反复预览",
     "beforeFooter": "调整 → 预览 → 再调整",
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "描述目标，继续对话",
@@ -79,11 +106,10 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "beforeFooter": "截图 → 定位 → 点击 → 再截图",
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "参考图仿色",
-    "afterFooter": "参考图 → 首轮渲染 → 观察 → 再调整",
-    "takeaway": "每轮都看实际渲染，再对照参考图决定下一步；比反复截图找滑块更顺畅，也有助于节省时间与 Token。",
+    "afterFooter": "参考图 → 逐张匹配 → 渲染回读",
+    "takeaway": "Agent 对照参考图逐张调整，并回读实际渲染；比反复截图、来回比对更顺畅，也有助于节省时间与 Token。",
     "benefits": ["参考图仿色", "多轮观察", "结果可回读"]
-  },
-  "pendingNote": "参考图仿色的实录截图整理中，稍后补上"
+  }
 }
 ```
 <!-- comparison-content:end -->

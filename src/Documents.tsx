@@ -25,33 +25,6 @@ const AUTHOR_CONTACT_URL = "./contact.html";
  */
 export const ARTICLE_URL = "";
 
-// Typical-usage examples embedded in the AgentStrip introduction: the article's
-// four scenes merged into three entries (03 combines color matching + refine,
-// they are one conversation workflow). The prompt strings are final copy.
-const SCENE_ENTRIES: { no: string; name: string; desc: string; prompts: string[] }[] = [
-  {
-    no: "01",
-    name: "看目录",
-    desc: "一句话连接 LR，总览当前目录与选片",
-    prompts: ["连接lr，我看看当前目录"],
-  },
-  {
-    no: "02",
-    name: "评分排废片",
-    desc: "整组逐张评分、打星标旗，结果写回目录",
-    prompts: ["给这个lr目录的照片评分。模糊/意义不明的照片标排除"],
-  },
-  {
-    no: "03",
-    name: "仿色与精调",
-    desc: "甩参考图逐张仿色，接着说「再突出光斑」",
-    prompts: [
-      "使用这些参考图，对目录每一张图片调色，每一张图片都要选择合适的参考图",
-      "继续修改，突出/调整风格/影调/还原肤色等，看看前后对比",
-    ],
-  },
-];
-
 export const INSTALL_PROMPT = installPrompt.trim();
 export const UNINSTALL_PROMPT = uninstallPrompt.trim();
 const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
@@ -169,20 +142,6 @@ function AgentStrip({ onExplain, onCopyInstall }: {
           <h1 id="agent-strip-title">{heroTitle}</h1>
           <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
           <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
-
-          <span className="eyebrow scene-entries-label">典型用法 · 可以这样对 Agent 说</span>
-          <ol className="scene-entries" aria-label="典型用法示例">
-            {SCENE_ENTRIES.map((scene) => (
-              <li className="scene-entry" key={scene.no}>
-                <span className="scene-no" aria-hidden="true">{scene.no}</span>
-                <div className="scene-body">
-                  <strong>{scene.name}</strong>
-                  <span className="scene-desc">{scene.desc}</span>
-                  {scene.prompts.map((prompt) => <code key={prompt}>{prompt}</code>)}
-                </div>
-              </li>
-            ))}
-          </ol>
 
           <div className="intro-cta-row">
             <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
