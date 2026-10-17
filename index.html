@@ -6,7 +6,8 @@
     <meta name="author" content="Reef Ruan" />
     <meta name="copyright" content="Copyright (C) 2026 Reef Ruan" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2v28M2 16h28M6 6l20 20M26 6 6 26' stroke='%233476d2' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%233476d2'/%3E%3C/svg%3E" />
-    <meta name="theme-color" content="#f5f3ec" />
+    <meta name="theme-color" content="#171c22" />
+    <meta name="color-scheme" content="dark" />
     <meta name="robots" content="index, follow" />
     <meta
       name="description"
@@ -21,9 +22,75 @@
     <meta property="og:url" content="https://reefruan.github.io/tonerelay-portal/" />
     <meta name="twitter:card" content="summary" />
     <title>ToneRelay — Lightroom 风格与效果画廊</title>
+    <style>
+      /* Boot screen — inline, zero-dependency. Every background value is copied
+         verbatim from .app-shell in src/styles.css (keep both in sync).
+         Dismissed by App.tsx's first effect via window.__bootDone(). */
+      #boot{
+        position:fixed;inset:0;z-index:10000;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+        background:#0e1216;
+        background-image:
+          linear-gradient(rgba(122,179,255,.07) 1px,transparent 1px),
+          linear-gradient(90deg,rgba(122,179,255,.07) 1px,transparent 1px),
+          radial-gradient(circle at 30% 5%,#1e2b3bcc,transparent 36%);
+        background-size:42px 42px,42px 42px,auto;
+        color:#edf1f4;
+        font-family:"SFMono-Regular",Menlo,Monaco,monospace;
+        opacity:1;transition:opacity 380ms cubic-bezier(.4,0,.2,1);
+      }
+      #boot.is-done{opacity:0;pointer-events:none;}
+      /* Relative URL: same file src/fonts.ts injects for the app, so the
+         browser cache is shared (no extra bytes) and sub-path deploys work. */
+      @font-face{font-family:"Xiaolai SC Web";src:url("fonts/xiaolai-subset.woff2") format("woff2");font-display:swap;}
+      .boot-mark{position:relative;width:44px;height:44px;animation:boot-spin 24s linear infinite;}
+      .boot-mark i{position:absolute;left:5px;top:21.5px;width:34px;height:1px;background:#79b3ff;}
+      .boot-mark i:nth-child(2){transform:rotate(90deg);}
+      .boot-mark i:nth-child(3){transform:rotate(45deg);}
+      .boot-mark i:nth-child(4){transform:rotate(-45deg);}
+      .boot-mark i:nth-child(5){left:19.5px;top:19.5px;width:5px;height:5px;border-radius:50%;}
+      .boot-word{font-size:13px;font-weight:600;letter-spacing:.34em;text-indent:.34em;}
+      .boot-status{font-family:"Xiaolai SC Web","Xiaolai SC","KaiTi","STKaiti",cursive;
+        font-size:15px;color:#9da7b1;letter-spacing:.06em;}
+      .boot-track{width:132px;height:2px;background:rgba(121,179,255,.16);border-radius:2px;overflow:hidden;}
+      .boot-track i{display:block;width:40%;height:100%;background:#79b3ff;border-radius:2px;
+        animation:boot-slide 1.15s ease-in-out infinite;}
+      @keyframes boot-spin{to{transform:rotate(360deg)}}
+      @keyframes boot-slide{from{transform:translateX(-105%)}to{transform:translateX(355%)}}
+      .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;
+        clip-path:inset(50%);white-space:nowrap;}
+      @media (prefers-reduced-motion:reduce){
+        #boot{transition-duration:120ms}
+        .boot-mark,.boot-track i{animation:none}
+        .boot-track i{width:100%;opacity:.45}
+      }
+    </style>
   </head>
   <body>
+    <div id="boot" role="status" aria-live="polite">
+      <div class="boot-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <strong class="boot-word">TONERELAY</strong>
+      <span class="boot-status" aria-hidden="true">正在进入 ToneRelay…</span>
+      <span class="boot-track" aria-hidden="true"><i></i></span>
+      <span class="visually-hidden">正在加载 ToneRelay</span>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      /* Boot dismissal: idempotent. Called by App.tsx after React commits and
+         paints; the 5s timeout is the fallback so a failed mount never traps
+         the user on the loading screen. */
+      window.__bootDone = function () {
+        var b = document.getElementById("boot");
+        if (!b || b.dataset.done) return;
+        b.dataset.done = "1";
+        b.classList.add("is-done");
+        var kill = function () { b.remove(); };
+        b.addEventListener("transitionend", kill, { once: true });
+        setTimeout(kill, 600);
+      };
+      setTimeout(window.__bootDone, 5000);
+    </script>
+    <noscript><style>#boot{display:none}</style></noscript>
   </body>
 </html>

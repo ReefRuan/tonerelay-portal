@@ -15,13 +15,24 @@ import { categories, visiblePresets as presets, type Category, type Preset } fro
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
 import { Trackball } from "./Trackball";
-import { Documents, INSTALL_PROMPT_WITH_FAQ, UNINSTALL_PROMPT, type PortalPage } from "./Documents";
+import { Documents, ARTICLE_URL, INSTALL_PROMPT_WITH_FAQ, UNINSTALL_PROMPT, type PortalPage } from "./Documents";
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
 import { HeaderHint, useOnboardingHints } from "./HeaderHints";
 import { InstallAction, PrivacyAction } from "./HeaderPanels";
 import { IntroSignature } from "./IntroSignature";
+
+declare global {
+  interface Window {
+    /**
+     * Dismisses the inline boot screen defined in index.html (fade-out +
+     * node removal). Idempotent — safe under StrictMode double effects — and
+     * self-healing via a 5s fallback inside index.html if React never mounts.
+     */
+    __bootDone?: () => void;
+  }
+}
 
 type DockMode = "collapsed" | "normal" | "expanded";
 
@@ -102,6 +113,15 @@ export default function App() {
 
   const hints = useOnboardingHints(page === "experience", detailOpen);
   const hintAnchor = hints.active === "star" ? starAnchorRef.current : null;
+
+  // Boot screen hand-off: once React has committed, wait for two animation
+  // frames so the app's first frame is painted, then start the index.html
+  // #boot fade-out. Fading before the first paint would expose a blank shell.
+  useEffect(() => {
+    const dismiss = () => window.requestAnimationFrame(() =>
+      window.requestAnimationFrame(() => window.__bootDone?.()));
+    dismiss();
+  }, []);
 
   const filteredPresets = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -464,14 +484,25 @@ export default function App() {
 
       {page === "gallery" ? <main className="catalog-main" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <section className="intro" aria-labelledby="page-title">
+          <span className="intro-kicker">TONERELAY · LIGHTROOM CLASSIC MCP</span>
           <h1 id="page-title">
             Reef 的 Lightroom MCP<br />
             <em>风格与效果画廊。</em>
           </h1>
           <p>
-            浏览由 Reef 整理的 Lightroom 风格模板与效果包。点击卡片查看适用场景，
-            再选择适合当前照片的内容。
+            ToneRelay 让 Agent 直接操作 Lightroom Classic——说出目标，它执行并回读结果。
+            这里是由 Reef 整理的风格模板与效果包：点击卡片查看适用场景，再挑适合当前照片的内容。
           </p>
+          <div className="intro-links">
+            <a className="intro-cta" href="#experience">
+              <Icon name="arrow" />去体验 · 看 Agent 怎么操作 Lightroom
+            </a>
+            {ARTICLE_URL ? (
+              <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
+                阅读介绍文章<Icon name="external" />
+              </a>
+            ) : null}
+          </div>
         </section>
 
         <div className="catalog-heading">
@@ -550,7 +581,7 @@ export default function App() {
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a>
           </div>
         </footer>
-      </main> : <Documents onCopyUninstall={copyUninstallPrompt} />}
+      </main> : <Documents onCopyUninstall={copyUninstallPrompt} onCopyInstall={copyInstallPrompt} />}
 
       <AnimatePresence onExitComplete={() => {
         if (detailOpen) return;

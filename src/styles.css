@@ -598,6 +598,81 @@ input:focus-visible,
   background: var(--line);
 }
 
+/* 介绍区 CTA（gallery .intro-links 与 experience .intro-cta-row 共用）。
+   形制复刻 .author-contact / .header-install：同圆角、同蓝边、同 hover 位移。 */
+.intro-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.intro-cta {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 19px;
+  border-radius: 8px;
+  border: 1px solid rgba(169, 207, 255, 0.48);
+  background: rgba(121, 179, 255, 0.07);
+  color: #d8e9fa;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.intro-cta:hover {
+  border-color: #a9cfff;
+  background: rgba(121, 179, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.intro-cta:active {
+  transform: translateY(0);
+  transition-duration: 100ms;
+}
+
+.intro-cta svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+/* 主 CTA：与 .header-install 同值 */
+.intro-cta.is-primary {
+  border-color: #a9cfff;
+  background: #a9cfff;
+  color: #0d1d2f;
+}
+
+.intro-cta.is-primary:hover {
+  border-color: #d7e9ff;
+  background: #d7e9ff;
+}
+
+/* 次 CTA（文章外链，当前未发布故不渲染； ARTICLE_URL 填值后自动出现） */
+.intro-cta.is-quiet {
+  border-color: rgba(150, 170, 190, 0.25);
+  background: transparent;
+  color: var(--muted);
+}
+
+.intro-cta.is-quiet:hover {
+  color: var(--ink);
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  transform: none;
+}
+
+.intro-cta:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
 .catalog-heading {
   width: min(1600px, calc(100% - clamp(36px, 8vw, 128px)));
   margin: 0 auto 34px;
@@ -2228,6 +2303,72 @@ kbd {
 
 .author-contact svg { width: 16px; height: 16px; }
 
+/* 典型用法（AgentStrip 介绍区）：编号 mono 蓝 + 名称衬线 + 说明 muted + 例句 code。
+   四层均为 portal 既有 idiom（.eyebrow / .agent-chip strong / FAQ code），无新色。 */
+.scene-entries-label {
+  display: block;
+  margin-top: 28px;
+}
+
+.scene-entries {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  max-width: 680px;
+}
+
+.scene-entry {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(150, 174, 199, 0.18);
+}
+
+.scene-entry:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+.scene-no {
+  font: 11px/1.7 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--blue);
+}
+
+.scene-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 10px;
+}
+
+.agent-strip-heading .scene-body strong {
+  font: 400 15px/1.4 var(--serif);
+  color: var(--ink);
+}
+
+.scene-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #aebac6;
+}
+
+.scene-body code {
+  flex-basis: 100%;
+  font: 11px/1.6 var(--mono);
+  color: #b7d5fa;
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+
+.intro-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
 .agent-picker {
   position: relative;
   z-index: 1;
@@ -2454,6 +2595,8 @@ kbd {
     gap: 18px;
   }
 
+  .scene-entries { max-width: 100%; }
+
   .agent-picker { padding: 16px 0 0; border-left: 0; border-top: 1px solid rgba(150, 174, 199, 0.27); }
 }
 
@@ -2476,6 +2619,7 @@ kbd {
   .experience-main { width: calc(100% - 24px); padding-top: 14px; }
   .agent-strip { padding: 22px 18px; }
   .agent-strip-heading h1 { font-size: 25px; }
+  .intro-cta { flex: 1 1 100%; min-height: 42px; }
   .agent-list { flex-wrap: wrap; }
   .feature-section, .compare-section, .use-cases-section, .experience-faq { margin-top: 84px; }
   .experience-section-heading h2 { font-size: clamp(39px, 11vw, 52px); }

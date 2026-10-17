@@ -15,6 +15,43 @@ export type PortalPage = "gallery" | "experience";
 const WORKBUDDY_INVITE_URL = "https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w";
 const AUTHOR_CONTACT_URL = "./contact.html";
 
+/**
+ * Link to the ToneRelay introduction article.
+ *
+ * The article currently lives in a private repo with no public URL, so this
+ * stays empty and every "阅读介绍文章" CTA renders nothing. Once the article
+ * is published (Bilibili column / personal blog), fill in the URL here and
+ * all CTAs light up automatically — it is the single source of truth.
+ */
+export const ARTICLE_URL = "";
+
+// Typical-usage examples embedded in the AgentStrip introduction: the article's
+// four scenes merged into three entries (03 combines color matching + refine,
+// they are one conversation workflow). The prompt strings are final copy.
+const SCENE_ENTRIES: { no: string; name: string; desc: string; prompts: string[] }[] = [
+  {
+    no: "01",
+    name: "看目录",
+    desc: "一句话连接 LR，总览当前目录与选片",
+    prompts: ["连接lr，我看看当前目录"],
+  },
+  {
+    no: "02",
+    name: "评分排废片",
+    desc: "整组逐张评分、打星标旗，结果写回目录",
+    prompts: ["给这个lr目录的照片评分。模糊/意义不明的照片标排除"],
+  },
+  {
+    no: "03",
+    name: "仿色与精调",
+    desc: "甩参考图逐张仿色，接着说「再突出光斑」",
+    prompts: [
+      "使用这些参考图，对目录每一张图片调色，每一张图片都要选择合适的参考图",
+      "继续修改，突出/调整风格/影调/还原肤色等，看看前后对比",
+    ],
+  },
+];
+
 export const INSTALL_PROMPT = installPrompt.trim();
 export const UNINSTALL_PROMPT = uninstallPrompt.trim();
 const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
@@ -120,7 +157,10 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-function AgentStrip({ onExplain }: { onExplain: () => void }) {
+function AgentStrip({ onExplain, onCopyInstall }: {
+  onExplain: () => void;
+  onCopyInstall?: () => void;
+}) {
   return (
     <section className="agent-strip" aria-labelledby="agent-strip-title">
       <div className="agent-strip-heading">
@@ -129,6 +169,32 @@ function AgentStrip({ onExplain }: { onExplain: () => void }) {
           <h1 id="agent-strip-title">{heroTitle}</h1>
           <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
           <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
+
+          <span className="eyebrow scene-entries-label">典型用法 · 可以这样对 Agent 说</span>
+          <ol className="scene-entries" aria-label="典型用法示例">
+            {SCENE_ENTRIES.map((scene) => (
+              <li className="scene-entry" key={scene.no}>
+                <span className="scene-no" aria-hidden="true">{scene.no}</span>
+                <div className="scene-body">
+                  <strong>{scene.name}</strong>
+                  <span className="scene-desc">{scene.desc}</span>
+                  {scene.prompts.map((prompt) => <code key={prompt}>{prompt}</code>)}
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="intro-cta-row">
+            <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
+              <Icon name="copy" />复制安装提示词，发给 Agent
+            </button>
+            {ARTICLE_URL ? (
+              <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
+                阅读介绍文章<Icon name="external" />
+              </a>
+            ) : null}
+          </div>
+
           <a className="author-contact" href={AUTHOR_CONTACT_URL}>
             联系作者 <Icon name="arrow" />
           </a>
@@ -183,11 +249,14 @@ function DocumentFooter() {
   return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
 }
 
-export function Documents({ onCopyUninstall }: { onCopyUninstall?: () => Promise<boolean> } = {}) {
+export function Documents({ onCopyUninstall, onCopyInstall }: {
+  onCopyUninstall?: () => Promise<boolean>;
+  onCopyInstall?: () => void;
+} = {}) {
   const [helpOpen, setHelpOpen] = useState(false);
   return (
     <main className="document-main experience-main">
-      <AgentStrip onExplain={() => setHelpOpen(true)} />
+      <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} />
       <WorkflowComparisons />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <DocumentFooter />
