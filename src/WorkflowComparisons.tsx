@@ -11,7 +11,7 @@ type ShotCopy = { alt: string; caption: string };
 type Content = {
   note: string;
   sceneEntries: SceneEntry[];
-  shots: { sliders: ShotCopy; refine: ShotCopy; loupe: ShotCopy; rating: ShotCopy; color: ShotCopy };
+  shots: { sliders: ShotCopy; refine: ShotCopy; loupe: ShotCopy; rating: ShotCopy; color: ShotCopy; mask: ShotCopy };
   first: Comparison & { followups: string[] };
   batch: Comparison;
   computer: Comparison;
@@ -35,6 +35,7 @@ const shotRefine = `${import.meta.env.BASE_URL}experience/conversation-refine.we
 const shotLoupe = `${import.meta.env.BASE_URL}experience/lr-loupe.webp`;
 const shotRating = `${import.meta.env.BASE_URL}experience/conversation-rating.webp`;
 const shotColor = `${import.meta.env.BASE_URL}experience/conversation-color-match.webp`;
+const shotMask = `${import.meta.env.BASE_URL}experience/conversation-mask.webp`;
 
 function Shot({ src, alt, caption, width, height }: { src: string; alt: string; caption: string; width: number; height: number }) {
   return <figure className="workflow-shot">
@@ -86,16 +87,17 @@ export function WorkflowComparisons() {
     <ComparisonFigure item={copy.first}>{[
       <Shot key="sliders" src={shotSliders} alt={copy.shots.sliders.alt} caption={copy.shots.sliders.caption} width={1800} height={1149} />,
       <div className="workflow-shot-stack" key="refine">
-        <Shot src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1500} height={1596} />
+        <Shot src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1400} height={1405} />
         <div className="workflow-next"><span>接着说</span><ul>{copy.first.followups.map((followup) => <li key={followup}>{followup}</li>)}</ul></div>
       </div>,
     ]}</ComparisonFigure>
     <ComparisonFigure item={copy.batch} variant="batch">{[
       <Shot key="loupe" src={shotLoupe} alt={copy.shots.loupe.alt} caption={copy.shots.loupe.caption} width={1500} height={1285} />,
-      <Shot key="rating" src={shotRating} alt={copy.shots.rating.alt} caption={copy.shots.rating.caption} width={1500} height={1175} />,
+      <Shot key="rating" src={shotRating} alt={copy.shots.rating.alt} caption={copy.shots.rating.caption} width={1500} height={1020} />,
     ]}</ComparisonFigure>
-    <ComparisonFigure item={copy.computer} variant="computer" solo>{[
-      <Shot key="color" src={shotColor} alt={copy.shots.color.alt} caption={copy.shots.color.caption} width={989} height={1299} />,
+    <ComparisonFigure item={copy.computer} variant="computer">{[
+      <Shot key="mask" src={shotMask} alt={copy.shots.mask.alt} caption={copy.shots.mask.caption} width={1346} height={1307} />,
+      <Shot key="color" src={shotColor} alt={copy.shots.color.alt} caption={copy.shots.color.caption} width={989} height={1194} />,
     ]}</ComparisonFigure>
     <div className="workflow-source"><span>{copy.note}</span></div>
   </section>;

@@ -2678,6 +2678,14 @@ kbd {
 .workflow-next li { padding: 6px 11px; border: 1px solid #cfd8cc; border-radius: 999px; background: #f0f3ed; color: #45614f; font-size: 11px; line-height: 1.5; }
 .workflow-path { margin: auto 0 0; color: #b4c0ca; font-size: 12px; line-height: 1.7; }
 .workflow-after .workflow-path { color: #4e6757; }
+/* 03 group: both panels use the light palette, no dark/light contrast. */
+.workflow-figure-computer .workflow-before { background: var(--study-light); color: var(--study-light-ink); }
+.workflow-figure-computer .workflow-before > header > span { color: #416250; }
+.workflow-figure-computer .workflow-before .workflow-shot { border-color: #c3cdc5; background: #f9faf7; }
+.workflow-figure-computer .workflow-before .workflow-shot figcaption { border-color: #d5ddd4; background: #eef1eb; color: #4c6255; }
+.workflow-figure-computer .workflow-before .workflow-shot .window-dots i { background: #a9b8ae; }
+.workflow-figure-computer .workflow-before .workflow-path { color: #4e6757; }
+.workflow-figure-computer .workflow-before + .workflow-after { border-top: 1px solid #d5ddd4; }
 .workflow-summary { padding: 22px 2px 0; display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; justify-content: space-between; }
 .workflow-summary > p { max-width: 560px; margin: 0; color: #d1d8de; font-size: 13px; line-height: 1.8; }
 .workflow-summary ul { list-style: none; display: flex; flex-wrap: wrap; gap: 14px; margin: 0; padding: 0; }
@@ -2685,7 +2693,9 @@ kbd {
 .workflow-summary li > span { margin-right: 6px; color: var(--study-accent); }
 .workflow-source { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.7; }
 @media (min-width: 768px) {
-  .workflow-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .workflow-board { grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr); }
+  .workflow-figure-computer .workflow-board { width: 61%; margin-inline: auto; }
+  .workflow-after { padding-inline: clamp(16px, 2vw, 26px); }
   .workflow-side { gap: 24px; }
 }
 @media (max-width: 639px) {
@@ -2700,7 +2710,8 @@ kbd {
 
 /* Solo figure (03): one centered card with the real capture, and the manual /
    computer-use way compressed into a contrast strip below it. */
-.workflow-board.workflow-board-solo { grid-template-columns: minmax(0, 1fr); width: min(560px, 100%); margin: 0 auto; }
+.workflow-figure-computer .workflow-board { grid-template-columns: minmax(0, 1fr); }
+.workflow-board.workflow-board-solo { grid-template-columns: minmax(0, 1fr); width: min(620px, 100%); margin: 0 auto; }
 .workflow-contrast { display: flex; align-items: center; gap: 14px; padding: 16px clamp(18px, 3vw, 36px) 18px; background: var(--study-bg); }
 .workflow-contrast-mark { flex-shrink: 0; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #46525d; border-radius: 50%; color: #8d99a3; font-size: 12px; line-height: 1; }
 .workflow-contrast-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }

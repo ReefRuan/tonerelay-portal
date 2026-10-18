@@ -61,6 +61,10 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "color": {
       "alt": "Agent 对话截图：用户给出 9 张参考图与修图目标，Agent 按每张照片的光线分别选择参考图，完成 14 张浓郁风格修图并逐张带回渲染预览",
       "caption": "Agent 对话 · 参考图仿色，逐张回读"
+    },
+    "mask": {
+      "alt": "Agent 对话截图：用户说「这张图曝光不对，蒙版恢复人物曝光和整体曝光」，Agent 返回整体曝光 +0.35 EV、高光 −55、阴影 +30 与人物蒙版提亮，并给出原图与曝光修正版的并排对比",
+      "caption": "Agent 对话 · 曝光不对，蒙版自己建"
     }
   },
   "first": {
@@ -72,8 +76,8 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "beforeTitle": "逐项调整，反复预览",
     "beforeFooter": "调整 → 预览 → 再调整",
     "afterLabel": "Agent + ToneRelay",
-    "afterTitle": "描述目标，继续对话",
-    "afterFooter": "描述 → 执行 → 查看结果",
+    "afterTitle": "描述目标，Agent 帮你后台处理",
+    "afterFooter": "找出合适参考图，修改当前图片",
     "followups": [
       "放大看看局部细节。",
       "把这一版和调整前放在一起比较。",
@@ -92,23 +96,23 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "beforeFooter": "逐张打开 → 标记 → 反复比较",
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "看图、评分、写回目录",
-    "afterFooter": "看图 → 评分 → 写回 Lightroom",
+    "afterFooter": "给这个lr目录的照片评分。模糊/意义不明的照片标排除",
     "takeaway": "一组照片也可以分步处理：先看，再评分，结果写回 Lightroom 再接着说。",
     "benefits": ["批量看图", "按意义评分", "写回目录"]
   },
   "computer": {
     "number": "03",
-    "label": "两种操作方式",
-    "title": "少截图，少来回找按钮。",
-    "description": "模仿参考图调色时，Agent 可以观察每轮 Lightroom 渲染，和参考图比较后再调整。",
-    "beforeLabel": "Agent 直接操作界面",
-    "beforeTitle": "反复看屏幕",
-    "beforeFooter": "截图 → 定位 → 点击 → 再截图",
-    "afterLabel": "Agent + ToneRelay",
-    "afterTitle": "参考图仿色",
-    "afterFooter": "参考图 → 逐张匹配 → 渲染回读",
-    "takeaway": "Agent 对照参考图逐张调整，并回读实际渲染；比反复截图、来回比对更顺畅，也有助于节省时间与 Token。",
-    "benefits": ["参考图仿色", "多轮观察", "结果可回读"]
+    "label": "两类活",
+    "title": "后台做完，你只看结果。",
+    "description": "曝光不对、参考图仿色，这两类活它都能自己拆开做：先改，再回读，确认了才存。",
+    "beforeLabel": "人物蒙版",
+    "beforeTitle": "曝光不对，一句话修回来",
+    "beforeFooter": "这张图曝光不对，蒙版恢复人物曝光和整体曝光",
+    "afterLabel": "参考图仿色",
+    "afterTitle": "9 张参考图，逐张挑",
+    "afterFooter": "使用这些参考图，考虑光影，进行浓郁风格修图",
+    "takeaway": "两段都是实录：一句话，一个完整结果——参数、蒙版、虚拟副本都留在 Lightroom 里。",
+    "benefits": ["人物蒙版", "参考图仿色", "结果可回读"]
   }
 }
 ```

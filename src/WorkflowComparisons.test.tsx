@@ -58,22 +58,23 @@ describe("workflow examples", () => {
     expect(batch).not.toContain("batch-thumb");
   });
 
-  it("shows reference matching with the real color-match conversation capture", () => {
+  it("shows mask repair and reference matching with real captures", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const computer = html.match(/workflow-figure-computer[\s\S]*?workflow-source/)?.[0];
 
     expect(computer).toBeDefined();
-    expect(computer).toContain("少截图，少来回找按钮。");
-    expect(computer).toContain("模仿参考图调色时");
+    expect(computer).toContain("后台做完，你只看结果。");
+    expect(computer).toContain("人物蒙版");
+    expect(computer).toContain("experience/conversation-mask.webp");
+    expect(computer).toContain("Agent 对话 · 曝光不对，蒙版自己建");
+    expect(computer).toContain("整体曝光 → 人物蒙版 → 回读确认");
     expect(computer).toContain("参考图仿色");
     expect(computer).toContain("结果可回读");
     expect(computer).toContain("experience/conversation-color-match.webp");
     expect(computer).toContain("Agent 对话 · 参考图仿色，逐张回读");
-    expect(computer).toContain("workflow-board-solo");
-    expect(computer).toContain("workflow-contrast");
-    expect(computer).toContain("Agent 直接操作界面 · 反复看屏幕");
-    expect(computer).toContain("截图 → 定位 → 点击 → 再截图");
     expect(computer).toContain("参考图 → 逐张匹配 → 渲染回读");
+    expect(computer).not.toContain("workflow-board-solo");
+    expect(computer).not.toContain("workflow-contrast");
     expect(computer).not.toContain("实录截图整理中");
     expect(computer).not.toContain("match-round-image");
     expect(computer).not.toContain("screen-loop");
