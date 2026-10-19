@@ -25,8 +25,8 @@ describe("hint delay", () => {
 });
 
 describe("HINT_COPY", () => {
-  it("keeps the reviewed star hint copy verbatim", () => {
-    expect(HINT_COPY.star).toBe("点击 ⭐ 支持作者");
+  it("uses an invitation for the Star hint", () => {
+    expect(HINT_COPY.star).toBe("喜欢这个项目？欢迎点个 Star。");
   });
 });
 

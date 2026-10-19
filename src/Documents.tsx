@@ -27,11 +27,12 @@ export const ARTICLE_URL = "";
 
 export const INSTALL_PROMPT = installPrompt.trim();
 export const UNINSTALL_PROMPT = uninstallPrompt.trim();
-const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
+const heroMatch = experienceIntroduction.match(/^## 工具介绍\r?\n\r?\n### ([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)\r?\n\r?\n([^\r\n]+)/m);
 if (!heroMatch) throw new Error("docs/experience-introduction.md is missing its tool introduction");
 const heroTitle = heroMatch[1];
 const heroIntroduction = heroMatch[2];
-const heroTagline = heroMatch[3];
+const heroCapabilities = heroMatch[3];
+const heroComparison = heroMatch[4];
 
 const agents: { name: string; href?: string }[] = [
   { name: "Codex" },
@@ -108,8 +109,8 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
         <div className="agent-dialog-body">
           <span className="eyebrow">第一次使用？从这里开始</span>
           <h2 id="agent-dialog-title">什么是 Agent？</h2>
-          <p className="agent-dialog-lead">Agent 是能理解你的目标、选择工具、执行步骤，并根据返回结果继续判断的 AI 助手。ToneRelay 不是 Agent，而是让 Agent 操作 Lightroom 的本地工具。</p>
-          <p className="agent-model-tip">推荐使用能看图的多模态模型</p>
+          <p className="agent-dialog-lead">Agent 是能听懂要求、调用工具做事的 AI 助手。ToneRelay 不是 Agent，而是让 Agent 操作 Lightroom 的本地工具。</p>
+          <p className="agent-model-tip">建议选择能看图的模型</p>
           <figure className="agent-architecture" aria-label="Agent、ToneRelay MCP、Lightroom 插件与 Lightroom Classic 的连接">
             <div className="agent-architecture-flow">
               <div className="agent-architecture-node"><strong>Agent</strong><span>理解与判断</span></div>
@@ -118,11 +119,12 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
               <span className="agent-architecture-arrow" aria-hidden="true">⇄</span>
               <div className="agent-architecture-node"><strong>Lightroom 插件</strong><span>执行与回读</span></div>
               <span className="agent-architecture-arrow" aria-hidden="true">⇄</span>
-              <div className="agent-architecture-node"><strong>Lightroom</strong><span>Classic · 照片与 Catalog</span></div>
+              <div className="agent-architecture-node"><strong>Lightroom</strong><span>Classic · 照片与目录</span></div>
             </div>
           </figure>
           <div className="agent-dialog-actions">
-            <a className="button-primary workbuddy-download" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">立即下载 WorkBuddy <Icon name="external" /></a>
+            <a className="button-primary workbuddy-download" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer" title="打开 WorkBuddy 网站">立即下载 WorkBuddy <Icon name="external" /></a>
+            <span>将打开 WorkBuddy 网站</span>
           </div>
         </div>
       </section>
@@ -141,7 +143,8 @@ function AgentStrip({ onExplain, onCopyInstall }: {
           <span className="eyebrow">工具介绍</span>
           <h1 id="agent-strip-title">{heroTitle}</h1>
           <p className="agent-intro">{inlineMarkdown(heroIntroduction)}</p>
-          <p className="agent-benefits">{inlineMarkdown(heroTagline)}</p>
+          <p className="agent-benefits">{inlineMarkdown(heroCapabilities)}</p>
+          <p className="agent-comparison">{inlineMarkdown(heroComparison)}</p>
 
           <div className="intro-cta-row">
             <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
@@ -182,10 +185,10 @@ function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<
       <header className="experience-section-heading">
         <span className="eyebrow">对话</span>
         <h2 id="dialogue-title">有疑问，直接问。</h2>
-        <p>从最常问的问题开始，点开一条就能看到回答。复制安装提示词时，这些回答也会一并交给 Agent。</p>
+        <p>点开问题查看回答。复制安装提示词时，FAQ 也会一起交给 Agent。</p>
         {onCopyUninstall && <div className="dialogue-actions">
           <button className="prompt-copy-button" onClick={() => void onCopyUninstall()}><Icon name="copy" />复制卸载提示词</button>
-          <span>发给 Agent，由它核对范围并完成卸载。</span>
+          <span>发给 Agent，让它先核对范围，再按当前版本的说明卸载。</span>
         </div>}
       </header>
       <div className="dialogue-list">
@@ -196,7 +199,9 @@ function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<
               <strong>{item.question}</strong>
               <span className="dialogue-toggle" aria-hidden="true">＋</span>
             </summary>
-            <div className="dialogue-answer"><span>回答</span><p>{inlineMarkdown(item.answer)}</p></div>
+            <div className="dialogue-answer"><span>回答</span><div className="dialogue-answer-body">
+              {item.answer.split(/\r?\n\r?\n/).filter(Boolean).map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{inlineMarkdown(paragraph)}</p>)}
+            </div></div>
           </details>
         ))}
       </div>
@@ -208,15 +213,16 @@ function DocumentFooter() {
   return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
 }
 
-export function Documents({ onCopyUninstall, onCopyInstall }: {
+export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {
   onCopyUninstall?: () => Promise<boolean>;
   onCopyInstall?: () => void;
+  onCopyPrompt?: (value: string, message: string) => Promise<boolean>;
 } = {}) {
   const [helpOpen, setHelpOpen] = useState(false);
   return (
     <main className="document-main experience-main">
       <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} />
-      <WorkflowComparisons />
+      <WorkflowComparisons onCopyPrompt={onCopyPrompt} />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <DocumentFooter />
       {helpOpen && typeof document !== "undefined" && createPortal(

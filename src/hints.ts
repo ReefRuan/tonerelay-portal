@@ -15,7 +15,7 @@ export type HintStatus = "done" | "dismissed";
 
 /** Copy for the Star hint. */
 export const HINT_COPY: Record<HintId, string> = {
-  star: "点击 ⭐ 支持作者",
+  star: "喜欢这个项目？欢迎点个 Star。",
 };
 
 /** Delay before each hint is offered. */

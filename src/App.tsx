@@ -464,8 +464,8 @@ export default function App() {
           <PrivacyAction />
           <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group" ref={starAnchorRef}>
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="打开 Portal / 风格包仓库，在 GitHub 点 Star" onClick={resolveStarHint}><Icon name="star" />Star Portal</a>
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="MCP 仓库目前私有；公开后访客才能在 GitHub 点 Star" aria-label="ToneRelay MCP 仓库，当前私有，公开后可 Star" onClick={resolveStarHint}><Icon name="star" />Star MCP <small>私有</small></a>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="在 GitHub 给 Portal 点 Star" onClick={resolveStarHint}><Icon name="star" />Star Portal</a>
+            <span className="header-action header-star-link is-unavailable" title="MCP 仓库尚未公开，公开后可在 GitHub 点 Star" aria-label="MCP 仓库尚未公开"><Icon name="star" />MCP 尚未公开</span>
           </div>
         </div>}
       </header>
@@ -581,7 +581,7 @@ export default function App() {
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a>
           </div>
         </footer>
-      </main> : <Documents onCopyUninstall={copyUninstallPrompt} onCopyInstall={copyInstallPrompt} />}
+      </main> : <Documents onCopyUninstall={copyUninstallPrompt} onCopyInstall={copyInstallPrompt} onCopyPrompt={copyValue} />}
 
       <AnimatePresence onExitComplete={() => {
         if (detailOpen) return;

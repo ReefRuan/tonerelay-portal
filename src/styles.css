@@ -143,6 +143,8 @@ input:focus-visible,
 .header-install { border-color: #a9cfff; color: #0d1d2f; background: #a9cfff; }
 .header-install:hover { border-color: #d7e9ff; color: #081a2d; background: #d7e9ff; }
 .header-star-link small { color: #9aa9b8; font-size: 9px; font-weight: 500; }
+.header-action.is-unavailable { opacity: 0.55; cursor: default; }
+.header-action.is-unavailable:hover { border-color: rgba(145, 172, 199, 0.44); background: rgba(32, 44, 58, 0.9); transform: none; }
 
 .site-nav {
   display: flex;
@@ -2119,13 +2121,13 @@ kbd {
   border-radius: 12px;
   background: var(--frost-bg);
   color: var(--frost-ink);
-  font-family: var(--hand);
+  font-family: inherit;
+  font-weight: 500;
   font-size: 13px;
   line-height: 1.55;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.09);
   -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-saturate));
   backdrop-filter: blur(var(--frost-blur)) saturate(var(--frost-saturate));
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .header-hint p { margin: 0; }
@@ -2270,6 +2272,13 @@ kbd {
 
 .agent-strip-heading .agent-benefits {
   margin-top: 12px;
+  color: #aebac6;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.agent-strip-heading .agent-comparison {
+  margin-top: 10px;
   color: #aebac6;
   font-size: 13px;
   line-height: 1.65;
@@ -2476,6 +2485,7 @@ kbd {
 }
 .dialogue-answer > span { color: var(--blue); font: 10px var(--mono); padding-top: 4px; }
 .dialogue-answer p { margin: 0; color: #d5e0e9; font-size: 13px; line-height: 1.85; }
+.dialogue-answer-body p + p { margin-top: 0.85em; }
 .dialogue-answer a { color: #a7c9f5; text-underline-offset: 3px; }
 .dialogue-answer code { font-family: var(--mono); color: #b7d5fa; overflow-wrap: anywhere; }
 
@@ -2521,6 +2531,7 @@ kbd {
 .agent-architecture-node span { color: #c2d0db; font-size: 10px; line-height: 1.5; }
 .agent-architecture-arrow { color: var(--blue); font: 18px/1 var(--mono); text-align: center; }
 .agent-dialog-actions { margin-top: 22px; display: flex; align-items: center; gap: 20px; }
+.agent-dialog-actions > span { color: var(--muted); font-size: 11px; }
 
 @media (max-width: 600px) {
   .agent-architecture-flow { grid-template-columns: minmax(0, 1fr); gap: 5px; }
@@ -2653,8 +2664,19 @@ kbd {
 .workflow-caption { margin-bottom: 26px; }
 .workflow-index { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 12px; }
 .workflow-index > span { color: var(--study-accent); font: 13px var(--mono); border-bottom: 1px solid var(--study-accent); padding-bottom: 4px; }
+.workflow-description-row { max-width: 900px; }
+.workflow-prompt-picker { display: inline-block; position: relative; vertical-align: baseline; }
+.workflow-prompt-trigger { display: inline-block; margin-left: 14px; padding: 5px 0; border: 0; border-bottom: 1px solid currentColor; border-radius: 0; background: transparent; color: var(--study-accent); font-family: inherit; font-size: 12px; line-height: 1.4; cursor: pointer; white-space: nowrap; }
+.workflow-prompt-picker > .workflow-prompt-trigger { margin-left: 14px; }
+.workflow-prompt-picker > summary { list-style: none; }
+.workflow-prompt-picker > summary::-webkit-details-marker { display: none; }
+.workflow-prompt-trigger:hover, .workflow-prompt-trigger:focus-visible { color: #e4f5e7; }
+.workflow-prompt-trigger:focus-visible, .workflow-prompt-menu button:focus-visible { outline: 2px solid var(--study-accent); outline-offset: 4px; }
+.workflow-prompt-menu { position: absolute; z-index: 3; top: calc(100% + 8px); left: 14px; min-width: 156px; padding: 6px; border: 1px solid var(--study-border); border-radius: 9px; background: var(--study-bg); box-shadow: 0 16px 30px #0007; }
+.workflow-prompt-menu button { display: block; width: 100%; padding: 9px 12px; border: 0; border-radius: 5px; background: transparent; color: var(--ink); font-family: inherit; font-size: 12px; line-height: 1.4; text-align: left; cursor: pointer; white-space: nowrap; }
+.workflow-prompt-menu button:hover { background: #ffffff16; }
 .workflow-caption h3 { margin: 18px 0 12px; font: 400 clamp(27px, 3vw, 40px)/1.35 var(--serif); letter-spacing: -.025em; }
-.workflow-caption > p { max-width: 740px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.workflow-description-row > p { display: inline; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
 .workflow-board { display: grid; grid-template-columns: minmax(0, 1fr); border: 1px solid var(--study-border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px #0003; }
 .workflow-side { min-width: 0; padding: clamp(18px, 3vw, 36px); display: flex; flex-direction: column; gap: 26px; }
 .workflow-before { background: var(--study-bg); }

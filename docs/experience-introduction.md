@@ -2,53 +2,55 @@
 
 ## 工具介绍
 
-### 扩展 Agent 操作 Lightroom 的能力。
+### 扩展 Agent 操作 Lightroom 的能力
 
-ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**。Agent 理解目标、决定下一步；ToneRelay **执行操作、回读真实渲染**，并提供批量执行、图像预处理、测量与对比、后台多方案试色。
+ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent 理解你的要求、决定怎么调；ToneRelay 通过 Lightroom 插件执行，并带回调整后的照片。
 
-**相比 computer use 直接操作界面** · **省去截图、视觉定位和逐步确认** · **直接操作 Catalog、内存回读** · **更快、更省 Token**
+**50+ MCP 工具** · **批量操作** · **主体蒙版** · **XMP 显影参数透传与回读** · **真实渲染预览** · **图像测量与对比**
+
+相比让 Agent 对着 Lightroom 截图找按钮，ToneRelay 少走反复截图、找控件和逐项点击的步骤，还能读回实际调整与渲染图。
 
 ## 说出目标，看见结果。
 
-像聊天一样告诉 Agent 想要的效果；它借助 ToneRelay 调整 Lightroom、带回照片预览。你看图再说哪里要改，不必自己逐项找滑块。
+告诉 Agent 你想要什么效果。它借助 ToneRelay 调整 Lightroom，再把照片带回来。你看图再说哪里要改，不必自己逐项找滑块。
 
-你还可以在 ToneRelay 画廊挑选 Reef 精心蒸馏的风格与效果包，下载后交给 Agent 加载；画廊会持续更新。
+画廊里还有 Reef 制作的风格与效果包。挑一个下载，把说明和参考图交给 Agent 使用；画廊会持续更新。
 
 <!-- comparison-content:start -->
 ```json
 {
-  "note": "三组均为实际工作流截图，照片来自作者的 Lightroom 目录。速度与 Token 收益尚未量化。",
+  "note": "图片来自作者的实际操作记录；尚未进行速度或 Token 的对照测试。",
   "sceneEntries": [
     {
       "no": "01",
       "name": "看目录",
-      "desc": "一句话连接 LR，总览当前目录与选片",
-      "prompts": ["连接lr，我看看当前目录"]
+      "desc": "连接完成后，看看当前目录里有哪些照片",
+      "prompts": ["看看当前 Lightroom 目录里有哪些照片。"]
     },
     {
       "no": "02",
-      "name": "评分排废片",
-      "desc": "整组逐张评分、打星标旗，结果写回目录",
-      "prompts": ["给这个lr目录的照片评分。模糊/意义不明的照片标排除"]
+      "name": "选片与标记",
+      "desc": "让 Agent 逐张看图，按你的标准打星或标旗",
+      "prompts": ["请逐张看这组照片，按清晰度和内容打星；明显模糊的先标为排除。"]
     },
     {
       "no": "03",
       "name": "仿色与精调",
-      "desc": "甩参考图逐张仿色，接着说「再突出光斑」",
+      "desc": "给 Agent 几张参考图，逐张试色；看过结果还能继续细调",
       "prompts": [
-        "使用这些参考图，对目录每一张图片调色，每一张图片都要选择合适的参考图",
-        "继续修改，突出/调整风格/影调/还原肤色等，看看前后对比"
+        "参考这些照片的颜色，给这组照片逐张调色；每张选最合适的参考。",
+        "暗部有点重，提亮一点，肤色别偏黄。再给我看前后对比。"
       ]
     }
   ],
   "shots": {
     "sliders": {
-      "alt": "Lightroom Classic 修改照片模块：右侧参数面板布满滑块，一个大光标停在曝光度滑块上",
+      "alt": "Lightroom Classic 修改照片面板，曝光度滑块位于右侧参数区",
       "caption": "Lightroom Classic · 逐项调整滑块"
     },
     "refine": {
-      "alt": "Agent 对话截图：说出修图目标并拿到第一版结果后，接着说「感觉暗部太黑了，提亮，注意色调」，Agent 再带回调整后的版本",
-      "caption": "Agent 对话 · 说出目标，接着说再改"
+      "alt": "Agent 对话截图：用户看过第一版后要求提亮过黑的暗部并留意色调，Agent 带回第二版结果",
+      "caption": "看过第一版，接着说哪里要改"
     },
     "loupe": {
       "alt": "Lightroom Classic 放大视图与底部胶片网格，逐张浏览照片",
@@ -56,15 +58,15 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     },
     "rating": {
       "alt": "Agent 对话截图：对整组照片逐张评分，返回星级分布并写回目录",
-      "caption": "Agent 对话 · 整组评分，写回目录"
+      "caption": "Agent 逐张评分，标记写回 Lightroom"
     },
     "color": {
       "alt": "Agent 对话截图：用户给出 9 张参考图与修图目标，Agent 按每张照片的光线分别选择参考图，完成 14 张浓郁风格修图并逐张带回渲染预览",
-      "caption": "Agent 对话 · 参考图仿色，逐张回读"
+      "caption": "参考图调色，逐张查看结果"
     },
     "mask": {
-      "alt": "Agent 对话截图：用户说「这张图曝光不对，蒙版恢复人物曝光和整体曝光」，Agent 返回整体曝光 +0.35 EV、高光 −55、阴影 +30 与人物蒙版提亮，并给出原图与曝光修正版的并排对比",
-      "caption": "Agent 对话 · 曝光不对，蒙版自己建"
+      "alt": "Agent 对话截图：用户要求分别调整人物与整体画面，Agent 使用全局参数和主体蒙版，返回原图与虚拟副本对比及实际参数回读",
+      "caption": "全局与主体蒙版调整，前后对比"
     }
   },
   "first": {
@@ -76,43 +78,44 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的**本地 MCP 工具套件**�
     "beforeTitle": "逐项调整，反复预览",
     "beforeFooter": "调整 → 预览 → 再调整",
     "afterLabel": "Agent + ToneRelay",
-    "afterTitle": "描述目标，Agent 帮你后台处理",
+    "afterTitle": "说出目标，看过结果再改",
     "afterFooter": "找出合适参考图，修改当前图片",
     "followups": [
       "放大看看局部细节。",
       "把这一版和调整前放在一起比较。",
       "背景再柔和一点。"
     ],
-    "takeaway": "每次调整都有可查看的实际结果，下一步仍由 Agent 和你决定。",
+    "takeaway": "每轮都能看调整后的照片；看过以后，再告诉 Agent 下一步怎么改。",
     "benefits": ["描述目标", "局部查看与对比", "继续细调"]
   },
   "batch": {
     "number": "02",
     "label": "批量操作",
     "title": "一组照片，也能用对话处理。",
-    "description": "看图、挑片、逐张评分，都能一句句交代。",
+    "description": "让 Agent 逐张看图，再按你的标准打星或标旗。",
     "beforeLabel": "逐张查看",
     "beforeTitle": "打开、判断、再切换",
     "beforeFooter": "逐张打开 → 标记 → 反复比较",
     "afterLabel": "Agent + ToneRelay",
-    "afterTitle": "看图、评分、写回目录",
-    "afterFooter": "给这个lr目录的照片评分。模糊/意义不明的照片标排除",
-    "takeaway": "一组照片也可以分步处理：先看，再评分，结果写回 Lightroom 再接着说。",
-    "benefits": ["批量看图", "按意义评分", "写回目录"]
+    "afterTitle": "逐张看图，标记留在 Lightroom",
+    "afterFooter": "读取 Lightroom 快速预览，缓存可用时复用",
+    "takeaway": "需要大图时，Agent 可导出 JPEG 并放进对话；评分与标旗写回 Lightroom。",
+    "benefits": ["逐张看图", "按你的标准标记", "写回 Lightroom"]
   },
   "computer": {
     "number": "03",
-    "label": "两类活",
-    "title": "后台做完，你只看结果。",
-    "description": "曝光不对、参考图仿色，这两类活它都能自己拆开做：先改，再回读，确认了才存。",
-    "beforeLabel": "人物蒙版",
-    "beforeTitle": "曝光不对，一句话修回来",
-    "beforeFooter": "这张图曝光不对，蒙版恢复人物曝光和整体曝光",
+    "label": "实际例子",
+    "title": "从局部蒙版，到整组调色。",
+    "description": "Agent 可以借助 ToneRelay 使用 Lightroom 的调色滑块和主体蒙版，分别调整整体与人物。看过渲染预览，你还能继续说哪个细节要改；给它参考图，也能逐张为一组照片调色。",
+    "beforeLabel": "主体蒙版",
+    "beforeTitle": "人物与整体，分别调整",
+    "beforeFooter": "全局参数与主体蒙版配合，查看前后对比",
     "afterLabel": "参考图仿色",
-    "afterTitle": "9 张参考图，逐张挑",
-    "afterFooter": "使用这些参考图，考虑光影，进行浓郁风格修图",
-    "takeaway": "两段都是实录：一句话，一个完整结果——参数、蒙版、虚拟副本都留在 Lightroom 里。",
-    "benefits": ["人物蒙版", "参考图仿色", "结果可回读"]
+    "afterTitle": "9 张参考图，按画面分别挑",
+    "afterFooter": "按光线选参考，实际渲染预览带回对话",
+    "takeaway": "这两段来自实际操作。调整保存在 Lightroom 虚拟副本中；看过预览，你还可以继续指出细节。",
+    "benefits": ["全局与蒙版配合", "逐张参考图调色", "对话继续细调"],
+    "followups": ["人物亮度可以了，整体高光再收一点。"]
   }
 }
 ```

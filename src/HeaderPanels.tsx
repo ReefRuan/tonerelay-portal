@@ -13,18 +13,18 @@ import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
 import { INSTALL_PROMPT_WITH_FAQ } from "./Documents";
 
-/** Final, reviewed copy for the open-source / privacy declaration. */
+/** Open-source / privacy declaration for local ToneRelay components. */
 export const PRIVACY_STATEMENT = {
   title: "开源 · 本地运行",
   items: [
-    "本机执行：ToneRelay 的运行时与 Lightroom 插件在你的电脑上运行——没有云端服务，无需注册账号。",
-    "照片不上传：ToneRelay 组件不会把你的照片发送到任何服务器；源照片不被覆盖。",
-    "开源可审查：Portal 与风格包内容开源（AGPL-3.0；第三方素材按各自许可），代码可在 GitHub 查看。",
+    "本地运行：ToneRelay 的运行组件在本机；使用的 Agent 是否需要账号，取决于客户端。",
+    "照片处理：ToneRelay 在本机操作 Lightroom，不主动把原片上传到自有服务器。与 Agent 分享预览图时，数据如何处理取决于所用客户端。显影调整在虚拟副本上进行；星级、旗标等整理操作仍会写入 Catalog。",
+    "开源可查：Portal 代码和公开风格包可在 GitHub 查看；照片按各自许可使用。",
   ],
   note: "说明：与 AI 助手的对话内容由你所使用的 Agent 服务按其条款处理。",
 } as const;
 
-export const INSTALL_PANEL_LEAD = "复制下面全部内容，发给你的 Agent 即可开始安装";
+export const INSTALL_PANEL_LEAD = "复制提示词，发给 Agent。它会先核对版本与安装条件。";
 
 export const HEADER_PANEL_STATE_EVENT = "tonerelay:header-panel-state";
 const HEADER_POPOVER_OPEN_EVENT = "tonerelay:header-popover-open";
@@ -101,7 +101,7 @@ function HeaderPopover({ open, panelRef, label, className, children }: {
 }
 
 /**
- * The header "一键安装" control: a split button whose main half keeps the
+ * The header install-prompt control: a split button whose main half keeps the
  * original copy behaviour and whose caret half opens an inline popover with the
  * full install prompt.
  */
@@ -131,10 +131,10 @@ export function InstallAction({ onCopy }: {
         <button
           type="button"
           className="header-action header-install install-main"
-          title="复制安装提示词和 FAQ，发给 Agent 开始安装"
+          title="复制安装提示词和 FAQ，发给 Agent 核对安装条件"
           onClick={() => void onCopy()}
         >
-          <Icon name="copy" />一键安装
+          <Icon name="copy" />复制安装提示词
         </button>
         <button
           ref={caretRef}
