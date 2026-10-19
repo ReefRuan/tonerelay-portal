@@ -42,7 +42,7 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 ## 现在能直接安装吗？
 
-全新公开安装不一定；先核对是否有可供公众访问的固定官方发行版本。安装提示词会核对来源、权限和版本；没有可验证来源时保留未就绪状态。本机开发源码需要你明确指定并授权。若本机已有来源可核验、组件健康的安装，只为新 Agent 客户端接入时可以复用它，不必重新下载整套发行物。
+可以按公开源码的固定版本安装。[GitHub MCP 主仓库](https://github.com/ReefRuan/tonerelay-lightroom-mcp)已经公开，[Gitee MCP 备用仓库](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)提供官方源码备用；先核验仓库身份、访问权限和完整 commit，使用标签时也核验它指向的完整 commit，再阅读该版本的 INSTALL.md。当前是源码预览，不代表已有稳定安装包或完成全平台验收；安装后仍需真实客户端验证。没有可核验来源或完整性依据时，停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装，不退回内部仓。本机开发源码仍需要你明确指定并授权。若只为新 Agent 客户端接入，可以复用来源可核验、组件健康的已有安装，不必重新下载整套源码。
 
 ## 已在一个 Agent 客户端使用 ToneRelay，换客户端还要重装吗？
 
@@ -74,7 +74,14 @@ macOS 新安装设计使用根目录下的 `config.json`，集中保存目录、
 
 ## 国内网络访问 GitHub 慢、打不开时怎么下载？
 
-门户仓库有国内镜像：https://gitee.com/ReefRuan/tonerelay-portal 。六个正式风格包的同版本 ZIP 可从镜像目录 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ 下载，画廊详情里的复制按钮也提供国内备用地址。镜像同步可能滞后，文档和新候选效果包先核对版本与文件是否存在；E01、E02 当前以 GitHub 主源下载为准。
+安装源码和文档／风格包有两组不同的官方双源：
+
+- MCP 完整安装源码：[GitHub 主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)。GitHub 不可达时可从 Gitee 获取同一固定完整 commit 的源码，按该版本的安装说明继续；Portal 仓库不能代替 MCP 源码。
+- 安装提示词、FAQ 和风格资源：[GitHub Portal](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 备用](https://gitee.com/ReefRuan/tonerelay-portal)。例如可直接阅读 [Gitee 安装提示词](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)。六个正式风格包的 ZIP 备用目录是 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ，画廊详情也提供国内备用地址；E01、E02 先核对镜像版本和文件是否存在，不能假定已经同步。
+
+镜像可能滞后，`main` 和“备用”都不代表最新版。先核验官方所有者、公开访问、固定完整 commit 和文件完整性，不混装不同 commit 的组件。最初仅镜像可达时，报告选用的镜像、固定 commit 与核验依据，不必先恢复 GitHub 才能使用官方备用；没有足够依据则停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装。
+
+源码备用不会自动解决 pip 依赖下载。需要 PIP_INDEX_URL 时仅使用核验过的可信 HTTPS 索引，限本次进程或专用环境并记录，不静默改全局配置或泄露凭据；保留 TLS 校验，不用 --trusted-host、关闭证书校验或不明包绕过失败。
 
 ## 安装为什么还需要真人授权？
 

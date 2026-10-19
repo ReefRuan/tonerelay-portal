@@ -44,7 +44,7 @@ If the connected version provides marking tools, you can batch-set ratings, flag
 
 ## Can I install it directly now?
 
-A fresh public installation is not guaranteed to be ready. First verify that an official pinned release version is publicly accessible. The installation prompt checks source, access, and version; if the source cannot be verified, it retains the not-ready status. Using local development source requires your explicit path and authorization. If this computer already has a healthy installation with a verifiable source, it can be reused when adding a new Agent client without downloading the complete distribution again.
+Yes, from a pinned version of the public source. The [primary GitHub MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp) is public, and the [Gitee MCP fallback](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp) provides an official alternative source. Verify the repository identity, access, and full commit; for a tag, also verify the full commit it resolves to. Then read that version's INSTALL.en.md. This is a source preview, not a claim that stable installers exist or all platforms have passed acceptance checks; real-client verification is still required after setup. If provenance or integrity cannot be verified, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can continue, without falling back to an internal repository. Using local development source still requires your explicit path and authorization. If you are only adding another Agent client, a healthy installation with a verifiable source can be reused without downloading the complete source again.
 
 ## I already use ToneRelay in one Agent client. Do I need to reinstall for another?
 
@@ -76,7 +76,14 @@ The gallery detail view for [E01 Adaptive Skin-Tone Fidelity](https://reefruan.g
 
 ## How can I download when GitHub is slow or inaccessible from China?
 
-The Portal repository has a China mirror: https://gitee.com/ReefRuan/tonerelay-portal . Same-version ZIPs of the six official style packs are available from https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ , and the gallery detail copy button also provides a China-access fallback URL. Mirror synchronization may lag; first check the version and file availability for documents and new candidate effect packages. E01 and E02 currently use the primary GitHub download source.
+Installation source and documentation/style packs have two separate official source pairs:
+
+- Complete MCP installation source: [GitHub primary](https://github.com/ReefRuan/tonerelay-lightroom-mcp) / [Gitee source fallback](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp). When GitHub is unreachable, obtain complete source at the same pinned full commit from Gitee and follow that version's instructions. Portal cannot replace the MCP source repository.
+- Installation prompt, FAQ, and style resources: [GitHub Portal](https://github.com/ReefRuan/tonerelay-portal) / [Gitee Portal fallback](https://gitee.com/ReefRuan/tonerelay-portal). For example, read the [English installation prompt on Gitee](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md). ZIP fallbacks for the six official style packs are under https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ; gallery details also provide China-access fallback URLs. Check mirror versions and file availability for E01 and E02 rather than assuming they have synchronized.
+
+Mirrors may lag: neither main nor the word “fallback” means the latest version. Verify the official owner, public access, pinned full commit, and file integrity; do not mix components from different commits. If only the mirror is reachable initially, report the selected mirror, full commit, and verification evidence. Restoring live GitHub access is not required to use an official fallback. Without sufficient evidence, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can still continue.
+
+A source fallback does not automatically solve pip dependency downloads. If PIP_INDEX_URL is needed, use only a verified trusted HTTPS index, scope it to this process or the dedicated environment, and record it; do not silently change global settings or disclose credentials. Keep TLS verification enabled. Do not bypass failures with --trusted-host, disabled certificate checks, or packages of unknown origin.
 
 ## Why does installation still need human authorization?
 

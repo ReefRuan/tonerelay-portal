@@ -2,11 +2,13 @@
 
 请让当前 Agent 客户端使用 ToneRelay for Lightroom Classic。先判断是复用已有安装、只接入当前客户端，还是需要全新安装、修复或我明确要求的升级；只执行必要步骤。
 
-请先确认操作系统、当前客户端、Lightroom Classic 和本机已有 ToneRelay 组件，优先读取已有安装的清单、来源与固定版本。仅新增客户端时，已核验的本机安装不必为了接入而重新下载；不能核验来源或版本时先报告，不能凭目录名或 Codex Plugin 已安装就认定共享 Runtime 可用。需要全新下载、修复下载或升级时，官方发行仓库候选地址是 https://github.com/ReefRuan/tonerelay-lightroom-mcp 。核对其真实身份、公开访问权限、固定发行版本和安装说明；没有可验证的公开固定版本时，明确报告公开安装尚未就绪。不要默认使用内部源码或私有仓库。本机开发源码仅在我明确指定路径并授权开发安装或复用后使用，标记为开发版。
+请先确认操作系统、当前客户端、Lightroom Classic 和本机已有 ToneRelay 组件，优先读取已有安装的清单、来源与固定版本。仅新增客户端时，已核验的本机安装不必为了接入而重新下载；不能核验来源或版本时先报告，不能凭目录名或 Codex Plugin 已安装就认定共享 Runtime 可用。需要全新下载、修复下载或升级时，使用已经公开的官方 MCP 源码主仓库 https://github.com/ReefRuan/tonerelay-lightroom-mcp ，或下述官方 Gitee 源码备用仓库。当前是可按固定源码版本安装的源码预览，不代表已发布稳定安装包或完成全平台验收。核对仓库身份、公开访问权限、完整 commit（标签须解析并核验其完整 commit）以及该版本的 INSTALL.md；不要把持续变化的 main 当作版本号。没有可核验的固定源码版本时停止安装下载分支并报告，仍可读取文档或核验复用健康的本机安装。不要默认使用内部源码或私有仓库。本机开发源码仅在我明确指定路径并授权开发安装或复用后使用，标记为开发版。
 
-常见问题与 Windows 排障文档：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.md 。网页复制按钮会把该 FAQ 正文附在本提示词后面；安装或排错时先参考附带内容，必要时再查看文档的最新版本。
+常见问题与 Windows 排障文档：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.md ，文档备用：https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.md 。网页复制按钮会把该 FAQ 正文附在本提示词后面；安装或排错时先参考附带内容，必要时再查看文档的最新版本。
 
-资源来源说明：门户仓库有国内镜像 https://gitee.com/ReefRuan/tonerelay-portal ，但同步可能滞后。GitHub 访问失败、超时或中断时，可检查镜像的同路径链接（raw 下载链接形如 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/<原路径> ）；必须核对目标文件存在、版本与固定发行物一致，不能把旧镜像当最新版。单一来源不可达时继续查核官方镜像或如实报告，不改用未经验证的第三方来源。
+双源分工：MCP 完整安装源码的主源是 https://github.com/ReefRuan/tonerelay-lightroom-mcp ，官方备用是 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp ；安装提示词、FAQ 和风格资源的 Portal 文档主源是 https://github.com/ReefRuan/tonerelay-portal ，官方备用是 https://gitee.com/ReefRuan/tonerelay-portal 。Portal 不是 MCP 源码仓库，不能用 Portal 下载包代替 MCP 安装源码。GitHub 失败、超时或中断时，可以从对应 Gitee 仓库取得同一固定完整 commit 的完整源码或同路径文档。核对官方所有者、公开可访问性、固定 commit 和文件完整性；镜像可能滞后，不能当作最新版，也不混用不同 commit 的安装器、Skill、插件和 Runtime。若一开始就只有镜像可达，报告选用的镜像地址、固定 commit 及可取得的核验依据，再按该版本的安装说明继续；不以实时连接 GitHub 为先决条件。不足以核验来源或完整性时停止安装下载分支并报告，不改用内部仓或未经验证的第三方源。raw 文档地址可使用 https://gitee.com/ReefRuan/tonerelay-portal/raw/<完整commit>/<原路径> 。
+
+源码备用不等于依赖备用。Python/pip 依赖网络仍需独立检查；如需使用 PIP_INDEX_URL，只使用已核验的可信 HTTPS 索引，按当前安装进程或专用环境设置并记录，不静默修改全局配置、不泄露索引凭据。保持 TLS 证书校验，不用 --trusted-host、关闭校验或来源不明的包来绕过失败；无法核验时报告依赖阶段未完成，不反复重装。
 
 仅使用当前系统与固定版本支持的入口；macOS 的命令、安装清单和卸载保护不能默认用于 Windows，未验证的平台能力如实标记。
 

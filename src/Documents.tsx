@@ -176,6 +176,9 @@ function AgentStrip({ onExplain, onCopyInstall }: {
             <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${language === "en" ? ".en" : ""}.md`} target="_blank" rel="noreferrer">
               {t("安装文档", "Installation guide")}<Icon name="external" />
             </a>
+            <a className="intro-cta is-quiet" href={`https://gitee.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${language === "en" ? ".en" : ""}.md`} target="_blank" rel="noreferrer">
+              {t("备用安装说明（Gitee）", "Gitee mirror installation guide")}<Icon name="external" />
+            </a>
             {ARTICLE_URL ? (
               <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
                 {t("阅读介绍文章", "Read the introduction")}<Icon name="external" />
@@ -246,6 +249,7 @@ function InstallationCallout({ onCopyInstall }: { onCopyInstall?: () => void }) 
     <div className="installation-callout-actions">
       <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}><Icon name="copy" />{t("复制安装提示词", "Copy installation prompt")}</button>
       <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("在 GitHub 查看并复制全文", "Read and copy the full prompt on GitHub")}<Icon name="external" /></a>
+      <a className="intro-cta is-quiet" href={`https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("Gitee 备用提示词全文", "Full prompt on Gitee")}<Icon name="external" /></a>
       <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
     </div>
     <p>{t("复制提示词不等于完成安装；请让 Agent 核对版本、权限与连接状态。", "Copying the prompt does not complete installation. Ask your Agent to verify the version, permissions, and connection.")}</p>

@@ -56,7 +56,9 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 2. 在[安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)复制完整安装提示词，或直接使用[本文末尾的简短入口](#直接复制安装提示词)。需要逐步操作时，查看 MCP 仓库的[技术安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。Agent 会先检查本机已有安装，再核对官方来源、访问权限、固定版本与安装说明。
 3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 Portal 的 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
 
-MCP 当前为源码预览，安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定到可核验的标签或完整提交，不把持续变化的 `main` 当作版本号。网页复制提示词不等于已经完成安装；已有健康本机安装时，可按提示核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
+MCP 已公开，当前为可按固定源码版本安装的源码预览，不代表已发布稳定安装包或完成全平台验收。安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定完整提交，标签也须核验其指向的完整提交，不把持续变化的 `main` 当作版本号。网页复制提示词不等于已经完成安装；已有健康本机安装时，可按提示核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
+
+双源入口分工：[GitHub MCP 源码主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee MCP 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)，以及 [GitHub Portal 文档主源](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 文档备用](https://gitee.com/ReefRuan/tonerelay-portal)。GitHub 不可达时，可核验并使用 Gitee 的固定完整 commit；镜像可能滞后，不混用不同版本组件。Portal 不提供 MCP 安装源码，源码备用也不代替 pip 依赖源；完整核验与依赖网络规则见[安装提示词](docs/install-prompt.md)。
 
 ## Portal 与 Runtime 分工
 
@@ -122,15 +124,16 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 
 在 GitHub 点击下方代码块右上角的复制按钮，粘贴给当前 Agent。这是简短入口；完整安装流程仍以本仓库原路径的[安装提示词](docs/install-prompt.md)和 MCP 的 [INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准，不另维护第二份长文。
 
-[打开网页安装与使用 →](https://reefruan.github.io/tonerelay-portal/#experience) · [打开完整安装提示词 →](docs/install-prompt.md)
+[打开网页安装与使用 →](https://reefruan.github.io/tonerelay-portal/#experience) · [打开完整安装提示词 →](docs/install-prompt.md) · [Gitee 提示词备用 →](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)
 
 ```text
 请让当前 Agent 客户端使用 ToneRelay for Lightroom Classic。
 先阅读完整安装提示词：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md
+文档备用：https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md
 并按其中的核验、授权和验收流程执行，不把本文当作完整安装规范。
 
 先确认系统、客户端和已有安装。优先只读核验已有来源、固定版本、Runtime、Bridge、LR 插件及 Catalog 授权；健康可兼容的安装只新增当前客户端，不顺便重装或升级共享组件。
-仅在需要下载、修复或经明确授权升级时，核验公开发行仓库 https://github.com/ReefRuan/tonerelay-lightroom-mcp 的真实身份与访问权限，固定到可验证的完整 commit 或标签，阅读该版本的 INSTALL.md；没有可核验版本就如实报告，不改用内部仓或第三方来源。
+仅在需要下载、修复或经明确授权升级时，使用已公开的源码主源 https://github.com/ReefRuan/tonerelay-lightroom-mcp 或官方源码备用 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp ，核验真实身份、公开访问和完整 commit（标签须核验其完整 commit），阅读该版本的 INSTALL.md。当前是源码预览，不代表稳定安装包或全平台验收。只要镜像版本与完整性可核验，不要求先连通 GitHub；报告选用的源、固定 commit 和依据，不混版本，不把 main 或镜像当最新版。无法核验时停止安装下载分支并报告，仍可读文档或核验复用健康本机安装，不改用内部仓或第三方源。
 按当前平台及客户端的官方入口，完成所需的 Lightroom 插件、MCP 和客户端支持的启动 Skill 接入；保留其他客户端配置、照片、Catalog、预设和个人数据。需要改变共享组件、Catalog 绑定或模式时先按完整提示词取得授权，不静默修改。
 遇到密码、登录或必须本人确认的步骤，说明最小操作并保存进度。安装后在真实新客户端会话只读验证工具发现、健康和当前选片；不能创建或观察新会话就标记待验证并给出交接，不宣布通过，也不为验收修改照片或 Catalog。
 ```
