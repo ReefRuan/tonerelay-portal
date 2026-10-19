@@ -1,67 +1,107 @@
-# ToneRelay Portal
+# ToneRelay Portal — Lightroom MCP 风格与效果画廊
 
-Reef 的 Lightroom MCP 风格与效果画廊。浏览参考图、了解风格包，再把想要的效果带进与 Agent 的对话。
+面向摄影与 **Adobe Lightroom Classic** 的参考图、调色风格和对话修图入口。先浏览喜欢的颜色与光影，再把目标带进与 Agent 的对话。
 
-[打开网页](https://reefruan.github.io/tonerelay-portal/) · [联系作者／海面名片](https://reefruan.github.io/tonerelay-portal/contact.html) · [了解 ToneRelay](https://reefruan.github.io/tonerelay-portal/#experience) · [浏览风格包](style-packs/README.md) · [安装提示词](docs/install-prompt.md) · [常见问题](docs/faq.md)
+ToneRelay connects AI agents to Lightroom Classic through the Model Context Protocol (MCP), for conversational AI photo editing, reference-based color grading, and photography workflows. This repository is its website and style gallery—not the MCP runtime.
 
-![ToneRelay 风格与效果画廊，展示可浏览的风格包卡片](docs/assets/portal-gallery.webp)
+[打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装与使用](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/) · [Lightroom MCP 仓库](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
 
-<sub>画廊截图中的照片：C200 封面 © <a href="https://www.flickr.com/photos/130477966@N06/48806348736">Chipmunk LIN</a>、NATURA 1600 封面 © <a href="https://www.flickr.com/photos/79635710@N05/9758617445">Gemini st.</a>、PRO 160NS 封面 © <a href="https://www.flickr.com/photos/19924293@N08/16203711663/">doca doca</a>，均为 <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>。截图经过缩放；所有参考图的逐图署名与许可见各包 <code>package.json</code>。</sub>
+![ToneRelay Portal：浏览摄影参考图、胶片风格与效果包](docs/assets/readme-portal-overview.jpg)
 
-## 这是哪里
+<sub>网页实拍截图。画廊中的照片是独立摄影作品，用作风格参考，不是 ToneRelay 生成的图片，也不是套用预设后的效果承诺。摄影师与许可见下方「图片来源与许可」。</sub>
 
-ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Agent 理解修图目标、决定下一步；ToneRelay 执行操作、回读结果，并提供图像预处理、测量与对比。
+## 先找到喜欢的颜色，再开始修图
 
-这个仓库是 ToneRelay 的**网页与公开风格包仓库**，不是 MCP Runtime 本身。网页负责介绍工具、展示和下载风格包、提供安装提示词与答疑；不需要登录或自建后端。
+在[在线画廊](https://reefruan.github.io/tonerelay-portal/#gallery)浏览六个胶片风格包：FUJICOLOR C200、NATURA 1600、PRO 160NS、PRO 400H、PROVIA 100F 与 SUPERIA X-TRA 400。
 
-<details>
-<summary>查看“立即体验”页面截图</summary>
+点开卡片，可以查看参考照片、颜色关系、适用场景和来源；喜欢的包可以单独下载，再把说明和参考图交给 Agent。无需登录，也不需要搭建后端。
 
-![ToneRelay 立即体验页面，展示工具介绍和推荐的 Agent 客户端](docs/assets/portal-experience.webp)
+![C200 风格包详情：十张参考照片、风格说明与下载入口](docs/assets/readme-style-detail.jpg)
 
-</details>
+风格包提供 Markdown 说明和参考图，**不是 Lightroom 预设**，下载它也不等于安装了 MCP；目前不承诺按包编号自动安装。完整目录、ZIP 与逐图署名见 [风格与效果包](style-packs/README.md)。
 
-## 从这里开始
+画廊还提供两个明确标为候选的效果包：[自适应肤色保护 E01](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) 与[朦胧发光人像 E02](https://reefruan.github.io/tonerelay-portal/?preset=luminous-mist-portrait#gallery)。它们的 Lightroom 成对效果尚待验证；E02 仅分发文字与原站照片链接，不包含第三方照片文件。
 
-1. 在[画廊](https://reefruan.github.io/tonerelay-portal/#gallery)挑选风格；点开卡片可查看参考图、风格说明和逐包下载链接。
-2. 在[立即体验](https://reefruan.github.io/tonerelay-portal/#experience)了解 Agent、ToneRelay 和对话修图的配合方式。
-3. 将[安装提示词](docs/install-prompt.md)交给正在使用的 Agent。提示词会先核实官方公开发行物与固定版本；若尚未就绪，会如实说明，而不会使用私有开发源码。排障时参考 [FAQ](docs/faq.md)。
+## 看结果，继续讨论怎么修
 
-风格包是供 Agent 阅读的 Markdown 与参考图，不等于 Lightroom 预设，也不代表安装了 MCP。六个公开包的目录、版本及下载入口见 [style-packs/README.md](style-packs/README.md)。
+接入 ToneRelay 后，Agent 可以读取当前照片与目录预览、调整显影参数、回读 Lightroom 实际渲染结果，再根据反馈继续精修。还可以结合参考图仿色、主体蒙版与批量星级整理；具体能力以当前安装版本为准。
 
-[自适应肤色保护 E01](https://reefruan.github.io/tonerelay-portal/?preset=skin-tone-adaptive-fidelity#gallery) 的画廊详情可直接阅读提示词与来源索引、查看两张色卡外观照片，并下载完整候选效果包。人物整体偏色且背景应保留时，提示词优先核验 Lightroom 原生主体蒙版，再小步调整局部色温或色调，并以同图数字采样板检查肤色与背景变化。主体分割不等于皮肤分割；色卡照片不是厂家标准色值，Lightroom 成对效果仍待验证。
+![ToneRelay 对话修图介绍页：Lightroom 工作流与 Agent 对话中的实际结果](docs/assets/readme-portal-experience.jpg)
 
-画廊中的 [朦胧发光人像候选](https://reefruan.github.io/tonerelay-portal/?preset=luminous-mist-portrait#gallery) 详情提供完整提示词、自然语言调整方向和六张教程照片的原站直链。[文字链接版效果包](style-packs/packages/luminous-mist-portrait/)可单独下载；网页和 ZIP 均不包含这些照片的文件。照片再分发许可与 Lightroom 成对效果尚未核实，因此仍标为候选。
+> “参考这张图的颜色，先做一版。”
+>
+> “暗部再亮一点，肤色别偏黄，给我看前后对比。”
 
-## 仓库内容与本地预览
+<p align="center">
+  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="docs/assets/readme-dialogue-workflow.jpg" alt="ToneRelay 当前网页的多轮对话修图展示：Lightroom 画面、第一版结果与反馈后的修改" /></a>
+</p>
 
-| 路径 | 内容 |
+<sub>上图于 2026-10-19 从当前 Portal 展示区重新截图；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非本次重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
+
+## 怎么开始
+
+1. [浏览画廊](https://reefruan.github.io/tonerelay-portal/#gallery)，或先看[对话修图介绍](https://reefruan.github.io/tonerelay-portal/#experience)。
+2. 将[安装提示词](docs/install-prompt.md)复制给正在使用的 Agent。它会先检查本机已有安装，再核对官方发行来源、访问权限、固定版本与安装说明。
+3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
+
+发行仓库当前仍为私有准备阶段，**不表示已经开放下载或可一键安装**。安装提示词在没有可核验的公开固定版本时会明确报告尚未就绪，不会默认使用私有开发源码。已有健康本机安装时，可按提示核验并复用。
+
+## Portal 与 Runtime 分工
+
+| 仓库 | 用途 |
 | --- | --- |
-| `src/`、`public/` | 网页源码、轻量预览图，以及独立海面名片页 `src/author-sea/` |
-| `style-packs/packages/` | 六个正式风格包，以及 E01 完整肤色效果包与 E02 文字链接版效果包 |
-| `style-packs/downloads/` | 按包提供的 ZIP |
-| `style-packs/effect-catalog.json` | 独立的公开效果包目录；效果包不进入风格包自动安装清单 |
-| `docs/` | 页面介绍、安装提示词、FAQ 与卸载提示词 |
+| **本仓库：[tonerelay-portal](https://github.com/ReefRuan/tonerelay-portal)** | 产品介绍、摄影风格画廊、风格与候选效果包、安装提示词与 FAQ |
+| **[tonerelay-lightroom-mcp](https://github.com/ReefRuan/tonerelay-lightroom-mcp)** | 连接 Agent 与 Lightroom Classic 的本地 MCP Runtime、Lightroom 插件及接入组件；当前私有准备中 |
 
-## 搜索引擎入口
+网站也提供可直接阅读的 [Lightroom MCP 使用说明](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/)、独立风格与效果介绍页，以及 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些页面便于分享和搜索引擎读取；收录、排名和推荐由各平台决定。
 
-构建会为首页、海面名片、ToneRelay 使用说明、[Lightroom Classic MCP 工具说明](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/)、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。MCP 页面介绍连接方式、选片修图与安装入口；风格和效果独立页展示各包内容。访客仍可从画廊卡片进入交互式详情。
-
-这些页面由 `pnpm build` 写入 `dist/`；本地查看构建后的页面请运行 `pnpm preview`。`pnpm dev` 可预览交互式画廊和 `contact.html`，其余静态介绍页需要先构建。编辑 MCP 页正文时修改 `docs/lightroom-classic-mcp.md`，构建脚本会生成对应 HTML 并把地址加入 sitemap。
-
-搜索引擎收录仍取决于爬取与站长平台。站点位于 GitHub Pages 的 `/tonerelay-portal/` 项目路径；项目内的 `robots.txt` 不能代替域名根目录的 `https://reefruan.github.io/robots.txt`，因此本仓库不声明已配置根目录 robots 规则。站点所有权验证完成后，可把上述 sitemap URL 提交给 Google Search Console、Bing Webmaster Tools 或百度搜索资源平台。
+## 本地预览
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-发布前运行 `pnpm verify:packs && pnpm test && pnpm build`。
+交互式画廊可直接预览；独立介绍页由构建生成，查看完整站点时运行 `pnpm build`，再运行 `pnpm preview`。
 
-「联系作者」现在跳转到同站的 `contact.html`，本地和正式构建均不依赖独立的 5175 原型服务。该页面是 BLOG 工作区 `prototypes/008-dither-sea-single-page/demo` 的独立快照，后续海面改动需同步到 `src/author-sea/`；Portal 的 `public/author-sea/` 保存其 Bayer 阈值图。页面中的 WebGL 海面有静态降级背景。
+网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装与排障文章位于 `docs/`。
 
-## 作者与许可
+## 图片来源与许可
+
+本页新截图来自 Portal 网页，按网页布局显示并可能缩放；截图中的第三方照片仍分别适用原许可，不因截屏而改为项目作者作品。画廊总览可见封面与 C200 详情参考图的署名如下，包内其他照片见各[风格包 `package.json`](style-packs/packages/)及网页逐图来源入口。实际修图与对话截图的来源见 [工作流截图记录](public/experience/SOURCES.md)。
+
+<details>
+<summary>画廊总览与 C200 详情截图：摄影师、原图与许可</summary>
+
+总览中的五张封面：
+
+| 风格包 | 摄影师／原图 | 许可 |
+| --- | --- | --- |
+| C200 | [Chipmunk LIN — 離鄉 / FUJIFILM C200](https://www.flickr.com/photos/130477966@N06/48806348736) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| NATURA 1600 | [Gemini st. — nightwalk](https://www.flickr.com/photos/79635710@N05/9758617445) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| PRO 160NS | [doca doca — 150315B7528PN160NS](https://www.flickr.com/photos/19924293@N08/16203711663/) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| PRO 400H | [Ustynskyi — Lisa](https://www.flickr.com/photos/99473925@N07/13223092445) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| PROVIA 100F | [Un ragazzo chiamato Bi — 3 colors and the moon](https://www.flickr.com/photos/57688343@N00/18029320402) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+
+C200 详情中的十张参考照片（顺序对应[包内来源记录](style-packs/packages/fuji-film-c200/package.json)）：
+
+| 编号 | 摄影师／原图 | 许可 |
+| --- | --- | --- |
+| 01 | [Chipmunk LIN — 離鄉 / FUJIFILM C200](https://www.flickr.com/photos/130477966@N06/48806348736) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| 02 | [Chipmunk LIN — 公園的小柴柴 / FUJIFILM C200](https://www.flickr.com/photos/130477966@N06/48805907483) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| 03 | [Sudipta Arka Das — ...](https://www.flickr.com/photos/34804966@N03/8044297521) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+| 04 | [Dane Van — Edit -1-5](https://www.flickr.com/photos/11028609@N05/40348704133) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| 05 | [Toffee Maky — Jug and Glass](https://www.flickr.com/photos/86543134@N03/13442559963) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+| 06 | [Chi Bellami — Postbox Trio](https://www.flickr.com/photos/46644449@N02/8128629297) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+| 07 | [brenkee — Planned Nature](https://www.flickr.com/photos/55128416@N05/13088517763) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| 08 | [Dane Van — Edit -1-9](https://www.flickr.com/photos/11028609@N05/39899830840) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| 09 | [+AARON++ — 中央体育场 / 南京](https://www.flickr.com/photos/50704193@N07/8284339196) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+| 10 | [Chi Bellami — RNLI Bembridge Lifeboat Station, Isle of Wight](https://www.flickr.com/photos/46644449@N02/46786107765) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) |
+
+截图不改变以上照片的许可；再分发图片时请保留作者、来源、许可与改动说明，并遵守适用的相同方式共享条件。
+
+</details>
 
 作者及维护者：[Reef Ruan (@ReefRuan)](https://github.com/ReefRuan)。Copyright (C) 2026 Reef Ruan。
 
-项目作者创作的代码与文字采用 [GNU AGPL-3.0-only](LICENSE)；适用范围和第三方素材例外见 [授权范围](LICENSE-SCOPE.md)。参考照片属于各摄影师，遵循每包 `package.json` 记录的原许可；仓库级 AGPL 不会把这些照片改为项目作者的作品。
+作者创作的代码与文字采用 [GNU AGPL-3.0-only](LICENSE)；适用范围和第三方素材例外见[授权范围](LICENSE-SCOPE.md)。摄影作品属于各原作者；仓库级 AGPL 不会替代它们的原许可。ToneRelay 是独立项目，非 Adobe 官方产品。
