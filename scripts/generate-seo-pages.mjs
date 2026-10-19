@@ -112,38 +112,52 @@ function renderMarkdown(markdown, links = {}) {
   return output.join("\n");
 }
 
-const css = `:root{color-scheme:light;font-family:system-ui,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f7f7f3;color:#202522}
-*{box-sizing:border-box}body{margin:0}a{color:#175446;text-underline-offset:.18em}a:hover{color:#0c392f}
-.wrap{max-width:960px;margin:auto;padding:0 24px}.site-header{border-bottom:1px solid #d8ded8;background:#fff}
+const css = `:root{color-scheme:dark;--line:#303b45;--surface:#171e26;--accent:#a8caff;--muted:#adb9c5;font-family:system-ui,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#10161d;color:#e8edf2}
+*{box-sizing:border-box}body{margin:0}a{color:var(--accent);text-underline-offset:.22em}a:hover{color:#d5e5ff}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.wrap{max-width:960px;margin:auto;padding:0 24px}.site-header{border-bottom:1px solid var(--line);background:#151c24}
 .site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px}
-.brand{font-weight:750;letter-spacing:.04em;text-decoration:none;color:#173c33}.nav{display:flex;gap:18px;flex-wrap:wrap}
-main{padding-top:44px;padding-bottom:72px}.eyebrow{color:#547065;font-size:.82rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
-h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin:.35em 0}.lead{font-size:1.12rem;line-height:1.85;max-width:800px}
-.meta,.muted{color:#5c6d65}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 34px}
-.button{display:inline-block;border:1px solid #175446;border-radius:999px;padding:11px 20px;text-decoration:none;font-weight:650}
-.button.primary{background:#175446;color:#fff}.prose{line-height:1.85}.prose h2{margin-top:2.4em;padding-top:.5em;border-top:1px solid #d8ded8}
-.prose h3{margin-top:1.6em}.prose p,.prose li{max-width:860px}.prose li{margin:.4em 0}.prose pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e9efeb;padding:18px;border-radius:12px}
-.prose code{background:#e9efeb;padding:.1em .3em;border-radius:4px}.prose pre code{padding:0}.table-scroll{overflow-x:auto}
-table{border-collapse:collapse;min-width:680px;width:100%}td,th{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid #d5ddd6}th{background:#e9efeb}
+.brand{font-weight:750;letter-spacing:.04em;text-decoration:none;color:#edf3fa}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem}
+main{padding-top:44px;padding-bottom:72px}.eyebrow{color:var(--accent);font-size:.82rem;font-weight:650;letter-spacing:.06em}
+h1{font-family:"Iowan Old Style","Songti SC","Noto Serif CJK SC",serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:500;line-height:1.25;margin:.35em 0}.lead{font-size:1.12rem;line-height:1.85;max-width:800px;color:#c9d4df}
+.meta,.muted{color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 34px}
+.button{display:inline-block;border:1px solid #52687f;border-radius:8px;padding:11px 20px;text-decoration:none;font-weight:650}
+.button.primary{background:var(--accent);border-color:var(--accent);color:#152337}.button:hover{background:#25374b;color:#eef5ff}.button.primary:hover{background:#c5dbff;color:#152337}.prose{line-height:1.85}.prose h2{margin-top:2.4em;padding-top:.8em;border-top:1px solid var(--line)}
+.prose h3{margin-top:1.6em}.prose p,.prose li{max-width:860px}.prose li{margin:.4em 0}.prose pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--surface);padding:18px;border:1px solid var(--line);border-radius:10px}
+.prose code{background:#23303e;padding:.1em .3em;border-radius:4px}.prose pre code{padding:0}.table-scroll{overflow-x:auto}
+table{border-collapse:collapse;min-width:680px;width:100%}td,th{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line)}th{background:var(--surface)}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin:24px 0}
-figure{margin:0;background:#fff;border:1px solid #dce3dc;border-radius:14px;overflow:hidden}figure img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.chart-gallery figure img{object-fit:contain;background:#f2f4f1}figcaption{font-size:.9rem;line-height:1.65;padding:12px}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}figure img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}figcaption{font-size:.9rem;line-height:1.65;padding:12px}
 .chart-gallery figure img{object-fit:contain;background:#fff}
-.source-list li{margin:.7em 0}.related{margin-top:64px;padding-top:24px;border-top:1px solid #d8ded8}.related ul{columns:2;line-height:2}
-footer{border-top:1px solid #d8ded8;padding:24px 0 38px;color:#5c6d65;font-size:.9rem}@media(max-width:640px){.nav{gap:10px}.related ul{columns:1}}`;
+.source-list li{margin:.7em 0}.related{margin-top:64px;padding-top:24px;border-top:1px solid var(--line)}.related ul{columns:2;line-height:2}
+footer{border-top:1px solid var(--line);padding:24px 0 38px;color:var(--muted);font-size:.9rem}@media(max-width:640px){.site-header .wrap{flex-wrap:wrap;padding-block:12px}.nav{gap:10px}.related ul{columns:1}}`;
 
 function page({ title, description, canonical, type, body, image, stylesheet }) {
   const metaImage = image ? `<meta property="og:image" content="${safeUrl(image)}">\n<meta name="twitter:card" content="summary_large_image">` : `<meta name="twitter:card" content="summary">`;
+  const structuredData = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: "zh-CN",
+    isPartOf: { "@type": "WebSite", "@id": `${site}#website`, name: "ToneRelay", url: site },
+    author: { "@type": "Person", name: "Reef Ruan", url: "https://github.com/ReefRuan" },
+    ...(image ? { image } : {}),
+  }).replace(/</g, "\\u003c");
   return `<!doctype html>
 <html lang="zh-CN"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Reef Ruan">
 <title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${safeUrl(canonical)}"><link rel="sitemap" type="application/xml" href="${absolute("sitemap.xml")}">
 <meta property="og:type" content="${escapeHtml(type)}"><meta property="og:site_name" content="ToneRelay">
 <meta property="og:locale" content="zh_CN"><meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${safeUrl(canonical)}">
 ${metaImage}<meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}">
+<script type="application/ld+json">${structuredData}</script>
 <link rel="stylesheet" href="${stylesheet}">
-</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${site}">ToneRelay</a><nav class="nav" aria-label="主导航"><a href="${site}">风格与效果画廊</a><a href="${absolute("experience/")}">使用说明</a></nav></div></header>
+</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${site}">ToneRelay</a><nav class="nav" aria-label="主导航"><a href="${site}">风格与效果画廊</a><a href="${absolute("experience/")}">使用说明</a><a href="${absolute("lightroom-classic-mcp/")}">Lightroom Classic MCP</a></nav></div></header>
 <main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">项目源码</a></div></footer></body></html>`;
 }
 
@@ -259,16 +273,23 @@ const faqSections = faqHeadings.map((heading) => {
 }).filter(Boolean);
 const experienceBody = `<p class="eyebrow">ToneRelay 使用说明</p><h1>用对话操作 Lightroom Classic</h1>
 <p class="lead">描述想要的画面，让 Agent 调整 Lightroom 并带回实际渲染；查看结果后继续细调，也可以从公开风格与效果包开始。</p>
-<div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${repo}/blob/main/docs/install-prompt.md">查看安装提示词</a></div>
+<div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP</a><a class="button" href="${repo}/blob/main/docs/install-prompt.md">查看安装提示词</a></div>
 <article class="prose">${renderMarkdown(intro)}<h2>常见问题</h2>${renderMarkdown(faqSections.join("\n"))}</article>`;
 await writePage("experience", page({ title: "ToneRelay 使用说明｜用对话操作 Lightroom Classic", description: "ToneRelay 连接 Agent 与 Lightroom Classic。了解对话修图、真实渲染回读、批量操作、参考图调色，以及风格效果包的使用方式。", canonical: absolute("experience/"), type: "website", body: experienceBody, stylesheet: "../seo.css" }));
+
+const mcpMarkdown = await readText("docs/lightroom-classic-mcp.md");
+const mcpBody = `<p class="eyebrow">ToneRelay · MCP 工具说明</p><h1>Lightroom MCP：用对话选片和修图</h1>
+<p class="lead">说出想要的效果，查看 Lightroom 实际渲染的照片，再接着调整。了解 ToneRelay 如何连接 Agent 与 Lightroom Classic。</p>
+<div class="actions"><a class="button primary" href="${absolute("#experience")}">查看交互式使用说明</a><a class="button" href="${absolute("experience/")}">阅读使用场景</a></div>
+<article class="prose">${renderMarkdown(mcpMarkdown)}</article>`;
+await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案。", canonical: absolute("lightroom-classic-mcp/"), type: "article", body: mcpBody, stylesheet: "../seo.css" }));
 
 const homepageLinks = [
   ...publicStyles.map((pack) => `<li><a href="${pack.url}">${escapeHtml(pack.title)} 风格包</a>：${escapeHtml(shortDescription(pack.summary, 85))}</li>`),
   ...publicEffects.map((pack) => `<li><a href="${pack.url}">${escapeHtml(pack.title)} 效果包</a>：${escapeHtml(shortDescription(pack.summary, 85))}</li>`),
 ].join("\n");
-const staticRoot = `<main lang="zh-CN"><header><h1>ToneRelay：Lightroom 风格与效果画廊</h1><p>ToneRelay 连接 Agent 与 Lightroom Classic。浏览公开胶片风格包和可调效果提示词，查看真实参考、来源署名和使用说明。</p></header>
-<nav aria-label="公开页面"><a href="${absolute("experience/")}">了解 ToneRelay 的对话修图方式</a></nav>
+const staticRoot = `<main lang="zh-CN"><header><h1>ToneRelay：Lightroom Classic MCP 与风格画廊</h1><p>ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具。了解对话修图与实际渲染回读，浏览公开胶片风格包和可调效果提示词。</p></header>
+<nav aria-label="公开页面"><a href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP 工具</a> · <a href="${absolute("experience/")}">查看 ToneRelay 使用说明</a></nav>
 <section><h2>公开风格与效果包</h2><ul>${homepageLinks}</ul></section>
 <p><a href="${repo}">ToneRelay Portal 项目与公开包文件</a></p></main>`;
 const indexPath = join(dist, "index.html");
@@ -278,7 +299,7 @@ if (!rootPattern.test(index)) throw new Error("Cannot find empty #root in Vite i
 await writeFile(indexPath, index.replace(rootPattern, `<div id="root">${staticRoot}</div>`), "utf8");
 
 await writeFile(join(dist, "seo.css"), css, "utf8");
-const sitemapUrls = [site, absolute("experience/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
+const sitemapUrls = [site, absolute("experience/"), absolute("lightroom-classic-mcp/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`).join("\n")}\n</urlset>\n`;
 await writeFile(join(dist, "sitemap.xml"), sitemap, "utf8");
-console.log(`Generated ${publicStyles.length} style pages, ${publicEffects.length} effect pages, experience page, homepage fallback, and sitemap.`);
+console.log(`Generated ${publicStyles.length} style pages, ${publicEffects.length} effect pages, experience and MCP pages, homepage fallback, and sitemap.`);

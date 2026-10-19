@@ -498,7 +498,11 @@ export const presets: Preset[] = [
 ];
 
 // 保留旧 BETA 数据；当前展示正式风格与标明状态的效果候选。
-export const visiblePresets = presets.filter((preset) => preset.release !== "BETA");
+// Lead the public gallery with photographic style covers. Effect packages still
+// remain in the same catalog and appear after styles in the default view.
+export const visiblePresets = presets
+  .filter((preset) => preset.release !== "BETA")
+  .sort((left, right) => Number(left.category === "效果") - Number(right.category === "效果"));
 
 export const categories = ["全部", "胶片", "模拟", "黑白", "效果"] as const;
 export type Category = (typeof categories)[number];

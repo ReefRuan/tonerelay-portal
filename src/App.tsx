@@ -19,7 +19,6 @@ import { Documents, ARTICLE_URL, INSTALL_PROMPT_WITH_FAQ, UNINSTALL_PROMPT, type
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
-import { HeaderHint, useOnboardingHints } from "./HeaderHints";
 import { InstallAction, PrivacyAction } from "./HeaderPanels";
 import { IntroSignature } from "./IntroSignature";
 
@@ -108,11 +107,7 @@ export default function App() {
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const starAnchorRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
-
-  const hints = useOnboardingHints(page === "experience", detailOpen);
-  const hintAnchor = hints.active === "star" ? starAnchorRef.current : null;
 
   // Boot screen hand-off: once React has committed, wait for two animation
   // frames so the app's first frame is painted, then start the index.html
@@ -300,11 +295,6 @@ export default function App() {
   const copyInstallPrompt = useCallback(() => copyValue(INSTALL_PROMPT_WITH_FAQ, "已复制安装提示词和 FAQ，发给 Agent 开始安装"), [copyValue]);
   const copyUninstallPrompt = useCallback(() => copyValue(UNINSTALL_PROMPT, "已复制卸载提示词，发给 Agent 核对并卸载"), [copyValue]);
 
-  const resolveStarHint = useCallback(() => hints.resolve("star", "done"), [hints]);
-  const dismissActiveHint = useCallback(() => {
-    if (hints.active) hints.dismiss(hints.active);
-  }, [hints]);
-
   const switchDetail = useCallback(
     (delta: number) => {
       if (!filteredPresets.length) return;
@@ -463,28 +453,15 @@ export default function App() {
         {page === "experience" && <div className="site-header-actions">
           <PrivacyAction />
           <InstallAction onCopy={copyInstallPrompt} />
-          <div className="header-star-group" ref={starAnchorRef}>
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="在 GitHub 给 Portal 点 Star" onClick={resolveStarHint}><Icon name="star" />Star Portal</a>
+          <div className="header-star-group">
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="在 GitHub 给 Portal 点 Star"><Icon name="star" />Star Portal</a>
             <span className="header-action header-star-link is-unavailable" title="MCP 仓库尚未公开，公开后可在 GitHub 点 Star" aria-label="MCP 仓库尚未公开"><Icon name="star" />MCP 尚未公开</span>
           </div>
         </div>}
       </header>
 
-      {/* Rendered without AnimatePresence so a resolved hint unmounts
-          deterministically — exit animations stall when a target="_blank"
-          link (e.g. a Star link) backgrounds the tab. */}
-      {hints.active && (
-        <HeaderHint
-          key={hints.active}
-          id={hints.active}
-          anchor={hintAnchor}
-          onDismiss={dismissActiveHint}
-        />
-      )}
-
       {page === "gallery" ? <main className="catalog-main" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <section className="intro" aria-labelledby="page-title">
-          <span className="intro-kicker">TONERELAY · LIGHTROOM CLASSIC MCP</span>
           <h1 id="page-title">
             Reef 的 Lightroom MCP<br />
             <em>风格与效果画廊。</em>
@@ -505,77 +482,86 @@ export default function App() {
           </div>
         </section>
 
-        <div className="catalog-heading">
-          <div>
-            <h2>互联网蒸馏预设</h2>
+        <section className="catalog-browse" aria-label="风格与效果画廊">
+          <div className="catalog-heading">
+            <div>
+              <h2>互联网蒸馏预设</h2>
+            </div>
+            <div className="catalog-rule"><i /></div>
+            <div className="catalog-tools">
+              <p>{filteredPresets.length} 项内容</p>
+              <button type="button" onClick={() => setDockMode((mode) => mode === "expanded" ? "normal" : "expanded")} aria-label="筛选内容" aria-expanded={dockMode === "expanded"} aria-controls="preset-filter-panel">
+                <Icon name="filter" /><span>筛选</span>
+              </button>
+            </div>
           </div>
-          <div className="catalog-rule"><i /></div>
-          <div className="catalog-tools">
-            <p>{filteredPresets.length} 项内容</p>
-            <button type="button" onClick={() => setDockMode((mode) => mode === "expanded" ? "normal" : "expanded")} aria-label="筛选内容" aria-expanded={dockMode === "expanded"} aria-controls="preset-filter-panel">
-              <Icon name="filter" /><span>筛选</span>
-            </button>
-          </div>
-        </div>
 
-        {filteredPresets.length ? (
-          <section className="preset-grid" aria-label="效果包瀑布流">
-            {filteredPresets.map((preset, index) => {
-              const selected = dockMode !== "collapsed" && preset.id === selectedPreset?.id;
-              return (
-                <motion.button
-                  layout
-                  transition={{ layout: { duration: reducedMotion ? 0 : 0.18 } }}
-                  key={preset.id}
-                  ref={(node) => {
-                    if (node) cardRefs.current.set(preset.id, node);
-                    else cardRefs.current.delete(preset.id);
-                  }}
-                  className={`preset-card ${selected ? "is-selected" : ""}`}
-                  style={
-                    {
-                      "--card-ratio": preset.ratio,
-                    } as CSSProperties
-                  }
-                  aria-label={`查看${preset.kind === "effect" ? "效果包" : "风格模板"}详情：${preset.name}`}
-                  onClick={() => openDetail(preset)}
-                >
-                  <span className="photo-frame">
-                    <img
-                      src={preset.image}
-                      alt=""
-                      loading={index < 5 ? "eager" : "lazy"}
-                      draggable={false}
-                    />
-                    <span className="photo-shade" />
-                    <span className={`release-badge ${preset.photoCredit ? "is-third-party" : "is-beta"}`}>
-                      {presetBadgeLabel(preset)}
+          {filteredPresets.length ? (
+            <section className="preset-grid" aria-label="风格与效果列表">
+              {filteredPresets.map((preset, index) => {
+                const selected = dockMode !== "collapsed" && preset.id === selectedPreset?.id;
+                return (
+                  <motion.button
+                    layout
+                    transition={{ layout: { duration: reducedMotion ? 0 : 0.18 } }}
+                    key={preset.id}
+                    ref={(node) => {
+                      if (node) cardRefs.current.set(preset.id, node);
+                      else cardRefs.current.delete(preset.id);
+                    }}
+                    className={`preset-card ${selected ? "is-selected" : ""}`}
+                    style={
+                      {
+                        "--card-ratio": preset.ratio,
+                      } as CSSProperties
+                    }
+                    aria-label={`查看${preset.kind === "effect" ? "效果包" : "风格模板"}详情：${preset.name}`}
+                    onClick={() => openDetail(preset)}
+                  >
+                    <span className="photo-frame">
+                      <img
+                        src={preset.image}
+                        alt=""
+                        loading={index < 5 ? "eager" : "lazy"}
+                        draggable={false}
+                      />
+                      <span className="photo-shade" />
+                      <span className={`release-badge ${preset.photoCredit ? "is-third-party" : "is-beta"}`}>
+                        {presetBadgeLabel(preset)}
+                      </span>
+                      <span className="card-number">{preset.number}</span>
+                      <span className="selection-mark"><Icon name="check" /></span>
                     </span>
-                    <span className="card-number">{preset.number}</span>
-                    <span className="selection-mark"><Icon name="check" /></span>
-                  </span>
-                  <span className="card-caption">
-                    <span>
-                      <strong>{preset.name}</strong>
-                      <small>{preset.en}</small>
+                    <span className="card-caption">
+                      <span>
+                        <strong>{preset.name}</strong>
+                        <small>{preset.en}</small>
+                      </span>
+                      <span className="card-stamps">
+                        <span className={`card-kind ${preset.kind === "effect" ? "is-effect" : ""}`}>
+                          {preset.kind === "effect" ? "效果" : "风格"}
+                        </span>
+                        <span className="card-version">{preset.version}</span>
+                      </span>
                     </span>
-                    <span className="card-version">{preset.version}</span>
-                  </span>
-                </motion.button>
-              );
-            })}
-          </section>
-        ) : (
-          <section className="empty-state">
-            <span>没有匹配结果</span>
-            <h2>没有找到这种内容。</h2>
-            <button onClick={() => { setQuery(""); setCategory("全部"); }}>清除筛选</button>
-          </section>
-        )}
+                  </motion.button>
+                );
+              })}
+            </section>
+          ) : (
+            <section className="empty-state">
+              <span>没有匹配结果</span>
+              <h2>没有找到这种内容。</h2>
+              <button onClick={() => { setQuery(""); setCategory("全部"); }}>清除筛选</button>
+            </section>
+          )}
+        </section>
 
         <footer className="site-footer">
           <span>© 2026 Reef Ruan · ToneRelay</span>
           <div className="site-footer-meta">
+            <a href={`${import.meta.env.BASE_URL}lightroom-classic-mcp/`}>Lightroom MCP 说明</a>
+            <span aria-hidden="true">·</span>
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a>
             <span aria-hidden="true">·</span>
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a>
@@ -761,7 +747,7 @@ export default function App() {
                     {categories.map((item) => (
                       <button
                         key={item}
-                        className={category === item ? "is-active" : ""}
+                        className={`${category === item ? "is-active" : ""} ${item === "效果" ? "is-effect" : ""}`}
                         onClick={() => setCategory(item)}
                       >
                         {item}

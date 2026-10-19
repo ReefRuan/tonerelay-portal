@@ -13,7 +13,7 @@ type ShotCopy = { alt: string; caption: string };
 type Content = {
   note: string;
   sceneEntries: SceneEntry[];
-  shots: { sliders: ShotCopy; refine: ShotCopy; loupe: ShotCopy; rating: ShotCopy; color: ShotCopy; mask: ShotCopy };
+  shots: Record<"sliders" | "masks" | "landscape" | "refine" | "grid" | "compare" | "loupe" | "rating" | "color" | "mask", ShotCopy>;
   first: Comparison & { followups: string[] };
   batch: Comparison;
   computer: Comparison & { followups: string[] };
@@ -32,22 +32,29 @@ const block = introduction.match(/<!-- comparison-content:start -->\s*```json\s*
 if (!block) throw new Error("Missing comparison content in experience-introduction.md");
 const copy: Content = JSON.parse(block[1]);
 if (!copy.sceneEntries?.length) throw new Error("Missing typical-usage entries in experience-introduction.md");
-const shotSliders = `${import.meta.env.BASE_URL}experience/lr-develop-sliders.webp`;
-const shotRefine = `${import.meta.env.BASE_URL}experience/conversation-refine.webp`;
-const shotLoupe = `${import.meta.env.BASE_URL}experience/lr-loupe.webp`;
-const shotRating = `${import.meta.env.BASE_URL}experience/conversation-rating.webp`;
+const shotSliders = `${import.meta.env.BASE_URL}experience/lr-develop-mountain.webp`;
+const shotMasks = `${import.meta.env.BASE_URL}experience/lr-develop-masks.webp`;
+const shotLandscape = `${import.meta.env.BASE_URL}experience/lr-develop-landscape.webp`;
+const shotRefine = `${import.meta.env.BASE_URL}experience/conversation-refine-tight.webp`;
+const shotGrid = `${import.meta.env.BASE_URL}experience/lr-library-grid.webp`;
+const shotCompare = `${import.meta.env.BASE_URL}experience/lr-library-compare.webp`;
+const shotLoupe = `${import.meta.env.BASE_URL}experience/lr-library-loupe.webp`;
+const shotRating = `${import.meta.env.BASE_URL}experience/conversation-rating-tight.webp`;
 const shotColor = `${import.meta.env.BASE_URL}experience/conversation-color-match.webp`;
 const shotMask = `${import.meta.env.BASE_URL}experience/conversation-mask.webp`;
 
 function Shot({ src, alt, caption, width, height }: { src: string; alt: string; caption: string; width: number; height: number }) {
   return <figure className="workflow-shot">
-    <img src={src} alt={alt} loading="lazy" width={width} height={height} />
-    <figcaption><span className="window-dots" aria-hidden="true"><i /><i /><i /></span>{caption}</figcaption>
+    <a className="workflow-shot-link" href={src} target="_blank" rel="noreferrer" aria-label={`放大查看：${caption}`}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" width={width} height={height} />
+      <span className="workflow-shot-zoom" aria-hidden="true">查看大图 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 4h6v6M20 4l-8 8M10 20H4v-6M4 20l8-8" /></svg></span>
+    </a>
+    <figcaption>{caption}</figcaption>
   </figure>;
 }
 
 // Typical-usage examples: three things you can say to an Agent, with the exact
-// prompt strings. Rendered right below the workflow introduction.
+// prompt strings. Shown after the first real example so proof leads the section.
 function SceneEntries() {
   return <div className="workflow-scene-entries">
     <span className="eyebrow scene-entries-label">试着这样说</span>
@@ -121,17 +128,25 @@ function ComparisonFigure({ item, children, variant = "", solo = false, promptId
 export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPrompt } = {}) {
   return <section className="workflow-section" aria-labelledby="workflow-title">
     <header className="experience-section-heading"><h2 id="workflow-title">{workflowHeading}</h2>{workflowParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</header>
-    <SceneEntries />
     <ComparisonFigure item={copy.first} promptIds={["01"]} onCopyPrompt={onCopyPrompt}>{[
-      <Shot key="sliders" src={shotSliders} alt={copy.shots.sliders.alt} caption={copy.shots.sliders.caption} width={1800} height={1149} />,
+      <div className="workflow-shot-stack" key="lightroom-edit">
+        <Shot src={shotSliders} alt={copy.shots.sliders.alt} caption={copy.shots.sliders.caption} width={2200} height={1201} />
+        <Shot src={shotMasks} alt={copy.shots.masks.alt} caption={copy.shots.masks.caption} width={2200} height={1201} />
+        <Shot src={shotLandscape} alt={copy.shots.landscape.alt} caption={copy.shots.landscape.caption} width={2200} height={1201} />
+      </div>,
       <div className="workflow-shot-stack" key="refine">
-        <Shot src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1400} height={1405} />
+        <Shot src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1312} height={1690} />
         <div className="workflow-next"><span>接着说</span><ul>{copy.first.followups.map((followup) => <li key={followup}>{followup}</li>)}</ul></div>
       </div>,
     ]}</ComparisonFigure>
+    <SceneEntries />
     <ComparisonFigure item={copy.batch} variant="batch" promptIds={["02"]} onCopyPrompt={onCopyPrompt}>{[
-      <Shot key="loupe" src={shotLoupe} alt={copy.shots.loupe.alt} caption={copy.shots.loupe.caption} width={1500} height={1285} />,
-      <Shot key="rating" src={shotRating} alt={copy.shots.rating.alt} caption={copy.shots.rating.caption} width={1500} height={1020} />,
+      <div className="workflow-shot-stack" key="lightroom-select">
+        <Shot src={shotGrid} alt={copy.shots.grid.alt} caption={copy.shots.grid.caption} width={2200} height={1201} />
+        <Shot src={shotCompare} alt={copy.shots.compare.alt} caption={copy.shots.compare.caption} width={2200} height={1201} />
+        <Shot src={shotLoupe} alt={copy.shots.loupe.alt} caption={copy.shots.loupe.caption} width={2200} height={1238} />
+      </div>,
+      <Shot key="rating" src={shotRating} alt={copy.shots.rating.alt} caption={copy.shots.rating.caption} width={1570} height={1770} />,
     ]}</ComparisonFigure>
     <ComparisonFigure item={copy.computer} variant="computer" promptIds={["03-A", "03-B"]} onCopyPrompt={onCopyPrompt}>{[
       <div className="workflow-shot-stack" key="mask">

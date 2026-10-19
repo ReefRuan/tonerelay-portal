@@ -16,15 +16,15 @@ describe("workflow examples", () => {
     expect(heading).not.toContain("交互示意");
   });
 
-  it("lists typical-usage prompts right after the workflow introduction", () => {
+  it("shows a real example before the typical-usage prompts", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const gallery = html.indexOf("画廊会持续更新");
     const sceneEntries = html.indexOf("试着这样说");
     const firstFigure = html.indexOf("workflow-figure ");
 
     expect(gallery).toBeGreaterThan(-1);
-    expect(sceneEntries).toBeGreaterThan(gallery);
-    expect(firstFigure).toBeGreaterThan(sceneEntries);
+    expect(firstFigure).toBeGreaterThan(gallery);
+    expect(sceneEntries).toBeGreaterThan(firstFigure);
     expect(html).toContain("看看当前 Lightroom 目录里有哪些照片。");
     expect(html).toContain("请逐张看这组照片，按清晰度和内容打星");
     expect(html).toContain("参考这些照片的颜色，给这组照片逐张调色");
@@ -36,8 +36,10 @@ describe("workflow examples", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const first = html.match(/workflow-figure "[\s\S]*?workflow-figure-batch/)?.[0];
 
-    expect(first).toContain("experience/lr-develop-sliders.webp");
-    expect(first).toContain("experience/conversation-refine.webp");
+    expect(first).toContain("experience/lr-develop-mountain.webp");
+    expect(first).toContain("experience/lr-develop-masks.webp");
+    expect(first).toContain("experience/lr-develop-landscape.webp");
+    expect(first).toContain("experience/conversation-refine-tight.webp");
     expect(first).toContain("Lightroom Classic · 逐项调整滑块");
     expect(first).toContain("看过第一版，接着说哪里要改");
     expect(first).toContain("接着说");
@@ -72,8 +74,10 @@ describe("workflow examples", () => {
     const batch = html.match(/workflow-figure-batch[\s\S]*?workflow-figure-computer/)?.[0];
 
     expect(batch).toBeDefined();
-    expect(batch).toContain("experience/lr-loupe.webp");
-    expect(batch).toContain("experience/conversation-rating.webp");
+    expect(batch).toContain("experience/lr-library-grid.webp");
+    expect(batch).toContain("experience/lr-library-compare.webp");
+    expect(batch).toContain("experience/lr-library-loupe.webp");
+    expect(batch).toContain("experience/conversation-rating-tight.webp");
     expect(batch).toContain("Lightroom Classic · 逐张浏览");
     expect(batch).toContain("Agent 逐张评分，标记写回 Lightroom");
     expect(batch).toContain("读取 Lightroom 快速预览，缓存可用时复用");

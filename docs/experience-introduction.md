@@ -45,8 +45,16 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
   ],
   "shots": {
     "sliders": {
-      "alt": "Lightroom Classic 修改照片面板，曝光度滑块位于右侧参数区",
+      "alt": "Lightroom Classic 显影界面中的山景照片与右侧调色滑块",
       "caption": "Lightroom Classic · 逐项调整滑块"
+    },
+    "masks": {
+      "alt": "Lightroom Classic 中的山景照片与蒙版调整面板",
+      "caption": "切换蒙版，调整局部"
+    },
+    "landscape": {
+      "alt": "Lightroom Classic 中的草地风景照片与显影参数面板",
+      "caption": "换一张照片，继续调整"
     },
     "refine": {
       "alt": "Agent 对话截图：用户看过第一版后要求提亮过黑的暗部并留意色调，Agent 带回第二版结果",
@@ -55,6 +63,14 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
     "loupe": {
       "alt": "Lightroom Classic 放大视图与底部胶片网格，逐张浏览照片",
       "caption": "Lightroom Classic · 逐张浏览"
+    },
+    "grid": {
+      "alt": "Lightroom Classic 目录网格中同一组人像照片的缩略图",
+      "caption": "查看整组照片"
+    },
+    "compare": {
+      "alt": "Lightroom Classic 比较视图中并排显示两张人像照片",
+      "caption": "并排比较，决定保留哪张"
     },
     "rating": {
       "alt": "Agent 对话截图：对整组照片逐张评分，返回星级分布并写回目录",

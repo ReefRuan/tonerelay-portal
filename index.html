@@ -11,17 +11,32 @@
     <meta name="robots" content="index, follow" />
     <meta
       name="description"
-      content="浏览 ToneRelay 的 Lightroom 风格与效果包：六款可下载的胶片风格包、朦胧发光人像效果提示词，以及 Agent 操作 Lightroom Classic 的使用说明。"
+      content="ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具。了解对话修图与实际渲染回读，浏览可下载的胶片风格包和效果提示词。"
     />
     <link rel="canonical" href="https://reefruan.github.io/tonerelay-portal/" />
     <link rel="sitemap" type="application/xml" href="https://reefruan.github.io/tonerelay-portal/sitemap.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ToneRelay" />
-    <meta property="og:title" content="ToneRelay — Lightroom 风格与效果画廊" />
-    <meta property="og:description" content="浏览可下载的胶片风格包和人像效果提示词，了解 ToneRelay 如何通过 Agent 操作 Lightroom Classic。" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="ToneRelay｜Lightroom Classic MCP 与风格画廊" />
+    <meta property="og:description" content="了解 ToneRelay 如何连接 Agent 与 Lightroom Classic，并浏览可下载的胶片风格包和效果提示词。" />
     <meta property="og:url" content="https://reefruan.github.io/tonerelay-portal/" />
     <meta name="twitter:card" content="summary" />
-    <title>ToneRelay — Lightroom 风格与效果画廊</title>
+    <meta name="twitter:title" content="ToneRelay｜Lightroom Classic MCP 与风格画廊" />
+    <meta name="twitter:description" content="了解 ToneRelay 如何连接 Agent 与 Lightroom Classic，并浏览可下载的胶片风格包和效果提示词。" />
+    <title>ToneRelay｜Lightroom Classic MCP 与风格画廊</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://reefruan.github.io/tonerelay-portal/#website",
+        "url": "https://reefruan.github.io/tonerelay-portal/",
+        "name": "ToneRelay",
+        "description": "连接 Agent 与 Lightroom Classic 的本地 MCP 工具、风格与效果画廊。",
+        "inLanguage": "zh-CN",
+        "author": { "@type": "Person", "name": "Reef Ruan", "url": "https://github.com/ReefRuan" }
+      }
+    </script>
     <style>
       /* Boot screen — inline, zero-dependency. Every background value is copied
          verbatim from .app-shell in src/styles.css (keep both in sync).
@@ -40,9 +55,9 @@
         opacity:1;transition:opacity 380ms cubic-bezier(.4,0,.2,1);
       }
       #boot.is-done{opacity:0;pointer-events:none;}
-      /* Relative URL: same file src/fonts.ts injects for the app, so the
-         browser cache is shared (no extra bytes) and sub-path deploys work. */
-      @font-face{font-family:"Xiaolai SC Web";src:url("fonts/xiaolai-subset.woff2") format("woff2");font-display:swap;}
+      /* Same public font as src/fonts.ts. Vite rewrites this URL for the
+         deployment base; both uses share the browser cache. */
+      @font-face{font-family:"Xiaolai SC Web";src:url("/fonts/xiaolai-subset.woff2") format("woff2");font-display:swap;}
       .boot-mark{position:relative;width:44px;height:44px;animation:boot-spin 24s linear infinite;}
       .boot-mark i{position:absolute;left:5px;top:21.5px;width:34px;height:1px;background:#79b3ff;}
       .boot-mark i:nth-child(2){transform:rotate(90deg);}

@@ -155,11 +155,10 @@ function AgentStrip({ onExplain, onCopyInstall }: {
                 阅读介绍文章<Icon name="external" />
               </a>
             ) : null}
+            <a className="author-contact" href={AUTHOR_CONTACT_URL}>
+              联系作者 <Icon name="arrow" />
+            </a>
           </div>
-
-          <a className="author-contact" href={AUTHOR_CONTACT_URL}>
-            联系作者 <Icon name="arrow" />
-          </a>
         </div>
       </div>
       <div className="agent-picker">
@@ -210,7 +209,7 @@ function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<
 }
 
 function DocumentFooter() {
-  return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
+  return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href={`${import.meta.env.BASE_URL}lightroom-classic-mcp/`}>Lightroom MCP 说明</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">授权范围与照片许可</a></span><a href="#gallery">回到画廊 <Icon name="arrow" /></a></footer>;
 }
 
 export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {

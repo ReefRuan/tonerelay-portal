@@ -45,9 +45,9 @@ ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。Age
 
 ## 搜索引擎入口
 
-构建会为首页、海面名片、ToneRelay 使用说明、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些 HTML 地址供搜索引擎读取；访客从画廊卡片直接进入详情弹窗，不需要经过独立介绍页。
+构建会为首页、海面名片、ToneRelay 使用说明、[Lightroom Classic MCP 工具说明](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/)、六个公开胶片风格包及 E01、E02 两个公开候选效果包生成可直接读取的 HTML 页面，并生成 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。MCP 页面介绍连接方式、选片修图与安装入口；风格和效果独立页展示各包内容。访客仍可从画廊卡片进入交互式详情。
 
-这些页面由 `pnpm build` 写入 `dist/`；本地查看构建后的页面请运行 `pnpm preview`。`pnpm dev` 可预览交互式画廊和 `contact.html`，其余搜索引擎专用页面需要先构建。
+这些页面由 `pnpm build` 写入 `dist/`；本地查看构建后的页面请运行 `pnpm preview`。`pnpm dev` 可预览交互式画廊和 `contact.html`，其余静态介绍页需要先构建。编辑 MCP 页正文时修改 `docs/lightroom-classic-mcp.md`，构建脚本会生成对应 HTML 并把地址加入 sitemap。
 
 搜索引擎收录仍取决于爬取与站长平台。站点位于 GitHub Pages 的 `/tonerelay-portal/` 项目路径；项目内的 `robots.txt` 不能代替域名根目录的 `https://reefruan.github.io/robots.txt`，因此本仓库不声明已配置根目录 robots 规则。站点所有权验证完成后，可把上述 sitemap URL 提交给 Google Search Console、Bing Webmaster Tools 或百度搜索资源平台。
 
