@@ -96,11 +96,6 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
     "afterLabel": "Agent + ToneRelay",
     "afterTitle": "说出目标，看过结果再改",
     "afterFooter": "找出合适参考图，修改当前图片",
-    "followups": [
-      "放大看看局部细节。",
-      "把这一版和调整前放在一起比较。",
-      "背景再柔和一点。"
-    ],
     "takeaway": "每轮都能看调整后的照片；看过以后，再告诉 Agent 下一步怎么改。",
     "benefits": ["描述目标", "局部查看与对比", "继续细调"]
   },

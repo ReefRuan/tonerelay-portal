@@ -14,7 +14,7 @@ type Content = {
   note: string;
   sceneEntries: SceneEntry[];
   shots: Record<"sliders" | "masks" | "landscape" | "refine" | "grid" | "compare" | "loupe" | "rating" | "color" | "mask", ShotCopy>;
-  first: Comparison & { followups: string[] };
+  first: Comparison;
   batch: Comparison;
   computer: Comparison & { followups: string[] };
 };
@@ -134,10 +134,7 @@ export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPromp
         <Shot src={shotMasks} alt={copy.shots.masks.alt} caption={copy.shots.masks.caption} width={2200} height={1201} />
         <Shot src={shotLandscape} alt={copy.shots.landscape.alt} caption={copy.shots.landscape.caption} width={2200} height={1201} />
       </div>,
-      <div className="workflow-shot-stack" key="refine">
-        <Shot src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1312} height={1690} />
-        <div className="workflow-next"><span>接着说</span><ul>{copy.first.followups.map((followup) => <li key={followup}>{followup}</li>)}</ul></div>
-      </div>,
+      <Shot key="refine" src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1312} height={1690} />,
     ]}</ComparisonFigure>
     <SceneEntries />
     <ComparisonFigure item={copy.batch} variant="batch" promptIds={["02"]} onCopyPrompt={onCopyPrompt}>{[

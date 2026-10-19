@@ -42,10 +42,6 @@ describe("workflow examples", () => {
     expect(first).toContain("experience/conversation-refine-tight.webp");
     expect(first).toContain("Lightroom Classic · 逐项调整滑块");
     expect(first).toContain("看过第一版，接着说哪里要改");
-    expect(first).toContain("接着说");
-    expect(first).toContain("放大看看局部细节。");
-    expect(first).toContain("把这一版和调整前放在一起比较。");
-    expect(first).toContain("背景再柔和一点。");
     expect(first).not.toContain("study-message");
   });
 
