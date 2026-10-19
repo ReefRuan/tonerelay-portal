@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
+import { useLanguage } from "./i18n";
 import { HEADER_PANEL_STATE_EVENT } from "./HeaderPanels";
 import {
   HINT_COPY,
@@ -104,6 +105,7 @@ export function HeaderHint({ id, anchor, onDismiss }: {
   anchor: HTMLElement | null;
   onDismiss: () => void;
 }) {
+  const { t } = useLanguage();
   const reducedMotion = useReducedMotion();
   const [position, setPosition] = useState<HintPosition | null>(() => measureHint(anchor));
   const [panelOpen, setPanelOpen] = useState(() =>
@@ -151,8 +153,8 @@ export function HeaderHint({ id, anchor, onDismiss }: {
         <path d="M22 4 l -6 6" />
         <path d="M22 4 l 6 6" />
       </svg>
-      <p>{HINT_COPY[id]}</p>
-      <button className="header-hint-close" type="button" aria-label="关闭提示" onClick={onDismiss}>
+      <p>{t(HINT_COPY[id], "Enjoying the project? Give it a Star.")}</p>
+      <button className="header-hint-close" type="button" aria-label={t("关闭提示", "Dismiss hint")} onClick={onDismiss}>
         <Icon name="close" />
       </button>
     </motion.div>

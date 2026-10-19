@@ -14,6 +14,9 @@
       content="ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具。了解对话修图与实际渲染回读，浏览可下载的胶片风格包和效果提示词。"
     />
     <link rel="canonical" href="https://reefruan.github.io/tonerelay-portal/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://reefruan.github.io/tonerelay-portal/" />
+    <link rel="alternate" hreflang="en" href="https://reefruan.github.io/tonerelay-portal/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://reefruan.github.io/tonerelay-portal/" />
     <link rel="sitemap" type="application/xml" href="https://reefruan.github.io/tonerelay-portal/sitemap.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ToneRelay" />
@@ -33,7 +36,7 @@
         "url": "https://reefruan.github.io/tonerelay-portal/",
         "name": "ToneRelay",
         "description": "连接 Agent 与 Lightroom Classic 的本地 MCP 工具、风格与效果画廊。",
-        "inLanguage": "zh-CN",
+        "inLanguage": ["zh-CN", "en"],
         "author": { "@type": "Person", "name": "Reef Ruan", "url": "https://github.com/ReefRuan" }
       }
     </script>
@@ -92,6 +95,11 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
+      if (new URLSearchParams(window.location.search).get("lang") === "en") {
+        document.documentElement.lang = "en";
+        document.querySelector(".boot-status").textContent = "Entering ToneRelay…";
+        document.querySelector("#boot .visually-hidden").textContent = "Loading ToneRelay";
+      }
       /* Boot dismissal: idempotent. Called by App.tsx after React commits and
          paints; the 5s timeout is the fallback so a failed mount never traps
          the user on the loading screen. */

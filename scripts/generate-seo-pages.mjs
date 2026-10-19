@@ -53,7 +53,14 @@ const inline = (text, links = {}) => escapeHtml(text)
     if (href === "sources.md") {
       throw new Error("Relative sources.md link needs package context");
     }
-    return `<a href="${safeUrl(href.replace(/&amp;/g, "&"))}">${label}</a>`;
+    const target = new URL(href.replace(/&amp;/g, "&"));
+    if (links.language === "en") {
+      const portal = new URL(site);
+      if (target.origin === portal.origin && target.pathname === portal.pathname) {
+        target.searchParams.set("lang", "en");
+      }
+    }
+    return `<a href="${safeUrl(target.href)}">${label}</a>`;
   })
   .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
   .replace(/`([^`]+)`/g, "<code>$1</code>");
@@ -131,7 +138,18 @@ figure{margin:0;background:var(--surface);border:1px solid var(--line);border-ra
 .source-list li{margin:.7em 0}.related{margin-top:64px;padding-top:24px;border-top:1px solid var(--line)}.related ul{columns:2;line-height:2}
 footer{border-top:1px solid var(--line);padding:24px 0 38px;color:var(--muted);font-size:.9rem}@media(max-width:640px){.site-header .wrap{flex-wrap:wrap;padding-block:12px}.nav{gap:10px}.related ul{columns:1}}`;
 
-function page({ title, description, canonical, type, body, image, stylesheet }) {
+function page({ title, description, canonical, type, body, image, stylesheet, language = "zh", alternates }) {
+  const english = language === "en";
+  const htmlLanguage = english ? "en" : "zh-CN";
+  const appHome = english ? absolute("?lang=en#gallery") : site;
+  const experienceUrl = absolute(english ? "en/experience/" : "experience/");
+  const mcpUrl = absolute(english ? "en/lightroom-classic-mcp/" : "lightroom-classic-mcp/");
+  const alternateLinks = alternates
+    ? `<link rel="alternate" hreflang="zh-CN" href="${safeUrl(alternates.zh)}"><link rel="alternate" hreflang="en" href="${safeUrl(alternates.en)}"><link rel="alternate" hreflang="x-default" href="${safeUrl(alternates.zh)}">`
+    : "";
+  const languageLink = alternates
+    ? `<a href="${safeUrl(english ? alternates.zh : alternates.en)}" lang="${english ? "zh-CN" : "en"}" hreflang="${english ? "zh-CN" : "en"}">${english ? "中文" : "English"}</a>`
+    : "";
   const metaImage = image ? `<meta property="og:image" content="${safeUrl(image)}">\n<meta name="twitter:card" content="summary_large_image">` : `<meta name="twitter:card" content="summary">`;
   const structuredData = JSON.stringify({
     "@context": "https://schema.org",
@@ -140,25 +158,26 @@ function page({ title, description, canonical, type, body, image, stylesheet }) 
     url: canonical,
     name: title,
     description,
-    inLanguage: "zh-CN",
+    inLanguage: htmlLanguage,
     isPartOf: { "@type": "WebSite", "@id": `${site}#website`, name: "ToneRelay", url: site },
     author: { "@type": "Person", name: "Reef Ruan", url: "https://github.com/ReefRuan" },
     ...(image ? { image } : {}),
   }).replace(/</g, "\\u003c");
   return `<!doctype html>
-<html lang="zh-CN"><head>
+<html lang="${htmlLanguage}"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Reef Ruan">
 <title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${safeUrl(canonical)}"><link rel="sitemap" type="application/xml" href="${absolute("sitemap.xml")}">
+${alternateLinks}
 <meta property="og:type" content="${escapeHtml(type)}"><meta property="og:site_name" content="ToneRelay">
-<meta property="og:locale" content="zh_CN"><meta property="og:title" content="${escapeHtml(title)}">
+<meta property="og:locale" content="${english ? "en_US" : "zh_CN"}"><meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${safeUrl(canonical)}">
 ${metaImage}<meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}">
 <script type="application/ld+json">${structuredData}</script>
 <link rel="stylesheet" href="${stylesheet}">
-</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${site}">ToneRelay</a><nav class="nav" aria-label="主导航"><a href="${site}">风格与效果画廊</a><a href="${absolute("experience/")}">使用说明</a><a href="${absolute("lightroom-classic-mcp/")}">Lightroom Classic MCP</a></nav></div></header>
-<main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">项目源码</a></div></footer></body></html>`;
+</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Usage guide" : "使用说明"}</a><a href="${mcpUrl}">Lightroom Classic MCP</a>${languageLink}</nav></div></header>
+<main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">${english ? "Project source" : "项目源码"}</a></div></footer></body></html>`;
 }
 
 async function writePage(path, html) {
@@ -275,14 +294,37 @@ const experienceBody = `<p class="eyebrow">ToneRelay 使用说明</p><h1>用对�
 <p class="lead">描述想要的画面，让 Agent 调整 Lightroom 并带回实际渲染；查看结果后继续细调，也可以从公开风格与效果包开始。</p>
 <div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">查看安装文档</a></div>
 <article class="prose">${renderMarkdown(intro)}<h2>常见问题</h2>${renderMarkdown(faqSections.join("\n"))}</article>`;
-await writePage("experience", page({ title: "ToneRelay 使用说明｜用对话操作 Lightroom Classic", description: "ToneRelay 连接 Agent 与 Lightroom Classic。了解对话修图、真实渲染回读、批量操作、参考图调色，以及风格效果包的使用方式。", canonical: absolute("experience/"), type: "website", body: experienceBody, stylesheet: "../seo.css" }));
+const experienceAlternates = { zh: absolute("experience/"), en: absolute("en/experience/") };
+await writePage("experience", page({ title: "ToneRelay 使用说明｜用对话操作 Lightroom Classic", description: "ToneRelay 连接 Agent 与 Lightroom Classic。了解对话修图、真实渲染回读、批量操作、参考图调色，以及风格效果包的使用方式。", canonical: experienceAlternates.zh, type: "website", body: experienceBody, stylesheet: "../seo.css", alternates: experienceAlternates }));
+
+const introEn = (await readText("docs/experience-introduction.en.md")).split("<!-- comparison-content:start -->")[0];
+const faqEn = await readText("docs/faq.en.md");
+const faqHeadingsEn = ["How should I describe the result I want?", "Does the tool automatically decide which photo is best?", "Can I download the templates in the gallery?"];
+const allFaqSectionsEn = faqEn.split(/^## /m).slice(1);
+const faqSectionsEn = faqHeadingsEn.map((heading) => {
+  const section = allFaqSectionsEn.find((candidate) => candidate.startsWith(`${heading}\n`));
+  return section ? `## ${section}` : "";
+}).filter(Boolean);
+const experienceBodyEn = `<p class="eyebrow">ToneRelay usage guide</p><h1>Operate Lightroom Classic through conversation</h1>
+<p class="lead">Describe the image you want, let an Agent adjust Lightroom and return actual renders, then refine the result together. You can also start with public style and effect packs.</p>
+<div class="actions"><a class="button primary" href="${absolute("?lang=en#gallery")}">Browse styles & effects</a><a class="button" href="${absolute("?lang=en#experience")}">Open the interactive usage guide</a><a class="button" href="${absolute("en/lightroom-classic-mcp/")}">About Lightroom Classic MCP</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Read the installation guide</a></div>
+<article class="prose">${renderMarkdown(introEn, { language: "en" })}<h2>Frequently asked questions</h2>${renderMarkdown(faqSectionsEn.join("\n"), { language: "en" })}</article>`;
+await writePage("en/experience", page({ title: "ToneRelay Usage Guide | Operate Lightroom Classic Through Conversation", description: "ToneRelay connects an Agent to Lightroom Classic. Explore conversational editing, actual render readback, batch operations, reference color matching, and style and effect packs.", canonical: experienceAlternates.en, type: "website", body: experienceBodyEn, stylesheet: "../../seo.css", language: "en", alternates: experienceAlternates }));
 
 const mcpMarkdown = await readText("docs/lightroom-classic-mcp.md");
 const mcpBody = `<p class="eyebrow">ToneRelay · MCP 工具说明</p><h1>Lightroom MCP：用对话选片和修图</h1>
 <p class="lead">说出想要的效果，查看 Lightroom 实际渲染的照片，再接着调整。了解 ToneRelay 如何连接 Agent 与 Lightroom Classic。</p>
 <div class="actions"><a class="button primary" href="${absolute("#experience")}">查看交互式使用说明</a><a class="button" href="${absolute("experience/")}">阅读使用场景</a></div>
 <article class="prose">${renderMarkdown(mcpMarkdown)}</article>`;
-await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案。", canonical: absolute("lightroom-classic-mcp/"), type: "article", body: mcpBody, stylesheet: "../seo.css" }));
+const mcpAlternates = { zh: absolute("lightroom-classic-mcp/"), en: absolute("en/lightroom-classic-mcp/") };
+await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案。", canonical: mcpAlternates.zh, type: "article", body: mcpBody, stylesheet: "../seo.css", alternates: mcpAlternates }));
+
+const mcpMarkdownEn = await readText("docs/lightroom-classic-mcp.en.md");
+const mcpBodyEn = `<p class="eyebrow">ToneRelay · MCP toolkit guide</p><h1>Lightroom MCP: select and edit photos through conversation</h1>
+<p class="lead">Describe the result you want, inspect photos actually rendered by Lightroom, then continue adjusting. Discover how ToneRelay connects an Agent to Lightroom Classic.</p>
+<div class="actions"><a class="button primary" href="${absolute("?lang=en#experience")}">Open the interactive usage guide</a><a class="button" href="${absolute("en/experience/")}">Explore usage scenarios</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Read the installation guide</a></div>
+<article class="prose">${renderMarkdown(mcpMarkdownEn, { language: "en" })}</article>`;
+await writePage("en/lightroom-classic-mcp", page({ title: "Lightroom MCP Toolkit | ToneRelay for Lightroom Classic", description: "ToneRelay is a local MCP toolkit connecting an Agent to Lightroom Classic. Select photos, adjust Develop settings and subject masks, inspect actual renders, and compare color treatments.", canonical: mcpAlternates.en, type: "article", body: mcpBodyEn, stylesheet: "../../seo.css", language: "en", alternates: mcpAlternates }));
 
 const homepageLinks = [
   ...publicStyles.map((pack) => `<li><a href="${pack.url}">${escapeHtml(pack.title)} 风格包</a>：${escapeHtml(shortDescription(pack.summary, 85))}</li>`),
@@ -299,7 +341,7 @@ if (!rootPattern.test(index)) throw new Error("Cannot find empty #root in Vite i
 await writeFile(indexPath, index.replace(rootPattern, `<div id="root">${staticRoot}</div>`), "utf8");
 
 await writeFile(join(dist, "seo.css"), css, "utf8");
-const sitemapUrls = [site, absolute("experience/"), absolute("lightroom-classic-mcp/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
+const sitemapUrls = [site, absolute("experience/"), absolute("lightroom-classic-mcp/"), absolute("en/experience/"), absolute("en/lightroom-classic-mcp/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`).join("\n")}\n</urlset>\n`;
 await writeFile(join(dist, "sitemap.xml"), sitemap, "utf8");
-console.log(`Generated ${publicStyles.length} style pages, ${publicEffects.length} effect pages, experience and MCP pages, homepage fallback, and sitemap.`);
+console.log(`Generated ${publicStyles.length} style pages, ${publicEffects.length} effect pages, Chinese and English experience and MCP pages, homepage fallback, and sitemap.`);

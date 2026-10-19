@@ -1,6 +1,8 @@
 import introduction from "../docs/experience-introduction.md?raw";
+import introductionEnglish from "../docs/experience-introduction.en.md?raw";
 import { useRef } from "react";
-import { cardPrompts, type CardPromptId } from "./cardPrompts";
+import { getCardPrompts, type CardPromptId } from "./cardPrompts";
+import { useLanguage } from "./i18n";
 
 type Comparison = {
   number: string; label: string; title: string; description: string;
@@ -18,20 +20,23 @@ type Content = {
   batch: Comparison;
   computer: Comparison & { followups: string[] };
 };
-const workflowPrelude = introduction.split("<!-- comparison-content:start -->")[0];
-const workflowHeadingMatch = Array.from(workflowPrelude.matchAll(/^## ([^\r\n]+)\r?$/gm)).at(-1);
-if (!workflowHeadingMatch || workflowHeadingMatch.index === undefined) throw new Error("Missing workflow introduction in experience-introduction.md");
-const workflowHeading = workflowHeadingMatch[1];
-const workflowParagraphs = workflowPrelude
-  .slice(workflowHeadingMatch.index + workflowHeadingMatch[0].length)
-  .trim()
-  .split(/\r?\n\r?\n/)
-  .filter(Boolean);
-if (workflowParagraphs.length < 2) throw new Error("Workflow introduction needs the conversation and gallery paragraphs");
-const block = introduction.match(/<!-- comparison-content:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- comparison-content:end -->/);
-if (!block) throw new Error("Missing comparison content in experience-introduction.md");
-const copy: Content = JSON.parse(block[1]);
-if (!copy.sceneEntries?.length) throw new Error("Missing typical-usage entries in experience-introduction.md");
+function readIntroduction(markdown: string) {
+  const workflowPrelude = markdown.split("<!-- comparison-content:start -->")[0];
+  const headingMatch = Array.from(workflowPrelude.matchAll(/^## ([^\r\n]+)\r?$/gm)).at(-1);
+  if (!headingMatch || headingMatch.index === undefined) throw new Error("Missing workflow introduction in an experience document");
+  const paragraphs = workflowPrelude
+    .slice(headingMatch.index + headingMatch[0].length)
+    .trim()
+    .split(/\r?\n\r?\n/)
+    .filter(Boolean);
+  if (paragraphs.length < 2) throw new Error("Workflow introduction needs the conversation and gallery paragraphs");
+  const block = markdown.match(/<!-- comparison-content:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- comparison-content:end -->/);
+  if (!block) throw new Error("Missing comparison content in an experience document");
+  const copy: Content = JSON.parse(block[1]);
+  if (!copy.sceneEntries?.length) throw new Error("Missing typical-usage entries in an experience document");
+  return { heading: headingMatch[1], paragraphs, copy };
+}
+const contentByLanguage = { zh: readIntroduction(introduction), en: readIntroduction(introductionEnglish) };
 const shotSliders = `${import.meta.env.BASE_URL}experience/lr-develop-mountain.webp`;
 const shotMasks = `${import.meta.env.BASE_URL}experience/lr-develop-masks.webp`;
 const shotLandscape = `${import.meta.env.BASE_URL}experience/lr-develop-landscape.webp`;
@@ -44,10 +49,11 @@ const shotColor = `${import.meta.env.BASE_URL}experience/conversation-color-matc
 const shotMask = `${import.meta.env.BASE_URL}experience/conversation-mask.webp`;
 
 function Shot({ src, alt, caption, width, height }: { src: string; alt: string; caption: string; width: number; height: number }) {
+  const { t } = useLanguage();
   return <figure className="workflow-shot">
-    <a className="workflow-shot-link" href={src} target="_blank" rel="noreferrer" aria-label={`放大查看：${caption}`}>
+    <a className="workflow-shot-link" href={src} target="_blank" rel="noreferrer" aria-label={t(`放大查看：${caption}`, `View larger: ${caption}`)}>
       <img src={src} alt={alt} loading="lazy" decoding="async" width={width} height={height} />
-      <span className="workflow-shot-zoom" aria-hidden="true">查看大图 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 4h6v6M20 4l-8 8M10 20H4v-6M4 20l8-8" /></svg></span>
+      <span className="workflow-shot-zoom" aria-hidden="true">{t("查看大图", "View full size")} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 4h6v6M20 4l-8 8M10 20H4v-6M4 20l8-8" /></svg></span>
     </a>
     <figcaption>{caption}</figcaption>
   </figure>;
@@ -55,11 +61,12 @@ function Shot({ src, alt, caption, width, height }: { src: string; alt: string; 
 
 // Typical-usage examples: three things you can say to an Agent, with the exact
 // prompt strings. Shown after the first real example so proof leads the section.
-function SceneEntries() {
+function SceneEntries({ entries }: { entries: SceneEntry[] }) {
+  const { t } = useLanguage();
   return <div className="workflow-scene-entries">
-    <span className="eyebrow scene-entries-label">试着这样说</span>
-    <ol className="scene-entries" aria-label="典型用法示例">
-      {copy.sceneEntries.map((scene) => (
+    <span className="eyebrow scene-entries-label">{t("试着这样说", "Try saying this")}</span>
+    <ol className="scene-entries" aria-label={t("典型用法示例", "Typical usage examples")}>
+      {entries.map((scene) => (
         <li className="scene-entry" key={scene.no}>
           <span className="scene-no" aria-hidden="true">{scene.no}</span>
           <div className="scene-body">
@@ -74,11 +81,19 @@ function SceneEntries() {
 }
 
 type CopyPrompt = (value: string, message: string) => Promise<boolean>;
-const promptLabels: Record<CardPromptId, string> = {
-  "01": "对话修图",
-  "02": "批量选片",
-  "03-A": "主体蒙版细调",
-  "03-B": "参考图调色",
+const promptLabels: Record<"zh" | "en", Record<CardPromptId, string>> = {
+  zh: {
+    "01": "对话修图",
+    "02": "批量选片",
+    "03-A": "主体蒙版细调",
+    "03-B": "参考图调色",
+  },
+  en: {
+    "01": "Conversational editing",
+    "02": "Batch photo selection",
+    "03-A": "Subject-mask refinement",
+    "03-B": "Reference-based color grading",
+  },
 };
 
 function ComparisonFigure({ item, children, variant = "", solo = false, promptIds, onCopyPrompt }: {
@@ -89,10 +104,13 @@ function ComparisonFigure({ item, children, variant = "", solo = false, promptId
   promptIds: CardPromptId[];
   onCopyPrompt?: CopyPrompt;
 }) {
+  const { language, t } = useLanguage();
+  const labels = promptLabels[language];
+  const cardPrompts = getCardPrompts(language);
   const promptMenuRef = useRef<HTMLDetailsElement>(null);
   const copyPrompt = (id: CardPromptId) => {
     if (!onCopyPrompt) return;
-    void onCopyPrompt(cardPrompts[id], `已复制「${promptLabels[id]}」提问，发给 Agent 即可开始`);
+    void onCopyPrompt(cardPrompts[id], t(`已复制「${labels[id]}」提问，发给 Agent 即可开始`, `Copied “${labels[id]}”. Send it to your Agent to get started.`));
     if (promptMenuRef.current) promptMenuRef.current.open = false;
   };
 
@@ -103,11 +121,11 @@ function ComparisonFigure({ item, children, variant = "", solo = false, promptId
       <div className="workflow-description-row">
         <p>{item.description}</p>
         {onCopyPrompt && (promptIds.length === 1
-          ? <button className="workflow-prompt-trigger" type="button" onClick={() => copyPrompt(promptIds[0])} aria-label={`复制${promptLabels[promptIds[0]]}提问`}>复制提问</button>
+          ? <button className="workflow-prompt-trigger" type="button" onClick={() => copyPrompt(promptIds[0])} aria-label={t(`复制${labels[promptIds[0]]}提问`, `Copy ${labels[promptIds[0]]} prompt`)}>{t("复制提问", "Copy prompt")}</button>
           : <details className="workflow-prompt-picker" ref={promptMenuRef}>
-            <summary className="workflow-prompt-trigger">复制提问</summary>
-            <div className="workflow-prompt-menu" aria-label="选择要复制的提问">
-              {promptIds.map((id) => <button key={id} type="button" onClick={() => copyPrompt(id)} aria-label={`复制${promptLabels[id]}提问`}>{promptLabels[id]}</button>)}
+            <summary className="workflow-prompt-trigger">{t("复制提问", "Copy prompt")}</summary>
+            <div className="workflow-prompt-menu" aria-label={t("选择要复制的提问", "Choose a prompt to copy")}>
+              {promptIds.map((id) => <button key={id} type="button" onClick={() => copyPrompt(id)} aria-label={t(`复制${labels[id]}提问`, `Copy ${labels[id]} prompt`)}>{labels[id]}</button>)}
             </div>
           </details>)}
       </div>
@@ -126,8 +144,10 @@ function ComparisonFigure({ item, children, variant = "", solo = false, promptId
 }
 
 export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPrompt } = {}) {
+  const { language, t } = useLanguage();
+  const { heading, paragraphs, copy } = contentByLanguage[language];
   return <section className="workflow-section" aria-labelledby="workflow-title">
-    <header className="experience-section-heading"><h2 id="workflow-title">{workflowHeading}</h2>{workflowParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</header>
+    <header className="experience-section-heading"><h2 id="workflow-title">{heading}</h2>{paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</header>
     <ComparisonFigure item={copy.first} promptIds={["01"]} onCopyPrompt={onCopyPrompt}>{[
       <div className="workflow-shot-stack" key="lightroom-edit">
         <Shot src={shotSliders} alt={copy.shots.sliders.alt} caption={copy.shots.sliders.caption} width={2200} height={1201} />
@@ -136,7 +156,7 @@ export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPromp
       </div>,
       <Shot key="refine" src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1312} height={1690} />,
     ]}</ComparisonFigure>
-    <SceneEntries />
+    <SceneEntries entries={copy.sceneEntries} />
     <ComparisonFigure item={copy.batch} variant="batch" promptIds={["02"]} onCopyPrompt={onCopyPrompt}>{[
       <div className="workflow-shot-stack" key="lightroom-select">
         <Shot src={shotGrid} alt={copy.shots.grid.alt} caption={copy.shots.grid.caption} width={2200} height={1201} />
@@ -148,7 +168,7 @@ export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPromp
     <ComparisonFigure item={copy.computer} variant="computer" promptIds={["03-A", "03-B"]} onCopyPrompt={onCopyPrompt}>{[
       <div className="workflow-shot-stack" key="mask">
         <Shot src={shotMask} alt={copy.shots.mask.alt} caption={copy.shots.mask.caption} width={1346} height={1307} />
-        <div className="workflow-next"><span>还可以接着说</span><ul>{copy.computer.followups.map((followup) => <li key={followup}>{followup}</li>)}</ul></div>
+        <div className="workflow-next"><span>{t("还可以接着说", "You can keep going")}</span><ul>{copy.computer.followups.map((followup) => <li key={followup}>{followup}</li>)}</ul></div>
       </div>,
       <Shot key="color" src={shotColor} alt={copy.shots.color.alt} caption={copy.shots.color.caption} width={989} height={1194} />,
     ]}</ComparisonFigure>

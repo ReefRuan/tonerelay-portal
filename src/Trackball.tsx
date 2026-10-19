@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type { Direction } from "./navigation";
+import { useLanguage } from "./i18n";
 
 type TrackballProps = {
   onNavigate: (direction: Direction) => void;
@@ -12,6 +13,7 @@ const directionFromOffset = (x: number, y: number): Direction => {
 };
 
 export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
+  const { t } = useLanguage();
   const [held, setHeld] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const pointer = useRef({ id: -1, x: 0, y: 0 });
@@ -56,8 +58,8 @@ export function Trackball({ onNavigate, detailOpen }: TrackballProps) {
         className="trackball-socket"
         aria-label={
           detailOpen
-            ? "轨迹球：左右切换预设，上下滚动详情"
-            : "轨迹球：向任意方向拨动以选择预设"
+            ? t("轨迹球：左右切换预设，上下滚动详情", "Trackball: move left or right to switch presets, up or down to scroll details")
+            : t("轨迹球：向任意方向拨动以选择预设", "Trackball: move in any direction to select a preset")
         }
         onPointerDown={(event) => {
           if (event.button !== 0 || !event.isPrimary) return;

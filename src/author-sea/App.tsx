@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { ScreenDitherFilter } from "./dither/ScreenDitherFilter";
 import { createSeaRenderer } from "./dither/seaRenderer";
+import { LanguageSwitch, useLanguage } from "../i18n";
 
 type Origin = { left: number; top: number; width: number; height: number };
 type OpenCard = { origin: Origin };
@@ -22,22 +23,23 @@ const email = "leningruan1@gmail.com";
 const qq = "1843727310";
 
 function ContactDetails() {
+  const { t } = useLanguage();
   return (
     <dl className="contact-details">
       <div>
         <dt>BILIBILI</dt>
-        <dd><a href="https://space.bilibili.com/2869626" target="_blank" rel="noreferrer">Bilibili 主页</a></dd>
+        <dd><a href="https://space.bilibili.com/2869626" target="_blank" rel="noreferrer">{t("Bilibili 主页", "Bilibili profile")}</a></dd>
       </div>
       <div>
         <dt>EMAIL</dt>
         <dd>
           <a href={`mailto:${email}`}>{email}</a>
-          <small>可能看得慢，回复不稳定</small>
+          <small>{t("可能看得慢，回复不稳定", "Checked infrequently; replies may be delayed")}</small>
         </dd>
       </div>
       <div>
         <dt>QQ</dt>
-        <dd>{qq}<small>消息秒回</small></dd>
+        <dd>{qq}<small>{t("消息秒回", "Quick replies")}</small></dd>
       </div>
     </dl>
   );
@@ -47,6 +49,7 @@ const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 
 export function App() {
+  const { language, t } = useLanguage();
   const sceneRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -68,6 +71,15 @@ export function App() {
   const [dragging, setDragging] = useState(false);
   const [webglReady, setWebglReady] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
+
+  useEffect(() => {
+    const title = language === "en" ? "Contact Reef · Sea Card" : "联系 Reef · 海面名片";
+    const description = language === "en" ? "Contact ToneRelay creator Reef Ruan and find project links and contact details." : "联系 ToneRelay 作者 Reef Ruan，查看项目 GitHub 与联系方式。";
+    document.title = title;
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+    document.querySelector('meta[name="description"]')?.setAttribute("content", description);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
+  }, [language]);
 
   expandedRef.current = expanded !== null;
 
@@ -438,7 +450,7 @@ export function App() {
         ref={sceneRef}
         className={`sea-scene ${dragging ? "is-dragging" : ""}`}
         role="main"
-        aria-label="可拖动和缩放的抖动海面"
+        aria-label={t("可拖动和缩放的抖动海面", "Draggable, zoomable dithered sea")}
         inert={!!expanded}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -465,10 +477,10 @@ export function App() {
                 if (!(event.target as HTMLElement).closest("a") && !window.getSelection()?.toString()) openCard();
               }}
             >
-              <div className="sea-card-top"><span>CONTACT / 名片</span><span>REEF</span></div>
+              <div className="sea-card-top"><span>{t("CONTACT / 名片", "CONTACT / CARD")}</span><span>REEF</span></div>
               <strong>REEF.</strong>
               <button ref={cardOpenButtonRef} className="sea-card-action" type="button" onClick={(event) => { event.stopPropagation(); openCard(); }}>
-                展开名片<span aria-hidden="true">↗</span>
+                {t("展开名片", "Open contact card")}<span aria-hidden="true">↗</span>
               </button>
             </article>
           </div>
@@ -477,10 +489,11 @@ export function App() {
 
       <div className="scene-ui" inert={!!expanded}>
         <span className="brand">ReeF</span>
-        <a className="back-link" href="./">← 返回画廊</a>
-        <div className="sea-controls" role="group" aria-label="海面视角">
-          <button type="button" onClick={() => zoomBy(1.2)} aria-label="放大海面" title="放大">＋</button>
-          <button type="button" onClick={() => zoomBy(1 / 1.2)} aria-label="缩小海面" title="缩小">−</button>
+        <LanguageSwitch className="contact-language-switch" />
+        <a className="back-link" href={language === "en" ? "./?lang=en" : "./"}>← {t("返回画廊", "Back to gallery")}</a>
+        <div className="sea-controls" role="group" aria-label={t("海面视角", "Sea view controls")}>
+          <button type="button" onClick={() => zoomBy(1.2)} aria-label={t("放大海面", "Zoom in on the sea")} title={t("放大", "Zoom in")}>＋</button>
+          <button type="button" onClick={() => zoomBy(1 / 1.2)} aria-label={t("缩小海面", "Zoom out of the sea")} title={t("缩小", "Zoom out")}>−</button>
         </div>
       </div>
 
@@ -490,8 +503,8 @@ export function App() {
           <div ref={readerMotionRef} className="reader-motion">
             <section ref={readerRef} className="reader-panel" role="dialog" aria-modal="true" aria-labelledby="contact-dialog-title" tabIndex={-1}>
               <div className="reader-topline">
-                <span>CONTACT / 名片</span>
-                <button type="button" onClick={closePage} aria-label="放回海面">× <span>放回</span></button>
+                <span>{t("CONTACT / 名片", "CONTACT / CARD")}</span>
+                <button type="button" onClick={closePage} aria-label={t("放回海面", "Return the card to the sea")}>× <span>{t("放回", "Put back")}</span></button>
               </div>
               <article className="reading-article contact-article">
                 <span className="reading-kicker">REEF / CONTACT</span>

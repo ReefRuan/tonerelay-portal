@@ -11,7 +11,8 @@ import {
 } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Icon } from "./Icon";
-import { INSTALL_PROMPT_WITH_FAQ } from "./Documents";
+import { getInstallPrompt } from "./Documents";
+import { useLanguage } from "./i18n";
 
 /** Open-source / privacy declaration for local ToneRelay components. */
 export const PRIVACY_STATEMENT = {
@@ -22,6 +23,16 @@ export const PRIVACY_STATEMENT = {
     "开源可查：Portal 代码和公开风格包可在 GitHub 查看；照片按各自许可使用。",
   ],
   note: "说明：与 AI 助手的对话内容由你所使用的 Agent 服务按其条款处理。",
+} as const;
+
+export const PRIVACY_STATEMENT_EN = {
+  title: "Open source · Runs locally",
+  items: [
+    "Local operation: ToneRelay's runtime components run on your computer; whether an Agent account is required depends on the client.",
+    "Photo handling: ToneRelay operates Lightroom locally and does not proactively upload original photos to its own servers. How previews shared with an Agent are handled depends on your client. Develop adjustments use virtual copies; organizational actions such as ratings and flags still write to the Catalog.",
+    "Open for inspection: Portal code and public style packs are available on GitHub; photos are used under their respective licenses.",
+  ],
+  note: "Note: Your conversations with the AI assistant are handled by your chosen Agent service under its terms.",
 } as const;
 
 export const INSTALL_PANEL_LEAD = "复制提示词，发给 Agent。它会先核对版本与安装条件。";
@@ -108,6 +119,7 @@ function HeaderPopover({ open, panelRef, label, className, children }: {
 export function InstallAction({ onCopy }: {
   onCopy: () => Promise<boolean>;
 }) {
+  const { language, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -131,32 +143,32 @@ export function InstallAction({ onCopy }: {
         <button
           type="button"
           className="header-action header-install install-main"
-          title="复制安装提示词和 FAQ，发给 Agent 核对安装条件"
+          title={t("复制安装提示词和 FAQ，发给 Agent 核对安装条件", "Copy the installation prompt and FAQ for your Agent to verify installation requirements")}
           onClick={() => void onCopy()}
         >
-          <Icon name="copy" />复制安装提示词
+          <Icon name="copy" />{t("复制安装提示词", "Copy install prompt")}
         </button>
         <button
           ref={caretRef}
           type="button"
           className="header-action header-install install-caret"
-          aria-label="展开安装提示词"
+          aria-label={t("展开安装提示词", "Expand installation prompt")}
           aria-expanded={open}
-          title="展开安装提示词"
+          title={t("展开安装提示词", "Expand installation prompt")}
           onClick={() => setOpen((current) => !current)}
         >
           <Icon name="chevron-down" />
         </button>
       </div>
-      <HeaderPopover open={open} panelRef={panelRef} label="安装提示词" className="install-panel">
-        <p className="header-panel-lead hand-text">{INSTALL_PANEL_LEAD}</p>
-        <pre className="header-panel-code">{INSTALL_PROMPT_WITH_FAQ}</pre>
+      <HeaderPopover open={open} panelRef={panelRef} label={t("安装提示词", "Installation prompt")} className="install-panel">
+        <p className="header-panel-lead hand-text">{t(INSTALL_PANEL_LEAD, "Copy the prompt and send it to your Agent. It will first verify the version and installation requirements.")}</p>
+        <pre className="header-panel-code">{getInstallPrompt(language)}</pre>
         <div className="header-panel-actions">
           <button type="button" className="header-panel-button is-primary" onClick={() => void onCopy()}>
-            <Icon name="copy" />复制
+            <Icon name="copy" />{t("复制", "Copy")}
           </button>
           <button type="button" className="header-panel-button" onClick={() => { close(); caretRef.current?.focus({ preventScroll: true }); }}>
-            关闭
+            {t("关闭", "Close")}
           </button>
         </div>
       </HeaderPopover>
@@ -169,6 +181,8 @@ export function InstallAction({ onCopy }: {
  * declaration popover.
  */
 export function PrivacyAction() {
+  const { language, t } = useLanguage();
+  const statement = language === "en" ? PRIVACY_STATEMENT_EN : PRIVACY_STATEMENT;
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -192,17 +206,17 @@ export function PrivacyAction() {
         ref={triggerRef}
         type="button"
         className="header-quiet"
-        title="开源与本地运行"
-        aria-label="开源与本地运行"
+        title={t("开源与本地运行", "Open source and local operation")}
+        aria-label={t("开源与本地运行", "Open source and local operation")}
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
       >
         <Icon name="shield" />
       </button>
-      <HeaderPopover open={open} panelRef={panelRef} label="开源与本地运行" className="privacy-panel">
-        <h3 className="hand-text">{PRIVACY_STATEMENT.title}</h3>
-        {PRIVACY_STATEMENT.items.map((item) => {
-          const separator = item.indexOf("：");
+      <HeaderPopover open={open} panelRef={panelRef} label={t("开源与本地运行", "Open source and local operation")} className="privacy-panel">
+        <h3 className="hand-text">{statement.title}</h3>
+        {statement.items.map((item) => {
+          const separator = item.indexOf(language === "en" ? ":" : "：");
           const label = separator >= 0 ? item.slice(0, separator + 1) : "";
           const body = separator >= 0 ? item.slice(separator + 1) : item;
           return (
@@ -211,10 +225,10 @@ export function PrivacyAction() {
             </p>
           );
         })}
-        <p className="privacy-note hand-text">{PRIVACY_STATEMENT.note}</p>
+        <p className="privacy-note hand-text">{statement.note}</p>
         <div className="header-panel-actions">
           <button type="button" className="header-panel-button" onClick={() => { close(); triggerRef.current?.focus({ preventScroll: true }); }}>
-            关闭
+            {t("关闭", "Close")}
           </button>
         </div>
       </HeaderPopover>

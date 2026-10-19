@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import promptDocument from "../docs/experience-card-prompts.md?raw";
+import promptDocumentEnglish from "../docs/experience-card-prompts.en.md?raw";
+import type { Language } from "./i18n";
 
 export const cardPromptIds = ["01", "02", "03-A", "03-B"] as const;
 export type CardPromptId = (typeof cardPromptIds)[number];
@@ -22,3 +24,8 @@ function readCardPrompts(markdown: string): Record<CardPromptId, string> {
 }
 
 export const cardPrompts = readCardPrompts(promptDocument);
+const englishCardPrompts = readCardPrompts(promptDocumentEnglish);
+
+export function getCardPrompts(language: Language): Record<CardPromptId, string> {
+  return language === "en" ? englishCardPrompts : cardPrompts;
+}

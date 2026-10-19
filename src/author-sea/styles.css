@@ -163,6 +163,36 @@ button:focus-visible, a:focus-visible { outline: 2px solid #426b77; outline-offs
   pointer-events: none;
 }
 .scene-ui > * { pointer-events: auto; }
+.contact-language-switch {
+  position: absolute;
+  top: 18px;
+  right: 205px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 1px solid #b4c3ba;
+  border-radius: 2px;
+  background: #fbfcf9;
+  color: #51656a;
+  font: 12px var(--mono);
+}
+.contact-language-switch button {
+  min-height: 38px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.contact-language-switch button[aria-pressed="true"] { color: var(--ink); font-weight: 750; }
+.contact-language-switch button:focus-visible { outline: 2px solid #4c6f75; outline-offset: -2px; }
+@media (max-width: 720px) {
+  .contact-language-switch { top: 66px; right: 12px; }
+}
 .brand {
   position: absolute;
   top: 24px;

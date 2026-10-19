@@ -177,6 +177,33 @@ input:focus-visible,
   box-shadow: 0 4px 14px rgba(37, 42, 49, 0.16);
 }
 
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-shrink: 0;
+  padding: 0 5px;
+  color: var(--muted);
+  font: 10px var(--mono);
+  letter-spacing: 0;
+}
+.language-switch button {
+  min-height: 32px;
+  padding: 5px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.language-switch button[aria-pressed="true"] { color: var(--ink); font-weight: 750; }
+.language-switch button:hover { color: var(--blue); }
+.language-switch button:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+.package-language-note { color: var(--muted); font-size: 12px; line-height: 1.7; }
+html[lang="en"] .agent-strip h1 { overflow-wrap: anywhere; }
+
 @media (min-width: 768px) and (max-width: 1200px) {
   .site-header-actions { gap: 6px; }
   .header-action { padding: 0 9px; gap: 5px; font-size: 10px; }
@@ -2016,6 +2043,13 @@ kbd {
 }
 
 @media (max-width: 374px) {
+  .site-header .brand { gap: 6px; }
+  .site-header .brand strong { font-size: 10px; letter-spacing: 0.1em; }
+  .site-header .brand-mark { width: 24px; }
+  .site-header .site-nav { gap: 2px; padding: 3px; }
+  .site-header .site-nav a { padding-inline: 6px; letter-spacing: 0.05em; }
+  .site-header .language-switch { padding-inline: 1px; gap: 2px; font-size: 9px; }
+  .site-header .language-switch button { padding-inline: 3px; }
   .controller-context img { display: none; }
   .controller-context strong,
   .controller-context small { max-width: 88px; }
