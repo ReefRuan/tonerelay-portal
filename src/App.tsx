@@ -579,7 +579,7 @@ export default function App() {
         <footer className="site-footer">
           <span>© 2026 Reef Ruan · ToneRelay</span>
           <div className="site-footer-meta">
-            <a href={`${import.meta.env.BASE_URL}${language === "en" ? "en/" : ""}lightroom-classic-mcp/`}>{t("Lightroom MCP 说明", "Lightroom MCP guide")}</a>
+            <a href={`${import.meta.env.BASE_URL}${language === "en" ? "?lang=en" : ""}#experience`}>{t("安装与使用", "Install & use")}</a>
             <span aria-hidden="true">·</span>
             <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a>
             <span aria-hidden="true">·</span>

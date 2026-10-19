@@ -236,9 +236,25 @@ function DialogueSection({ onCopyUninstall }: { onCopyUninstall?: () => Promise<
   );
 }
 
+function InstallationCallout({ onCopyInstall }: { onCopyInstall?: () => void }) {
+  const { language, t } = useLanguage();
+  const suffix = language === "en" ? ".en" : "";
+  return <section className="installation-callout" id="installation" aria-labelledby="installation-title">
+    <span className="eyebrow">{t("开始使用", "Get started")}</span>
+    <h2 id="installation-title">{t("把安装交给 Agent，接着开始修图。", "Let your Agent help you install, then start editing.")}</h2>
+    <p>{t("复制完整安装提示词和 FAQ，发给正在使用的 Agent。它会先检查已有安装与本机条件，再按官方说明继续。", "Copy the complete installation prompt and FAQ to your Agent. It will check existing components and local requirements before following the official instructions.")}</p>
+    <div className="installation-callout-actions">
+      <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}><Icon name="copy" />{t("复制安装提示词", "Copy installation prompt")}</button>
+      <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("在 GitHub 查看并复制全文", "Read and copy the full prompt on GitHub")}<Icon name="external" /></a>
+      <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
+    </div>
+    <p>{t("复制提示词不等于完成安装；请让 Agent 核对版本、权限与连接状态。", "Copying the prompt does not complete installation. Ask your Agent to verify the version, permissions, and connection.")}</p>
+  </section>;
+}
+
 function DocumentFooter() {
   const { language, t } = useLanguage();
-  return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href={`${import.meta.env.BASE_URL}${language === "en" ? "en/" : ""}lightroom-classic-mcp/`}>{t("Lightroom MCP 说明", "Lightroom MCP guide")}</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">{t("授权范围与照片许可", "License scope and photo licenses")}</a></span><a href={`${language === "en" ? "?lang=en" : ""}#gallery`}>{t("回到画廊", "Back to gallery")} <Icon name="arrow" /></a></footer>;
+  return <footer className="document-footer"><span>© 2026 Reef Ruan · ToneRelay · <a href={`${import.meta.env.BASE_URL}${language === "en" ? "?lang=en" : ""}#experience`}>{t("安装与使用", "Install & use")}</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE" target="_blank" rel="noreferrer">AGPL-3.0-only</a> · <a href="https://github.com/ReefRuan/tonerelay-portal/blob/main/LICENSE-SCOPE.md" target="_blank" rel="noreferrer">{t("授权范围与照片许可", "License scope and photo licenses")}</a></span><a href={`${language === "en" ? "?lang=en" : ""}#gallery`}>{t("回到画廊", "Back to gallery")} <Icon name="arrow" /></a></footer>;
 }
 
 export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {
@@ -252,6 +268,7 @@ export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {
       <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} />
       <WorkflowComparisons onCopyPrompt={onCopyPrompt} />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
+      <InstallationCallout onCopyInstall={onCopyInstall} />
       <DocumentFooter />
       {helpOpen && typeof document !== "undefined" && createPortal(
         <AgentHelpDialog onClose={() => setHelpOpen(false)} />,

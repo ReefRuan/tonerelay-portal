@@ -2250,6 +2250,7 @@ kbd {
   overflow: hidden;
   padding: 26px clamp(26px, 3vw, 42px);
   border: 1px solid rgba(121, 179, 255, 0.28);
+  border-radius: 20px;
   background:
     radial-gradient(circle at 97% 18%, rgba(69, 130, 196, 0.22), transparent 27%),
     linear-gradient(110deg, rgba(25, 35, 46, 0.96), rgba(15, 22, 29, 0.96));
@@ -2692,7 +2693,7 @@ kbd {
 .workflow-prompt-menu button:hover { background: #ffffff16; }
 .workflow-caption h3 { margin: 18px 0 12px; font: 400 clamp(27px, 3vw, 40px)/1.35 var(--serif); letter-spacing: -.025em; }
 .workflow-description-row > p { display: inline; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
-.workflow-board { display: grid; grid-template-columns: minmax(0, 1fr); border: 1px solid var(--study-border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px #0003; }
+.workflow-board { display: grid; grid-template-columns: minmax(0, 1fr); border: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 44px #0002; }
 .workflow-side { min-width: 0; padding: clamp(18px, 3vw, 36px); display: flex; flex-direction: column; gap: 26px; }
 .workflow-before { background: var(--study-bg); }
 .workflow-after { background: var(--study-light); color: var(--study-light-ink); }
@@ -2702,7 +2703,7 @@ kbd {
 .window-dots { display: flex; gap: 4px; }
 .window-dots i { width: 5px; height: 5px; border-radius: 50%; background: #62707b; }
 .status-dot { display: inline-block; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #507e5f; }
-.workflow-shot { margin: 0; border: 1px solid #354049; border-radius: 10px; overflow: hidden; background: #10151a; box-shadow: 0 8px 18px #0002; }
+.workflow-shot { margin: 0; border: 1px solid #ffffff14; border-radius: 14px; overflow: hidden; background: #10151a; box-shadow: 0 6px 16px #0001; }
 .workflow-shot-link { position: relative; display: block; color: #f4f7fa; cursor: zoom-in; }
 .workflow-shot img { display: block; width: 100%; height: auto; }
 .workflow-shot-zoom { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #ffffff40; border-radius: 6px; background: #111820d9; font-size: 12px; line-height: 1.4; opacity: 0; transform: translateY(3px); transition: opacity 150ms ease, transform 150ms ease; }
@@ -2710,7 +2711,7 @@ kbd {
 .workflow-shot-link:hover .workflow-shot-zoom, .workflow-shot-link:focus-visible .workflow-shot-zoom { opacity: 1; transform: none; }
 .workflow-shot-link:focus-visible { outline: 2px solid var(--blue); outline-offset: -3px; }
 .workflow-shot figcaption { min-height: 38px; padding: 10px 12px; border-top: 1px solid #ffffff12; background: #20282f; color: #b6c1ca; font-size: 12px; line-height: 1.5; }
-.workflow-after .workflow-shot { border-color: #c3cdc5; background: #f9faf7; }
+.workflow-after .workflow-shot { border-color: #40574920; background: #f9faf7; }
 .workflow-after .workflow-shot figcaption { border-color: #d5ddd4; background: #eef1eb; color: #4c6255; }
 .workflow-after .workflow-shot .window-dots i { background: #a9b8ae; }
 .workflow-shot-stack { display: flex; flex-direction: column; gap: 18px; }
@@ -2723,7 +2724,7 @@ kbd {
 /* 03 group: both panels use the light palette, no dark/light contrast. */
 .workflow-figure-computer .workflow-before { background: var(--study-light); color: var(--study-light-ink); }
 .workflow-figure-computer .workflow-before > header > span { color: #416250; }
-.workflow-figure-computer .workflow-before .workflow-shot { border-color: #c3cdc5; background: #f9faf7; }
+.workflow-figure-computer .workflow-before .workflow-shot { border-color: #40574920; background: #f9faf7; }
 .workflow-figure-computer .workflow-before .workflow-shot figcaption { border-color: #d5ddd4; background: #eef1eb; color: #4c6255; }
 .workflow-figure-computer .workflow-before .workflow-shot .window-dots i { background: #a9b8ae; }
 .workflow-figure-computer .workflow-before .workflow-path { color: #4e6757; }
@@ -2749,7 +2750,7 @@ kbd {
   .workflow-side { gap: 20px; }
   .workflow-section .experience-section-heading { margin-bottom: 40px; }
   .workflow-figure { margin-bottom: 48px; }
-  .workflow-board { border-radius: 9px; }
+  .workflow-board { border-radius: 16px; }
   .workflow-summary ul { gap: 12px; }
 }
 
@@ -2765,6 +2766,20 @@ kbd {
 @media (max-width: 639px) {
   .workflow-scene-entries { margin-bottom: 40px; }
   .scene-entries { grid-template-columns: 1fr; margin-top: 12px; }
+}
+
+.installation-callout {
+  margin: 64px 0 32px;
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid #a9cfff38;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #22364a8c, #19232e);
+}
+.installation-callout h2 { margin: 12px 0; font: 400 clamp(26px, 3vw, 38px)/1.35 var(--serif); }
+.installation-callout p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+.installation-callout-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+@media (max-width: 639px) {
+  .installation-callout-actions .intro-cta { width: 100%; justify-content: center; padding-block: 12px; }
 }
 
 .manual-copy-dialog { padding: 24px; }

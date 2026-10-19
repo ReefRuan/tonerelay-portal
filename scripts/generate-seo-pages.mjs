@@ -27,6 +27,14 @@ const safeUrl = (value) => {
   }
   return escapeHtml(url.href);
 };
+function installationCallout(language = "zh") {
+  const english = language === "en";
+  const suffix = english ? ".en" : "";
+  return `<section class="installation-callout related" aria-labelledby="installation-heading"><h2 id="installation-heading">${english ? "Ready to start editing?" : "看完效果，开始安装。"}</h2>
+<p>${english ? "Open the interactive guide to copy the complete installation prompt and FAQ to your Agent. You can also read and copy the prompt directly on GitHub." : "打开交互式入口，复制完整安装提示词和 FAQ 给 Agent；也可以直接在 GitHub 查看并复制提示词全文。"}</p>
+<div class="installation-callout-actions actions"><a class="button primary" href="${absolute(english ? "?lang=en#experience" : "#experience")}">${english ? "Open Install & use" : "打开安装与使用入口"}</a><a class="button" href="${repo}/blob/main/docs/install-prompt${suffix}.md">${english ? "Read and copy the prompt on GitHub" : "在 GitHub 查看并复制安装提示词"}</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md">${english ? "Installation steps and requirements" : "安装步骤与要求"}</a></div>
+<p class="muted">${english ? "Copying the prompt does not complete installation. Let your Agent verify the version, permissions, and existing components before proceeding." : "复制提示词不等于完成安装。请让 Agent 先核对版本、权限与已有组件，再继续。"}</p></section>`;
+}
 const shortDescription = (text, max = 155) => {
   const clean = String(text).replace(/\s+/g, " ").trim();
   return clean.length > max ? `${clean.slice(0, max - 1).replace(/[，。；、\s]+$/u, "")}…` : clean;
@@ -142,8 +150,8 @@ function page({ title, description, canonical, type, body, image, stylesheet, la
   const english = language === "en";
   const htmlLanguage = english ? "en" : "zh-CN";
   const appHome = english ? absolute("?lang=en#gallery") : site;
-  const experienceUrl = absolute(english ? "en/experience/" : "experience/");
-  const mcpUrl = absolute(english ? "en/lightroom-classic-mcp/" : "lightroom-classic-mcp/");
+  const experienceUrl = absolute(english ? "?lang=en#experience" : "#experience");
+  const mcpUrl = "https://github.com/ReefRuan/tonerelay-lightroom-mcp";
   const alternateLinks = alternates
     ? `<link rel="alternate" hreflang="zh-CN" href="${safeUrl(alternates.zh)}"><link rel="alternate" hreflang="en" href="${safeUrl(alternates.en)}"><link rel="alternate" hreflang="x-default" href="${safeUrl(alternates.zh)}">`
     : "";
@@ -176,7 +184,7 @@ ${alternateLinks}
 ${metaImage}<meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}">
 <script type="application/ld+json">${structuredData}</script>
 <link rel="stylesheet" href="${stylesheet}">
-</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Usage guide" : "使用说明"}</a><a href="${mcpUrl}">Lightroom Classic MCP</a>${languageLink}</nav></div></header>
+</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Install & use" : "安装与使用"}</a><a href="${mcpUrl}">${english ? "MCP source" : "MCP 源码"}</a>${languageLink}</nav></div></header>
 <main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">${english ? "Project source" : "项目源码"}</a></div></footer></body></html>`;
 }
 
@@ -292,8 +300,8 @@ const faqSections = faqHeadings.map((heading) => {
 }).filter(Boolean);
 const experienceBody = `<p class="eyebrow">ToneRelay 使用说明</p><h1>用对话操作 Lightroom Classic</h1>
 <p class="lead">描述想要的画面，让 Agent 调整 Lightroom 并带回实际渲染；查看结果后继续细调，也可以从公开风格与效果包开始。</p>
-<div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">查看安装文档</a></div>
-<article class="prose">${renderMarkdown(intro)}<h2>常见问题</h2>${renderMarkdown(faqSections.join("\n"))}</article>`;
+<div class="actions"><a class="button primary" href="${absolute("#experience")}">开始安装与使用</a><a class="button" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">安装步骤与要求</a></div>
+<article class="prose">${renderMarkdown(intro)}<h2>常见问题</h2>${renderMarkdown(faqSections.join("\n"))}</article>${installationCallout()}`;
 const experienceAlternates = { zh: absolute("experience/"), en: absolute("en/experience/") };
 await writePage("experience", page({ title: "ToneRelay 使用说明｜用对话操作 Lightroom Classic", description: "ToneRelay 连接 Agent 与 Lightroom Classic。了解对话修图、真实渲染回读、批量操作、参考图调色，以及风格效果包的使用方式。", canonical: experienceAlternates.zh, type: "website", body: experienceBody, stylesheet: "../seo.css", alternates: experienceAlternates }));
 
@@ -307,23 +315,23 @@ const faqSectionsEn = faqHeadingsEn.map((heading) => {
 }).filter(Boolean);
 const experienceBodyEn = `<p class="eyebrow">ToneRelay usage guide</p><h1>Operate Lightroom Classic through conversation</h1>
 <p class="lead">Describe the image you want, let an Agent adjust Lightroom and return actual renders, then refine the result together. You can also start with public style and effect packs.</p>
-<div class="actions"><a class="button primary" href="${absolute("?lang=en#gallery")}">Browse styles & effects</a><a class="button" href="${absolute("?lang=en#experience")}">Open the interactive usage guide</a><a class="button" href="${absolute("en/lightroom-classic-mcp/")}">About Lightroom Classic MCP</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Read the installation guide</a></div>
-<article class="prose">${renderMarkdown(introEn, { language: "en" })}<h2>Frequently asked questions</h2>${renderMarkdown(faqSectionsEn.join("\n"), { language: "en" })}</article>`;
+<div class="actions"><a class="button primary" href="${absolute("?lang=en#experience")}">Start installation & use</a><a class="button" href="${absolute("?lang=en#gallery")}">Browse styles & effects</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Installation steps and requirements</a></div>
+<article class="prose">${renderMarkdown(introEn, { language: "en" })}<h2>Frequently asked questions</h2>${renderMarkdown(faqSectionsEn.join("\n"), { language: "en" })}</article>${installationCallout("en")}`;
 await writePage("en/experience", page({ title: "ToneRelay Usage Guide | Operate Lightroom Classic Through Conversation", description: "ToneRelay connects an Agent to Lightroom Classic. Explore conversational editing, actual render readback, batch operations, reference color matching, and style and effect packs.", canonical: experienceAlternates.en, type: "website", body: experienceBodyEn, stylesheet: "../../seo.css", language: "en", alternates: experienceAlternates }));
 
 const mcpMarkdown = await readText("docs/lightroom-classic-mcp.md");
 const mcpBody = `<p class="eyebrow">ToneRelay · MCP 工具说明</p><h1>Lightroom MCP：用对话选片和修图</h1>
 <p class="lead">说出想要的效果，查看 Lightroom 实际渲染的照片，再接着调整。了解 ToneRelay 如何连接 Agent 与 Lightroom Classic。</p>
-<div class="actions"><a class="button primary" href="${absolute("#experience")}">查看交互式使用说明</a><a class="button" href="${absolute("experience/")}">阅读使用场景</a></div>
-<article class="prose">${renderMarkdown(mcpMarkdown)}</article>`;
+<div class="actions"><a class="button primary" href="${absolute("#experience")}">开始安装与使用</a><a class="button" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">安装步骤与要求</a></div>
+<article class="prose">${renderMarkdown(mcpMarkdown)}</article>${installationCallout()}`;
 const mcpAlternates = { zh: absolute("lightroom-classic-mcp/"), en: absolute("en/lightroom-classic-mcp/") };
 await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案。", canonical: mcpAlternates.zh, type: "article", body: mcpBody, stylesheet: "../seo.css", alternates: mcpAlternates }));
 
 const mcpMarkdownEn = await readText("docs/lightroom-classic-mcp.en.md");
 const mcpBodyEn = `<p class="eyebrow">ToneRelay · MCP toolkit guide</p><h1>Lightroom MCP: select and edit photos through conversation</h1>
 <p class="lead">Describe the result you want, inspect photos actually rendered by Lightroom, then continue adjusting. Discover how ToneRelay connects an Agent to Lightroom Classic.</p>
-<div class="actions"><a class="button primary" href="${absolute("?lang=en#experience")}">Open the interactive usage guide</a><a class="button" href="${absolute("en/experience/")}">Explore usage scenarios</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Read the installation guide</a></div>
-<article class="prose">${renderMarkdown(mcpMarkdownEn, { language: "en" })}</article>`;
+<div class="actions"><a class="button primary" href="${absolute("?lang=en#experience")}">Start installation & use</a><a class="button" href="${absolute("?lang=en#gallery")}">Browse styles & effects</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Installation steps and requirements</a></div>
+<article class="prose">${renderMarkdown(mcpMarkdownEn, { language: "en" })}</article>${installationCallout("en")}`;
 await writePage("en/lightroom-classic-mcp", page({ title: "Lightroom MCP Toolkit | ToneRelay for Lightroom Classic", description: "ToneRelay is a local MCP toolkit connecting an Agent to Lightroom Classic. Select photos, adjust Develop settings and subject masks, inspect actual renders, and compare color treatments.", canonical: mcpAlternates.en, type: "article", body: mcpBodyEn, stylesheet: "../../seo.css", language: "en", alternates: mcpAlternates }));
 
 const homepageLinks = [
@@ -331,7 +339,7 @@ const homepageLinks = [
   ...publicEffects.map((pack) => `<li><a href="${pack.url}">${escapeHtml(pack.title)} 效果包</a>：${escapeHtml(shortDescription(pack.summary, 85))}</li>`),
 ].join("\n");
 const staticRoot = `<main lang="zh-CN"><header><h1>ToneRelay：Lightroom Classic MCP 与风格画廊</h1><p>ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具。了解对话修图与实际渲染回读，浏览公开胶片风格包和可调效果提示词。</p></header>
-<nav aria-label="公开页面"><a href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP 工具</a> · <a href="${absolute("experience/")}">查看 ToneRelay 使用说明</a></nav>
+<nav aria-label="公开页面"><a href="${absolute("#experience")}">安装与使用</a> · <a href="${absolute("#gallery")}">浏览风格与效果画廊</a></nav>
 <section><h2>公开风格与效果包</h2><ul>${homepageLinks}</ul></section>
 <p><a href="${repo}">ToneRelay Portal 项目与公开包文件</a></p></main>`;
 const indexPath = join(dist, "index.html");

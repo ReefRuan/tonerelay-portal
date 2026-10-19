@@ -29,10 +29,16 @@ The tools execute operations and read results back; the Agent uses the photos an
 
 ## Get started
 
-The main installation guide is in the [Lightroom MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp). Start with [INSTALL.en.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md); see [USAGE.en.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.en.md) for editing workflows. You can also copy the [installation prompt](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md) retained in Portal to your Agent. It first checks existing local components, connects only the new client when a healthy installation already exists, and verifies the official source and pins the version when a download is needed. A source preview does not mean that a stable installer has been released or that all platforms have passed acceptance checks.
+Open [Install & use](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) to see real examples, then copy the complete installation prompt and FAQ to your Agent. You can also read and copy the [installation prompt](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md) directly from its original location on GitHub. The Agent first checks existing local components, connects only the new client when a healthy installation already exists, and verifies the official source and pins the version when a download is needed. Follow [INSTALL.en.md in the MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md) for installation steps and requirements; see [USAGE.en.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.en.md) for editing workflows. A source preview does not mean that a stable installer has been released or that all platforms have passed acceptance checks.
 
 On first connection, confirm which Lightroom Catalog to use. Develop adjustments use virtual copies; organizational actions such as ratings and flags write to the Catalog.
 
 For connection and troubleshooting, see Portal's [FAQ](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.en.md); for removal, see the [uninstallation prompt](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/uninstall-prompt.en.md). These documents remain at their original location in Portal. For tool details, read the [MCP tool overview (Chinese)](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/mcp-tools-overview.md).
 
 If you like this workflow, [Star the MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp). Continue browsing the [Portal style and effect gallery](https://reefruan.github.io/tonerelay-portal/?lang=en#gallery), or follow the author's [Bilibili profile](https://space.bilibili.com/2869626).
+
+## Next: install ToneRelay
+
+[Open Install & use](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) · [Read and copy the installation prompt on GitHub](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md)
+
+Send the prompt to your Agent so it can verify the version, permissions, and existing installation before proceeding. Copying the prompt does not complete installation.

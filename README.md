@@ -6,19 +6,27 @@
 
 ToneRelay connects AI agents to Lightroom Classic through the Model Context Protocol (MCP), for conversational AI photo editing, reference-based color grading, and photography workflows. This repository is its website and style gallery—not the MCP runtime.
 
-[打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装 Lightroom MCP](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md) · [给 MCP 点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [Bilibili 主页](https://space.bilibili.com/2869626) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
+[打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装与使用](https://reefruan.github.io/tonerelay-portal/#experience) · [给 MCP 点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [Bilibili 主页](https://space.bilibili.com/2869626) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
 
-![ToneRelay Portal：浏览摄影参考图、胶片风格与效果包](docs/assets/readme-portal-overview.jpg)
+<p align="center">
+  <a href="https://reefruan.github.io/tonerelay-portal/#gallery"><img src="docs/assets/readme-portal-overview.png" width="900" alt="ToneRelay Portal：浏览摄影参考图、胶片风格与效果包" /></a>
+</p>
 
 <sub>网页实拍截图。画廊中的照片是独立摄影作品，用作风格参考，不是 ToneRelay 生成的图片，也不是套用预设后的效果承诺。摄影师与许可见下方「图片来源与许可」。</sub>
 
 ## 先找到喜欢的颜色，再开始修图
 
+**[推荐先逛风格与效果画廊 →](https://reefruan.github.io/tonerelay-portal/#gallery)** 颜色、光影和参考图比风格名称更直观。点击小图进入画廊，找到喜欢的方向，再带进修图对话。
+
+<a href="https://reefruan.github.io/tonerelay-portal/#gallery"><img src="docs/assets/readme-gallery-preview.png" width="360" alt="点击浏览 ToneRelay 风格与效果画廊中的摄影参考图" /></a>
+
 在[在线画廊](https://reefruan.github.io/tonerelay-portal/#gallery)浏览六个胶片风格包：FUJICOLOR C200、NATURA 1600、PRO 160NS、PRO 400H、PROVIA 100F 与 SUPERIA X-TRA 400。
 
 点开卡片，可以查看参考照片、颜色关系、适用场景和来源；喜欢的包可以单独下载，再把说明和参考图交给 Agent。无需登录，也不需要搭建后端。
 
-![C200 风格包详情：十张参考照片、风格说明与下载入口](docs/assets/readme-style-detail.jpg)
+<p align="center">
+  <a href="docs/assets/readme-style-detail.png"><img src="docs/assets/readme-style-detail.png" width="760" alt="C200 风格包详情：十张参考照片、风格说明与下载入口，点击放大" /></a>
+</p>
 
 风格包提供 Markdown 说明和参考图，**不是 Lightroom 预设**，下载它也不等于安装了 MCP；目前不承诺按包编号自动安装。完整目录、ZIP 与逐图署名见 [风格与效果包](style-packs/README.md)。
 
@@ -28,22 +36,24 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 
 接入 ToneRelay 后，Agent 可以读取当前照片与目录预览、调整显影参数、回读 Lightroom 实际渲染结果，再根据反馈继续精修。还可以结合参考图仿色、主体蒙版与批量星级整理；具体能力以当前安装版本为准。
 
-![ToneRelay 对话修图介绍页：Lightroom 工作流与 Agent 对话中的实际结果](docs/assets/readme-portal-experience.jpg)
+<p align="center">
+  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="docs/assets/readme-portal-experience.png" width="900" alt="ToneRelay 对话修图介绍页：Lightroom 工作流与 Agent 对话中的实际结果" /></a>
+</p>
 
 > “参考这张图的颜色，先做一版。”
 >
 > “暗部再亮一点，肤色别偏黄，给我看前后对比。”
 
 <p align="center">
-  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="docs/assets/readme-dialogue-workflow.jpg" alt="ToneRelay 当前网页的多轮对话修图展示：Lightroom 画面、第一版结果与反馈后的修改" /></a>
+  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="docs/assets/readme-dialogue-workflow.png" width="900" alt="ToneRelay 当前网页的多轮对话修图展示：Lightroom 画面、第一版结果与反馈后的修改" /></a>
 </p>
 
-<sub>上图于 2026-10-19 从当前 Portal 展示区重新截图；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非本次重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
+<sub>上图来自 Portal 的对话修图展示区；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非为本次文档更新重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
 
 ## 怎么开始
 
 1. [浏览画廊](https://reefruan.github.io/tonerelay-portal/#gallery)，或先看[对话修图介绍](https://reefruan.github.io/tonerelay-portal/#experience)。
-2. 从 MCP 仓库的[安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)开始，也可以将 Portal 保留的[安装提示词](docs/install-prompt.md)复制给正在使用的 Agent。它会先检查本机已有安装，再核对官方来源、访问权限、固定版本与安装说明。
+2. 在[安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)复制完整安装提示词，或直接使用[本文末尾的简短入口](#直接复制安装提示词)。需要逐步操作时，查看 MCP 仓库的[技术安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。Agent 会先检查本机已有安装，再核对官方来源、访问权限、固定版本与安装说明。
 3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 Portal 的 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
 
 MCP 当前为源码预览，安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定到可核验的标签或完整提交，不把持续变化的 `main` 当作版本号。网页复制提示词不等于已经完成安装；已有健康本机安装时，可按提示核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
@@ -55,7 +65,7 @@ MCP 当前为源码预览，安装以 [MCP 仓库的指南](https://github.com/R
 | **本仓库：[tonerelay-portal](https://github.com/ReefRuan/tonerelay-portal)** | 产品介绍、摄影风格画廊、风格与候选效果包、安装提示词与 FAQ，以及 MCP 安装入口 |
 | **[tonerelay-lightroom-mcp](https://github.com/ReefRuan/tonerelay-lightroom-mcp)** | 连接 Agent 与 Lightroom Classic 的本地 MCP Runtime、Lightroom 插件及接入组件；[安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)、[使用指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.md)与 Star 入口都在这里 |
 
-网站也提供可直接阅读的 [Lightroom MCP 使用说明](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/)、独立风格与效果介绍页，以及 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些页面便于分享和搜索引擎读取；收录、排名和推荐由各平台决定。
+网站的[安装与使用入口](https://reefruan.github.io/tonerelay-portal/#experience)与实际效果展示位于同一页；独立介绍页与 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)供分享和搜索引擎读取，不作为另一套安装流程。收录、排名和推荐由各平台决定。
 
 ## 本地预览
 
@@ -66,7 +76,7 @@ pnpm dev
 
 交互式画廊可直接预览；独立介绍页由构建生成，查看完整站点时运行 `pnpm build`，再运行 `pnpm preview`。
 
-网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装提示词、FAQ 与卸载提示词仍保留在本仓库 `docs/`，供网页复制和阅读。主安装指南链接到 [MCP 仓库的 INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。
+网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装提示词、FAQ 与卸载提示词仍保留在本仓库 `docs/`，供网页复制和阅读。[安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)提供直观入口；详细步骤见 [MCP 仓库的 INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。
 
 ## 图片来源与许可
 
@@ -107,3 +117,22 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 作者及维护者：[Reef Ruan (@ReefRuan)](https://github.com/ReefRuan) · [Bilibili](https://space.bilibili.com/2869626)。喜欢对话修图，欢迎给 [Lightroom MCP 仓库点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp)。Copyright (C) 2026 Reef Ruan。
 
 作者创作的代码与文字采用 [GNU AGPL-3.0-only](LICENSE)；适用范围和第三方素材例外见[授权范围](LICENSE-SCOPE.md)。摄影作品属于各原作者；仓库级 AGPL 不会替代它们的原许可。ToneRelay 是独立项目，非 Adobe 官方产品。
+
+## 直接复制安装提示词
+
+在 GitHub 点击下方代码块右上角的复制按钮，粘贴给当前 Agent。这是简短入口；完整安装流程仍以本仓库原路径的[安装提示词](docs/install-prompt.md)和 MCP 的 [INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准，不另维护第二份长文。
+
+[打开网页安装与使用 →](https://reefruan.github.io/tonerelay-portal/#experience) · [打开完整安装提示词 →](docs/install-prompt.md)
+
+```text
+请让当前 Agent 客户端使用 ToneRelay for Lightroom Classic。
+先阅读完整安装提示词：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md
+并按其中的核验、授权和验收流程执行，不把本文当作完整安装规范。
+
+先确认系统、客户端和已有安装。优先只读核验已有来源、固定版本、Runtime、Bridge、LR 插件及 Catalog 授权；健康可兼容的安装只新增当前客户端，不顺便重装或升级共享组件。
+仅在需要下载、修复或经明确授权升级时，核验公开发行仓库 https://github.com/ReefRuan/tonerelay-lightroom-mcp 的真实身份与访问权限，固定到可验证的完整 commit 或标签，阅读该版本的 INSTALL.md；没有可核验版本就如实报告，不改用内部仓或第三方来源。
+按当前平台及客户端的官方入口，完成所需的 Lightroom 插件、MCP 和客户端支持的启动 Skill 接入；保留其他客户端配置、照片、Catalog、预设和个人数据。需要改变共享组件、Catalog 绑定或模式时先按完整提示词取得授权，不静默修改。
+遇到密码、登录或必须本人确认的步骤，说明最小操作并保存进度。安装后在真实新客户端会话只读验证工具发现、健康和当前选片；不能创建或观察新会话就标记待验证并给出交接，不宣布通过，也不为验收修改照片或 Catalog。
+```
+
+<a href="https://reefruan.github.io/tonerelay-portal/#experience"><kbd>打开安装与使用 →</kbd></a> · [查看完整安装提示词 →](docs/install-prompt.md)

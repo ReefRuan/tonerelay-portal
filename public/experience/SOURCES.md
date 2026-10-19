@@ -40,3 +40,20 @@
 | `conversation-rating-tight.webp` | 1570×1770 | `image-20261019222344125.png` | 保留顶部到 y=1770 的评分对话，裁掉底部输入框 |
 
 页面前两组各使用三张 Lightroom 截图和一张对应对话图。第 03 组继续使用已处理时间信息的 `conversation-mask.webp` 和原有 `conversation-color-match.webp`；本次压缩包中的原始蒙版图包含时间信息，没有替换上去。所有展示图都提供原尺寸 WebP 的大图链接。
+
+## README 展示图：透明圆角与画廊入口
+
+2026-10-20 从当前 Portal 页面重新截图，供 Portal 与 MCP 仓库的中英文 README 使用。截图使用浏览器原生 PNG 输出：保留透明圆角、去掉截图范围以外的背景和多余外框，并轻化页面展示卡片的边框。没有重绘照片、改变调色结果或改写对话，也没有重新执行 Lightroom 工作流。
+
+| 展示图 | 页面内容与来源 |
+| --- | --- |
+| `readme-dialogue-workflow.png` / MCP `dialogue-workflow.png` | 第 01 组对比板；原有三张 Lightroom 截图与 `conversation-refine-tight.webp` |
+| MCP `batch-workflow.png` | 第 02 组对比板；原有 Lightroom 目录、比较、放大截图与 `conversation-rating-tight.webp` |
+| MCP `subject-mask.png` | 第 03 组主体蒙版面板，原有 `conversation-mask.webp` |
+| MCP `reference-color.png` | 第 03 组参考图调色面板，原有 `conversation-color-match.webp` |
+| `readme-portal-experience.png` | 当前工具介绍区，文字与页面一致 |
+| `readme-portal-overview.png` | 当前画廊前五张风格卡片；仅展示部分卡片，不代表完整目录 |
+| `readme-gallery-preview.png` / MCP `gallery-preview.png` | 同五张卡片的紧凑预览，用于点击进入画廊 |
+| `readme-style-detail.png` | C200 详情中的十张参考照片，保留逐图作者及许可标注 |
+
+Portal 文件位于 [`docs/assets/`](../../docs/assets/)，MCP 文件位于[公开 MCP 仓库的 `assets/readme/`](https://github.com/ReefRuan/tonerelay-lightroom-mcp/tree/main/assets/readme)。截图中使用的摄影作品仍适用各自的原许可；画廊封面与 C200 详情的完整署名见 [Portal README](../../README.md#图片来源与许可) 和各风格包的来源记录。透明圆角与展示缩放不改变素材权利，也不构成速度或 Token 用量对照测试。

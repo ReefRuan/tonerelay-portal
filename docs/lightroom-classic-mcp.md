@@ -27,10 +27,16 @@ MCP 是 Agent 调用外部工具的连接方式。装好 ToneRelay 后，Agent �
 
 ## 开始使用
 
-主安装指南位于 [Lightroom MCP 仓库](https://github.com/ReefRuan/tonerelay-lightroom-mcp)：从 [INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md) 开始，修图用法见 [USAGE.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.md)。也可以把 Portal 保留的 [安装提示词](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md) 复制给正在使用的 Agent；它会先检查本机已有组件，已有健康安装时只接入新客户端，需要下载时核对官方来源并固定版本。源码预览不代表已发布稳定安装包或完成全平台验收。
+直接打开 [安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)，看实际效果，再复制完整安装提示词和 FAQ 给正在使用的 Agent。也可以直接在 GitHub 查看并复制 Portal 原位的 [安装提示词](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)。Agent 会先检查本机已有组件，已有健康安装时只接入新客户端，需要下载时核对官方来源并固定版本。具体安装步骤与要求以 [MCP 仓库的 INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md) 为准，修图用法见 [USAGE.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.md)。源码预览不代表已发布稳定安装包或完成全平台验收。
 
 首次连接时，确认要使用的 Lightroom 目录。显影调整使用虚拟副本；星级、旗标等整理操作会写入目录。
 
 接入与排障见 Portal 的 [常见问题](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/faq.md)，卸载见[卸载提示词](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/uninstall-prompt.md)。这些文档保留在 Portal 原路径。想了解工具细节，可以阅读 [MCP 工具说明](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/mcp-tools-overview.md)。
 
 喜欢这个工作流，欢迎给 [MCP 仓库点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp)。继续浏览 [Portal 风格与效果画廊](https://reefruan.github.io/tonerelay-portal/)，或关注作者的 [Bilibili 主页](https://space.bilibili.com/2869626)。
+
+## 下一步：开始安装
+
+[打开安装与使用入口](https://reefruan.github.io/tonerelay-portal/#experience) · [在 GitHub 查看并复制安装提示词](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)
+
+复制后发给 Agent，让它先核对版本、权限和已有安装，再继续。复制提示词本身不等于安装完成。
