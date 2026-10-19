@@ -2624,7 +2624,6 @@ kbd {
   margin-top: clamp(72px, 9vw, 128px);
   padding-top: clamp(52px, 7vw, 90px);
   border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(14, 18, 22, 0.05), rgba(14, 18, 22, 0.7) 18%, rgba(14, 18, 22, 0.7) 88%, transparent);
 }
 .workflow-section .experience-section-heading { margin-bottom: 30px; }
 .workflow-section .experience-section-heading h2 { margin: 0 0 14px; font-size: clamp(40px, 4.7vw, 64px); }
