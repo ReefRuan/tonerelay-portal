@@ -153,9 +153,42 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-function AgentStrip({ onExplain, onCopyInstall }: {
+export function WorkBuddyDownloadDialog({ onClose }: { onClose: () => void }) {
+  const { t } = useLanguage();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const previous = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    dialog?.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+      previous?.focus();
+    };
+  }, []);
+
+  return <dialog ref={dialogRef} className="agent-dialog workbuddy-dialog" aria-labelledby="workbuddy-download-title"
+    onCancel={(event) => { event.preventDefault(); onClose(); }}
+    onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="agent-dialog-topline">
+      <h2 id="workbuddy-download-title">{t("扫码下载你的第一个 Agent 客户端", "Scan to get your first Agent client")}</h2>
+      <button type="button" onClick={onClose} aria-label={t("关闭二维码", "Close QR code")}><Icon name="close" /></button>
+    </div>
+    <img className="workbuddy-download-poster" src={`${import.meta.env.BASE_URL}agents/workbuddy-download.jpg`} width={750} height={1110}
+      alt={t("WorkBuddy 下载海报，右下方二维码可扫码打开 WorkBuddy 活动页面", "WorkBuddy download poster with a QR code in the lower-right corner linking to the WorkBuddy invitation page")} />
+    <a className="workbuddy-poster-link" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">
+      {t("也可以直接打开下载页面", "Or open the download page")}<Icon name="external" />
+    </a>
+  </dialog>;
+}
+
+function AgentStrip({ onExplain, onCopyInstall, onDownloadQr }: {
   onExplain: () => void;
   onCopyInstall?: () => void;
+  onDownloadQr: () => void;
 }) {
   const { language, t } = useLanguage();
   const hero = heroByLanguage[language];
@@ -170,15 +203,17 @@ function AgentStrip({ onExplain, onCopyInstall }: {
           <p className="agent-comparison">{inlineMarkdown(hero.comparison)}</p>
 
           <div className="intro-cta-row">
-            <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
-              <Icon name="copy" />{t("复制安装提示词，发给 Agent", "Copy installation prompt for your Agent")}
+            <span className="intro-install-glow">
+              <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
+                <Icon name="copy" />{t("复制安装提示词，发给 Agent", "Copy installation prompt for your Agent")}
+              </button>
+            </span>
+            <a className="intro-cta is-quiet" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">
+              {t("没有 Agent？下载一个", "No Agent? Download one")}<Icon name="external" />
+            </a>
+            <button type="button" className="intro-cta is-quiet" onClick={onDownloadQr} aria-haspopup="dialog">
+              {t("扫码下载 Agent", "Scan to get an Agent")}
             </button>
-            <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${language === "en" ? ".en" : ""}.md`} target="_blank" rel="noreferrer">
-              {t("安装文档", "Installation guide")}<Icon name="external" />
-            </a>
-            <a className="intro-cta is-quiet" href={`https://gitee.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${language === "en" ? ".en" : ""}.md`} target="_blank" rel="noreferrer">
-              {t("备用安装说明（Gitee）", "Gitee mirror installation guide")}<Icon name="external" />
-            </a>
             {ARTICLE_URL ? (
               <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
                 {t("阅读介绍文章", "Read the introduction")}<Icon name="external" />
@@ -267,15 +302,20 @@ export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {
   onCopyPrompt?: (value: string, message: string) => Promise<boolean>;
 } = {}) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const [downloadQrOpen, setDownloadQrOpen] = useState(false);
   return (
     <main className="document-main experience-main">
-      <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} />
+      <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} onDownloadQr={() => setDownloadQrOpen(true)} />
       <WorkflowComparisons onCopyPrompt={onCopyPrompt} />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <InstallationCallout onCopyInstall={onCopyInstall} />
       <DocumentFooter />
       {helpOpen && typeof document !== "undefined" && createPortal(
         <AgentHelpDialog onClose={() => setHelpOpen(false)} />,
+        document.body,
+      )}
+      {downloadQrOpen && typeof document !== "undefined" && createPortal(
+        <WorkBuddyDownloadDialog onClose={() => setDownloadQrOpen(false)} />,
         document.body,
       )}
     </main>

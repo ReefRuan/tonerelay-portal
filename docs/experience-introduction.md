@@ -12,8 +12,6 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
 
 ## 说出目标，看见结果。
 
-告诉 Agent 你想要什么效果。它借助 ToneRelay 调整 Lightroom，再把照片带回来。你看图再说哪里要改，不必自己逐项找滑块。
-
 画廊里还有 Reef 制作的风格与效果包。挑一个下载，把说明和参考图交给 Agent 使用；画廊会持续更新。
 
 <!-- comparison-content:start -->
@@ -89,7 +87,7 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
     "number": "01",
     "label": "对话修图",
     "title": "从想要的画面开始。",
-    "description": "说出想要的效果，看看照片，再接着说哪里要改。",
+    "description": "告诉 Agent 你想要什么效果。它借助 ToneRelay 调整 Lightroom，再把照片带回来。你看图再说哪里要改，不必自己逐项找滑块。",
     "beforeLabel": "手动操作",
     "beforeTitle": "逐项调整，反复预览",
     "beforeFooter": "调整 → 预览 → 再调整",

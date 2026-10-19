@@ -4,16 +4,18 @@ import { WorkflowComparisons } from "./WorkflowComparisons";
 import { cardPrompts } from "./cardPrompts";
 
 describe("workflow examples", () => {
-  it("uses the article introduction to explain conversational editing without an eyebrow", () => {
+  it("keeps gallery information under the section heading and explains editing only in the first card", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const heading = html.match(/<header class="experience-section-heading">[\s\S]*?<\/header>/)?.[0];
 
     expect(heading).toContain("说出目标，看见结果。");
-    expect(heading).toContain("告诉 Agent 你想要什么效果");
-    expect(heading).toContain("不必自己逐项找滑块");
+    expect(heading).not.toContain("告诉 Agent 你想要什么效果");
+    expect(heading).not.toContain("不必自己逐项找滑块");
     expect(heading).toContain("Reef 制作的风格与效果包");
     expect(heading).toContain("画廊会持续更新");
     expect(heading).not.toContain("交互示意");
+    expect(html.match(/告诉 Agent 你想要什么效果/g)).toHaveLength(1);
+    expect(html).not.toContain("说出想要的效果，看看照片，再接着说哪里要改。");
   });
 
   it("shows a real example before the typical-usage prompts", () => {
@@ -51,7 +53,7 @@ describe("workflow examples", () => {
     expect(html).toContain("复制对话修图提问");
     expect(html).toContain("复制批量选片提问");
     expect(html).toContain("<summary class=\"workflow-prompt-trigger\">复制提问</summary>");
-    expect(html).toMatch(/<div class="workflow-description-row"><p>说出想要的效果，看看照片，再接着说哪里要改。<\/p><button class="workflow-prompt-trigger"/);
+    expect(html).toMatch(/<div class="workflow-description-row"><p>告诉 Agent 你想要什么效果。它借助 ToneRelay 调整 Lightroom，再把照片带回来。你看图再说哪里要改，不必自己逐项找滑块。<\/p><button class="workflow-prompt-trigger"/);
     expect(html).not.toContain("workflow-caption-top");
     expect(html).toContain("主体蒙版细调");
     expect(html).toContain("参考图调色");

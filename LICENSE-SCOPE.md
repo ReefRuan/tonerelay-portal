@@ -15,3 +15,5 @@ Copyright (C) 2026 Reef Ruan.
 `docs/assets/portal-gallery.webp` 是网页截图，其中嵌入的第三方封面照片仍遵循各自的 CC 许可；截图在根目录 README 中标明可见照片的作者、原图与许可。`docs/assets/portal-experience.webp` 同样是页面截图，不会改变其中任何外部素材的原有权利。
 
 依赖库、字体及其他第三方内容保留各自许可。ToneRelay 名称和标识的使用问题不由 AGPL 自动解决。
+
+`public/agents/workbuddy-download.jpg` 是用户提供、用于 WorkBuddy 下载入口的第三方宣传海报，含 WorkBuddy 标识与二维码，不属于 Reef Ruan 原创内容，也不受仓库级 AGPL 重新授权；来源与用途见同目录 `SOURCES.md`。

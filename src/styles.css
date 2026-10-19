@@ -143,6 +143,24 @@ input:focus-visible,
 .header-install { border-color: #a9cfff; color: #0d1d2f; background: #a9cfff; }
 .header-install:hover { border-color: #d7e9ff; color: #081a2d; background: #d7e9ff; }
 .header-star-link small { color: #9aa9b8; font-size: 9px; font-weight: 500; }
+.header-action.header-star-glow {
+  color: #0d1d2f;
+  border-color: #c2d8ff;
+  background: #b9d3ff;
+  box-shadow:
+    -5px 5px 17px -6px rgba(113, 171, 255, 0.7),
+    0 7px 20px -7px rgba(224, 160, 223, 0.6),
+    6px 5px 17px -7px rgba(129, 226, 205, 0.65);
+}
+.header-action.header-star-glow:hover {
+  color: #081a2d;
+  border-color: #e2ebff;
+  background: #d6e5ff;
+  box-shadow:
+    -5px 5px 20px -5px rgba(113, 171, 255, 0.8),
+    0 8px 23px -6px rgba(224, 160, 223, 0.7),
+    6px 5px 20px -6px rgba(129, 226, 205, 0.75);
+}
 .header-action.is-unavailable { opacity: 0.55; cursor: default; }
 .header-action.is-unavailable:hover { border-color: rgba(145, 172, 199, 0.44); background: rgba(32, 44, 58, 0.9); transform: none; }
 
@@ -2339,6 +2357,54 @@ kbd {
   margin-top: 18px;
 }
 
+/* A soft iridescent underglow: the solid button face stays crisp and readable. */
+.intro-install-glow { position: relative; isolation: isolate; display: inline-flex; border-radius: 8px; }
+.intro-install-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px -3px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(105deg, #72c8ff 0%, #a9a2ff 30%, #f0a8ce 56%, #8de3cf 79%, #9ccaff 100%);
+  filter: blur(10px);
+  transform: translateY(5px);
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+.intro-install-glow > .intro-cta { position: relative; width: 100%; }
+.intro-install-glow:hover::before, .intro-install-glow:focus-within::before { opacity: 0.8; filter: blur(12px); }
+
+@keyframes install-aura-breathe {
+  0%, 100% { opacity: 0.44; background-position: 0% 50%; }
+  50% { opacity: 0.64; background-position: 100% 50%; }
+}
+
+@keyframes star-aura-breathe {
+  0%, 100% {
+    box-shadow:
+      -5px 5px 16px -6px rgba(113, 171, 255, 0.48),
+      0 7px 18px -7px rgba(224, 160, 223, 0.4),
+      6px 5px 16px -7px rgba(129, 226, 205, 0.45);
+  }
+  50% {
+    box-shadow:
+      -5px 5px 19px -6px rgba(113, 171, 255, 0.72),
+      0 7px 22px -7px rgba(224, 160, 223, 0.62),
+      6px 5px 19px -7px rgba(129, 226, 205, 0.68);
+  }
+}
+
+/* Animate light only, never the controls. Reduced-motion keeps the static glow. */
+@media (prefers-reduced-motion: no-preference) {
+  .intro-install-glow::before { background-size: 180% 100%; animation: install-aura-breathe 7s ease-in-out infinite; }
+  .header-action.header-star-glow { animation: star-aura-breathe 6.5s ease-in-out infinite; }
+  .intro-install-glow:hover::before,
+  .intro-install-glow:focus-within::before,
+  .header-action.header-star-glow:hover,
+  .header-action.header-star-glow:focus-visible { animation: none; }
+}
+
 .agent-picker {
   position: relative;
   z-index: 1;
@@ -2553,6 +2619,25 @@ kbd {
 .agent-dialog-actions { margin-top: 22px; display: flex; align-items: center; gap: 20px; }
 .agent-dialog-actions > span { color: var(--muted); font-size: 11px; }
 
+.workbuddy-dialog {
+  margin: auto;
+  padding: 0;
+  width: min(480px, calc(100vw - 40px));
+  max-height: calc(100dvh - 40px);
+  border: 1px solid #536473;
+  border-radius: 16px;
+  color: var(--ink);
+  background: #18212a;
+  overflow: auto;
+}
+.workbuddy-dialog::backdrop { background: rgba(6, 12, 20, 0.7); backdrop-filter: blur(7px); }
+.workbuddy-dialog .agent-dialog-topline { position: sticky; top: 0; z-index: 1; padding-left: 18px; background: #18212a; }
+.workbuddy-dialog h2 { margin: 0; color: #dce7f2; font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+.workbuddy-dialog .agent-dialog-topline button { color: #dce7f2; flex: none; }
+.workbuddy-download-poster { display: block; width: 100%; height: auto; background: #fff; }
+.workbuddy-poster-link { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; color: #b8d4f5; font-size: 13px; text-underline-offset: 4px; }
+.workbuddy-poster-link svg { width: 14px; height: 14px; }
+
 @media (max-width: 600px) {
   .agent-architecture-flow { grid-template-columns: minmax(0, 1fr); gap: 5px; }
   .agent-architecture-node { min-height: 0; padding: 9px 12px; gap: 3px; }
@@ -2592,6 +2677,7 @@ kbd {
   .agent-strip { padding: 22px 18px; }
   .agent-strip-heading h1 { font-size: 25px; }
   .intro-cta { flex: 1 1 100%; min-height: 42px; }
+  .intro-install-glow { flex: 1 1 100%; }
   .agent-list { flex-wrap: wrap; }
   .feature-section, .compare-section, .use-cases-section, .experience-faq { margin-top: 84px; }
   .experience-section-heading h2 { font-size: clamp(39px, 11vw, 52px); }

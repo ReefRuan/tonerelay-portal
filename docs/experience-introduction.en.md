@@ -12,8 +12,6 @@ Compared with asking an Agent to find buttons in Lightroom screenshots, ToneRela
 
 ## Describe the goal. See the result.
 
-Tell your Agent the look you want. It uses ToneRelay to adjust Lightroom and bring the photo back. Look at the result and say what needs changing, without finding every slider yourself.
-
 The gallery also offers style and effects packs created by Reef. Download one and give its notes and reference images to your Agent. The gallery will continue to grow.
 
 <!-- comparison-content:start -->
@@ -89,7 +87,7 @@ The gallery also offers style and effects packs created by Reef. Download one an
     "number": "01",
     "label": "Conversational editing",
     "title": "Start with the image you have in mind.",
-    "description": "Describe the look, see the photo, then say what needs changing.",
+    "description": "Tell your Agent the look you want. It uses ToneRelay to adjust Lightroom and bring the photo back. Look at the result and say what needs changing, without finding every slider yourself.",
     "beforeLabel": "Manual editing",
     "beforeTitle": "Adjust each setting and preview repeatedly",
     "beforeFooter": "Adjust → Preview → Adjust again",

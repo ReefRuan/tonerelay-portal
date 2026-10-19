@@ -29,7 +29,7 @@ function readIntroduction(markdown: string) {
     .trim()
     .split(/\r?\n\r?\n/)
     .filter(Boolean);
-  if (paragraphs.length < 2) throw new Error("Workflow introduction needs the conversation and gallery paragraphs");
+  if (paragraphs.length < 1) throw new Error("Workflow introduction needs at least one paragraph");
   const block = markdown.match(/<!-- comparison-content:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- comparison-content:end -->/);
   if (!block) throw new Error("Missing comparison content in an experience document");
   const copy: Content = JSON.parse(block[1]);

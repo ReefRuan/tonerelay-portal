@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import installDocument from "../docs/install-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
-import { Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ } from "./Documents";
+import { Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
 
 describe("installation copy payload", () => {
   it("copies the standalone installation prompt and complete FAQ", () => {
@@ -26,5 +26,26 @@ describe("installation copy payload", () => {
     expect(html).not.toContain("安装介绍");
     expect(html).toContain('href="./contact.html"');
     expect(html).toContain('href="https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w"');
+  });
+
+  it("replaces only the two hero guide links with Agent download actions", () => {
+    const html = renderToStaticMarkup(createElement(Documents));
+    const hero = html.split('<section class="agent-strip"')[1].split('</section>')[0];
+    expect(hero).toContain('class="intro-install-glow"');
+    expect(hero).toContain("没有 Agent？下载一个");
+    expect(hero).toContain('aria-haspopup="dialog">扫码下载 Agent</button>');
+    expect(hero).not.toContain("/INSTALL");
+    expect(hero).not.toContain("备用安装说明");
+    expect(html).toContain("安装步骤与要求");
+  });
+
+  it("uses the provided WorkBuddy poster with a close control and direct-link fallback", () => {
+    const html = renderToStaticMarkup(createElement(WorkBuddyDownloadDialog, { onClose: () => {} }));
+    expect(html).toContain('<dialog');
+    expect(html).toContain('aria-labelledby="workbuddy-download-title"');
+    expect(html).toContain('agents/workbuddy-download.jpg');
+    expect(html).toContain('width="750" height="1110"');
+    expect(html).toContain('aria-label="关闭二维码"');
+    expect(html).toContain('https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w');
   });
 });

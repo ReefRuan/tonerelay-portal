@@ -472,8 +472,8 @@ export default function App() {
           <PrivacyAction />
           <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group">
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title={t("在 GitHub 给 Lightroom MCP 点 Star", "Star Lightroom MCP on GitHub")}><Icon name="star" />Star MCP</a>
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看 Portal 网页源码", "View Portal source code")}><Icon name="external" />{t("Portal 源码", "Portal source")}</a>
+            <a className="header-action header-star-link header-star-glow" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title={t("在 GitHub 给 Lightroom MCP 点 Star", "Star Lightroom MCP on GitHub")}><Icon name="star" />Star MCP</a>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看本页面源码", "View this page's source code")}><Icon name="external" />{t("本页面源码", "Page source")}</a>
           </div>
         </div>}
         <LanguageSwitch className="header-language" />
