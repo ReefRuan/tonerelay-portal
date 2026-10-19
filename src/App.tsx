@@ -466,7 +466,6 @@ export default function App() {
         <nav className="site-nav" aria-label={t("主要导航", "Main navigation")}>
           <a href="#gallery" aria-current={page === "gallery" ? "page" : undefined}>{t("画廊", "Gallery")}</a>
           <a href="#experience" aria-current={page === "experience" ? "page" : undefined}>{t("立即体验", "Explore")}</a>
-          <LanguageSwitch />
         </nav>
         {page === "gallery" && <IntroSignature />}
         {page === "experience" && <div className="site-header-actions">
@@ -477,6 +476,7 @@ export default function App() {
             <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看 Portal 网页源码", "View Portal source code")}><Icon name="external" />{t("Portal 源码", "Portal source")}</a>
           </div>
         </div>}
+        <LanguageSwitch className="header-language" />
       </header>
 
       {page === "gallery" ? <main className="catalog-main" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
