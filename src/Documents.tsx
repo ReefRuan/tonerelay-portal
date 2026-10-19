@@ -150,6 +150,9 @@ function AgentStrip({ onExplain, onCopyInstall }: {
             <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
               <Icon name="copy" />复制安装提示词，发给 Agent
             </button>
+            <a className="intro-cta is-quiet" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md" target="_blank" rel="noreferrer">
+              安装文档<Icon name="external" />
+            </a>
             {ARTICLE_URL ? (
               <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
                 阅读介绍文章<Icon name="external" />

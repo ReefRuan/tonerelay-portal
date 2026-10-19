@@ -4,7 +4,7 @@
 
 ToneRelay connects AI agents to Lightroom Classic through the Model Context Protocol (MCP), for conversational AI photo editing, reference-based color grading, and photography workflows. This repository is its website and style gallery—not the MCP runtime.
 
-[打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装与使用](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/) · [Lightroom MCP 仓库](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
+[打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装 Lightroom MCP](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md) · [给 MCP 点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [Bilibili 主页](https://space.bilibili.com/2869626) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
 
 ![ToneRelay Portal：浏览摄影参考图、胶片风格与效果包](docs/assets/readme-portal-overview.jpg)
 
@@ -41,17 +41,17 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 ## 怎么开始
 
 1. [浏览画廊](https://reefruan.github.io/tonerelay-portal/#gallery)，或先看[对话修图介绍](https://reefruan.github.io/tonerelay-portal/#experience)。
-2. 将[安装提示词](docs/install-prompt.md)复制给正在使用的 Agent。它会先检查本机已有安装，再核对官方发行来源、访问权限、固定版本与安装说明。
-3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
+2. 从 MCP 仓库的[安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)开始，也可以将 Portal 保留的[安装提示词](docs/install-prompt.md)复制给正在使用的 Agent。它会先检查本机已有安装，再核对官方来源、访问权限、固定版本与安装说明。
+3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 Portal 的 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
 
-发行仓库当前仍为私有准备阶段，**不表示已经开放下载或可一键安装**。安装提示词在没有可核验的公开固定版本时会明确报告尚未就绪，不会默认使用私有开发源码。已有健康本机安装时，可按提示核验并复用。
+MCP 当前为源码预览，安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定到可核验的标签或完整提交，不把持续变化的 `main` 当作版本号。网页复制提示词不等于已经完成安装；已有健康本机安装时，可按提示核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
 
 ## Portal 与 Runtime 分工
 
 | 仓库 | 用途 |
 | --- | --- |
-| **本仓库：[tonerelay-portal](https://github.com/ReefRuan/tonerelay-portal)** | 产品介绍、摄影风格画廊、风格与候选效果包、安装提示词与 FAQ |
-| **[tonerelay-lightroom-mcp](https://github.com/ReefRuan/tonerelay-lightroom-mcp)** | 连接 Agent 与 Lightroom Classic 的本地 MCP Runtime、Lightroom 插件及接入组件；当前私有准备中 |
+| **本仓库：[tonerelay-portal](https://github.com/ReefRuan/tonerelay-portal)** | 产品介绍、摄影风格画廊、风格与候选效果包、安装提示词与 FAQ，以及 MCP 安装入口 |
+| **[tonerelay-lightroom-mcp](https://github.com/ReefRuan/tonerelay-lightroom-mcp)** | 连接 Agent 与 Lightroom Classic 的本地 MCP Runtime、Lightroom 插件及接入组件；[安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)、[使用指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/USAGE.md)与 Star 入口都在这里 |
 
 网站也提供可直接阅读的 [Lightroom MCP 使用说明](https://reefruan.github.io/tonerelay-portal/lightroom-classic-mcp/)、独立风格与效果介绍页，以及 [sitemap.xml](https://reefruan.github.io/tonerelay-portal/sitemap.xml)。这些页面便于分享和搜索引擎读取；收录、排名和推荐由各平台决定。
 
@@ -64,7 +64,7 @@ pnpm dev
 
 交互式画廊可直接预览；独立介绍页由构建生成，查看完整站点时运行 `pnpm build`，再运行 `pnpm preview`。
 
-网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装与排障文章位于 `docs/`。
+网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装提示词、FAQ 与卸载提示词仍保留在本仓库 `docs/`，供网页复制和阅读。主安装指南链接到 [MCP 仓库的 INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。
 
 ## 图片来源与许可
 
@@ -102,6 +102,6 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 
 </details>
 
-作者及维护者：[Reef Ruan (@ReefRuan)](https://github.com/ReefRuan)。Copyright (C) 2026 Reef Ruan。
+作者及维护者：[Reef Ruan (@ReefRuan)](https://github.com/ReefRuan) · [Bilibili](https://space.bilibili.com/2869626)。喜欢对话修图，欢迎给 [Lightroom MCP 仓库点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp)。Copyright (C) 2026 Reef Ruan。
 
 作者创作的代码与文字采用 [GNU AGPL-3.0-only](LICENSE)；适用范围和第三方素材例外见[授权范围](LICENSE-SCOPE.md)。摄影作品属于各原作者；仓库级 AGPL 不会替代它们的原许可。ToneRelay 是独立项目，非 Adobe 官方产品。

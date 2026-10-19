@@ -25,6 +25,10 @@ function ContactDetails() {
   return (
     <dl className="contact-details">
       <div>
+        <dt>BILIBILI</dt>
+        <dd><a href="https://space.bilibili.com/2869626" target="_blank" rel="noreferrer">Bilibili 主页</a></dd>
+      </div>
+      <div>
         <dt>EMAIL</dt>
         <dd>
           <a href={`mailto:${email}`}>{email}</a>

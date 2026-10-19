@@ -454,8 +454,8 @@ export default function App() {
           <PrivacyAction />
           <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group">
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="在 GitHub 给 Portal 点 Star"><Icon name="star" />Star Portal</a>
-            <span className="header-action header-star-link is-unavailable" title="MCP 仓库尚未公开，公开后可在 GitHub 点 Star" aria-label="MCP 仓库尚未公开"><Icon name="star" />MCP 尚未公开</span>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title="在 GitHub 给 Lightroom MCP 点 Star"><Icon name="star" />Star MCP</a>
+            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title="查看 Portal 网页源码"><Icon name="external" />Portal 源码</a>
           </div>
         </div>}
       </header>

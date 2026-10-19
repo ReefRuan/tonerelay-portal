@@ -273,7 +273,7 @@ const faqSections = faqHeadings.map((heading) => {
 }).filter(Boolean);
 const experienceBody = `<p class="eyebrow">ToneRelay 使用说明</p><h1>用对话操作 Lightroom Classic</h1>
 <p class="lead">描述想要的画面，让 Agent 调整 Lightroom 并带回实际渲染；查看结果后继续细调，也可以从公开风格与效果包开始。</p>
-<div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP</a><a class="button" href="${repo}/blob/main/docs/install-prompt.md">查看安装提示词</a></div>
+<div class="actions"><a class="button primary" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="${absolute("#experience")}">打开交互式使用说明</a><a class="button" href="${absolute("lightroom-classic-mcp/")}">了解 Lightroom Classic MCP</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">查看安装文档</a></div>
 <article class="prose">${renderMarkdown(intro)}<h2>常见问题</h2>${renderMarkdown(faqSections.join("\n"))}</article>`;
 await writePage("experience", page({ title: "ToneRelay 使用说明｜用对话操作 Lightroom Classic", description: "ToneRelay 连接 Agent 与 Lightroom Classic。了解对话修图、真实渲染回读、批量操作、参考图调色，以及风格效果包的使用方式。", canonical: absolute("experience/"), type: "website", body: experienceBody, stylesheet: "../seo.css" }));
 
