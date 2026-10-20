@@ -27,7 +27,10 @@ describe("workflow examples", () => {
     expect(gallery).toBeGreaterThan(-1);
     expect(firstFigure).toBeGreaterThan(gallery);
     expect(sceneEntries).toBeGreaterThan(firstFigure);
-    expect(html).toContain("看看当前 Lightroom 目录里有哪些照片。");
+    expect(html).toContain("查看当前 Lightroom 目录信息和我当前选择的照片");
+    expect(html).not.toContain("连接完成后，看看当前目录里有哪些照片");
+    expect(html).not.toContain("看看当前 Lightroom 目录里有哪些照片。");
+    expect(html).not.toContain('<span class="scene-desc"></span>');
     expect(html).toContain("请逐张看这组照片，按清晰度和内容打星");
     expect(html).toContain("参考这些照片的颜色，给这组照片逐张调色");
     expect(html).toContain("暗部有点重，提亮一点，肤色别偏黄");

@@ -22,8 +22,8 @@ ToneRelay 是连接 Agent 和 Lightroom Classic 的**本地 MCP 工具**。Agent
     {
       "no": "01",
       "name": "看目录",
-      "desc": "连接完成后，看看当前目录里有哪些照片",
-      "prompts": ["看看当前 Lightroom 目录里有哪些照片。"]
+      "desc": "",
+      "prompts": ["查看当前 Lightroom 目录信息和我当前选择的照片"]
     },
     {
       "no": "02",

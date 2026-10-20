@@ -21,9 +21,9 @@ The gallery also offers style and effects packs created by Reef. Download one an
   "sceneEntries": [
     {
       "no": "01",
-      "name": "Browse a folder",
-      "desc": "Once connected, see which photos are in the current folder",
-      "prompts": ["Show me the photos in the current Lightroom folder."]
+      "name": "View Catalog information",
+      "desc": "",
+      "prompts": ["Show the current Lightroom Catalog information and my currently selected photo."]
     },
     {
       "no": "02",

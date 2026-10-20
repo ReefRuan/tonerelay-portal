@@ -72,7 +72,7 @@ function SceneEntries({ entries }: { entries: SceneEntry[] }) {
           <span className="scene-no" aria-hidden="true">{scene.no}</span>
           <div className="scene-body">
             <strong>{scene.name}</strong>
-            <span className="scene-desc">{scene.desc}</span>
+            {scene.desc && <span className="scene-desc">{scene.desc}</span>}
             {scene.prompts.map((prompt) => <code key={prompt}>{prompt}</code>)}
           </div>
         </li>
