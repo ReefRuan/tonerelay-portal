@@ -33,7 +33,7 @@ describe("installation copy payload", () => {
     const hero = html.split('<section class="agent-strip"')[1].split('</section>')[0];
     expect(hero).toContain('class="intro-install-glow"');
     expect(hero).toContain("没有 Agent？下载一个");
-    expect(hero).toContain('aria-haspopup="dialog">扫码下载 Agent</button>');
+    expect(hero).toContain('aria-haspopup="dialog">二维码下载</button>');
     expect(hero).not.toContain("/INSTALL");
     expect(hero).not.toContain("备用安装说明");
     expect(html).toContain("安装步骤与要求");

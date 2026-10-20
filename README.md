@@ -9,10 +9,10 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 [打开画廊](https://reefruan.github.io/tonerelay-portal/#gallery) · [看看怎样修图](https://reefruan.github.io/tonerelay-portal/#experience) · [安装与使用](https://reefruan.github.io/tonerelay-portal/#experience) · [给 MCP 点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [Bilibili 主页](https://space.bilibili.com/2869626) · [联系作者](https://reefruan.github.io/tonerelay-portal/contact.html)
 
 <p align="center">
-  <a href="https://reefruan.github.io/tonerelay-portal/#gallery"><img src="docs/assets/readme-portal-overview.png" width="900" alt="ToneRelay Portal：浏览摄影参考图、胶片风格与效果包" /></a>
+  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="docs/assets/readme-portal-dialogue.jpg" width="900" alt="ToneRelay Portal 体验页：对话修图与 Lightroom 实际结果" /></a>
 </p>
 
-<sub>网页实拍截图。画廊中的照片是独立摄影作品，用作风格参考，不是 ToneRelay 生成的图片，也不是套用预设后的效果承诺。摄影师与许可见下方「图片来源与许可」。</sub>
+<sub>体验页实拍截图。Lightroom 与 Agent 对话画面来自实际修图工作流；图片来源与许可见下方「图片来源与许可」。</sub>
 
 ## 先找到喜欢的颜色，再开始修图
 
@@ -49,6 +49,10 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 </p>
 
 <sub>上图来自 Portal 的对话修图展示区；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非为本次文档更新重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
+
+## 从一张照片，到一整组照片
+
+[![ToneRelay MCP 工具一览：修图参数与回读、批量操作与导出、图片测量与对比](docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg)](docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg)
 
 ## 怎么开始
 

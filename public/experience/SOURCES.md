@@ -57,3 +57,9 @@
 | `readme-style-detail.png` | C200 详情中的十张参考照片，保留逐图作者及许可标注 |
 
 Portal 文件位于 [`docs/assets/`](../../docs/assets/)，MCP 文件位于[公开 MCP 仓库的 `assets/readme/`](https://github.com/ReefRuan/tonerelay-lightroom-mcp/tree/main/assets/readme)。截图中使用的摄影作品仍适用各自的原许可；画廊封面与 C200 详情的完整署名见 [Portal README](../../README.md#图片来源与许可) 和各风格包的来源记录。透明圆角与展示缩放不改变素材权利，也不构成速度或 Token 用量对照测试。
+
+## 2026-10-20 README 体验页入口与工具列表
+
+`docs/assets/readme-portal-dialogue.jpg`（公开 MCP 中为 `assets/readme/portal-experience.jpg`）是当前体验页的浏览器截图，包含导航、「说出目标，看见结果」及第 01 组对话修图案例；替代 README 入口原先的画廊主图。截图保留页面与对话的原始文字，没有重新执行修图或改写画面。
+
+工具一览的中英文截图在 `docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg`、`tools-list.en.two-column.jpg`，公开 MCP 中为 `assets/readme/mcp-tools-list.zh.jpg`、`mcp-tools-list.en.jpg`。它们来自同目录 HTML/CSS 的浏览器渲染，不包含摄影作品；58 个工具名称依据已记录的公开源码快照核对，详见[列表说明](../../docs/assets/mcp-tools-overview/README.md)。

@@ -212,7 +212,7 @@ function AgentStrip({ onExplain, onCopyInstall, onDownloadQr }: {
               {t("没有 Agent？下载一个", "No Agent? Download one")}<Icon name="external" />
             </a>
             <button type="button" className="intro-cta is-quiet" onClick={onDownloadQr} aria-haspopup="dialog">
-              {t("扫码下载 Agent", "Scan to get an Agent")}
+              {t("二维码下载", "Download via QR")}
             </button>
             {ARTICLE_URL ? (
               <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">

@@ -83,6 +83,21 @@ describe("workflow examples", () => {
     expect(batch).not.toContain("batch-thumb");
   });
 
+  it("places the expanded in-page MCP tool directory before the batch chapter", () => {
+    const html = renderToStaticMarkup(<WorkflowComparisons onCopyPrompt={async () => true} />);
+    const batch = html.match(/workflow-figure-batch[\s\S]*?workflow-figure-computer/)?.[0];
+
+    expect(html.match(/class="workflow-tools-overview"/g)).toHaveLength(1);
+    expect(html).toContain('<details class="workflow-tools-overview" open=""><summary class="workflow-tools-toggle">MCP 工具一览');
+    const overview = html.indexOf('class="workflow-tools-overview"');
+    expect(overview).toBeGreaterThan(html.indexOf('class="workflow-scene-entries"'));
+    expect(overview).toBeLessThan(html.indexOf('workflow-figure-batch'));
+    expect(batch).not.toContain("workflow-tools-overview");
+    expect(batch).not.toContain("tools-list.zh.html");
+    expect(batch).not.toContain("<iframe");
+    expect(batch).toContain("复制批量选片提问");
+  });
+
   it("shows mask repair and reference matching with real captures", () => {
     const html = renderToStaticMarkup(<WorkflowComparisons />);
     const computer = html.match(/workflow-figure-computer[\s\S]*?workflow-source/)?.[0];

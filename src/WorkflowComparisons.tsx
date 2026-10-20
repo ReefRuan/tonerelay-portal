@@ -3,6 +3,7 @@ import introductionEnglish from "../docs/experience-introduction.en.md?raw";
 import { useRef } from "react";
 import { getCardPrompts, type CardPromptId } from "./cardPrompts";
 import { useLanguage } from "./i18n";
+import { McpToolsOverview } from "./McpToolsOverview";
 
 type Comparison = {
   number: string; label: string; title: string; description: string;
@@ -157,6 +158,7 @@ export function WorkflowComparisons({ onCopyPrompt }: { onCopyPrompt?: CopyPromp
       <Shot key="refine" src={shotRefine} alt={copy.shots.refine.alt} caption={copy.shots.refine.caption} width={1312} height={1690} />,
     ]}</ComparisonFigure>
     <SceneEntries entries={copy.sceneEntries} />
+    <McpToolsOverview />
     <ComparisonFigure item={copy.batch} variant="batch" promptIds={["02"]} onCopyPrompt={onCopyPrompt}>{[
       <div className="workflow-shot-stack" key="lightroom-select">
         <Shot src={shotGrid} alt={copy.shots.grid.alt} caption={copy.shots.grid.caption} width={2200} height={1201} />
