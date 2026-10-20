@@ -6,7 +6,7 @@ import overviewEnglish from "../docs/assets/mcp-tools-overview/tools-list.en.htm
 import { useLanguage } from "./i18n";
 import "./mcp-tools-overview.css";
 
-type Tool = { name: string; description: string; legacy: boolean };
+type Tool = { name: string; description: string };
 type ToolGroup = { id: string; number: string; title: string; tools: Tool[]; note?: string };
 
 const plainText = (html: string) => html.replace(/<[^>]*>/g, "").replace(/&(amp|lt|gt|quot|#39);/g, (_, entity: string) => ({
@@ -23,34 +23,32 @@ function readOverview(html: string) {
     if (!title || !number) throw new Error("An MCP tool group is missing its heading");
     return {
       id: match[1], number, title: plainText(title),
-      tools: Array.from(section.matchAll(/<li([^>]*)><code>(trlr_\w+)<\/code><span>([\s\S]*?)<\/span><\/li>/g), (tool) => ({
-        name: tool[2], description: plainText(tool[3]), legacy: /class="legacy"/.test(tool[1]),
+      tools: Array.from(section.matchAll(/<li[^>]*><code>(trlr_\w+)<\/code><span>([\s\S]*?)<\/span><\/li>/g), (tool) => ({
+        name: tool[1], description: plainText(tool[2]),
       })),
       note: section.match(/class="group-note">([^<]+)</)?.[1],
     };
   });
-  const intro = html.match(/class="intro">([^<]+)</)?.[1];
   const count = groups.reduce((sum, group) => sum + group.tools.length, 0);
   const expectedCount = Number(html.match(/Lightroom Classic · (\d+) MCP tools/)?.[1]);
-  if (!intro || groups.map(group => group.id).join() !== "develop,catalog,image" || count !== expectedCount
+  if (groups.map(group => group.id).join() !== "develop,catalog,image" || count !== expectedCount
     || new Set(groups.flatMap(group => group.tools.map(tool => tool.name))).size !== count) {
     throw new Error("The approved MCP tool directory has incomplete or duplicate entries");
   }
-  return { groups, intro: plainText(intro), count };
+  return { groups, count };
 }
 
 export const toolOverviewByLanguage = { zh: readOverview(overviewChinese), en: readOverview(overviewEnglish) };
 
 function Group({ group }: { group: ToolGroup }) {
-  const { t } = useLanguage();
   return <section className={`mcp-tools-group mcp-tools-${group.id}`} aria-labelledby={`mcp-tools-${group.id}-title`}>
     <header className="mcp-tools-group-heading">
       <div><span className="mcp-tools-number">{group.number}</span><h3 id={`mcp-tools-${group.id}-title`}>{group.title}</h3></div>
       <span className="mcp-tools-count">{group.tools.length} tools</span>
     </header>
     <ul className="mcp-tools-list">
-      {group.tools.map(tool => <li key={tool.name} className={tool.legacy ? "is-legacy" : undefined}>
-        <code>{tool.name}</code><span>{tool.description}{tool.legacy && <small>{t(" · 兼容", " · Legacy")}</small>}</span>
+      {group.tools.map(tool => <li key={tool.name}>
+        <code>{tool.name}</code><span>{tool.description}</span>
       </li>)}
     </ul>
     {group.note && <p className="mcp-tools-note">{plainText(group.note)}</p>}
@@ -67,7 +65,6 @@ export function McpToolsOverview() {
     </summary>
     <div className="mcp-tool-directory">
       <div className="mcp-tools-meta"><strong>TONERELAY</strong><span>Lightroom Classic · {overview.count} MCP tools</span></div>
-      <p className="mcp-tools-intro">{overview.intro}</p>
       <div className="mcp-tools-layout">
         <Group group={overview.groups[0]} />
         <div className="mcp-tools-secondary"><Group group={overview.groups[1]} /><Group group={overview.groups[2]} /></div>

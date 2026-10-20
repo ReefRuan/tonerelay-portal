@@ -26,5 +26,8 @@ describe("inline MCP tool directory", () => {
     expect(html).not.toMatch(/<iframe|<img|href=|target=/);
     expect(html).toContain('aria-labelledby="mcp-tools-develop-title"');
     expect(html).toContain('<h3 id="mcp-tools-develop-title">修图参数、版本与回读</h3>');
+    expect(html).not.toContain("按使用场景分为三组");
+    expect(html).not.toContain("mcp-tools-intro");
+    expect(html).not.toMatch(/旧版接口|兼容|Legacy|is-legacy|<small/);
   });
 });

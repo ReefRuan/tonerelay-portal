@@ -6,20 +6,18 @@ const decode = (value) => value.replace(/&amp;/g, "&").replace(/&lt;/g, "<").rep
 for (const language of ["zh", "en"]) {
   const html = await readFile(new URL(`tools-list.${language}.html`, import.meta.url), "utf8");
   const title = html.match(/<h1>([^<]+)<\/h1>/)?.[1];
-  const intro = html.match(/<p class="intro">([^<]+)<\/p>/)?.[1];
   const sections = [...html.matchAll(/<section class="tool-group [\s\S]*?<\/section>/g)].map(([section]) => section);
-  if (!title || !intro || sections.length !== 3) throw new Error(`Invalid ${language} tool directory`);
-  const lines = [`# ${decode(title)}`, "", `<!-- Generated from tools-list.${language}.html; edit that HTML, then run export-markdown.mjs. -->`, "", decode(intro), ""];
+  if (!title || sections.length !== 3) throw new Error(`Invalid ${language} tool directory`);
+  const lines = [`# ${decode(title)}`, "", `<!-- Generated from tools-list.${language}.html; edit that HTML, then run export-markdown.mjs. -->`, ""];
   const allNames = [];
   for (const section of sections) {
     const heading = section.match(/<h2[^>]*>([^<]+)<\/h2>/)?.[1];
-    const rows = [...section.matchAll(/<li([^>]*)><code>(trlr_\w+)<\/code><span>([^<]+)<\/span><\/li>/g)];
+    const rows = [...section.matchAll(/<li[^>]*><code>(trlr_\w+)<\/code><span>([^<]+)<\/span><\/li>/g)];
     if (!heading || !rows.length) throw new Error(`Invalid ${language} tool group`);
     lines.push(`## ${decode(heading)} · ${rows.length}`, "", language === "zh" ? "| Tool | 用途 |" : "| Tool | Purpose |", "| --- | --- |");
-    for (const [, attributes, name, label] of rows) {
+    for (const [, name, label] of rows) {
       allNames.push(name);
-      const legacy = attributes.includes('class="legacy"') ? (language === "zh" ? " · 兼容" : " · Legacy") : "";
-      lines.push(`| \`${name}\` | ${decode(label)}${legacy} |`);
+      lines.push(`| \`${name}\` | ${decode(label)} |`);
     }
     const note = section.match(/<p class="group-note">([^<]+)<\/p>/)?.[1];
     lines.push("", ...(note ? [decode(note), ""] : []));

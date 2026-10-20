@@ -2,8 +2,6 @@
 
 <!-- Generated from tools-list.zh.html; edit that HTML, then run export-markdown.mjs. -->
 
-按使用场景分为三组。直接列出工具名称，旁边是简短用途；标注「兼容」的是旧 Session 工作流。
-
 ## 修图参数、版本与回读 · 32
 
 | Tool | 用途 |
@@ -30,16 +28,16 @@
 | `trlr_list_develop_presets` | 列出显影预设 |
 | `trlr_get_develop_preset` | 读取预设参数 |
 | `trlr_compare_develop_presets` | 比较预设参数 |
-| `trlr_create_session` | 创建会话 · 兼容 |
-| `trlr_get_session` | 读取会话状态 · 兼容 |
-| `trlr_get_preview` | 读取已存编辑预览 · 兼容 |
-| `trlr_apply_settings` | 应用显影设置 · 兼容 |
-| `trlr_get_xmp` | 基础参数与 XMP · 兼容 |
-| `trlr_get_full_settings` | 完整显影回读 · 兼容 |
-| `trlr_round_diff` | 轮次参数与图像差异 · 兼容 |
-| `trlr_replay_round` | 回放一轮设置 · 兼容 |
-| `trlr_reset` | 恢复会话基线 · 兼容 |
-| `trlr_export_session_context` | 导出会话上下文 · 兼容 |
+| `trlr_create_session` | 创建会话 |
+| `trlr_get_session` | 读取会话状态 |
+| `trlr_get_preview` | 读取已存编辑预览 |
+| `trlr_apply_settings` | 应用显影设置 |
+| `trlr_get_xmp` | 基础参数与 XMP |
+| `trlr_get_full_settings` | 完整显影回读 |
+| `trlr_round_diff` | 轮次参数与图像差异 |
+| `trlr_replay_round` | 回放一轮设置 |
+| `trlr_reset` | 恢复会话基线 |
+| `trlr_export_session_context` | 导出会话上下文 |
 
 XMP 原片写入需明确授权；原生蒙版是虚拟副本的优先路径。ΔE00 用于观察颜色变化，不代表仿色精度认证。
 

@@ -2,8 +2,6 @@
 
 <!-- Generated from tools-list.en.html; edit that HTML, then run export-markdown.mjs. -->
 
-Three task-oriented groups, with each actual tool name and a short label. Legacy marks the older Session workflow.
-
 ## Develop settings, versions & readback · 32
 
 | Tool | Purpose |
@@ -30,16 +28,16 @@ Three task-oriented groups, with each actual tool name and a short label. Legacy
 | `trlr_list_develop_presets` | List Develop presets |
 | `trlr_get_develop_preset` | Read preset settings |
 | `trlr_compare_develop_presets` | Compare preset settings |
-| `trlr_create_session` | Create Session · Legacy |
-| `trlr_get_session` | Session state · Legacy |
-| `trlr_get_preview` | Saved edit preview · Legacy |
-| `trlr_apply_settings` | Apply settings · Legacy |
-| `trlr_get_xmp` | Basic settings & XMP · Legacy |
-| `trlr_get_full_settings` | Full settings readback · Legacy |
-| `trlr_round_diff` | Round differences · Legacy |
-| `trlr_replay_round` | Replay a round · Legacy |
-| `trlr_reset` | Restore baseline · Legacy |
-| `trlr_export_session_context` | Export context · Legacy |
+| `trlr_create_session` | Create Session |
+| `trlr_get_session` | Session state |
+| `trlr_get_preview` | Saved edit preview |
+| `trlr_apply_settings` | Apply settings |
+| `trlr_get_xmp` | Basic settings & XMP |
+| `trlr_get_full_settings` | Full settings readback |
+| `trlr_round_diff` | Round differences |
+| `trlr_replay_round` | Replay a round |
+| `trlr_reset` | Restore baseline |
+| `trlr_export_session_context` | Export context |
 
 Master XMP writes require explicit authorization. Native masks are preferred for virtual copies. ΔE00 describes color change, not certified matching accuracy.
 
