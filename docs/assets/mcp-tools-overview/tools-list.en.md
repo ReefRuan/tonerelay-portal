@@ -2,7 +2,7 @@
 
 <!-- Generated from tools-list.en.html; edit that HTML, then run export-markdown.mjs. -->
 
-## Develop settings, versions & readback · 32
+## Develop settings, versions & readback · 25
 
 | Tool | Purpose |
 | --- | --- |
@@ -13,10 +13,13 @@
 | `trlr_color_region_compare` | Regional color changes |
 | `trlr_list_episodes` | List edit contexts |
 | `trlr_get_episode` | Versions & readbacks |
+| `trlr_get_photo_settings` | Live settings & XMP |
 | `trlr_episode_artifact` | Edit previews & XMP |
+| `trlr_episode_diff` | Settings & readback differences |
+| `trlr_replay_episode` | Replay as a new version |
 | `trlr_stop_episode` | Stop later renders |
 | `trlr_restore_episode` | Restore a version |
-| `trlr_message_episode` | Save conversation notes |
+| `trlr_message_episode` | Save notes & labels |
 | `trlr_parameter_reference` | Parameter names & ranges |
 | `trlr_capabilities` | Capabilities & limits |
 | `trlr_render_parameter_variants` | Render candidate values |
@@ -28,20 +31,8 @@
 | `trlr_list_develop_presets` | List Develop presets |
 | `trlr_get_develop_preset` | Read preset settings |
 | `trlr_compare_develop_presets` | Compare preset settings |
-| `trlr_create_session` | Create Session |
-| `trlr_get_session` | Session state |
-| `trlr_get_preview` | Saved edit preview |
-| `trlr_apply_settings` | Apply settings |
-| `trlr_get_xmp` | Basic settings & XMP |
-| `trlr_get_full_settings` | Full settings readback |
-| `trlr_round_diff` | Round differences |
-| `trlr_replay_round` | Replay a round |
-| `trlr_reset` | Restore baseline |
-| `trlr_export_session_context` | Export context |
 
-Master XMP writes require explicit authorization. Native masks are preferred for virtual copies. ΔE00 describes color change, not certified matching accuracy.
-
-## Batch operations, preview & export · 24
+## Batch operations, preview & export · 25
 
 | Tool | Purpose |
 | --- | --- |
@@ -57,6 +48,7 @@ Master XMP writes require explicit authorization. Native masks are preferred for
 | `trlr_folder_roots` | Accessible roots |
 | `trlr_folder_scan` | Scan image files |
 | `trlr_folder_preview` | File preview |
+| `trlr_import_photos` | Batch-import files & folders |
 | `trlr_upload_photo` | Transfer to Lightroom |
 | `trlr_export_image` | JPEG export |
 | `trlr_health` | Connection & access |

@@ -241,29 +241,8 @@ html[lang="en"] .agent-strip h1 { overflow-wrap: anywhere; }
 .brand-mark {
   width: 36px;
   height: 36px;
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
-.brand-mark::before,
-.brand-mark::after,
-.brand-mark i {
-  content: "";
-  position: absolute;
-  width: 28px;
-  height: 1px;
-  background: var(--blue);
-}
-
-.brand-mark::after { transform: rotate(90deg); }
-.brand-mark i:nth-child(1) { transform: rotate(45deg); }
-.brand-mark i:nth-child(2) { transform: rotate(-45deg); }
-.brand-mark i:nth-child(3) {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--blue);
+  display: block;
+  flex-shrink: 0;
 }
 
 .brand strong {
@@ -1844,9 +1823,6 @@ kbd {
 
   .brand { grid-column: 1; grid-row: 1; gap: 9px; }
   .brand-mark { width: 28px; height: 28px; }
-  .brand-mark::before,
-  .brand-mark::after,
-  .brand-mark i { width: 22px; }
   .brand strong { font-size: 12px; }
   .brand small { font-size: 6px; margin-top: 5px; }
   .header-meta { display: none; }
@@ -2067,7 +2043,7 @@ kbd {
 @media (max-width: 374px) {
   .site-header .brand { gap: 6px; }
   .site-header .brand strong { font-size: 10px; letter-spacing: 0.1em; }
-  .site-header .brand-mark { width: 24px; }
+  .site-header .brand-mark { width: 24px; height: 24px; }
   .site-header .site-nav { gap: 2px; padding: 3px; }
   .site-header .site-nav a { padding-inline: 6px; letter-spacing: 0.05em; }
   .site-header .language-switch { padding-inline: 1px; gap: 2px; font-size: 9px; }

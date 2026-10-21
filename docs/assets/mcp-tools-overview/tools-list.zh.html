@@ -9,11 +9,11 @@
 </head>
 <body>
 <main class="tool-directory">
-  <header class="masthead"><strong class="brand">TONERELAY</strong><span class="meta">Lightroom Classic · 58 MCP tools</span></header>
+  <header class="masthead"><strong class="brand">TONERELAY</strong><span class="meta">Lightroom Classic · 52 MCP tools</span></header>
   <h1>MCP 工具一览</h1>
   <div class="inventory-layout">
   <section class="tool-group develop" aria-labelledby="develop-title">
-    <header class="group-heading"><div class="group-title"><span class="group-number">01</span><h2 id="develop-title">修图参数、版本与回读</h2></div><span class="group-count">32 tools</span></header>
+    <header class="group-heading"><div class="group-title"><span class="group-number">01</span><h2 id="develop-title">修图参数、版本与回读</h2></div><span class="group-count">25 tools</span></header>
     <ul class="tool-list">
       <li><code>trlr_create_episode</code><span>编辑上下文与虚拟副本</span></li>
       <li><code>trlr_edit_episode</code><span>显影参数与曲线</span></li>
@@ -22,10 +22,13 @@
       <li><code>trlr_color_region_compare</code><span>区域色彩变化</span></li>
       <li><code>trlr_list_episodes</code><span>列出编辑上下文</span></li>
       <li><code>trlr_get_episode</code><span>版本、回读与状态</span></li>
+      <li><code>trlr_get_photo_settings</code><span>当前显影参数与 XMP</span></li>
       <li><code>trlr_episode_artifact</code><span>编辑版本预览与 XMP</span></li>
+      <li><code>trlr_episode_diff</code><span>版本参数与回读差异</span></li>
+      <li><code>trlr_replay_episode</code><span>重放参数为新版本</span></li>
       <li><code>trlr_stop_episode</code><span>停止后续渲染</span></li>
       <li><code>trlr_restore_episode</code><span>恢复已保存版本</span></li>
-      <li><code>trlr_message_episode</code><span>保存对话说明</span></li>
+      <li><code>trlr_message_episode</code><span>保存对话与标签</span></li>
       <li><code>trlr_parameter_reference</code><span>参数名称与范围</span></li>
       <li><code>trlr_capabilities</code><span>参数能力与限制</span></li>
       <li><code>trlr_render_parameter_variants</code><span>多参数值候选渲染</span></li>
@@ -37,22 +40,11 @@
       <li><code>trlr_list_develop_presets</code><span>列出显影预设</span></li>
       <li><code>trlr_get_develop_preset</code><span>读取预设参数</span></li>
       <li><code>trlr_compare_develop_presets</code><span>比较预设参数</span></li>
-      <li><code>trlr_create_session</code><span>创建会话</span></li>
-      <li><code>trlr_get_session</code><span>读取会话状态</span></li>
-      <li><code>trlr_get_preview</code><span>读取已存编辑预览</span></li>
-      <li><code>trlr_apply_settings</code><span>应用显影设置</span></li>
-      <li><code>trlr_get_xmp</code><span>基础参数与 XMP</span></li>
-      <li><code>trlr_get_full_settings</code><span>完整显影回读</span></li>
-      <li><code>trlr_round_diff</code><span>轮次参数与图像差异</span></li>
-      <li><code>trlr_replay_round</code><span>回放一轮设置</span></li>
-      <li><code>trlr_reset</code><span>恢复会话基线</span></li>
-      <li><code>trlr_export_session_context</code><span>导出会话上下文</span></li>
     </ul>
-    <p class="group-note">XMP 原片写入需明确授权；原生蒙版是虚拟副本的优先路径。ΔE00 用于观察颜色变化，不代表仿色精度认证。</p>
   </section>
   <div class="secondary-column">
     <section class="tool-group catalog" aria-labelledby="catalog-title">
-      <header class="group-heading"><div class="group-title"><span class="group-number">02</span><h2 id="catalog-title">批量操作、预览与导出</h2></div><span class="group-count">24 tools</span></header>
+      <header class="group-heading"><div class="group-title"><span class="group-number">02</span><h2 id="catalog-title">批量操作、预览与导出</h2></div><span class="group-count">25 tools</span></header>
       <ul class="tool-list">
         <li><code>trlr_get_current_selection</code><span>当前照片与文件夹</span></li>
         <li><code>trlr_list_photos</code><span>目录筛选与分页</span></li>
@@ -66,6 +58,7 @@
         <li><code>trlr_folder_roots</code><span>可访问文件根目录</span></li>
         <li><code>trlr_folder_scan</code><span>扫描图片文件</span></li>
         <li><code>trlr_folder_preview</code><span>文件图片预览</span></li>
+        <li><code>trlr_import_photos</code><span>批量导入文件与目录</span></li>
         <li><code>trlr_upload_photo</code><span>图片传入 Lightroom</span></li>
         <li><code>trlr_export_image</code><span>JPEG 导出</span></li>
         <li><code>trlr_health</code><span>连接与目录授权</span></li>
@@ -84,7 +77,7 @@
       <header class="group-heading"><div class="group-title"><span class="group-number">03</span><h2 id="image-title">图片处理与数值化</h2></div><span class="group-count">2 tools</span></header>
       <ul class="tool-list">
         <li><code>trlr_image_measure</code><span>直方图、亮度、分布</span></li>
-        <li><code>trlr_image_compare</code><span>局部裁切与两图对比</span></li>
+        <li><code>trlr_image_compare</code><span>局部裁切与渲染对比</span></li>
       </ul>
     </section>
   </div>

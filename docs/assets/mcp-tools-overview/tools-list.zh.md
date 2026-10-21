@@ -2,7 +2,7 @@
 
 <!-- Generated from tools-list.zh.html; edit that HTML, then run export-markdown.mjs. -->
 
-## 修图参数、版本与回读 · 32
+## 修图参数、版本与回读 · 25
 
 | Tool | 用途 |
 | --- | --- |
@@ -13,10 +13,13 @@
 | `trlr_color_region_compare` | 区域色彩变化 |
 | `trlr_list_episodes` | 列出编辑上下文 |
 | `trlr_get_episode` | 版本、回读与状态 |
+| `trlr_get_photo_settings` | 当前显影参数与 XMP |
 | `trlr_episode_artifact` | 编辑版本预览与 XMP |
+| `trlr_episode_diff` | 版本参数与回读差异 |
+| `trlr_replay_episode` | 重放参数为新版本 |
 | `trlr_stop_episode` | 停止后续渲染 |
 | `trlr_restore_episode` | 恢复已保存版本 |
-| `trlr_message_episode` | 保存对话说明 |
+| `trlr_message_episode` | 保存对话与标签 |
 | `trlr_parameter_reference` | 参数名称与范围 |
 | `trlr_capabilities` | 参数能力与限制 |
 | `trlr_render_parameter_variants` | 多参数值候选渲染 |
@@ -28,20 +31,8 @@
 | `trlr_list_develop_presets` | 列出显影预设 |
 | `trlr_get_develop_preset` | 读取预设参数 |
 | `trlr_compare_develop_presets` | 比较预设参数 |
-| `trlr_create_session` | 创建会话 |
-| `trlr_get_session` | 读取会话状态 |
-| `trlr_get_preview` | 读取已存编辑预览 |
-| `trlr_apply_settings` | 应用显影设置 |
-| `trlr_get_xmp` | 基础参数与 XMP |
-| `trlr_get_full_settings` | 完整显影回读 |
-| `trlr_round_diff` | 轮次参数与图像差异 |
-| `trlr_replay_round` | 回放一轮设置 |
-| `trlr_reset` | 恢复会话基线 |
-| `trlr_export_session_context` | 导出会话上下文 |
 
-XMP 原片写入需明确授权；原生蒙版是虚拟副本的优先路径。ΔE00 用于观察颜色变化，不代表仿色精度认证。
-
-## 批量操作、预览与导出 · 24
+## 批量操作、预览与导出 · 25
 
 | Tool | 用途 |
 | --- | --- |
@@ -57,6 +48,7 @@ XMP 原片写入需明确授权；原生蒙版是虚拟副本的优先路径。�
 | `trlr_folder_roots` | 可访问文件根目录 |
 | `trlr_folder_scan` | 扫描图片文件 |
 | `trlr_folder_preview` | 文件图片预览 |
+| `trlr_import_photos` | 批量导入文件与目录 |
 | `trlr_upload_photo` | 图片传入 Lightroom |
 | `trlr_export_image` | JPEG 导出 |
 | `trlr_health` | 连接与目录授权 |
@@ -75,7 +67,7 @@ XMP 原片写入需明确授权；原生蒙版是虚拟副本的优先路径。�
 | Tool | 用途 |
 | --- | --- |
 | `trlr_image_measure` | 直方图、亮度、分布 |
-| `trlr_image_compare` | 局部裁切与两图对比 |
+| `trlr_image_compare` | 局部裁切与渲染对比 |
 
 选片与审美由你和 Agent 决定，工具负责执行与回读。缓存预览用于浏览；最终效果查看 Lightroom 实际渲染。
 

@@ -458,7 +458,7 @@ export default function App() {
     <div className={`app-shell page-${page} dock-${dockMode} ${detailBackdropActive ? "has-detail" : ""}`}>
       <header className="site-header" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <a className="brand" href="#gallery" aria-label={t("ToneRelay 画廊", "ToneRelay gallery")}>
-          <span className="brand-mark"><i /><i /><i /></span>
+          <img className="brand-mark" src={`${import.meta.env.BASE_URL}brand/tonerelay-icon.svg`} width="36" height="36" alt="" aria-hidden="true" />
           <span>
             <strong>TONERELAY</strong>
           </span>

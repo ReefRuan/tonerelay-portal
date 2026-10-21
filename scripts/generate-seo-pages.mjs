@@ -131,7 +131,7 @@ const css = `:root{color-scheme:dark;--line:#303b45;--surface:#171e26;--accent:#
 *{box-sizing:border-box}body{margin:0}a{color:var(--accent);text-underline-offset:.22em}a:hover{color:#d5e5ff}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .wrap{max-width:960px;margin:auto;padding:0 24px}.site-header{border-bottom:1px solid var(--line);background:#151c24}
 .site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px}
-.brand{font-weight:750;letter-spacing:.04em;text-decoration:none;color:#edf3fa}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:750;letter-spacing:.04em;text-decoration:none;color:#edf3fa}.brand img{display:block;width:28px;height:28px}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem}
 main{padding-top:44px;padding-bottom:72px}.eyebrow{color:var(--accent);font-size:.82rem;font-weight:650;letter-spacing:.06em}
 h1{font-family:"Iowan Old Style","Songti SC","Noto Serif CJK SC",serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:500;line-height:1.25;margin:.35em 0}.lead{font-size:1.12rem;line-height:1.85;max-width:800px;color:#c9d4df}
 .meta,.muted{color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 34px}
@@ -149,6 +149,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 38px;color:var(--muted);f
 function page({ title, description, canonical, type, body, image, stylesheet, language = "zh", alternates }) {
   const english = language === "en";
   const htmlLanguage = english ? "en" : "zh-CN";
+  const brandIcon = stylesheet.replace(/seo\.css$/, "brand/tonerelay-icon.svg");
   const appHome = english ? absolute("?lang=en#gallery") : site;
   const experienceUrl = absolute(english ? "?lang=en#experience" : "#experience");
   const mcpUrl = "https://github.com/ReefRuan/tonerelay-lightroom-mcp";
@@ -175,6 +176,7 @@ function page({ title, description, canonical, type, body, image, stylesheet, la
 <html lang="${htmlLanguage}"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Reef Ruan">
+<link rel="icon" type="image/svg+xml" href="${escapeHtml(brandIcon)}">
 <title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${safeUrl(canonical)}"><link rel="sitemap" type="application/xml" href="${absolute("sitemap.xml")}">
 ${alternateLinks}
@@ -184,7 +186,7 @@ ${alternateLinks}
 ${metaImage}<meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}">
 <script type="application/ld+json">${structuredData}</script>
 <link rel="stylesheet" href="${stylesheet}">
-</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Install & use" : "安装与使用"}</a><a href="${mcpUrl}">${english ? "MCP source" : "MCP 源码"}</a>${languageLink}</nav></div></header>
+</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}"><img src="${escapeHtml(brandIcon)}" width="28" height="28" alt="">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Install & use" : "安装与使用"}</a><a href="${mcpUrl}">${english ? "MCP source" : "MCP 源码"}</a>${languageLink}</nav></div></header>
 <main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">${english ? "Project source" : "项目源码"}</a></div></footer></body></html>`;
 }
 

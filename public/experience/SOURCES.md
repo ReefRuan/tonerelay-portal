@@ -62,4 +62,10 @@ Portal 文件位于 [`docs/assets/`](../../docs/assets/)，MCP 文件位于[公�
 
 `docs/assets/readme-portal-dialogue.jpg`（公开 MCP 中为 `assets/readme/portal-experience.jpg`）是当前体验页的浏览器截图，包含导航、「说出目标，看见结果」及第 01 组对话修图案例；替代 README 入口原先的画廊主图。截图保留页面与对话的原始文字，没有重新执行修图或改写画面。
 
-工具一览的中英文截图在 `docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg`、`tools-list.en.two-column.jpg`，公开 MCP 中为 `assets/readme/mcp-tools-list.zh.jpg`、`mcp-tools-list.en.jpg`。它们来自同目录 HTML/CSS 的浏览器渲染，不包含摄影作品；58 个工具名称依据已记录的公开源码快照核对，详见[列表说明](../../docs/assets/mcp-tools-overview/README.md)。
+工具一览的中英文截图在 `docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg`、`tools-list.en.two-column.jpg`。它们来自同目录 HTML/CSS 的浏览器渲染，不包含摄影作品。2026-10-21 Portal 名单和截图已按[公开 MCP 0.7.0 快照 `f17196210939a9638319e4c918dc1f750da6ef3d`](https://github.com/ReefRuan/tonerelay-lightroom-mcp/tree/f17196210939a9638319e4c918dc1f750da6ef3d) 的实际 `tools/list` 核对为 52 个唯一工具，三组分别为 25 / 25 / 2 项；只展示当前工具，不保留退役接口。本轮不更新 MCP 仓库中的 README 或图片。详见[列表说明](../../docs/assets/mcp-tools-overview/README.md)。
+
+## 2026-10-21 Portal 图标与 README
+
+`public/brand/tonerelay-icon.svg` 是本轮新绘制的 ToneRelay 图标：白色 S 曲线、控制点与坐标轴端点圆圈，作者 Reef Ruan，采用 AGPL-3.0-only，不使用 Adobe 的 Lightroom 标志。
+
+`docs/assets/readme-portal-dialogue.jpg` 与 `readme-portal-dialogue.en.jpg` 分别从中文、英文体验页重新截图，保留新图标、导航及第 01 组对话修图展示。页面界面随语言切换，照片和真实对话图片仍为原始素材，没有翻译或改写图片中的内容，也没有重新执行修图。本轮只修改 Portal。

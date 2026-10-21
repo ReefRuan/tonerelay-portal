@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://reefruan.github.io/tonerelay-portal/?lang=en#experience"><img src="public/brand/tonerelay-icon.svg" width="80" height="80" alt="ToneRelay S-curve icon" /></a>
+</p>
+
 # ToneRelay Portal — Lightroom MCP Style and Effects Gallery
 
 [中文](README.md) | [English](README.en.md)
@@ -9,7 +13,7 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 [Open the gallery](https://reefruan.github.io/tonerelay-portal/?lang=en#gallery) · [Explore photo editing](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) · [Install and use](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) · [Star the MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp) · [Bilibili homepage](https://space.bilibili.com/2869626) · [Contact the author](https://reefruan.github.io/tonerelay-portal/contact.html?lang=en)
 
 <p align="center">
-  <a href="https://reefruan.github.io/tonerelay-portal/?lang=en#experience"><img src="docs/assets/readme-portal-dialogue.jpg" width="900" alt="ToneRelay Portal experience page: conversational editing and actual Lightroom results" /></a>
+  <a href="https://reefruan.github.io/tonerelay-portal/?lang=en#experience"><img src="docs/assets/readme-portal-dialogue.en.jpg" width="900" alt="ToneRelay Portal experience page: conversational editing and actual Lightroom results" /></a>
 </p>
 
 <sub>An actual screenshot of the experience page. Its Lightroom and Agent conversation images come from real editing workflows. See “Image sources and licensing” below for sources and licenses.</sub>
@@ -51,6 +55,8 @@ Once ToneRelay is connected, your Agent can read the current photo and folder pr
 <sub>The image above comes from Portal’s conversational editing showcase. Its Lightroom and Agent conversation images come from the author’s earlier real workflow; the editing was not rerun for this documentation update. [More real workflow images and image sources](public/experience/SOURCES.md). The Agent determines the editing direction, while ToneRelay executes changes and retrieves results. Not every photo can achieve the same result in one step.</sub>
 
 ## From one photo to a whole set
+
+52 MCP tools cover Develop and color controls, edit-version readback, batch Catalog operations, previews, and export. This directory matches the public 0.7.0 source, including batch import, full Develop settings readback, version comparison, and historical-parameter replay. Available tools depend on the installed version.
 
 [![ToneRelay MCP tool directory: Develop settings and readback, batch operations and export, image measurement and comparison](docs/assets/mcp-tools-overview/tools-list.en.two-column.jpg)](docs/assets/mcp-tools-overview/tools-list.en.two-column.jpg)
 

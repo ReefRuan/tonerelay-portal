@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://reefruan.github.io/tonerelay-portal/#experience"><img src="public/brand/tonerelay-icon.svg" width="80" height="80" alt="ToneRelay S 曲线图标" /></a>
+</p>
+
 # ToneRelay Portal — Lightroom MCP 风格与效果画廊
 
 [中文](README.md) | [English](README.en.md)
@@ -51,6 +55,8 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 <sub>上图来自 Portal 的对话修图展示区；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非为本次文档更新重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
 
 ## 从一张照片，到一整组照片
+
+52 个 MCP 工具，涵盖显影与色彩、编辑版本回读、图库批量操作、预览和导出。当前一览已同步公开 0.7.0 源码，包含批量导入、完整显影参数读取、版本差异比较与历史参数重放；具体可用工具以安装版本为准。
 
 [![ToneRelay MCP 工具一览：修图参数与回读、批量操作与导出、图片测量与对比](docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg)](docs/assets/mcp-tools-overview/tools-list.zh.two-column.jpg)
 
