@@ -132,20 +132,19 @@ The author’s code and text are licensed under [GNU AGPL-3.0-only](LICENSE); se
 
 ## Copy the installation prompt
 
-Use the copy button in the top-right corner of the code block on GitHub, then paste it into your current Agent. This is a short entry point, not a second copy of the complete workflow. The full [installation prompt](docs/install-prompt.en.md) remains at its original path in this repository, alongside the MCP repository’s [INSTALL.en.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md).
+Use the copy button on GitHub, then paste the text into your current Agent. This [short entry point](docs/install-short-prompt.en.md) contains only the two official MCP repository URLs. Portal maintains the full [installation prompt](docs/install-prompt.en.md) and [FAQ](docs/faq.en.md), with synchronized copies in the MCP repository root. A complete MCP source download includes INSTALL-PROMPT.en.md, FAQ.en.md, and INSTALL.en.md, so installation does not require reaching Portal again.
 
 [Open Install and use →](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) · [Open the full installation prompt →](docs/install-prompt.en.md) · [Gitee prompt fallback →](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md)
 
 ```text
-Please enable ToneRelay for Lightroom Classic in the current Agent client.
-First read the full installation prompt: https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md
-Documentation fallback: https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md
-Follow its verification, authorization, and acceptance workflow; this short entry point is not the complete installation specification.
+Please install or connect ToneRelay for Lightroom Classic in the current Agent client.
+Use either official repository:
+https://github.com/ReefRuan/tonerelay-lightroom-mcp
+https://gitee.com/ReefRuan/tonerelay-lightroom-mcp
 
-Identify the operating system, client, and existing installation. Prefer read-only verification of its source, pinned version, Runtime, Bridge, Lightroom plug-in, and Catalog authorization. If a healthy compatible installation exists, connect only the current client; do not incidentally reinstall or upgrade shared components.
-Only when a download, repair, or explicitly authorized upgrade is needed, use the public source primary https://github.com/ReefRuan/tonerelay-lightroom-mcp or official source fallback https://gitee.com/ReefRuan/tonerelay-lightroom-mcp. Verify identity, public access, and a full commit (also verify a tag's resolved full commit), then read that version's INSTALL.en.md. This is a source preview, not a stable-installer or all-platform acceptance claim. Live GitHub access is not required when the mirror version and integrity can be verified. Report the selected source, full commit, and evidence; do not mix versions or assume main or the mirror is the latest. If verification fails, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can continue, without internal or third-party sources.
-Using the current platform's and client's official entry points, complete the necessary Lightroom plug-in, MCP, and startup Skill connection where supported. Preserve other client configuration, photos, Catalogs, presets, and personal data. Obtain the authorization required by the full prompt before changing shared components, Catalog binding, or mode; do not make silent changes.
-For passwords, login, or steps requiring the user's own confirmation, explain the minimum action and save progress. After setup, verify tool discovery, health, and current-photo readback in a real new client session using read-only operations. If you cannot create or observe that session, mark verification as pending and provide a handoff; do not declare success or modify photos or Catalog contents for acceptance.
+Check existing installations read-only first. If healthy and compatible, connect only this client; do not reinstall or incidentally upgrade shared components.
+Read the selected repository, record its full commit, and read INSTALL-PROMPT.en.md, FAQ.en.md, and INSTALL.en.md in its root completely before following them. If source needs downloading, pin that commit and obtain the complete source under the dedicated ToneRelay installation directory; do not mix component versions.
+Preserve photos, Catalogs, and other client configuration. Complete the required authorization and read-only acceptance checks in a real new client session; report anything that remains unverified.
 ```
 
 <a href="https://reefruan.github.io/tonerelay-portal/?lang=en#experience"><kbd>Open Install &amp; use →</kbd></a> · [Read the full installation prompt →](docs/install-prompt.en.md)

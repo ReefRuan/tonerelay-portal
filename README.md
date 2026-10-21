@@ -132,20 +132,19 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 
 ## 直接复制安装提示词
 
-在 GitHub 点击下方代码块右上角的复制按钮，粘贴给当前 Agent。这是简短入口；完整安装流程仍以本仓库原路径的[安装提示词](docs/install-prompt.md)和 MCP 的 [INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准，不另维护第二份长文。
+在 GitHub 点击下方代码块右上角的复制按钮，粘贴给当前 Agent。这是只有 MCP 双仓库链接的[短入口](docs/install-short-prompt.md)。完整[安装提示词](docs/install-prompt.md)与 [FAQ](docs/faq.md)在 Portal 维护，并同步到 MCP 仓库根目录；取得 MCP 完整源码后，可直接阅读其中的 INSTALL-PROMPT.md、FAQ.md 和 INSTALL.md，无需再次访问 Portal。
 
 [打开网页安装与使用 →](https://reefruan.github.io/tonerelay-portal/#experience) · [打开完整安装提示词 →](docs/install-prompt.md) · [Gitee 提示词备用 →](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)
 
 ```text
-请让当前 Agent 客户端使用 ToneRelay for Lightroom Classic。
-先阅读完整安装提示词：https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md
-文档备用：https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md
-并按其中的核验、授权和验收流程执行，不把本文当作完整安装规范。
+请在当前 Agent 客户端安装或接入 ToneRelay for Lightroom Classic。
+官方仓库，二选一：
+https://github.com/ReefRuan/tonerelay-lightroom-mcp
+https://gitee.com/ReefRuan/tonerelay-lightroom-mcp
 
-先确认系统、客户端和已有安装。优先只读核验已有来源、固定版本、Runtime、Bridge、LR 插件及 Catalog 授权；健康可兼容的安装只新增当前客户端，不顺便重装或升级共享组件。
-仅在需要下载、修复或经明确授权升级时，使用已公开的源码主源 https://github.com/ReefRuan/tonerelay-lightroom-mcp 或官方源码备用 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp ，核验真实身份、公开访问和完整 commit（标签须核验其完整 commit），阅读该版本的 INSTALL.md。当前是源码预览，不代表稳定安装包或全平台验收。只要镜像版本与完整性可核验，不要求先连通 GitHub；报告选用的源、固定 commit 和依据，不混版本，不把 main 或镜像当最新版。无法核验时停止安装下载分支并报告，仍可读文档或核验复用健康本机安装，不改用内部仓或第三方源。
-按当前平台及客户端的官方入口，完成所需的 Lightroom 插件、MCP 和客户端支持的启动 Skill 接入；保留其他客户端配置、照片、Catalog、预设和个人数据。需要改变共享组件、Catalog 绑定或模式时先按完整提示词取得授权，不静默修改。
-遇到密码、登录或必须本人确认的步骤，说明最小操作并保存进度。安装后在真实新客户端会话只读验证工具发现、健康和当前选片；不能创建或观察新会话就标记待验证并给出交接，不宣布通过，也不为验收修改照片或 Catalog。
+先只读检查已有安装；健康兼容时只接入当前客户端，不重装或顺便升级。
+读取所选仓库，记录完整 commit，完整阅读根目录的 INSTALL-PROMPT.md、FAQ.md 和 INSTALL.md，再按要求执行。需要下载源码时，固定该 commit，将完整源码放入 ToneRelay 专用安装目录；不混用不同版本的组件。
+保留照片、Catalog 和其他客户端配置；完成必要授权及真实新会话的只读验收，未验证项如实报告。
 ```
 
 <a href="https://reefruan.github.io/tonerelay-portal/#experience"><kbd>打开安装与使用 →</kbd></a> · [查看完整安装提示词 →](docs/install-prompt.md)

@@ -1,6 +1,6 @@
 # ToneRelay FAQ
 
-[中文](faq.md) | [English](faq.en.md)
+English FAQ. A Chinese version is provided separately.
 
 ## How should I describe the result I want?
 
@@ -78,8 +78,8 @@ The gallery detail view for [E01 Adaptive Skin-Tone Fidelity](https://reefruan.g
 
 Installation source and documentation/style packs have two separate official source pairs:
 
-- Complete MCP installation source: [GitHub primary](https://github.com/ReefRuan/tonerelay-lightroom-mcp) / [Gitee source fallback](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp). When GitHub is unreachable, obtain complete source at the same pinned full commit from Gitee and follow that version's instructions. Portal cannot replace the MCP source repository.
-- Installation prompt, FAQ, and style resources: [GitHub Portal](https://github.com/ReefRuan/tonerelay-portal) / [Gitee Portal fallback](https://gitee.com/ReefRuan/tonerelay-portal). For example, read the [English installation prompt on Gitee](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md). ZIP fallbacks for the six official style packs are under https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ; gallery details also provide China-access fallback URLs. Check mirror versions and file availability for E01 and E02 rather than assuming they have synchronized.
+- Complete MCP installation source and its bundled installation prompt and FAQ: [GitHub primary](https://github.com/ReefRuan/tonerelay-lightroom-mcp) / [Gitee source fallback](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp). At a pinned commit containing the documents, read `INSTALL-PROMPT.en.md`, `FAQ.en.md`, and `INSTALL.en.md` in the root completely; installation does not require reaching Portal again. When GitHub is unreachable, obtain complete source at the same pinned full commit from Gitee. Older tags or lagging mirrors may lack the added documents: report this rather than moving old tags or mixing components. Portal cannot replace the MCP source repository.
+- Maintenance source for public installation documents, the website, and style resources: [GitHub Portal](https://github.com/ReefRuan/tonerelay-portal) / [Gitee Portal fallback](https://gitee.com/ReefRuan/tonerelay-portal). If an older MCP version lacks the documents, obtain the [English installation prompt on Gitee](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md) separately and record its full commit, while following the target source version's actual capabilities. ZIP fallbacks for the six official style packs are under https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ; gallery details also provide China-access fallback URLs. Check mirror versions and file availability for E01 and E02 rather than assuming they have synchronized.
 
 Mirrors may lag: neither main nor the word “fallback” means the latest version. Verify the official owner, public access, pinned full commit, and file integrity; do not mix components from different commits. If only the mirror is reachable initially, report the selected mirror, full commit, and verification evidence. Restoring live GitHub access is not required to use an official fallback. Without sufficient evidence, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can still continue.
 

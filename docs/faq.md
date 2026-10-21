@@ -76,8 +76,8 @@ macOS 新安装设计使用根目录下的 `config.json`，集中保存目录、
 
 安装源码和文档／风格包有两组不同的官方双源：
 
-- MCP 完整安装源码：[GitHub 主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)。GitHub 不可达时可从 Gitee 获取同一固定完整 commit 的源码，按该版本的安装说明继续；Portal 仓库不能代替 MCP 源码。
-- 安装提示词、FAQ 和风格资源：[GitHub Portal](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 备用](https://gitee.com/ReefRuan/tonerelay-portal)。例如可直接阅读 [Gitee 安装提示词](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)。六个正式风格包的 ZIP 备用目录是 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ，画廊详情也提供国内备用地址；E01、E02 先核对镜像版本和文件是否存在，不能假定已经同步。
+- MCP 完整安装源码及随仓库提供的安装提示词、FAQ：[GitHub 主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)。取得包含安装文档的固定提交后，完整阅读根目录的 `INSTALL-PROMPT.md`、`FAQ.md` 与 `INSTALL.md`，不必再访问 Portal 才能安装。GitHub 不可达时可从 Gitee 获取同一固定完整 commit 的源码；旧标签或滞后镜像可能没有新增文档，应如实报告，不移动旧标签或混装组件。Portal 仓库不能代替 MCP 源码。
+- 公开安装文档的维护源、网页与风格资源：[GitHub Portal](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 备用](https://gitee.com/ReefRuan/tonerelay-portal)。旧 MCP 版本未附带文档时，可另外读取 [Gitee 安装提示词](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)，记录文档的固定提交，仍按目标源码版本的能力执行。六个正式风格包的 ZIP 备用目录是 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ，画廊详情也提供国内备用地址；E01、E02 先核对镜像版本和文件是否存在，不能假定已经同步。
 
 镜像可能滞后，`main` 和“备用”都不代表最新版。先核验官方所有者、公开访问、固定完整 commit 和文件完整性，不混装不同 commit 的组件。最初仅镜像可达时，报告选用的镜像、固定 commit 与核验依据，不必先恢复 GitHub 才能使用官方备用；没有足够依据则停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装。
 

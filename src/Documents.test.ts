@@ -3,9 +3,35 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import installDocument from "../docs/install-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
+import installDocumentEn from "../docs/install-prompt.en.md?raw";
+import shortInstallDocument from "../docs/install-short-prompt.md?raw";
+import shortInstallDocumentEn from "../docs/install-short-prompt.en.md?raw";
 import { Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
 
 describe("installation copy payload", () => {
+  it("keeps both short entries limited to the two official MCP repositories", () => {
+    for (const [document, suffix] of [[shortInstallDocument, ""], [shortInstallDocumentEn, ".en"]]) {
+      const prompt = document.match(/```text\n([\s\S]*?)\n```/)?.[1];
+      expect(prompt).toBeDefined();
+      expect(prompt!.match(/https:\/\/[^\s]+/g)).toEqual([
+        "https://github.com/ReefRuan/tonerelay-lightroom-mcp",
+        "https://gitee.com/ReefRuan/tonerelay-lightroom-mcp",
+      ]);
+      for (const file of [`INSTALL-PROMPT${suffix}.md`, `FAQ${suffix}.md`, `INSTALL${suffix}.md`]) {
+        expect(prompt).toContain(file);
+      }
+    }
+  });
+
+  it("routes the complete prompts to bundled FAQ files without assuming an appended FAQ", () => {
+    expect(installDocument).toContain("否则读取同一文档快照的 FAQ");
+    expect(installDocument).toContain("不要求再连通 Portal");
+    expect(installDocumentEn).toContain("otherwise open the FAQ from the same documentation snapshot");
+    expect(installDocumentEn).toContain("without reaching Portal again");
+    expect(installDocument).toContain("`INSTALL-PROMPT.md`、`FAQ.md`");
+    expect(installDocumentEn).toContain("`INSTALL-PROMPT.en.md`, `FAQ.en.md`");
+  });
+
   it("copies the standalone installation prompt and complete FAQ", () => {
     expect(INSTALL_PROMPT).toBe(installDocument.trim());
     expect(INSTALL_PROMPT_WITH_FAQ).toBe(`${installDocument.trim()}\n\n${faqDocument.trim()}`);
