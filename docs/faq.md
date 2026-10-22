@@ -48,6 +48,12 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 通常不用。先核对已有安装的来源、版本，以及 Runtime、Bridge、Lightroom 插件和 Catalog 授权是否健康；只装了某个客户端的 Plugin，不能直接证明共享组件都已就绪。确认可复用后，新客户端只需按自己的官方方式接入同一套本机 MCP；如果支持 Skill，也从同版本来源安装启动 Skill，并在新会话做只读连接检查。不要为了增加客户端重新下载、升级或注册一份 Lightroom 插件；某个共享组件确实损坏或不兼容时，才针对该层修复并说明对其他客户端的影响。
 
+## WorkBuddy 的技能必须走“上传技能”吗？
+
+不一定。WorkBuddy 会直接发现用户级技能目录：把与当前安装同一固定版本的 `tonerelay-lightroom/` 技能目录整体复制进去即可，位置是用户主目录下的 `~/.workbuddy/skills/tonerelay-lightroom/`（Windows 上即 `%USERPROFILE%\.workbuddy\skills\tonerelay-lightroom\`），保留其中的 `SKILL.md`、`references/` 和 `agents/`。放入后在新会话的技能列表里应能看到 `tonerelay-lightroom` 并可调用。该路径在 Windows 版 WorkBuddy（5.7.6）实测可直接发现，无需先打包 ZIP 或走“专家·技能·连接器 → 技能 → 添加技能 → 上传技能”；官方上传入口仍然可用，适合不便直接操作文件目录的情况。两条路都只交付技能，不安装 Runtime、Lightroom 插件或 MCP 连接。
+
+注意：使用与当前版本一致的已核验来源；保留本地已修改的技能，不静默覆盖；不要放入整个 Runtime、源码检出或 Codex 插件；技能是否就绪以客户端技能列表实际发现为准，仅磁盘上有文件不证明已加载；WorkBuddy 的 MCP 条目仍需单独写入 `~/.workbuddy/mcp.json` 并在连接器面板启用/信任，技能与 MCP 分别验证；其他平台或版本请按实际发现结果核对。
+
 ## Windows 和 macOS 的卸载能力一样吗？
 
 新增的安装清单、进程身份核对和断点卸载目前仅在 macOS 开发版实现，尚未完成 Windows 实机验收。Windows 请使用对应版本支持的入口；旧版整目录卸载会删除其中的 `data`，保留个人数据时应先备份，再逐项移除软件。
