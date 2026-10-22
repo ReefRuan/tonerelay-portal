@@ -91,13 +91,15 @@ function inlineMarkdown(markdown: string): ReactNode[] {
   return parts;
 }
 
-function AgentHelpDialog({ onClose }: { onClose: () => void }) {
+export function AgentHelpDialog({ onClose, onDownloadQr }: { onClose: () => void; onDownloadQr: () => void }) {
   const { t } = useLanguage();
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
       if (event.key === "Tab") {
@@ -115,6 +117,7 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
     closeRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
       previous?.focus();
     };
   }, [onClose]);
@@ -145,6 +148,9 @@ function AgentHelpDialog({ onClose }: { onClose: () => void }) {
           </figure>
           <div className="agent-dialog-actions">
             <a className="button-primary workbuddy-download" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer" title={t("打开 WorkBuddy 网站", "Open the WorkBuddy website")}>{t("立即下载 WorkBuddy", "Download WorkBuddy")} <Icon name="external" /></a>
+            <button type="button" className="intro-cta is-quiet" onClick={onDownloadQr} aria-haspopup="dialog">
+              {t("二维码下载", "Download via QR")}
+            </button>
             <span>{t("将打开 WorkBuddy 网站", "Opens the WorkBuddy website")}</span>
           </div>
         </div>
@@ -185,10 +191,9 @@ export function WorkBuddyDownloadDialog({ onClose }: { onClose: () => void }) {
   </dialog>;
 }
 
-function AgentStrip({ onExplain, onCopyInstall, onDownloadQr }: {
+function AgentStrip({ onExplain, onCopyInstall }: {
   onExplain: () => void;
   onCopyInstall?: () => void;
-  onDownloadQr: () => void;
 }) {
   const { language, t } = useLanguage();
   const hero = heroByLanguage[language];
@@ -211,9 +216,6 @@ function AgentStrip({ onExplain, onCopyInstall, onDownloadQr }: {
             <a className="intro-cta is-quiet" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">
               {t("没有 Agent？下载一个", "No Agent? Download one")}<Icon name="external" />
             </a>
-            <button type="button" className="intro-cta is-quiet" onClick={onDownloadQr} aria-haspopup="dialog">
-              {t("二维码下载", "Download via QR")}
-            </button>
             {ARTICLE_URL ? (
               <a className="intro-cta is-quiet" href={ARTICLE_URL} target="_blank" rel="noreferrer">
                 {t("阅读介绍文章", "Read the introduction")}<Icon name="external" />
@@ -305,13 +307,13 @@ export function Documents({ onCopyUninstall, onCopyInstall, onCopyPrompt }: {
   const [downloadQrOpen, setDownloadQrOpen] = useState(false);
   return (
     <main className="document-main experience-main">
-      <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} onDownloadQr={() => setDownloadQrOpen(true)} />
+      <AgentStrip onExplain={() => setHelpOpen(true)} onCopyInstall={onCopyInstall} />
       <WorkflowComparisons onCopyPrompt={onCopyPrompt} />
       <DialogueSection onCopyUninstall={onCopyUninstall} />
       <InstallationCallout onCopyInstall={onCopyInstall} />
       <DocumentFooter />
-      {helpOpen && typeof document !== "undefined" && createPortal(
-        <AgentHelpDialog onClose={() => setHelpOpen(false)} />,
+      {helpOpen && !downloadQrOpen && typeof document !== "undefined" && createPortal(
+        <AgentHelpDialog onClose={() => setHelpOpen(false)} onDownloadQr={() => setDownloadQrOpen(true)} />,
         document.body,
       )}
       {downloadQrOpen && typeof document !== "undefined" && createPortal(

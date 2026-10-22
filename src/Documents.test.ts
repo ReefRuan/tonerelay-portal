@@ -6,7 +6,8 @@ import faqDocument from "../docs/faq.md?raw";
 import installDocumentEn from "../docs/install-prompt.en.md?raw";
 import shortInstallDocument from "../docs/install-short-prompt.md?raw";
 import shortInstallDocumentEn from "../docs/install-short-prompt.en.md?raw";
-import { Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
+import { AgentHelpDialog, Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
+import { InstallAction } from "./HeaderPanels";
 
 describe("installation copy payload", () => {
   it("keeps both short entries limited to the two official MCP repositories", () => {
@@ -54,15 +55,33 @@ describe("installation copy payload", () => {
     expect(html).toContain('href="https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w"');
   });
 
-  it("replaces only the two hero guide links with Agent download actions", () => {
+  it("keeps the hero focused on installation, an Agent download link and author contact", () => {
     const html = renderToStaticMarkup(createElement(Documents));
     const hero = html.split('<section class="agent-strip"')[1].split('</section>')[0];
     expect(hero).toContain('class="intro-install-glow"');
     expect(hero).toContain("没有 Agent？下载一个");
-    expect(hero).toContain('aria-haspopup="dialog">二维码下载</button>');
+    expect(hero).not.toContain("二维码下载");
+    expect(hero).not.toContain("install-start-tag");
+    expect(hero).toContain('class="author-contact"');
     expect(hero).not.toContain("/INSTALL");
     expect(hero).not.toContain("备用安装说明");
     expect(html).toContain("安装步骤与要求");
+  });
+
+  it("places the QR download action in the Agent explanation instead of the hero", () => {
+    const html = renderToStaticMarkup(createElement(AgentHelpDialog, { onClose: () => {}, onDownloadQr: () => {} }));
+    expect(html).toContain('id="agent-dialog-title">什么是 Agent？</h2>');
+    expect(html).toContain('aria-haspopup="dialog">二维码下载</button>');
+    expect(html).toContain('href="https://www.workbuddy.cn/events/invite?inviteCode=rozclpaflg2w"');
+  });
+
+  it("marks the header copy control without changing its accessible button name", () => {
+    const html = renderToStaticMarkup(createElement(InstallAction, { onCopy: async () => true }));
+    expect(html).toContain('class="install-start-hint" aria-hidden="true">');
+    expect(html).toContain('d="M24 28 C 15 23, 31 16, 22 5"');
+    expect(html).toContain("立即开始使用");
+    expect(html).toContain("复制安装提示词");
+    expect(html).toContain('aria-label="展开安装提示词"');
   });
 
   it("uses the provided WorkBuddy poster with a close control and direct-link fallback", () => {

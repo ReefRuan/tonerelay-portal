@@ -16,6 +16,7 @@ import { categoryLabel, localizePreset } from "./catalog.en";
 import { LanguageSwitch, useLanguage } from "./i18n";
 import { Icon } from "./Icon";
 import { findSpatialTarget, type Direction, type SpatialRect } from "./navigation";
+import { resolvePortalPage } from "./routing";
 import { Trackball } from "./Trackball";
 import { Documents, ARTICLE_URL, getInstallPrompt, getUninstallPrompt, type PortalPage } from "./Documents";
 
@@ -29,7 +30,9 @@ declare global {
     /**
      * Dismisses the inline boot screen defined in index.html (fade-out +
      * node removal). Idempotent — safe under StrictMode double effects — and
-     * self-healing via a 5s fallback inside index.html if React never mounts.
+     * exposes an independent installation entry after 10s if React is delayed.
+     * Only actual readiness dismisses the screen; a timeout never reveals
+     * the unstyled SEO fallback.
      */
     __bootDone?: () => void;
   }
@@ -38,10 +41,7 @@ declare global {
 type DockMode = "collapsed" | "normal" | "expanded";
 
 function pageFromHash(): PortalPage {
-  const value = window.location.hash.slice(1);
-  return value === "experience" || value === "about" || value === "help"
-    ? "experience"
-    : "gallery";
+  return resolvePortalPage(window.location.hash, window.location.search);
 }
 
 function markdownWithExternalLinks(markdown: string) {
@@ -457,7 +457,7 @@ export default function App() {
   return (
     <div className={`app-shell page-${page} dock-${dockMode} ${detailBackdropActive ? "has-detail" : ""}`}>
       <header className="site-header" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
-        <a className="brand" href="#gallery" aria-label={t("ToneRelay 画廊", "ToneRelay gallery")}>
+        <a className="brand" href="#experience" aria-label={t("ToneRelay 首页", "ToneRelay home")}>
           <img className="brand-mark" src={`${import.meta.env.BASE_URL}brand/tonerelay-icon.svg`} width="36" height="36" alt="" aria-hidden="true" />
           <span>
             <strong>TONERELAY</strong>
@@ -473,7 +473,7 @@ export default function App() {
           <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group">
             <a className="header-action header-star-link header-star-glow" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title={t("在 GitHub 给 Lightroom MCP 点 Star", "Star Lightroom MCP on GitHub")}><Icon name="star" />Star MCP</a>
-            <a className="header-action header-star-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看本页面源码", "View this page's source code")}><Icon name="external" />{t("本页面源码", "Page source")}</a>
+            <a className="header-action header-source-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看本页面源码", "View this page's source code")}><Icon name="external" />{t("本页面源码", "Page source")}</a>
           </div>
         </div>}
         <LanguageSwitch className="header-language" />
@@ -504,7 +504,7 @@ export default function App() {
         <section className="catalog-browse" aria-label={t("风格与效果画廊", "Style and effects gallery")}>
           <div className="catalog-heading">
             <div>
-              <h2>{t("互联网蒸馏预设", "Styles distilled from visual references")}</h2>
+              <h2>{t("互联网蒸馏预设包skills Beta", "Internet-distilled preset pack skills Beta")}</h2>
             </div>
             <div className="catalog-rule"><i /></div>
             <div className="catalog-tools">

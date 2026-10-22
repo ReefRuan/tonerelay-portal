@@ -41,12 +41,12 @@
       }
     </script>
     <style>
-      /* Boot screen — inline, zero-dependency. Every background value is copied
-         verbatim from .app-shell in src/styles.css (keep both in sync).
-         Dismissed by App.tsx's first effect via window.__bootDone(). */
+      /* Independent boot UI: no application CSS, web font or JS required.
+         Only actual app readiness dismisses it; slow loading offers installation. */
       #boot{
         position:fixed;inset:0;z-index:10000;
-        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+        display:flex;align-items:center;justify-content:center;
+        overflow-y:auto;box-sizing:border-box;padding:32px 24px;
         background:#0e1216;
         background-image:
           linear-gradient(rgba(122,179,255,.07) 1px,transparent 1px),
@@ -54,17 +54,16 @@
           radial-gradient(circle at 30% 5%,#1e2b3bcc,transparent 36%);
         background-size:42px 42px,42px 42px,auto;
         color:#edf1f4;
-        font-family:"SFMono-Regular",Menlo,Monaco,monospace;
-        opacity:1;transition:opacity 380ms cubic-bezier(.4,0,.2,1);
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+        opacity:1;transition:opacity 180ms ease-out;
       }
       #boot.is-done{opacity:0;pointer-events:none;}
-      /* Same public font as src/fonts.ts. Vite rewrites this URL for the
-         deployment base; both uses share the browser cache. */
-      @font-face{font-family:"Xiaolai SC Web";src:url("/fonts/xiaolai-subset.woff2") format("woff2");font-display:swap;}
+      body:has(#boot:not(.is-done)){overflow:hidden;}
+      #boot [hidden]{display:none!important;}
+      #boot-loading{display:flex;flex-direction:column;align-items:center;gap:24px;}
       .boot-mark{display:block;width:52px;height:52px;animation:boot-breathe 2s ease-in-out infinite alternate;}
       .boot-word{font-size:13px;font-weight:600;letter-spacing:.34em;text-indent:.34em;}
-      .boot-status{font-family:"Xiaolai SC Web","Xiaolai SC","KaiTi","STKaiti",cursive;
-        font-size:15px;color:#9da7b1;letter-spacing:.06em;}
+      .boot-status{font-size:15px;color:#9da7b1;letter-spacing:.06em;}
       .boot-track{width:132px;height:2px;background:rgba(121,179,255,.16);border-radius:2px;overflow:hidden;}
       .boot-track i{display:block;width:40%;height:100%;background:#79b3ff;border-radius:2px;
         animation:boot-slide 1.15s ease-in-out infinite;}
@@ -72,6 +71,29 @@
       @keyframes boot-slide{from{transform:translateX(-105%)}to{transform:translateX(355%)}}
       .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;
         clip-path:inset(50%);white-space:nowrap;}
+      #boot.is-slow{align-items:flex-start;}
+      .boot-fallback{width:min(100%,820px);margin:auto;box-sizing:border-box;
+        padding:clamp(24px,4vw,40px);border:1px solid #34485e;border-radius:24px;
+        background:#131d28;box-shadow:0 20px 80px #0004;text-align:left;line-height:1.6;}
+      .boot-fallback *{box-sizing:border-box;}
+      .boot-eyebrow{margin:0 0 16px;color:#9cc8ff;font-size:12px;font-weight:650;letter-spacing:.14em;}
+      .boot-fallback h1{margin:0 0 12px;font-size:clamp(26px,4vw,34px);line-height:1.25;font-weight:650;letter-spacing:-.02em;}
+      .boot-description{margin:0 0 24px;color:#c1cbd5;font-size:16px;}
+      .boot-actions{display:flex;gap:10px;flex-wrap:wrap;}
+      .boot-fallback button,.boot-fallback .boot-refresh{appearance:none;padding:11px 18px;min-height:44px;border:1px solid #45586a;
+        border-radius:10px;background:#1c2a37;color:#edf1f4;font:inherit;font-size:15px;cursor:pointer;text-decoration:none;}
+      .boot-fallback button.boot-primary{background:#b0d2ff;border-color:#b0d2ff;color:#10243b;font-weight:650;}
+      .boot-fallback button:hover,.boot-fallback .boot-refresh:hover{filter:brightness(1.12);}
+      .boot-fallback a{color:#accfff;text-underline-offset:3px;}
+      .boot-fallback :is(a,button,textarea):focus-visible{outline:2px solid #b0d2ff;outline-offset:4px;}
+      .boot-feedback{min-height:23px;margin:10px 0 20px;color:#b3c7dc;font-size:13px;}
+      .boot-prompt-label{display:block;margin-bottom:8px;color:#c4cfda;font-size:13px;}
+      .boot-prompt{display:block;resize:vertical;width:100%;min-height:220px;max-height:55vh;
+        border:1px solid #3b5064;border-radius:12px;padding:16px;background:#0d151f;color:#e0e9f3;
+        font:13px/1.75 ui-monospace,"SFMono-Regular",Menlo,Consolas,"PingFang SC",monospace;}
+      .boot-doc-links{margin:14px 0 24px;color:#aab9c8;font-size:13px;overflow-wrap:anywhere;}
+      .boot-contact{display:flex;flex-wrap:wrap;gap:8px 18px;border-top:1px solid #314253;padding-top:18px;
+        color:#bac7d4;font-size:13px;overflow-wrap:anywhere;}
       @media (prefers-reduced-motion:reduce){
         #boot{transition-duration:120ms}
         .boot-mark,.boot-track i{animation:none}
@@ -80,35 +102,105 @@
     </style>
   </head>
   <body>
-    <div id="boot" role="status" aria-live="polite">
+    <div id="boot">
+      <div id="boot-loading" role="status" aria-live="polite">
       <img class="boot-mark" src="/brand/tonerelay-icon.svg" width="52" height="52" alt="" aria-hidden="true" />
       <strong class="boot-word">TONERELAY</strong>
       <span class="boot-status" aria-hidden="true">正在进入 ToneRelay…</span>
       <span class="boot-track" aria-hidden="true"><i></i></span>
       <span class="visually-hidden">正在加载 ToneRelay</span>
+      </div>
+      <!-- boot-install-context -->
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      if (new URLSearchParams(window.location.search).get("lang") === "en") {
+      /* boot-runtime:start */
+      (function () {
+      var boot = document.getElementById("boot");
+      var loading = document.getElementById("boot-loading");
+      var fallback = document.getElementById("boot-fallback");
+      var root = document.getElementById("root");
+      var english = new URLSearchParams(window.location.search).get("lang") === "en";
+      var appMounted = false;
+      var appReady = false;
+      var interacting = false;
+      var removed = false;
+      if (root) root.inert = true;
+      if (english) {
         document.documentElement.lang = "en";
         document.querySelector(".boot-status").textContent = "Entering ToneRelay…";
         document.querySelector("#boot .visually-hidden").textContent = "Loading ToneRelay";
       }
-      /* Boot dismissal: idempotent. Called by App.tsx after React commits and
-         paints; the 5s timeout is the fallback so a failed mount never traps
-         the user on the loading screen. */
+      document.querySelectorAll("[data-boot-language]").forEach(function (panel) {
+        panel.hidden = panel.dataset.bootLanguage !== (english ? "en" : "zh");
+      });
+      fallback.setAttribute("aria-labelledby", english ? "boot-title-en" : "boot-title-zh");
+
+      function dismiss() {
+        if (boot.dataset.done) return;
+        boot.dataset.done = "1";
+        if (root) root.inert = false;
+        boot.classList.add("is-done");
+        var kill = function () {
+          if (removed) return;
+          removed = true;
+          boot.remove();
+        };
+        boot.addEventListener("transitionend", function (event) {
+          if (event.target === boot) kill();
+        });
+        setTimeout(kill, 400);
+      }
+      function showSlow() {
+        if (appReady || boot.dataset.done) return;
+        boot.classList.add("is-slow");
+        loading.hidden = true;
+        fallback.hidden = false;
+      }
+      var slowTimer = setTimeout(showSlow, 10000);
       window.__bootDone = function () {
-        var b = document.getElementById("boot");
-        if (!b || b.dataset.done) return;
-        b.dataset.done = "1";
-        b.classList.add("is-done");
-        var kill = function () { b.remove(); };
-        b.addEventListener("transitionend", kill, { once: true });
-        setTimeout(kill, 600);
+        appMounted = true;
+        // A mounted app with a failed stylesheet is still not ready to show.
+        if (getComputedStyle(document.documentElement).getPropertyValue("--tonerelay-ui-ready").trim() !== "1") return;
+        appReady = true;
+        clearTimeout(slowTimer);
+        if (interacting && !fallback.hidden) {
+          document.querySelectorAll("[data-boot-enter]").forEach(function (button) { button.hidden = false; });
+          return;
+        }
+        dismiss();
       };
-      setTimeout(window.__bootDone, 5000);
+      document.querySelectorAll('link[rel="stylesheet"]').forEach(function (stylesheet) {
+        stylesheet.addEventListener("load", function () { if (appMounted) window.__bootDone(); });
+      });
+      function keepFallback() { if (!fallback.hidden) interacting = true; }
+      fallback.addEventListener("pointerdown", keepFallback);
+      fallback.addEventListener("focusin", keepFallback);
+      document.querySelectorAll("[data-boot-enter]").forEach(function (button) {
+        button.addEventListener("click", function () { if (appReady) dismiss(); });
+      });
+      document.querySelectorAll("[data-boot-copy]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          interacting = true;
+          var field = document.getElementById(button.dataset.bootCopy);
+          var feedback = document.getElementById(button.getAttribute("aria-describedby"));
+          function manualCopy() {
+            field.focus();
+            field.select();
+            feedback.textContent = english ? "Text selected. Copy it manually and paste it into your Agent." : "已选中文字，请手动复制，再粘贴给 Agent。";
+          }
+          if (!navigator.clipboard || !navigator.clipboard.writeText) { manualCopy(); return; }
+          try {
+            navigator.clipboard.writeText(field.value).then(function () {
+              feedback.textContent = english ? "Copied. Paste it into your Agent to install." : "已复制。粘贴给 Agent，即可按说明安装。";
+            }).catch(manualCopy);
+          } catch (_) { manualCopy(); }
+        });
+      });
+      })();
+      /* boot-runtime:end */
     </script>
-    <noscript><style>#boot{display:none}</style></noscript>
+    <noscript><style>#boot{align-items:flex-start}#boot #boot-loading{display:none}#boot #boot-fallback[hidden]{display:block!important}</style></noscript>
   </body>
 </html>

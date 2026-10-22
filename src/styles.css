@@ -1,4 +1,6 @@
 :root {
+  /* Boot hand-off must see the real app stylesheet, not just a mounted DOM. */
+  --tonerelay-ui-ready: 1;
   font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", sans-serif;
   color: #edf1f4;
   background: #0e1216;
@@ -140,6 +142,24 @@ input:focus-visible,
 
 .header-action:hover { border-color: var(--blue); background: #263f5b; transform: translateY(-1px); }
 .header-action svg { width: 15px; height: 15px; }
+.header-action.header-source-link {
+  min-height: 32px;
+  padding: 0 7px;
+  border-color: transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #9eacba;
+  font-size: 11px;
+  font-weight: 500;
+}
+.header-action.header-source-link:hover,
+.header-action.header-source-link:focus-visible {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.045);
+  color: #e8f0f8;
+  transform: none;
+}
+.header-action.header-source-link svg { width: 12px; height: 12px; opacity: 0.75; }
 .header-install { border-color: #a9cfff; color: #0d1d2f; background: #a9cfff; }
 .header-install:hover { border-color: #d7e9ff; color: #081a2d; background: #d7e9ff; }
 .header-star-link small { color: #9aa9b8; font-size: 9px; font-weight: 500; }
@@ -2074,9 +2094,45 @@ kbd {
 }
 
 .install-split {
+  position: relative;
   display: inline-flex;
   align-items: stretch;
 }
+
+.install-start-hint {
+  position: absolute;
+  top: calc(100% + 29px);
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: max-content;
+  padding: 8px 15px;
+  border: 1px solid rgba(169, 207, 255, 0.3);
+  border-radius: 12px;
+  background: var(--frost-bg-strong);
+  color: #e4edf6;
+  box-shadow: 0 6px 18px rgba(4, 12, 21, 0.14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font: 500 14px/1.4 var(--hand);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.install-start-hint svg {
+  position: absolute;
+  top: -29px;
+  left: calc(50% - 23px);
+  width: 46px;
+  height: 30px;
+  overflow: visible;
+  fill: none;
+  stroke: #d5e2ef;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.site-header-actions:has(.header-panel) .install-start-hint { display: none; }
 
 .install-split .install-main {
   border-top-right-radius: 0;
@@ -2307,24 +2363,29 @@ kbd {
 .agent-strip-heading strong { color: var(--blue); font-weight: 720; }
 
 .author-contact {
-  min-height: 44px;
-  padding: 0 4px;
+  min-height: 48px;
+  padding: 0 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  color: #b8c9d9;
-  font-size: 12px;
-  font-weight: 600;
+  gap: 10px;
+  border: 1px solid rgba(150, 174, 199, 0.36);
+  border-radius: 8px;
+  background: rgba(169, 207, 255, 0.045);
+  color: #d6e5f3;
+  font-size: 15px;
+  font-weight: 650;
   text-decoration: none;
-  transition: color 160ms ease;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
 .author-contact:hover {
   color: #fff;
+  border-color: rgba(169, 207, 255, 0.7);
+  background: rgba(169, 207, 255, 0.1);
 }
 
-.author-contact svg { width: 16px; height: 16px; }
+.author-contact svg { width: 18px; height: 18px; }
 
 .intro-cta-row {
   display: flex;
@@ -2592,7 +2653,7 @@ kbd {
 .agent-architecture-node strong { color: var(--ink); font: 600 13px/1.3 var(--mono); }
 .agent-architecture-node span { color: #c2d0db; font-size: 10px; line-height: 1.5; }
 .agent-architecture-arrow { color: var(--blue); font: 18px/1 var(--mono); text-align: center; }
-.agent-dialog-actions { margin-top: 22px; display: flex; align-items: center; gap: 20px; }
+.agent-dialog-actions { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 .agent-dialog-actions > span { color: var(--muted); font-size: 11px; }
 
 .workbuddy-dialog {

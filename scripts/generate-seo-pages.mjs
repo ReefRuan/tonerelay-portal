@@ -150,7 +150,7 @@ function page({ title, description, canonical, type, body, image, stylesheet, la
   const english = language === "en";
   const htmlLanguage = english ? "en" : "zh-CN";
   const brandIcon = stylesheet.replace(/seo\.css$/, "brand/tonerelay-icon.svg");
-  const appHome = english ? absolute("?lang=en#gallery") : site;
+  const galleryUrl = absolute(english ? "?lang=en#gallery" : "#gallery");
   const experienceUrl = absolute(english ? "?lang=en#experience" : "#experience");
   const mcpUrl = "https://github.com/ReefRuan/tonerelay-lightroom-mcp";
   const alternateLinks = alternates
@@ -186,7 +186,7 @@ ${alternateLinks}
 ${metaImage}<meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}">
 <script type="application/ld+json">${structuredData}</script>
 <link rel="stylesheet" href="${stylesheet}">
-</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${appHome}"><img src="${escapeHtml(brandIcon)}" width="28" height="28" alt="">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${appHome}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Install & use" : "安装与使用"}</a><a href="${mcpUrl}">${english ? "MCP source" : "MCP 源码"}</a>${languageLink}</nav></div></header>
+</head><body><header class="site-header"><div class="wrap"><a class="brand" href="${experienceUrl}"><img src="${escapeHtml(brandIcon)}" width="28" height="28" alt="">ToneRelay</a><nav class="nav" aria-label="${english ? "Main navigation" : "主导航"}"><a href="${galleryUrl}">${english ? "Style & effect gallery" : "风格与效果画廊"}</a><a href="${experienceUrl}">${english ? "Install & use" : "安装与使用"}</a><a href="${mcpUrl}">${english ? "MCP source" : "MCP 源码"}</a>${languageLink}</nav></div></header>
 <main class="wrap">${body}</main><footer><div class="wrap">© 2026 Reef Ruan · ToneRelay · <a href="${repo}">${english ? "Project source" : "项目源码"}</a></div></footer></body></html>`;
 }
 

@@ -1,10 +1,23 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import { renderBootInstallFallback } from "./src/bootFallback.ts";
 
 export default defineConfig({
   base: "./",
-  plugins: [react()],
+  plugins: [react(), {
+    name: "inline-boot-installation-context",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        if (!html.includes("<!-- boot-install-context -->")) return html;
+        const zh = readFileSync(new URL("./docs/install-short-prompt.md", import.meta.url), "utf8");
+        const en = readFileSync(new URL("./docs/install-short-prompt.en.md", import.meta.url), "utf8");
+        return html.replace("<!-- boot-install-context -->", renderBootInstallFallback(zh, en));
+      },
+    },
+  }],
   build: {
     rollupOptions: {
       input: {

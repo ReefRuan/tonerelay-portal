@@ -140,6 +140,14 @@ export function InstallAction({ onCopy }: {
   return (
     <div className="header-action-group" ref={rootRef}>
       <div className="install-split">
+        <span className="install-start-hint" aria-hidden="true">
+          <svg viewBox="0 0 46 30" focusable="false">
+            <path d="M24 28 C 15 23, 31 16, 22 5" />
+            <path d="M22 4 l -6 6" />
+            <path d="M22 4 l 6 6" />
+          </svg>
+          <span>{t("立即开始使用", "Start using now")}</span>
+        </span>
         <button
           type="button"
           className="header-action header-install install-main"
