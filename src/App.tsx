@@ -23,6 +23,7 @@ import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
 import { InstallAction, PrivacyAction } from "./HeaderPanels";
 import { IntroSignature } from "./IntroSignature";
+import { GenerationGallery } from "./GenerationGallery";
 
 declare global {
   interface Window {
@@ -396,6 +397,7 @@ export default function App() {
       if (page !== "gallery" || manualCopy !== null || event.defaultPrevented || event.isComposing) return;
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest(".generation-gallery")) return;
       const editing = target?.closest('input, textarea, select, [contenteditable="true"]');
       if (editing) {
         if (event.key === "Escape" && !detailOpen) {
@@ -575,6 +577,8 @@ export default function App() {
             </section>
           )}
         </section>
+
+        <GenerationGallery onCopy={copyValue} />
 
         <footer className="site-footer">
           <span>© 2026 Reef Ruan · ToneRelay</span>
