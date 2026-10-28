@@ -63,7 +63,6 @@ export function GenerationGallery({ onCopy }: {
             <span><strong>kigurumi模拟</strong><small>KIGURUMI SIMULATION</small></span>
             <span className="card-stamps"><span className="card-kind is-effect">{t("生成", "Generate")}</span><span className="card-version">SKILL</span></span>
           </span>
-          <span className="generation-credit">深海鱼肉包 × Reef</span>
         </button>
         <button type="button" className="generation-copy" onClick={() => void copy("skill")}>
           <Icon name="copy" />{t("一键复制 Skill", "Copy complete skill")}
@@ -89,7 +88,6 @@ export function GenerationGallery({ onCopy }: {
         <div className="generation-description">
           <span className="generation-eyebrow">CHARACTER → KIGURUMI</span>
           <h2 id="generation-detail-title">kigurumi模拟</h2>
-          <p className="generation-byline">深海鱼肉包 × Reef</p>
           <p>{t("把角色原型转成实体头壳预览图，保留角色的脸、瞳色、发型与配饰。", "Turn character references into physical kigurumi head previews while preserving identity, eyes, hairstyle and accessories.")}</p>
           <p>{t("使用时会询问角色原型、真实头壳定妆照，以及玉米须 / 亮面直发。没有定妆照时，从 KiguDB 查找。", "The skill asks for character references, a real finished-head photo, and a microcrimped or glossy straight wig finish. If no product photo is available, it searches KiguDB.")}</p>
           <button type="button" className="generation-copy is-primary" onClick={() => void copy("skill")}><Icon name="copy" />{t("复制完整 Skill", "Copy complete skill")}</button>

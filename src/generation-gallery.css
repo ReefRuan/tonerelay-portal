@@ -5,7 +5,6 @@
 .generation-cover.preset-card { width: 100%; --card-ratio: 1070 / 1470; }
 .generation-cover .photo-frame img { filter: none; }
 .generation-cover .release-badge { background: #23434fdf; }
-.generation-credit { display: block; margin-top: 12px; color: var(--muted); font-size: 10px; letter-spacing: .06em; }
 .generation-copy { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 42px; padding: 10px 17px; border: 1px solid #465765; border-radius: 6px; color: var(--ink); background: #1b2732; font-size: 12px; cursor: pointer; }
 .generation-card > .generation-copy { width: 100%; margin-top: 10px; }
 .generation-copy:hover { background: #263c4e; border-color: #7babc6; }
@@ -22,7 +21,6 @@
 .generation-eyebrow { color: #80bdd3; font: 10px var(--mono); letter-spacing: .15em; }
 .generation-description h2 { margin: 12px 0 6px; font: 400 34px var(--serif); }
 .generation-description p { color: #bccad5; font-size: 13px; line-height: 1.85; }
-.generation-description .generation-byline { margin: 0 0 22px; color: #91a6b7; font-size: 11px; }
 .generation-copy.is-primary { margin-top: 10px; background: #325b75; border-color: #739eb9; }
 .generation-description .generation-use { color: var(--muted); font-size: 11px; }
 .generation-example { margin-top: 28px; border-top: 1px solid #36414b; padding-top: 20px; }
