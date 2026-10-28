@@ -17,7 +17,12 @@ export function GenerationGallery({ onCopy }: {
 }) {
   const { t } = useLanguage();
   const dialog = useRef<HTMLDialogElement>(null);
+  const readerTitle = useRef<HTMLHeadingElement>(null);
+  const readerButton = useRef<HTMLButtonElement>(null);
+  const overviewScroll = useRef(0);
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState<"overview" | "skill">("overview");
+  const [exampleExpanded, setExampleExpanded] = useState(false);
   const [feedback, setFeedback] = useState<{ kind: "skill" | "example"; message: string } | null>(null);
 
   useEffect(() => {
@@ -31,6 +36,18 @@ export function GenerationGallery({ onCopy }: {
       document.body.style.overflow = previousOverflow;
     };
   }, [open]);
+
+  useEffect(() => {
+    const modal = dialog.current;
+    if (!modal?.open) return;
+    modal.scrollTop = view === "skill" ? 0 : overviewScroll.current;
+    (view === "skill" ? readerTitle.current : readerButton.current)?.focus({ preventScroll: true });
+  }, [view]);
+
+  function readSkill() {
+    overviewScroll.current = dialog.current?.scrollTop ?? 0;
+    setView("skill");
+  }
 
   async function copy(kind: "skill" | "example") {
     const message = kind === "skill"
@@ -69,30 +86,57 @@ export function GenerationGallery({ onCopy }: {
         </button>
       </article>
     </div>
-    <dialog ref={dialog} className="generation-dialog" aria-labelledby="generation-detail-title"
-      onClose={() => setOpen(false)} onKeyDown={(event) => event.stopPropagation()}
+    <dialog ref={dialog} className={`generation-dialog ${view === "skill" ? "is-reading" : ""}`} aria-labelledby={view === "skill" ? "generation-reader-title" : "generation-detail-title"}
+      onClose={() => { setOpen(false); setView("overview"); setExampleExpanded(false); }} onKeyDown={(event) => event.stopPropagation()}
       onClick={(event) => {
         if (event.target !== event.currentTarget) return;
         const bounds = event.currentTarget.getBoundingClientRect();
         if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setOpen(false);
       }}>
       <div className="generation-dialog-header">
-        <span>{t("生成类", "Image generation")} / G01</span>
+        {view === "skill"
+          ? <button type="button" className="generation-reader-back" onClick={() => setView("overview")}><Icon name="back" />{t("返回预览", "Back to preview")}</button>
+          : <span>{t("生成类", "Image generation")} / G01</span>}
         <button type="button" autoFocus onClick={() => setOpen(false)} aria-label={t("关闭生成详情", "Close generation details")}><Icon name="close" /></button>
       </div>
-      <div className="generation-detail">
-        <a className="generation-preview" href={cover} target="_blank" rel="noreferrer">
-          <img src={cover} alt={t("蓝发头壳玉米须效果完整预览", "Full blue-haired kigurumi preview")} width="1070" height="1470" />
-          <span>{t("查看原图", "View full image")}</span>
-        </a>
+      {view === "skill" ? <article className="generation-reader">
+        <div className="generation-reader-heading">
+          <div><span className="generation-eyebrow">KIGURUMI SIMULATION</span><h2 id="generation-reader-title" ref={readerTitle} tabIndex={-1}>{t("Skill 全文", "Complete skill")}</h2><p>SKILL.md</p></div>
+          <button type="button" className="generation-copy is-primary" onClick={() => void copy("skill")}><Icon name="copy" />{t("复制完整 Skill", "Copy complete skill")}</button>
+        </div>
+        <p role="status" aria-live="polite" className="generation-feedback">{feedback?.kind === "skill" ? feedback.message : ""}</p>
+        <pre>{skill}</pre>
+      </article> : <div className="generation-detail">
         <div className="generation-description">
           <span className="generation-eyebrow">CHARACTER → KIGURUMI</span>
           <h2 id="generation-detail-title">kigurumi模拟</h2>
           <p>{t("把角色原型转成实体头壳预览图，保留角色的脸、瞳色、发型与配饰。", "Turn character references into physical kigurumi head previews while preserving identity, eyes, hairstyle and accessories.")}</p>
-          <p>{t("使用时会询问角色原型、真实头壳定妆照，以及玉米须 / 亮面直发。没有定妆照时，从 KiguDB 查找。", "The skill asks for character references, a real finished-head photo, and a microcrimped or glossy straight wig finish. If no product photo is available, it searches KiguDB.")}</p>
-          <button type="button" className="generation-copy is-primary" onClick={() => void copy("skill")}><Icon name="copy" />{t("复制完整 Skill", "Copy complete skill")}</button>
+          <ul className="generation-requirements" aria-label={t("使用时需要", "What you need")}>
+            <li>{t("角色原型", "Character reference")}</li><li>{t("真实定妆照", "Finished-head photo")}</li><li>{t("玉米须 / 亮面直发", "Wig finish")}</li>
+          </ul>
+          <p className="generation-reference-note">{t("没有定妆照时，Skill 会从 KiguDB 查找。", "No product photo? The skill searches KiguDB.")}</p>
+          <div className="generation-primary-actions">
+            <button type="button" className="generation-copy is-primary" onClick={() => void copy("skill")}><Icon name="copy" />{t("复制完整 Skill", "Copy complete skill")}</button>
+            <button ref={readerButton} type="button" className="generation-copy is-secondary" onClick={readSkill}><Icon name="details" />{t("阅读全文", "Read full skill")}</button>
+          </div>
           <p className="generation-use">{t("粘贴给支持图像生成的 Agent，按提示补充图片即可。", "Paste into an image-capable agent and provide the requested reference images.")}</p>
-          <section className="generation-resources" aria-labelledby="generation-resources-title">
+          <p role="status" aria-live="polite" className="generation-feedback">{feedback?.kind === "skill" ? feedback.message : ""}</p>
+        </div>
+        <div className="generation-visual">
+          <a className="generation-preview" href={cover} target="_blank" rel="noreferrer">
+            <img src={cover} alt={t("蓝发头壳玉米须效果完整预览", "Full blue-haired kigurumi preview")} width="1070" height="1470" />
+            <span>{t("查看原图", "View full image")}<Icon name="external" /></span>
+          </a>
+          <section className="generation-example" aria-labelledby="generation-example-title">
+            <div className="generation-example-heading"><div><span className="generation-eyebrow">PROMPT EXAMPLE</span><h3 id="generation-example-title">{t("蓝发示例提示词", "Blue-haired example prompt")}</h3></div><button type="button" className="generation-copy" onClick={() => void copy("example")}><Icon name="copy" />{t("复制示例", "Copy example")}</button></div>
+            <div id="generation-example-content" className="generation-example-content">
+              {(exampleExpanded ? examplePrompt.trim().split(/\n\s*\n/) : [examplePrompt.trim().split(/\n\s*\n/)[0]]).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+            </div>
+            <button type="button" className="generation-example-toggle" aria-expanded={exampleExpanded} aria-controls="generation-example-content" onClick={() => setExampleExpanded((value) => !value)}>{exampleExpanded ? t("收起示例", "Show less") : t("展开完整示例", "Read the full example")}<Icon name="chevron-down" /></button>
+            <p role="status" aria-live="polite" className="generation-feedback">{feedback?.kind === "example" ? feedback.message : ""}</p>
+          </section>
+        </div>
+        <section className="generation-resources" aria-labelledby="generation-resources-title">
             <h3 id="generation-resources-title">{t("更多修图 Skill", "More photo-editing skills")}</h3>
             <p>{t("本页面会经常更新修图 Skill，欢迎回来看看最新内容。", "This page is regularly updated with photo-editing skills. Come back for the latest additions.")}</p>
             <div className="generation-resource-links">
@@ -103,16 +147,8 @@ export function GenerationGallery({ onCopy }: {
                 <span><strong>{t("给 Portal 点 Star", "Star Portal on GitHub")}</strong><small>{t("喜欢这里的 Skill，欢迎支持这个页面", "Enjoy the skills here? Support the portal")}</small></span><Icon name="star" />
               </a>
             </div>
-          </section>
-          <details className="generation-skill-source"><summary>{t("查看完整 SKILL.md", "Read the complete SKILL.md")}</summary><pre>{skill}</pre></details>
-          <p role="status" aria-live="polite" className="generation-feedback">{feedback?.kind === "skill" ? feedback.message : ""}</p>
-        </div>
-        <section className="generation-example" aria-labelledby="generation-example-title">
-          <div><h3 id="generation-example-title">{t("蓝发示例提示词", "Blue-haired example prompt")}</h3><button type="button" onClick={() => void copy("example")}><Icon name="copy" />{t("复制示例", "Copy example")}</button></div>
-          <pre>{examplePrompt}</pre>
-          <p role="status" aria-live="polite" className="generation-feedback">{feedback?.kind === "example" ? feedback.message : ""}</p>
         </section>
-      </div>
+      </div>}
     </dialog>
   </section>;
 }
