@@ -30,6 +30,12 @@ Ask the Agent to “Check the ToneRelay version” and report the actual MCP ver
 
 An upgrade uses the verified newer version and updates ToneRelay entry points while preserving personal data and the currently valid configuration. A fresh installation does not merge old scattered configuration.
 
+## Already installed? How do I update to the latest prompt version?
+
+Copy the same installation/update prompt from the website and send it to your Agent. It names a target version and full commit: an older installation is updated to that target even if healthy; an identical healthy version and commit is only verified and reconnected. “Latest” means the version pinned in that prompt, so copy the current prompt for a newer target. A newer, development, or unverifiable local build is reported before replacement, with no silent downgrade.
+
+The update preserves personal data, effective configuration, Catalog bindings and mode, and other client entries. The Agent reports the target and actual running versions, verifies the loaded Lightroom plug-in build, and retains a rollback entry. Only an explicit “client connection only” or “no upgrade” request skips the update. Copying the prompt or downloading files alone does not prove the update is complete.
+
 ## What if the plug-in is in full mode but the Runtime expects safe?
 
 The access mode and saved binding are inconsistent. If the current Catalog identity is the target you have confirmed, and you explicitly choose to retain `full`, the Agent can save the actual mode with the Catalog confirmation tool and recheck authorization, without making you switch back and forth in Plug-in Manager. If that authorization does not exist, make an explicit choice first; if the Catalog identity changes, confirm the target again. A connected bridge alone is not permission to continue reading or writing photos.
@@ -48,7 +54,7 @@ Yes, from a pinned version of the public source. The [primary GitHub MCP reposit
 
 ## I already use ToneRelay in one Agent client. Do I need to reinstall for another?
 
-Usually not. First verify the existing installation's source and version, and the health of the Runtime, Bridge, Lightroom plug-in, and Catalog authorization. Having only a client Plugin installed does not prove the shared components are ready. Once reuse is verified, the new client only needs its own official connection method to the same local MCP. If it supports Skills, also install the startup Skill from the same-version source, then check the connection read-only in a new session. Do not download, upgrade, or register another Lightroom plug-in just to add a client. Only repair a particular shared layer if it is actually broken or incompatible, and explain the effect on other clients.
+For an explicit client-connection-only request, usually not; to update as well, use the website installation/update prompt. First verify the existing installation's source and version, and the health of the Runtime, Bridge, Lightroom plug-in, and Catalog authorization. Having only a client Plugin installed does not prove the shared components are ready. Once reuse is verified, the new client only needs its own official connection method to the same local MCP. If it supports Skills, also install the startup Skill from the same-version source, then check the connection read-only in a new session. Do not download, upgrade, or register another Lightroom plug-in just to add a client. Only repair a particular shared layer if it is actually broken or incompatible, and explain the effect on other clients.
 
 ## Does the WorkBuddy skill have to go through "upload skill"?
 

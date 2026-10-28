@@ -35,7 +35,7 @@ export const PRIVACY_STATEMENT_EN = {
   note: "Note: Your conversations with the AI assistant are handled by your chosen Agent service under its terms.",
 } as const;
 
-export const INSTALL_PANEL_LEAD = "复制提示词，发给 Agent。它会先核对版本与安装条件。";
+export const INSTALL_PANEL_LEAD = "复制提示词发给 Agent：未安装时安装，已安装旧版本时更新到提示词版本。";
 
 export const HEADER_PANEL_STATE_EVENT = "tonerelay:header-panel-state";
 const HEADER_POPOVER_OPEN_EVENT = "tonerelay:header-popover-open";
@@ -143,25 +143,25 @@ export function InstallAction({ onCopy }: {
         <button
           type="button"
           className="header-action header-install install-main"
-          title={t("复制安装提示词和 FAQ，发给 Agent 核对安装条件", "Copy the installation prompt and FAQ for your Agent to verify installation requirements")}
+          title={t("复制安装与更新提示词和 FAQ，发给 Agent", "Copy the install/update prompt and FAQ for your Agent")}
           onClick={() => void onCopy()}
         >
-          <Icon name="copy" />{t("复制安装提示词", "Copy install prompt")}
+          <Icon name="copy" />{t("安装 / 更新提示词", "Install / update prompt")}
         </button>
         <button
           ref={caretRef}
           type="button"
           className="header-action header-install install-caret"
-          aria-label={t("展开安装提示词", "Expand installation prompt")}
+          aria-label={t("展开安装与更新提示词", "Expand install/update prompt")}
           aria-expanded={open}
-          title={t("展开安装提示词", "Expand installation prompt")}
+          title={t("展开安装与更新提示词", "Expand install/update prompt")}
           onClick={() => setOpen((current) => !current)}
         >
           <Icon name="chevron-down" />
         </button>
       </div>
-      <HeaderPopover open={open} panelRef={panelRef} label={t("安装提示词", "Installation prompt")} className="install-panel">
-        <p className="header-panel-lead hand-text">{t(INSTALL_PANEL_LEAD, "Copy the prompt and send it to your Agent. It will first verify the version and installation requirements.")}</p>
+      <HeaderPopover open={open} panelRef={panelRef} label={t("安装与更新提示词", "Install/update prompt")} className="install-panel">
+        <p className="header-panel-lead hand-text">{t(INSTALL_PANEL_LEAD, "Send the prompt to your Agent: install if absent, or update an older installation to the prompt version.")}</p>
         <pre className="header-panel-code">{getInstallPrompt(language)}</pre>
         <div className="header-panel-actions">
           <button type="button" className="header-panel-button is-primary" onClick={() => void onCopy()}>

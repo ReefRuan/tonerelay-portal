@@ -4,6 +4,7 @@
 import { copyFile, readFile, mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateInstallTarget } from "./install-prompts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "dist");
@@ -12,6 +13,7 @@ const repo = "https://github.com/ReefRuan/tonerelay-portal";
 
 const readText = (relativePath) => readFile(join(root, relativePath), "utf8");
 const readJson = async (relativePath) => JSON.parse(await readText(relativePath));
+const installTarget = validateInstallTarget(await readJson("docs/install-target.json"));
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
   "&": "&amp;",
   "<": "&lt;",
@@ -30,9 +32,9 @@ const safeUrl = (value) => {
 function installationCallout(language = "zh") {
   const english = language === "en";
   const suffix = english ? ".en" : "";
-  return `<section class="installation-callout related" aria-labelledby="installation-heading"><h2 id="installation-heading">${english ? "Ready to start editing?" : "看完效果，开始安装。"}</h2>
-<p>${english ? "Open the interactive guide to copy the complete installation prompt and FAQ to your Agent. You can also read and copy the prompt directly on GitHub." : "打开交互式入口，复制完整安装提示词和 FAQ 给 Agent；也可以直接在 GitHub 查看并复制提示词全文。"}</p>
-<div class="installation-callout-actions actions"><a class="button primary" href="${absolute(english ? "?lang=en#experience" : "#experience")}">${english ? "Open Install & use" : "打开安装与使用入口"}</a><a class="button" href="${repo}/blob/main/docs/install-prompt${suffix}.md">${english ? "Read and copy the prompt on GitHub" : "在 GitHub 查看并复制安装提示词"}</a><a class="button" href="https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md">${english ? "Full prompt on Gitee" : "Gitee 备用提示词全文"}</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md">${english ? "Installation steps and requirements" : "安装步骤与要求"}</a><a class="button" href="https://gitee.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md">${english ? "Gitee mirror installation guide" : "备用安装说明（Gitee）"}</a></div>
+  return `<section class="installation-callout related" aria-labelledby="installation-heading"><h2 id="installation-heading">${english ? "Install or update, then start editing." : "安装或更新，接着开始修图。"}</h2>
+<p>${english ? "Copy the complete prompt and FAQ to your Agent. It installs if absent, updates an older installation, and verifies an identical healthy installation." : "复制完整提示词和 FAQ 给 Agent。未安装时安装，已有旧版本时更新，相同版本且健康时核验复用。"} ${english ? "Prompt target" : "提示词目标"}: <strong>v${installTarget.version}</strong> · <code>${installTarget.commit.slice(0, 12)}</code></p>
+<div class="installation-callout-actions actions"><a class="button primary" href="${absolute(english ? "?lang=en#experience" : "#experience")}">${english ? "Open Install & use" : "打开安装与使用入口"}</a><a class="button" href="${repo}/blob/main/docs/install-prompt${suffix}.md">${english ? "Read and copy the prompt on GitHub" : "在 GitHub 查看并复制安装提示词"}</a><a class="button" href="https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md">${english ? "Full prompt on Gitee" : "Gitee 备用提示词全文"}</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/${installTarget.commit}/INSTALL${suffix}.md">${english ? "Installation steps and requirements" : "安装步骤与要求"}</a><a class="button" href="https://gitee.com/ReefRuan/tonerelay-lightroom-mcp/blob/${installTarget.commit}/INSTALL${suffix}.md">${english ? "Gitee mirror installation guide" : "备用安装说明（Gitee）"}</a></div>
 <p class="muted">${english ? "Copying the prompt does not complete installation. Let your Agent verify the version, permissions, and existing components before proceeding." : "复制提示词不等于完成安装。请让 Agent 先核对版本、权限与已有组件，再继续。"}</p></section>`;
 }
 const shortDescription = (text, max = 155) => {
