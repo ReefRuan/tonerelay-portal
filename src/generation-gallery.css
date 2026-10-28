@@ -14,16 +14,17 @@
 .generation-dialog::backdrop { background: #070a0ed9; backdrop-filter: blur(6px); }
 .generation-dialog-header { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 2; padding: 14px 22px; border-bottom: 1px solid #36414b; background: #161c22; color: var(--muted); font: 11px var(--mono); }
 .generation-dialog-header button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #46515d; border-radius: 50%; background: #202b35; color: var(--ink); cursor: pointer; }
-.generation-detail { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); align-items: start; gap: 32px; padding: 28px; }
-.generation-preview { display: block; position: sticky; top: 24px; background: white; border-radius: 5px; overflow: hidden; }
+.generation-detail { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); grid-template-areas: "preview description" "example description"; align-items: start; gap: 28px 32px; padding: 28px; }
+.generation-preview { grid-area: preview; display: block; background: white; border-radius: 5px; overflow: hidden; }
 .generation-preview img { display: block; width: 100%; height: auto; }
 .generation-preview span { display: block; padding: 9px; background: #243541; color: #e1edf6; font-size: 11px; text-align: center; }
 .generation-eyebrow { color: #80bdd3; font: 10px var(--mono); letter-spacing: .15em; }
+.generation-description { grid-area: description; min-width: 0; }
 .generation-description h2 { margin: 12px 0 6px; font: 400 34px var(--serif); }
 .generation-description p { color: #bccad5; font-size: 13px; line-height: 1.85; }
 .generation-copy.is-primary { margin-top: 10px; background: #325b75; border-color: #739eb9; }
 .generation-description .generation-use { color: var(--muted); font-size: 11px; }
-.generation-example { margin-top: 28px; border-top: 1px solid #36414b; padding-top: 20px; }
+.generation-example { grid-area: example; min-width: 0; border-top: 1px solid #36414b; padding-top: 20px; }
 .generation-example > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .generation-example h3 { margin: 0; font-size: 14px; font-weight: 500; }
 .generation-example button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 7px 10px; border: 1px solid #465765; border-radius: 5px; color: #e0ebf4; background: #22313e; font-size: 11px; cursor: pointer; }
@@ -31,12 +32,21 @@
 .generation-skill-source { margin-top: 20px; font-size: 12px; color: #a9bfce; }
 .generation-skill-source summary { cursor: pointer; }
 .generation-skill-source pre { max-height: 400px; overflow: auto; }
-.generation-description .generation-feedback { min-height: 24px; color: #8cced0; font-size: 12px; }
+.generation-feedback { min-height: 24px; color: #8cced0; font-size: 12px; }
+.generation-resources { margin-top: 28px; border-top: 1px solid #36414b; padding-top: 20px; }
+.generation-resources h3 { margin: 0; font-size: 14px; font-weight: 500; }
+.generation-resource-links { display: grid; gap: 10px; margin-top: 18px; }
+.generation-resource-links a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 17px; border: 1px solid #3d5262; border-radius: 7px; background: #1c2a35; color: #deedf7; text-decoration: none; }
+.generation-resource-links a:hover { border-color: #7babc6; background: #263c4e; }
+.generation-resource-links a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.generation-resource-links strong { display: block; font-size: 13px; font-weight: 500; }
+.generation-resource-links small { display: block; margin-top: 5px; color: #a4b8c7; font-size: 11px; line-height: 1.6; }
+.generation-resource-links svg { flex-shrink: 0; width: 18px; height: 18px; color: #91bfd9; }
 @media(max-width: 750px) {
   .generation-card { width: min(290px, 100%); }
   .generation-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px); }
-  .generation-detail { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px; }
-  .generation-preview { position: static; max-width: 310px; margin: auto; }
+  .generation-detail { grid-template-columns: minmax(0, 1fr); grid-template-areas: "preview" "description" "example"; gap: 22px; padding: 18px; }
+  .generation-preview { max-width: 310px; margin: auto; }
   .generation-description h2 { font-size: 29px; }
   .generation-grid { justify-content: center; }
 }
