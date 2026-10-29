@@ -112,9 +112,9 @@ export function GenerationGallery({ onCopy }: {
           <h2 id="generation-detail-title">kigurumi模拟</h2>
           <p>{t("把角色原型转成实体头壳预览图，保留角色的脸、瞳色、发型与配饰。", "Turn character references into physical kigurumi head previews while preserving identity, eyes, hairstyle and accessories.")}</p>
           <ul className="generation-requirements" aria-label={t("使用时需要", "What you need")}>
-            <li>{t("角色原型", "Character reference")}</li><li>{t("真实定妆照", "Finished-head photo")}</li><li>{t("玉米须 / 亮面直发", "Wig finish")}</li>
+            <li>{t("角色原型", "Character reference")}</li><li>{t("喜欢店家的定妆照", "Preferred maker’s photo")}</li><li>{t("玉米须 / 亮面直发", "Wig finish")}</li>
           </ul>
-          <p className="generation-reference-note">{t("没有定妆照时，Skill 会从 KiguDB 查找。", "No product photo? The skill searches KiguDB.")}</p>
+          <p className="generation-reference-note">{t("首次先确认你喜欢店家的定妆照，再生成；满意后可沿用成图修改。需要代找参考时，会先让你选定实物照。", "First choose finished-head photos from a maker you like, then generate. Refine a result you like in later edits. If you need help finding references, you choose the photos before generation.")}</p>
           <div className="generation-primary-actions">
             <button type="button" className="generation-copy is-primary" onClick={() => void copy("skill")}><Icon name="copy" />{t("复制完整 Skill", "Copy complete skill")}</button>
             <button ref={readerButton} type="button" className="generation-copy is-secondary" onClick={readSkill}><Icon name="details" />{t("阅读全文", "Read full skill")}</button>
