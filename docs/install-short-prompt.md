@@ -5,7 +5,7 @@
 <!-- install-short-prompt:start -->
 ```text
 请在当前 Agent 客户端安装或更新 ToneRelay for Lightroom Classic。
-目标：v0.7.0；完整 commit：a7501464665c694ca17a9a013e76f203930e4d77。“最新”仅指此目标，不是 main。
+目标：v0.7.0；完整 commit：84a6ff0aee3ec376541969f30612c803dcfd9e70。“最新”仅指此目标，不是 main。
 官方仓库，二选一：
 https://github.com/ReefRuan/tonerelay-lightroom-mcp
 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp

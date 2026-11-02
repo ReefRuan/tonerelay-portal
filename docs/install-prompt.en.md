@@ -3,7 +3,7 @@
 Read this English version in full; a Chinese version is provided separately.
 
 <!-- install-target:start -->
-Prompt target: **v0.7.0**, full commit: `a7501464665c694ca17a9a013e76f203930e4d77`. “Latest” means this pinned public source version, not the moving `main` branch.
+Prompt target: **v0.7.0**, full commit: `84a6ff0aee3ec376541969f30612c803dcfd9e70`. “Latest” means this pinned public source version, not the moving `main` branch.
 <!-- install-target:end -->
 
 Please install or update ToneRelay for Lightroom Classic in the current Agent client to the target below. First inspect the existing installation, then complete the necessary installation, update, repair, and client connection steps. An older healthy installation still needs updating; do not reduce this request to connecting a client.

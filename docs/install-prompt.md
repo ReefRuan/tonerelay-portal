@@ -1,7 +1,7 @@
 # ToneRelay 安装与更新提示词
 
 <!-- install-target:start -->
-本提示词目标：**v0.7.0**，完整 commit：`a7501464665c694ca17a9a013e76f203930e4d77`。“最新”指本提示词固定的公开源码版本，不自动追随 `main`。
+本提示词目标：**v0.7.0**，完整 commit：`84a6ff0aee3ec376541969f30612c803dcfd9e70`。“最新”指本提示词固定的公开源码版本，不自动追随 `main`。
 <!-- install-target:end -->
 
 请在当前 Agent 客户端安装或更新 ToneRelay for Lightroom Classic 到本提示词目标版本。先检查已有安装，再连续完成所需的安装、更新、修复和客户端接入。已有较旧版本即使健康也要更新，不能把本次请求缩减成只接入客户端。
