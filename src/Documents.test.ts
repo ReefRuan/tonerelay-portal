@@ -12,6 +12,19 @@ import shortInstallDocumentEn from "../docs/install-short-prompt.en.md?raw";
 import { Documents, getInstallPrompt, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
 
 describe("installation copy payload", () => {
+  it("verifies upgraded MCP tools in the actual client without requiring a Plugin card", () => {
+    for (const language of ["zh", "en"] as const) {
+      const payload = getInstallPrompt(language);
+      for (const name of ["trlr_list_folders", "trlr_list_folder_photos", "trlr_get_storage_usage"]) {
+        expect(payload).toContain(name);
+      }
+      expect(payload).toContain("tonerelay-lightroom");
+      expect(payload).toContain("https://learn.chatgpt.com/docs/extend/mcp");
+    }
+    expect(getInstallPrompt("zh")).toContain("不要求必须出现完整 Plugin 卡片");
+    expect(getInstallPrompt("en")).toContain("a full Plugin card is optional");
+  });
+
   it("keeps both short entries limited to the two official MCP repositories", () => {
     for (const [document, suffix] of [[shortInstallDocument, ""], [shortInstallDocumentEn, ".en"]]) {
       const prompt = document.match(/```text\r?\n([\s\S]*?)\r?\n```/)?.[1];

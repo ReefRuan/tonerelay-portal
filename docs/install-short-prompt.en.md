@@ -5,7 +5,7 @@ Copy the text block into the current Agent. It locates the complete instructions
 <!-- install-short-prompt:start -->
 ```text
 Please install or update ToneRelay for Lightroom Classic in the current Agent client.
-Target: v0.7.0; full commit: 3be21794d37f02a1005941b46c18cea89acd8da9. “Latest” means this target, not main.
+Target: v0.7.0; full commit: a7501464665c694ca17a9a013e76f203930e4d77. “Latest” means this target, not main.
 Use either official repository:
 https://github.com/ReefRuan/tonerelay-lightroom-mcp
 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp

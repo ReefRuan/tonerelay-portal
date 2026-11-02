@@ -54,6 +54,10 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 明确只接入客户端时通常不用；同时要更新则使用网页安装与更新提示词。先核对已有安装的来源、版本，以及 Runtime、Bridge、Lightroom 插件和 Catalog 授权是否健康；只装了某个客户端的 Plugin，不能直接证明共享组件都已就绪。确认可复用后，新客户端只需按自己的官方方式接入同一套本机 MCP；如果支持 Skill，也从同版本来源安装启动 Skill，并在新会话做只读连接检查。不要为了增加客户端重新下载、升级或注册一份 Lightroom 插件；某个共享组件确实损坏或不兼容时，才针对该层修复并说明对其他客户端的影响。
 
+## Codex 插件页没有卡片，是没有装上 MCP 吗？
+
+不一定。独立 MCP 加启动 Skill 可以正常使用，不必安装完整客户端 Plugin。在 Codex 的“设置 → MCP 服务器”查看 `tonerelay-lightroom`，也可输入 `/mcp` 查看连接；更新后在此重启 MCP，再让 Agent 只读验证实际工具、health 和当前选片。只有注册完整 Plugin 时才检查它的卡片，避免为了显示卡片重复安装同一个 MCP。[Codex MCP 说明](https://learn.chatgpt.com/docs/extend/mcp)。
+
 ## WorkBuddy 的技能必须走“上传技能”吗？
 
 不一定。WorkBuddy 会直接发现用户级技能目录：把与当前安装同一固定版本的 `tonerelay-lightroom/` 技能目录整体复制进去即可，位置是用户主目录下的 `~/.workbuddy/skills/tonerelay-lightroom/`（Windows 上即 `%USERPROFILE%\.workbuddy\skills\tonerelay-lightroom\`），保留其中的 `SKILL.md`、`references/` 和 `agents/`。放入后在新会话的技能列表里应能看到 `tonerelay-lightroom` 并可调用。该路径在 Windows 版 WorkBuddy（5.7.6）实测可直接发现，无需先打包 ZIP 或走“专家·技能·连接器 → 技能 → 添加技能 → 上传技能”；官方上传入口仍然可用，适合不便直接操作文件目录的情况。两条路都只交付技能，不安装 Runtime、Lightroom 插件或 MCP 连接。

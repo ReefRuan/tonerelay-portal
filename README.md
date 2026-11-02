@@ -141,7 +141,7 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 <!-- install-short-prompt:start -->
 ```text
 请在当前 Agent 客户端安装或更新 ToneRelay for Lightroom Classic。
-目标：v0.7.0；完整 commit：3be21794d37f02a1005941b46c18cea89acd8da9。“最新”仅指此目标，不是 main。
+目标：v0.7.0；完整 commit：a7501464665c694ca17a9a013e76f203930e4d77。“最新”仅指此目标，不是 main。
 官方仓库，二选一：
 https://github.com/ReefRuan/tonerelay-lightroom-mcp
 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp
