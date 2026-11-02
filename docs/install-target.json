@@ -1,4 +1,5 @@
 {
-  "version": "0.7.0",
-  "commit": "84a6ff0aee3ec376541969f30612c803dcfd9e70"
+  "repository": "https://github.com/ReefRuan/tonerelay-lightroom-mcp",
+  "branch": "main",
+  "resolve": "at_execution"
 }

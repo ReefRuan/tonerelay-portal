@@ -66,7 +66,7 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 2. 在[安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)复制完整安装提示词，或直接使用[本文末尾的简短入口](#直接复制安装与更新提示词)。需要逐步操作时，查看 MCP 仓库的[技术安装指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。Agent 会先检查本机已有安装，再核对官方来源、访问权限、固定版本与安装说明。
 3. 安装可用并完成验证后，打开 Lightroom Classic 与目标 Catalog，从“看看当前照片”开始。遇到问题可查看 Portal 的 [FAQ](docs/faq.md)，卸载见[卸载提示词](docs/uninstall-prompt.md)。
 
-MCP 已公开，当前为可按固定源码版本安装的源码预览，不代表已发布稳定安装包或完成全平台验收。安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定完整提交，标签也须核验其指向的完整提交，不把持续变化的 `main` 当作版本号。网页复制提示词不等于已经完成安装；未安装时安装，已安装旧版本时更新到提示词固定的目标；相同版本与 commit 且健康时只核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
+MCP 已公开，当前为可按固定源码版本安装的源码预览，不代表已发布稳定安装包或完成全平台验收。安装以 [MCP 仓库的指南](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)为准；下载时固定完整提交，标签也须核验其指向的完整提交，先查询官方 `main` 最新完整 commit，再锁定该提交完成本次安装。网页复制提示词不等于已经完成安装；未安装时安装，已安装旧版本时查询并更新到执行时官方 main 的最新提交；相同版本与 commit 且健康时只核验并复用。Portal 的安装提示词、FAQ 与卸载说明保留原位，不迁移或改变目录结构。
 
 双源入口分工：[GitHub MCP 源码主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee MCP 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)，以及 [GitHub Portal 文档主源](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 文档备用](https://gitee.com/ReefRuan/tonerelay-portal)。GitHub 不可达时，可核验并使用 Gitee 的固定完整 commit；镜像可能滞后，不混用不同版本组件。Portal 不提供 MCP 安装源码，源码备用也不代替 pip 依赖源；完整核验与依赖网络规则见[安装提示词](docs/install-prompt.md)。
 
@@ -141,13 +141,13 @@ C200 详情中的十张参考照片（顺序对应[包内来源记录](style-pac
 <!-- install-short-prompt:start -->
 ```text
 请在当前 Agent 客户端安装或更新 ToneRelay for Lightroom Classic。
-目标：v0.7.0；完整 commit：84a6ff0aee3ec376541969f30612c803dcfd9e70。“最新”仅指此目标，不是 main。
-官方仓库，二选一：
+目标：执行时官方公开 MCP 仓库 main 分支的最新代码。先查询并记录一次完整的 40 位 commit，整次安装统一使用该提交，期间 main 前进也不混装；我明确指定版本或 commit 时按我的指定。
+官方主源及备用：
 https://github.com/ReefRuan/tonerelay-lightroom-mcp
 https://gitee.com/ReefRuan/tonerelay-lightroom-mcp
 
 先只读检查：未安装则安装；已有较旧版本即使健康也更新到目标；版本与 commit 均相同且健康时只核验并接入，不重复安装。较新版本、开发版或来源不明时先报告差异，不静默降级。只有我明确要求“只接入客户端”或“不升级”时才跳过更新。
-核验所选仓库的目标 commit，完整阅读该提交根目录的 INSTALL-PROMPT.md、FAQ.md 和 INSTALL.md。本次已授权更新到目标版本所需的普通步骤；旧随仓库说明中的“仅接入时复用”不能取消这次更新授权。需要下载时，将完整源码放入 ToneRelay 专用安装根目录，组件统一到同一 commit；镜像滞后不能改变目标。
+核验公开仓库身份，通过官方 API 或 Git 解析 main，完整阅读所得提交根目录的 INSTALL-PROMPT.md、FAQ.md 和 INSTALL.md。源码附带旧提示词的提交号不能替换本次解析结果。本次已授权普通安装／更新步骤。将完整源码放入 ToneRelay 专用安装根目录，组件统一到该提交。已解析 GitHub main 时，备用源须提供同一提交；最初仅 Gitee 可达时解析其 main，并说明尚未核验 GitHub 的最新状态。
 保留照片、Catalog、数据、有效配置、访问模式、绑定、其他客户端条目和用户修改过的 Skill。完成必要授权及真实客户端的只读验收，报告实际运行版本与未验证项；不重放结果未知的写入。
 ```
 <!-- install-short-prompt:end -->

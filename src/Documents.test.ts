@@ -57,20 +57,22 @@ describe("installation copy payload", () => {
     expect(INSTALL_PROMPT_WITH_FAQ).not.toContain("请卸载 ToneRelay");
   });
 
-  it("copies the same pinned target in both languages and every short entry, including update instructions and FAQ", () => {
+  it("resolves latest main on every execution in both languages and all copy entry points", () => {
     for (const document of [getInstallPrompt("zh"), getInstallPrompt("en"), shortInstallDocument, shortInstallDocumentEn, readme, readmeEn]) {
-      expect(document).toContain(`v${installTarget.version}`);
-      expect(document).toContain(installTarget.commit);
+      expect(document).toContain("main");
+      expect(document).not.toMatch(/\b[a-f0-9]{40}\b/);
     }
-    expect(getInstallPrompt("zh")).toContain("## 已安装时：更新到本提示词版本");
-    expect(getInstallPrompt("en")).toContain("## Existing installation: update to this prompt's target");
-    expect(getInstallPrompt("zh")).toContain("## 已经安装，怎么更新到提示词最新版本？");
-    expect(getInstallPrompt("en")).toContain("## Already installed? How do I update to the latest prompt version?");
+    expect(getInstallPrompt("zh")).toContain("默认每次执行本提示词都重新查询");
+    expect(getInstallPrompt("en")).toContain("Each execution must query the latest full commit");
+    expect(getInstallPrompt("zh")).toContain("不得在不同阶段重新取 main 而混装组件");
+    expect(getInstallPrompt("en")).toContain("Do not repeatedly fetch main at different stages and mix components");
+    expect(getInstallPrompt("zh")).toContain("## 已经安装，怎么更新到最新代码？");
+    expect(getInstallPrompt("en")).toContain("## Already installed? How do I update to the latest code?");
     const html = renderToStaticMarkup(createElement(Documents));
     expect(html).toContain("复制安装与更新提示词");
-    expect(html).toContain(`v${installTarget.version}`);
-    expect(html).toContain(installTarget.commit.slice(0, 12));
-    expect(html).toContain(`/blob/${installTarget.commit}/INSTALL.md`);
+    expect(html).toContain("执行时查询最新提交");
+    expect(html).toContain(`<code>${installTarget.branch}</code>`);
+    expect(html).toContain(`/blob/${installTarget.branch}/INSTALL.md`);
   });
 
   it("shows the concise tool introduction without a separate installation section", () => {

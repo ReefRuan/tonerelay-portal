@@ -281,13 +281,13 @@ function InstallationCallout({ onCopyInstall }: { onCopyInstall?: () => void }) 
   return <section className="installation-callout" id="installation" aria-labelledby="installation-title">
     <span className="eyebrow">{t("开始使用", "Get started")}</span>
     <h2 id="installation-title">{t("让 Agent 安装或更新，接着开始修图。", "Let your Agent install or update, then start editing.")}</h2>
-    <p>{t("复制完整提示词和 FAQ 给 Agent。未安装时安装，已有旧版本时更新到提示词目标；相同版本且健康时核验复用。", "Copy the complete prompt and FAQ to your Agent. It installs if absent, updates an older installation to the prompt target, and verifies an identical healthy installation.")}</p>
-    <p>{t("提示词目标", "Prompt target")}：<strong>v{installTarget.version}</strong> · <code>{installTarget.commit.slice(0, 12)}</code></p>
+    <p>{t("复制完整提示词和 FAQ 给 Agent。每次执行都查询官方 main 的最新代码；已是相同提交且健康时核验复用。", "Copy the complete prompt and FAQ to your Agent. Each execution resolves the latest official main code; an identical healthy commit is verified and reused.")}</p>
+    <p>{t("更新来源", "Update source")}：{t("官方 MCP 仓库", "Official MCP repository")} · <code>{installTarget.branch}</code> · {t("执行时查询最新提交", "Resolve the latest commit at execution")}</p>
     <div className="installation-callout-actions">
       <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}><Icon name="copy" />{t("复制安装与更新提示词", "Copy install/update prompt")}</button>
       <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("在 GitHub 查看并复制全文", "Read and copy the full prompt on GitHub")}<Icon name="external" /></a>
       <a className="intro-cta is-quiet" href={`https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("Gitee 备用提示词全文", "Full prompt on Gitee")}<Icon name="external" /></a>
-      <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/${installTarget.commit}/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
+      <a className="intro-cta is-quiet" href={`${installTarget.repository}/blob/${installTarget.branch}/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
     </div>
     <p>{t("复制提示词不等于完成安装；请让 Agent 核对版本、权限与连接状态。", "Copying the prompt does not complete installation. Ask your Agent to verify the version, permissions, and connection.")}</p>
   </section>;
