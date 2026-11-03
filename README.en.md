@@ -54,6 +54,10 @@ Once ToneRelay is connected, your Agent can read the current photo and folder pr
 
 <sub>The image above comes from Portal’s conversational editing showcase. Its Lightroom and Agent conversation images come from the author’s earlier real workflow; the editing was not rerun for this documentation update. [More real workflow images and image sources](public/experience/SOURCES.md). The Agent determines the editing direction, while ToneRelay executes changes and retrieves results. Not every photo can achieve the same result in one step.</sub>
 
+## 0.8.0.0 update
+
+Continue ordinary edits on the same working virtual copy and protect named copies from writes. Chat previews and final results remain available, while internal iteration, batch inspection and scoring avoid extra image-delivery copies. Update Runtime, MCP and the Lightroom plug-in together; see the [FAQ](docs/faq.en.md). The tool overview image below retains its original snapshot version.
+
 ## From one photo to a whole set
 
 52 MCP tools cover Develop and color controls, edit-version readback, batch Catalog operations, previews, and export. This directory matches the public 0.7.0 source, including batch import, full Develop settings readback, version comparison, and historical-parameter replay. Available tools depend on the installed version.

@@ -54,6 +54,10 @@ ToneRelay connects AI agents to Lightroom Classic through the Model Context Prot
 
 <sub>上图来自 Portal 的对话修图展示区；其中的 Lightroom 与 Agent 对话画面来自作者此前的实际工作流，并非为本次文档更新重新执行修图。[更多实际操作画面与图片来源](public/experience/SOURCES.md)。Agent 负责判断目标，ToneRelay 负责执行与回读；不是每张照片都能一键得到相同结果。</sub>
 
+## 0.8.0.0 更新
+
+多轮修图默认接着同一张工作虚拟副本；保护命名阻止覆盖。对话看图与最终结果照常展示，内部迭代、批量看片和打分减少额外的 image-delivery 展示副本。更新时同步 Runtime、MCP 与 Lightroom 插件，详见 [FAQ](docs/faq.md#0800-怎样处理多轮修图和预览)；下方工具一览图片仍标明原快照版本。
+
 ## 从一张照片，到一整组照片
 
 52 个 MCP 工具，涵盖显影与色彩、编辑版本回读、图库批量操作、预览和导出。当前一览已同步公开 0.7.0 源码，包含批量导入、完整显影参数读取、版本差异比较与历史参数重放；具体可用工具以安装版本为准。
