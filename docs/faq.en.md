@@ -151,6 +151,8 @@ First distinguish whether the tool failed to obtain the image or the chat failed
 
 Use the `mcp_server` entry printed by the installer. A `.mcp.json` written for macOS cannot be copied unchanged to Windows; doing so will cause the connection to fail.
 
-## Why can't I see ToneRelay tools in a new session?
+## After installation, why does the Agent say this conversation has no ToneRelay tools and cannot continue verification or Catalog binding?
 
-Some clients require a new session or restart before newly added tools appear. A successful result in the installation session does not replace verification in a new session.
+Start a new conversation in the same Agent client, then continue using ToneRelay. If installation and client setup are complete and the connector is enabled and trusted, the old installation conversation may not have loaded the newly added MCP tools. An Agent saying it has no ToneRelay tools and cannot continue connection verification or Catalog binding does not, in this situation, mean installation failed. Do not reinstall for that reason.
+
+In the new conversation, send: “Use ToneRelay to check the connection and continue the post-installation verification.” If tools are still missing in the new conversation, or actual calls still fail, check the connector state and investigate the specific error.

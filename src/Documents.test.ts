@@ -3,6 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import installDocument from "../docs/install-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
+import faqDocumentEn from "../docs/faq.en.md?raw";
 import installDocumentEn from "../docs/install-prompt.en.md?raw";
 import installTarget from "../docs/install-target.json";
 import readme from "../README.md?raw";
@@ -55,6 +56,23 @@ describe("installation copy payload", () => {
     expect(INSTALL_PROMPT).toContain("不执行 `prepare` 或 Runtime `install`");
     expect(INSTALL_PROMPT_WITH_FAQ).toContain("换客户端还要重装吗？");
     expect(INSTALL_PROMPT_WITH_FAQ).not.toContain("请卸载 ToneRelay");
+  });
+
+  it("directs missing tools in the installation conversation to a new conversation without a duplicate FAQ", () => {
+    const question = "安装完成后，Agent 提示当前会话没有 ToneRelay 工具，无法继续验证或绑定怎么办？";
+    const questionEn = "After installation, why does the Agent say this conversation has no ToneRelay tools and cannot continue verification or Catalog binding?";
+    const html = renderToStaticMarkup(createElement(Documents));
+    expect(faqDocument.split(`## ${question}\n`)).toHaveLength(2);
+    expect(faqDocumentEn.split(`## ${questionEn}\n`)).toHaveLength(2);
+    expect(faqDocument).not.toContain("## 新会话里看不到 ToneRelay 工具？");
+    expect(faqDocumentEn).not.toContain("## Why can't I see ToneRelay tools in a new session?");
+    expect(html).toContain(question);
+    expect(html).toContain("先在同一个 Agent 客户端新建一个会话");
+    expect(html).toContain("连接器已启用并信任时");
+    expect(html).toContain("不需要因此重复安装");
+    expect(getInstallPrompt("zh")).toContain(faqDocument.trim());
+    expect(getInstallPrompt("en")).toContain(faqDocumentEn.trim());
+    expect(getInstallPrompt("en")).toContain("Start a new conversation in the same Agent client");
   });
 
   it("resolves latest main on every execution in both languages and all copy entry points", () => {
