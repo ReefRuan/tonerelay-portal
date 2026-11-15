@@ -6,7 +6,7 @@
 
 [中文](README.md) | [English](README.en.md)
 
-面向摄影与 **Adobe Lightroom Classic** 的参考图、调色风格和对话修图入口。先浏览喜欢的颜色与光影，再把目标带进与 Agent 的对话。
+面向摄影与 **Adobe Lightroom Classic** 的参考图、调色风格和对话修图入口。先浏览喜欢的颜色与光影，再把目标带进与 Agent 的对话。云版 Lightroom 目前是[实验性支持](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md#lightroom-桌面版云版实验性)。
 
 ToneRelay connects AI agents to Lightroom Classic through the Model Context Protocol (MCP), for conversational AI photo editing, reference-based color grading, and photography workflows. This repository is its website and style gallery—not the MCP runtime.
 

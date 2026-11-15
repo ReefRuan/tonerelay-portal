@@ -6,7 +6,7 @@
 
 [中文](README.md) | [English](README.en.md)
 
-A place to explore reference photos, color-grading styles, and conversational editing for photography and **Adobe Lightroom Classic**. Find the colors and lighting you like, then bring that direction into a conversation with your Agent.
+A place to explore reference photos, color-grading styles, and conversational editing for photography and **Adobe Lightroom Classic**. Find the colors and lighting you like, then bring that direction into a conversation with your Agent. Cloud Lightroom is supported on an [experimental path](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md#lightroom-desktop-cloud-experimental).
 
 ToneRelay connects AI agents to Lightroom Classic through the Model Context Protocol (MCP), for conversational AI photo editing, reference-based color grading, and photography workflows. This repository is its website and style gallery—not the MCP runtime.
 

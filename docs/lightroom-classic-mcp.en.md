@@ -39,6 +39,10 @@ For connection and troubleshooting, see Portal's [FAQ](https://github.com/ReefRu
 
 If you like this workflow, [Star the MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp). Continue browsing the [Portal style and effect gallery](https://reefruan.github.io/tonerelay-portal/?lang=en#gallery), or follow the author's [Bilibili profile](https://space.bilibili.com/2869626).
 
+## Cloud Lightroom (experimental)
+
+Everything above assumes Lightroom Classic: virtual copies, catalog reads, and sidecar XMP all come from the Classic plug-in interface. Cloud Lightroom has no such interface, so ToneRelay connects through its external controller API instead, as an experimental path—edits land on the real photo, only the currently open photo is reachable, no sidecar XMP is written, and masks are not implemented. Setup steps are in [the cloud section of INSTALL.en.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md#lightroom-desktop-cloud-experimental).
+
 ## Next: install ToneRelay
 
 [Open Install & use](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) · [Read and copy the installation prompt on GitHub](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md) · [Gitee prompt fallback](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md)

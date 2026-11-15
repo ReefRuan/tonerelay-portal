@@ -37,6 +37,10 @@ MCP 已公开：[GitHub 源码主源](https://github.com/ReefRuan/tonerelay-ligh
 
 喜欢这个工作流，欢迎给 [MCP 仓库点 Star](https://github.com/ReefRuan/tonerelay-lightroom-mcp)。继续浏览 [Portal 风格与效果画廊](https://reefruan.github.io/tonerelay-portal/)，或关注作者的 [Bilibili 主页](https://space.bilibili.com/2869626)。
 
+## 云版 Lightroom（实验性）
+
+上面的能力都以 Lightroom Classic 为前提：虚拟副本、目录读取和旁车 XMP 都来自 Classic 的插件接口。云版 Lightroom 没有这套接口，ToneRelay 改用它自带的外部控制器接入口，属于实验性通道——改动直接落在原照片，只能操作当前打开的那张，不写旁车 XMP，蒙版尚未实现。安装步骤见 [INSTALL.md 的云版章节](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md#lightroom-桌面版云版实验性)。
+
 ## 下一步：开始安装
 
 [打开安装与使用入口](https://reefruan.github.io/tonerelay-portal/#experience) · [在 GitHub 查看并复制安装提示词](https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md) · [Gitee 提示词备用](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)

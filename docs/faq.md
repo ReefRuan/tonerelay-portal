@@ -58,6 +58,10 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 可以按公开源码的固定版本安装。[GitHub MCP 主仓库](https://github.com/ReefRuan/tonerelay-lightroom-mcp)已经公开，[Gitee MCP 备用仓库](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)提供官方源码备用；先核验仓库身份、访问权限和完整 commit，使用标签时也核验它指向的完整 commit，再阅读该版本的 INSTALL.md。当前是源码预览，不代表已有稳定安装包或完成全平台验收；安装后仍需真实客户端验证。没有可核验来源或完整性依据时，停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装，不退回内部仓。本机开发源码仍需要你明确指定并授权。若只为新 Agent 客户端接入，可以复用来源可核验、组件健康的已有安装，不必重新下载整套源码。
 
+## 云版 Lightroom 能用吗？
+
+可以用，但目前是实验性通道，装法与 Classic 不同。安装器只装 Classic 插件；连云版（Lightroom 桌面版）要在 Lightroom 的“首选项 → 界面”里启用外部控制器，再由 MCP 仓库的 [云版桥接](https://github.com/ReefRuan/tonerelay-lightroom-mcp/tree/main/bridges/lightroom-cloud) 把控制器接口接到本机 MCP，步骤与限制见 [INSTALL.md 的云版章节](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md#lightroom-桌面版云版实验性)。限制是明确的：没有虚拟副本，改动直接落在原照片；只能操作当前打开的那张，不能浏览目录；不写旁车 XMP；导入与导出预览不可用；蒙版尚未实现。
+
 ## 已在一个 Agent 客户端使用 ToneRelay，换客户端还要重装吗？
 
 明确只接入客户端时通常不用；同时要更新则使用网页安装与更新提示词。先核对已有安装的来源、版本，以及 Runtime、Bridge、Lightroom 插件和 Catalog 授权是否健康；只装了某个客户端的 Plugin，不能直接证明共享组件都已就绪。确认可复用后，新客户端只需按自己的官方方式接入同一套本机 MCP；如果支持 Skill，也从同版本来源安装启动 Skill，并在新会话做只读连接检查。不要为了增加客户端重新下载、升级或注册一份 Lightroom 插件；某个共享组件确实损坏或不兼容时，才针对该层修复并说明对其他客户端的影响。
