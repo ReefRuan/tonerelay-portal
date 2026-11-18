@@ -94,6 +94,8 @@ pnpm dev
 
 交互式画廊可直接预览；独立介绍页由构建生成，查看完整站点时运行 `pnpm build`，再运行 `pnpm preview`。
 
+FAQ 更新、内容维护、本地验证和部署流程见[开发维护手册](docs/development-runbook.md)。这是一份按需查阅的 Runbook，不注册为 Skill。
+
 网页代码位于 `src/` 和 `public/`；风格与效果包位于 `style-packs/`；安装提示词、FAQ 与卸载提示词仍保留在本仓库 `docs/`，供网页复制和阅读。[安装与使用](https://reefruan.github.io/tonerelay-portal/#experience)提供直观入口；详细步骤见 [MCP 仓库的 INSTALL.md](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md)。
 
 ## 图片来源与许可

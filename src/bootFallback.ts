@@ -13,6 +13,15 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+/** Vite's generated app CSS must not block the independent inline entry. */
+export function deferBootStylesheets(html: string): string {
+  if (!html.includes('id="boot"')) return html;
+  return html.replace(/<link\b[^>]*>/gi, (link) => {
+    if (!/\brel="stylesheet"/i.test(link) || /\bdata-boot-style\b/.test(link)) return link;
+    return link.replace(/\s*\/?>$/, ' data-boot-style media="print" onload="this.media=\'all\'" fetchpriority="high">');
+  });
+}
+
 /** Generated into index.html, independent of the application bundle and CSS. */
 export function renderBootInstallFallback(chineseMarkdown: string, englishMarkdown: string): string {
   const panels = (["zh", "en"] as const).map((language) => {
@@ -25,7 +34,7 @@ export function renderBootInstallFallback(chineseMarkdown: string, englishMarkdo
       <p class="boot-description">${english ? "Refresh the page, or install directly: copy this short prompt into your Agent. You don’t need to wait for this website." : "你可以刷新页面，或直接安装：把下面的短提示词发给 Agent，不必等网页加载。"}</p>
       <div class="boot-actions">
         <button class="boot-primary" type="button" data-boot-copy="boot-prompt-${language}" aria-describedby="boot-feedback-${language}">${english ? "Copy installation prompt" : "复制短安装提示词"}</button>
-        <a class="boot-refresh" href="">${english ? "Refresh page" : "刷新页面"}</a>
+        <a class="boot-refresh" href="" data-boot-refresh>${english ? "Refresh page" : "刷新页面"}</a>
         <button type="button" data-boot-enter hidden>${english ? "Open the full page" : "进入完整页面"}</button>
       </div>
       <p class="boot-feedback" id="boot-feedback-${language}" role="status" aria-live="polite">${english ? "Paste it into the Agent client you want to use." : "复制后，粘贴到你要使用的 Agent 客户端。"}</p>

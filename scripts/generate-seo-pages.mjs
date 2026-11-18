@@ -348,9 +348,9 @@ const staticRoot = `<main lang="zh-CN"><header><h1>ToneRelay：Lightroom Classic
 <p><a href="${repo}">ToneRelay Portal 项目与公开包文件</a></p></main>`;
 const indexPath = join(dist, "index.html");
 const index = await readFile(indexPath, "utf8");
-const rootPattern = /<div id="root">\s*<\/div>/;
+const rootPattern = /(<div id="root"(?: inert(?:="")?)?>)\s*<\/div>/;
 if (!rootPattern.test(index)) throw new Error("Cannot find empty #root in Vite index.html");
-await writeFile(indexPath, index.replace(rootPattern, `<div id="root">${staticRoot}</div>`), "utf8");
+await writeFile(indexPath, index.replace(rootPattern, (_, openingTag) => `${openingTag}${staticRoot}</div>`), "utf8");
 
 await writeFile(join(dist, "seo.css"), css, "utf8");
 const sitemapUrls = [site, absolute("experience/"), absolute("lightroom-classic-mcp/"), absolute("en/experience/"), absolute("en/lightroom-classic-mcp/"), absolute("contact.html"), ...publicStyles.map((item) => item.url), ...publicEffects.map((item) => item.url)];

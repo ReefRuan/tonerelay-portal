@@ -92,6 +92,8 @@ pnpm dev
 
 The interactive gallery can be previewed directly. Standalone introduction pages are generated during the build. To view the complete site, run `pnpm build`, then `pnpm preview`.
 
+For FAQ updates, content maintenance, local verification, and deployment, see the [development and maintenance runbook (Chinese)](docs/development-runbook.md). It is an on-demand repository document, not a registered Skill.
+
 Website code lives in `src/` and `public/`; style and effects packs live in `style-packs/`. The installation prompt, FAQ, and uninstallation prompt remain in this repository’s `docs/` for reading and copying through the website. [Install and use](https://reefruan.github.io/tonerelay-portal/?lang=en#experience) is the visual entry point; detailed steps remain in [INSTALL.en.md in the MCP repository](https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md).
 
 ## Image sources and licensing

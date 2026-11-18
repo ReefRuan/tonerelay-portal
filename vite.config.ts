@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
-import { renderBootInstallFallback } from "./src/bootFallback.ts";
+import { deferBootStylesheets, renderBootInstallFallback } from "./src/bootFallback.ts";
 
 export default defineConfig({
   base: "./",
@@ -17,6 +17,9 @@ export default defineConfig({
         return html.replace("<!-- boot-install-context -->", renderBootInstallFallback(zh, en));
       },
     },
+  }, {
+    name: "nonblocking-boot-stylesheets",
+    transformIndexHtml: { order: "post", handler: deferBootStylesheets },
   }],
   build: {
     rollupOptions: {

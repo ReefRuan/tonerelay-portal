@@ -18,7 +18,7 @@ class BootElement {
   style: Record<string, string> = {};
   attributes: Record<string, string> = {};
   classes = new Set<string>();
-  listeners = new Map<string, (event: { target: BootElement }) => void>();
+  listeners = new Map<string, (event: { target: BootElement; preventDefault: () => void }) => void>();
   classList = {
     add: (...names: string[]) => names.forEach((name) => this.classes.add(name)),
     remove: (...names: string[]) => names.forEach((name) => this.classes.delete(name)),
@@ -27,10 +27,14 @@ class BootElement {
   remove = vi.fn();
   focus = vi.fn();
   select = vi.fn();
-  addEventListener = vi.fn((event: string, handler: (event: { target: BootElement }) => void) => this.listeners.set(event, handler));
+  addEventListener = vi.fn((event: string, handler: (event: { target: BootElement; preventDefault: () => void }) => void) => this.listeners.set(event, handler));
   setAttribute(name: string, value: string) { this.attributes[name] = value; }
   getAttribute(name: string) { return this.attributes[name] ?? null; }
-  dispatch(event: string) { this.listeners.get(event)?.({ target: this }); }
+  dispatch(type: string) {
+    const event = { target: this, preventDefault: vi.fn() };
+    this.listeners.get(type)?.(event);
+    return event;
+  }
 }
 
 function executeBoot(search = "", writeText: (text: string) => Promise<void> = async () => {}, cssReady = true) {
@@ -47,6 +51,7 @@ function executeBoot(search = "", writeText: (text: string) => Promise<void> = a
     panels: [new BootElement(), new BootElement()],
     copies: [new BootElement(), new BootElement()],
     enter: [new BootElement(), new BootElement()],
+    refresh: [new BootElement(), new BootElement()],
     stylesheets: [new BootElement()],
   };
   for (const [index, language] of ["zh", "en"].entries()) {
@@ -88,6 +93,7 @@ function executeBoot(search = "", writeText: (text: string) => Promise<void> = a
       "[data-boot-language]": controls.panels,
       "[data-boot-copy]": controls.copies,
       "[data-boot-enter]": controls.enter,
+      "[data-boot-refresh]": controls.refresh,
       'link[rel="stylesheet"]': controls.stylesheets,
       "link[rel=stylesheet]": controls.stylesheets,
     })[selector] ?? [],
@@ -132,6 +138,15 @@ function executeBoot(search = "", writeText: (text: string) => Promise<void> = a
 }
 
 describe("independent slow-loading installation fallback", () => {
+  it("refreshes the actual entry instead of navigating away from its language and preset fragment", () => {
+    const runtime = executeBoot("?lang=en&preset=fuji-film-c200");
+    runtime.advance(10001);
+    const event = runtime.controls.refresh[1].dispatch("click");
+    expect(event.preventDefault).toHaveBeenCalledOnce();
+    expect(runtime.reload).toHaveBeenCalledOnce();
+    expect(runtime.root.inert).toBe(true);
+  });
+
   it("extracts only the copyable short prompt rather than its document commentary", () => {
     expect(extractShortPrompt("# Explanation\n\n```text\nInstall ToneRelay.\nRead INSTALL-PROMPT.md.\n```\n\nNot part of the prompt."))
       .toBe("Install ToneRelay.\nRead INSTALL-PROMPT.md.");
@@ -315,7 +330,7 @@ describe("independent slow-loading installation fallback", () => {
     expect(links[1][0]).toContain("Refresh page");
     for (const [link] of links) {
       expect(link).toContain('href=""');
-      expect(link).not.toMatch(/onclick|javascript:|data-boot-refresh/);
+      expect(link).not.toMatch(/onclick|javascript:/);
     }
   });
 });
