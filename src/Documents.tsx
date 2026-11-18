@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { Icon } from "./Icon";
 import installPrompt from "../docs/install-prompt.md?raw";
 import installPromptEnglish from "../docs/install-prompt.en.md?raw";
+import installTarget from "../docs/install-target.json";
 import uninstallPrompt from "../docs/uninstall-prompt.md?raw";
 import uninstallPromptEnglish from "../docs/uninstall-prompt.en.md?raw";
 import faqDocument from "../docs/faq.md?raw";
@@ -210,7 +211,7 @@ function AgentStrip({ onExplain, onCopyInstall }: {
           <div className="intro-cta-row">
             <span className="intro-install-glow">
               <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}>
-                <Icon name="copy" />{t("复制安装提示词，发给 Agent", "Copy installation prompt for your Agent")}
+                <Icon name="copy" />{t("复制安装与更新提示词，发给 Agent", "Copy install/update prompt for your Agent")}
               </button>
             </span>
             <a className="intro-cta is-quiet" href={WORKBUDDY_INVITE_URL} target="_blank" rel="noopener noreferrer">
@@ -281,13 +282,15 @@ function InstallationCallout({ onCopyInstall }: { onCopyInstall?: () => void }) 
   const suffix = language === "en" ? ".en" : "";
   return <section className="installation-callout" id="installation" aria-labelledby="installation-title">
     <span className="eyebrow">{t("开始使用", "Get started")}</span>
-    <h2 id="installation-title">{t("把安装交给 Agent，接着开始修图。", "Let your Agent help you install, then start editing.")}</h2>
-    <p>{t("复制完整安装提示词和 FAQ，发给正在使用的 Agent。它会先检查已有安装与本机条件，再按官方说明继续。", "Copy the complete installation prompt and FAQ to your Agent. It will check existing components and local requirements before following the official instructions.")}</p>
+    <h2 id="installation-title">{t("让 Agent 安装或更新，接着开始修图。", "Let your Agent install or update, then start editing.")}</h2>
+    <p>{t("复制完整提示词和 FAQ 给 Agent。每次执行都查询官方 main 的最新代码；已是相同提交且健康时核验复用。", "Copy the complete prompt and FAQ to your Agent. Each execution resolves the latest official main code; an identical healthy commit is verified and reused.")}</p>
+    <p>{t("更新来源", "Update source")}：{t("官方 MCP 仓库", "Official MCP repository")} · <code>{installTarget.branch}</code> · {t("执行时查询最新提交", "Resolve the latest commit at execution")}</p>
+    <p>{t("0.8.0.0：接着同一张工作副本精修；保护命名阻止覆盖；对话看图照常展示，内部迭代减少额外展示文件。", "0.8.0.0: refine the same working copy, protect named copies, and keep chat previews while reducing extra display files during internal iteration.")}</p>
     <div className="installation-callout-actions">
-      <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}><Icon name="copy" />{t("复制安装提示词", "Copy installation prompt")}</button>
+      <button type="button" className="intro-cta is-primary" onClick={onCopyInstall} disabled={!onCopyInstall}><Icon name="copy" />{t("复制安装与更新提示词", "Copy install/update prompt")}</button>
       <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("在 GitHub 查看并复制全文", "Read and copy the full prompt on GitHub")}<Icon name="external" /></a>
       <a className="intro-cta is-quiet" href={`https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt${suffix}.md`} target="_blank" rel="noreferrer">{t("Gitee 备用提示词全文", "Full prompt on Gitee")}<Icon name="external" /></a>
-      <a className="intro-cta is-quiet" href={`https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
+      <a className="intro-cta is-quiet" href={`${installTarget.repository}/blob/${installTarget.branch}/INSTALL${suffix}.md`} target="_blank" rel="noreferrer">{t("安装步骤与要求", "Installation steps and requirements")}<Icon name="external" /></a>
     </div>
     <p>{t("复制提示词不等于完成安装；请让 Agent 核对版本、权限与连接状态。", "Copying the prompt does not complete installation. Ask your Agent to verify the version, permissions, and connection.")}</p>
   </section>;

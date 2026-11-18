@@ -28,6 +28,20 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 升级时使用已核对的新版并更新 ToneRelay 入口，保留个人数据和当前有效配置；全新安装不合并旧分散配置。
 
+## 0.8.0.0 怎样处理多轮修图和预览？
+
+普通修图首次创建工作虚拟副本，后续调整接着同一 UUID。忘记 UUID 时，结合 TRLR 名称、原片关联、当前 Catalog 与操作记录找回，不只按名称或最大版本号选择。名字带有保护、锁定、勿改、只读、留档或对应独立英文保护标记的副本，显影与原生蒙版写入都会被拦截；查看仍可使用。只有明确要独立方案时才另建副本。
+
+普通对话看图与最终结果照常展示，Agent 应使用 `display=true`。内部迭代、批量看片和打分默认只返回原生 MCP 图片内容，不额外写 image-delivery 展示副本；需要时可以从已保存的操作结果补交展示，不再修改或渲染照片。既有 Lightroom 渲染、Bridge 与历史工件仍可能落盘，这次没有实现端到端纯内存。
+
+更新须同步 Runtime、MCP 与 Lightroom 插件。0.8.0.0 插件 build 是 `poll-lifecycle-0.8.0.0`，需声明 `copy_protection_v1`；旧插件缺少该能力时会拒绝原地写入。源码回归测试不等于每个客户端已通过真实图片展示验收。
+
+## 已经安装，怎么更新到最新代码？
+
+复制网页上同一份“安装与更新提示词”发给 Agent。每次执行都会查询官方公开 MCP 仓库 main 的最新完整 commit，再锁定该提交完成整次安装；以后 main 更新，无需修改或重新复制提示词中的版本号。旧安装即使健康也更新；已是本次解析的相同 commit 且健康时只核验并接入。明确指定版本或 commit 时按你的指定。较晚或分叉提交、开发版及来源不明的安装先报告差异，不静默降级。
+
+更新保留个人数据、有效配置、Catalog 绑定与模式，以及其他客户端条目。Agent 会报告目标与实际运行版本，核对 Lightroom 加载的插件 build，并保留回退入口。只有你明确要求“只接入客户端”或“不升级”时才跳过更新。复制提示词或下载完成本身不代表更新已经生效。
+
 ## 插件是 full，Runtime 却期望 safe，怎么办？
 
 这是访问模式与保存的绑定不一致。若当前 Catalog 身份就是你已确认的目标，且你明确选择保留 `full`，Agent 可通过 Catalog 确认工具保存实际模式并重新检查授权，无需来回切 Plugin Manager。没有相应授权时先明确选择；Catalog 身份改变时须重新确认目标。不能仅因桥已连接就继续读写照片。
@@ -46,7 +60,11 @@ ToneRelay 提供图像测量与对比；哪张更好，还是由你和 Agent 判
 
 ## 已在一个 Agent 客户端使用 ToneRelay，换客户端还要重装吗？
 
-通常不用。先核对已有安装的来源、版本，以及 Runtime、Bridge、Lightroom 插件和 Catalog 授权是否健康；只装了某个客户端的 Plugin，不能直接证明共享组件都已就绪。确认可复用后，新客户端只需按自己的官方方式接入同一套本机 MCP；如果支持 Skill，也从同版本来源安装启动 Skill，并在新会话做只读连接检查。不要为了增加客户端重新下载、升级或注册一份 Lightroom 插件；某个共享组件确实损坏或不兼容时，才针对该层修复并说明对其他客户端的影响。
+明确只接入客户端时通常不用；同时要更新则使用网页安装与更新提示词。先核对已有安装的来源、版本，以及 Runtime、Bridge、Lightroom 插件和 Catalog 授权是否健康；只装了某个客户端的 Plugin，不能直接证明共享组件都已就绪。确认可复用后，新客户端只需按自己的官方方式接入同一套本机 MCP；如果支持 Skill，也从同版本来源安装启动 Skill，并在新会话做只读连接检查。不要为了增加客户端重新下载、升级或注册一份 Lightroom 插件；某个共享组件确实损坏或不兼容时，才针对该层修复并说明对其他客户端的影响。
+
+## Codex 插件页没有卡片，是没有装上 MCP 吗？
+
+不一定。独立 MCP 加启动 Skill 可以正常使用，不必安装完整客户端 Plugin。在 Codex 的“设置 → MCP 服务器”查看 `tonerelay-lightroom`，也可输入 `/mcp` 查看连接；更新后在此重启 MCP，再让 Agent 只读验证实际工具、health 和当前选片。只有注册完整 Plugin 时才检查它的卡片，避免为了显示卡片重复安装同一个 MCP。[Codex MCP 说明](https://learn.chatgpt.com/docs/extend/mcp)。
 
 ## WorkBuddy 的技能必须走“上传技能”吗？
 
@@ -85,7 +103,7 @@ macOS 新安装设计使用根目录下的 `config.json`，集中保存目录、
 - MCP 完整安装源码及随仓库提供的安装提示词、FAQ：[GitHub 主源](https://github.com/ReefRuan/tonerelay-lightroom-mcp)／[Gitee 源码备用](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp)。取得包含安装文档的固定提交后，完整阅读根目录的 `INSTALL-PROMPT.md`、`FAQ.md` 与 `INSTALL.md`，不必再访问 Portal 才能安装。GitHub 不可达时可从 Gitee 获取同一固定完整 commit 的源码；旧标签或滞后镜像可能没有新增文档，应如实报告，不移动旧标签或混装组件。Portal 仓库不能代替 MCP 源码。
 - 公开安装文档的维护源、网页与风格资源：[GitHub Portal](https://github.com/ReefRuan/tonerelay-portal)／[Gitee Portal 备用](https://gitee.com/ReefRuan/tonerelay-portal)。旧 MCP 版本未附带文档时，可另外读取 [Gitee 安装提示词](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.md)，记录文档的固定提交，仍按目标源码版本的能力执行。六个正式风格包的 ZIP 备用目录是 https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ，画廊详情也提供国内备用地址；E01、E02 先核对镜像版本和文件是否存在，不能假定已经同步。
 
-镜像可能滞后，`main` 和“备用”都不代表最新版。先核验官方所有者、公开访问、固定完整 commit 和文件完整性，不混装不同 commit 的组件。最初仅镜像可达时，报告选用的镜像、固定 commit 与核验依据，不必先恢复 GitHub 才能使用官方备用；没有足够依据则停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装。
+每次执行先解析官方 main 的最新完整提交；镜像可能滞后，仅解析备用源时须说明主源最新状态未核验。先核验官方所有者、公开访问、固定完整 commit 和文件完整性，不混装不同 commit 的组件。最初仅镜像可达时，报告选用的镜像、固定 commit 与核验依据，不必先恢复 GitHub 才能使用官方备用；没有足够依据则停止安装下载分支并报告，仍可阅读文档或核验复用健康本机安装。
 
 源码备用不会自动解决 pip 依赖下载。需要 PIP_INDEX_URL 时仅使用核验过的可信 HTTPS 索引，限本次进程或专用环境并记录，不静默改全局配置或泄露凭据；保留 TLS 校验，不用 --trusted-host、关闭证书校验或不明包绕过失败。
 
@@ -131,6 +149,8 @@ macOS 新安装设计使用根目录下的 `config.json`，集中保存目录、
 
 用安装器打印的 `mcp_server` 条目。为 macOS 写的 `.mcp.json` 不能照搬到 Windows，否则连接一定失败。
 
-## 新会话里看不到 ToneRelay 工具？
+## 安装完成后，Agent 提示当前会话没有 ToneRelay 工具，无法继续验证或绑定怎么办？
 
-有些客户端需要新会话或重启后才会显示新工具。安装会话里的成功结果不能代替新会话验证。
+先在同一个 Agent 客户端新建一个会话，再继续使用 ToneRelay。安装和客户端接入已完成、连接器已启用并信任时，安装用的旧对话可能尚未加载新添加的 MCP 工具。此时 Agent 提示“没有 ToneRelay 工具”，无法继续连接验证或 Catalog 绑定，不代表安装失败，不需要因此重复安装。
+
+在新对话中发送：“使用 ToneRelay 检查连接，并继续完成安装后的验证。”如果新会话仍找不到工具，或实际调用仍然报错，再检查连接器状态并按具体错误排查。

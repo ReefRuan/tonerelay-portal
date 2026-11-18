@@ -311,7 +311,7 @@ export default function App() {
     }
   }, [selectedPreset, copyValue, t]);
 
-  const copyInstallPrompt = useCallback(() => copyValue(getInstallPrompt(language), t("已复制安装提示词和 FAQ，发给 Agent 开始安装", "Copied installation prompt and FAQ. Send them to your agent.")), [copyValue, language, t]);
+  const copyInstallPrompt = useCallback(() => copyValue(getInstallPrompt(language), t("已复制安装与更新提示词和 FAQ，发给 Agent 继续", "Copied install/update prompt and FAQ. Send them to your Agent.")), [copyValue, language, t]);
   const copyUninstallPrompt = useCallback(() => copyValue(getUninstallPrompt(language), t("已复制卸载提示词，发给 Agent 核对并卸载", "Copied uninstallation prompt. Send it to your agent to verify and uninstall.")), [copyValue, language, t]);
 
   const switchDetail = useCallback(

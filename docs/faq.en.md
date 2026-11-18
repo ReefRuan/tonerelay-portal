@@ -30,6 +30,20 @@ Ask the Agent to “Check the ToneRelay version” and report the actual MCP ver
 
 An upgrade uses the verified newer version and updates ToneRelay entry points while preserving personal data and the currently valid configuration. A fresh installation does not merge old scattered configuration.
 
+## How does 0.8.0.0 handle repeated edits and previews?
+
+Ordinary editing creates a working virtual copy once, then continues on that UUID. If the UUID is forgotten, recover it using TRLR names together with master linkage, the current Catalog and operation records; a name or the highest version alone is insufficient. Copies named with Chinese protection markers (保护, 锁定, 勿改, 只读, 留档) or the supported standalone English protection markers reject Develop and native-mask writes. Read-only viewing remains available. Create another copy only for an explicitly requested independent candidate.
+
+Conversational viewing and final results still display normally: the Agent should use `display=true`. Internal iteration, batch inspection and scoring return native MCP images without extra image-delivery copies by default. A saved operation result can be delivered later without editing or rendering again. Existing Lightroom renders, Bridge outputs and history artifacts can still use disk; this release does not implement end-to-end memory transport.
+
+Update Runtime, MCP and the Lightroom plug-in together. The 0.8.0.0 plug-in build is `poll-lifecycle-0.8.0.0` and must advertise `copy_protection_v1`; an older plug-in without that capability cannot perform in-place writes. Source regression tests do not establish real image-display acceptance in every client.
+
+## Already installed? How do I update to the latest code?
+
+Copy the same installation/update prompt from the website to your Agent. Each execution queries the latest full commit on the official public MCP main branch, then freezes it for that installation. Future main updates require no version-number edits or new prompt copy. An older healthy installation is updated; an identical healthy resolved commit is only verified and connected. An explicit version/commit request takes precedence. Later or divergent commits, development builds, and unverified installations are reported before replacement, without silent downgrades.
+
+The update preserves personal data, effective configuration, Catalog bindings and mode, and other client entries. The Agent reports the target and actual running versions, verifies the loaded Lightroom plug-in build, and retains a rollback entry. Only an explicit “client connection only” or “no upgrade” request skips the update. Copying the prompt or downloading files alone does not prove the update is complete.
+
 ## What if the plug-in is in full mode but the Runtime expects safe?
 
 The access mode and saved binding are inconsistent. If the current Catalog identity is the target you have confirmed, and you explicitly choose to retain `full`, the Agent can save the actual mode with the Catalog confirmation tool and recheck authorization, without making you switch back and forth in Plug-in Manager. If that authorization does not exist, make an explicit choice first; if the Catalog identity changes, confirm the target again. A connected bridge alone is not permission to continue reading or writing photos.
@@ -48,7 +62,11 @@ Yes, from a pinned version of the public source. The [primary GitHub MCP reposit
 
 ## I already use ToneRelay in one Agent client. Do I need to reinstall for another?
 
-Usually not. First verify the existing installation's source and version, and the health of the Runtime, Bridge, Lightroom plug-in, and Catalog authorization. Having only a client Plugin installed does not prove the shared components are ready. Once reuse is verified, the new client only needs its own official connection method to the same local MCP. If it supports Skills, also install the startup Skill from the same-version source, then check the connection read-only in a new session. Do not download, upgrade, or register another Lightroom plug-in just to add a client. Only repair a particular shared layer if it is actually broken or incompatible, and explain the effect on other clients.
+For an explicit client-connection-only request, usually not; to update as well, use the website installation/update prompt. First verify the existing installation's source and version, and the health of the Runtime, Bridge, Lightroom plug-in, and Catalog authorization. Having only a client Plugin installed does not prove the shared components are ready. Once reuse is verified, the new client only needs its own official connection method to the same local MCP. If it supports Skills, also install the startup Skill from the same-version source, then check the connection read-only in a new session. Do not download, upgrade, or register another Lightroom plug-in just to add a client. Only repair a particular shared layer if it is actually broken or incompatible, and explain the effect on other clients.
+
+## No Codex Plugin card: does that mean MCP is missing?
+
+Not necessarily. A direct MCP connection with the startup Skill works without a complete client Plugin. Check `tonerelay-lightroom` under Settings → MCP servers, or type `/mcp` to see connections. Restart MCP there after updating, then ask the Agent to verify the actual tools, health, and selection readback. Check a Plugin card only when installing a complete Plugin; avoid duplicate MCP registrations merely to show a card. See the [Codex MCP documentation](https://learn.chatgpt.com/docs/extend/mcp).
 
 ## Does the WorkBuddy skill have to go through "upload skill"?
 
@@ -87,7 +105,7 @@ Installation source and documentation/style packs have two separate official sou
 - Complete MCP installation source and its bundled installation prompt and FAQ: [GitHub primary](https://github.com/ReefRuan/tonerelay-lightroom-mcp) / [Gitee source fallback](https://gitee.com/ReefRuan/tonerelay-lightroom-mcp). At a pinned commit containing the documents, read `INSTALL-PROMPT.en.md`, `FAQ.en.md`, and `INSTALL.en.md` in the root completely; installation does not require reaching Portal again. When GitHub is unreachable, obtain complete source at the same pinned full commit from Gitee. Older tags or lagging mirrors may lack the added documents: report this rather than moving old tags or mixing components. Portal cannot replace the MCP source repository.
 - Maintenance source for public installation documents, the website, and style resources: [GitHub Portal](https://github.com/ReefRuan/tonerelay-portal) / [Gitee Portal fallback](https://gitee.com/ReefRuan/tonerelay-portal). If an older MCP version lacks the documents, obtain the [English installation prompt on Gitee](https://gitee.com/ReefRuan/tonerelay-portal/blob/main/docs/install-prompt.en.md) separately and record its full commit, while following the target source version's actual capabilities. ZIP fallbacks for the six official style packs are under https://gitee.com/ReefRuan/tonerelay-portal/raw/main/style-packs/downloads/ ; gallery details also provide China-access fallback URLs. Check mirror versions and file availability for E01 and E02 rather than assuming they have synchronized.
 
-Mirrors may lag: neither main nor the word “fallback” means the latest version. Verify the official owner, public access, pinned full commit, and file integrity; do not mix components from different commits. If only the mirror is reachable initially, report the selected mirror, full commit, and verification evidence. Restoring live GitHub access is not required to use an official fallback. Without sufficient evidence, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can still continue.
+Resolve the latest full official main commit on each execution. Mirrors may lag; mirror-only resolution must disclose that primary-source freshness remains unverified. Verify the official owner, public access, pinned full commit, and file integrity; do not mix components from different commits. If only the mirror is reachable initially, report the selected mirror, full commit, and verification evidence. Restoring live GitHub access is not required to use an official fallback. Without sufficient evidence, stop the installation-download branch and report it; documentation reading or verification and reuse of a healthy local installation can still continue.
 
 A source fallback does not automatically solve pip dependency downloads. If PIP_INDEX_URL is needed, use only a verified trusted HTTPS index, scope it to this process or the dedicated environment, and record it; do not silently change global settings or disclose credentials. Keep TLS verification enabled. Do not bypass failures with --trusted-host, disabled certificate checks, or packages of unknown origin.
 
@@ -133,6 +151,8 @@ First distinguish whether the tool failed to obtain the image or the chat failed
 
 Use the `mcp_server` entry printed by the installer. A `.mcp.json` written for macOS cannot be copied unchanged to Windows; doing so will cause the connection to fail.
 
-## Why can't I see ToneRelay tools in a new session?
+## After installation, why does the Agent say this conversation has no ToneRelay tools and cannot continue verification or Catalog binding?
 
-Some clients require a new session or restart before newly added tools appear. A successful result in the installation session does not replace verification in a new session.
+Start a new conversation in the same Agent client, then continue using ToneRelay. If installation and client setup are complete and the connector is enabled and trusted, the old installation conversation may not have loaded the newly added MCP tools. An Agent saying it has no ToneRelay tools and cannot continue connection verification or Catalog binding does not, in this situation, mean installation failed. Do not reinstall for that reason.
+
+In the new conversation, send: “Use ToneRelay to check the connection and continue the post-installation verification.” If tools are still missing in the new conversation, or actual calls still fail, check the connector state and investigate the specific error.

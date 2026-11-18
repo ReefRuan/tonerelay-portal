@@ -3,16 +3,33 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import installDocument from "../docs/install-prompt.md?raw";
 import faqDocument from "../docs/faq.md?raw";
+import faqDocumentEn from "../docs/faq.en.md?raw";
 import installDocumentEn from "../docs/install-prompt.en.md?raw";
+import installTarget from "../docs/install-target.json";
+import readme from "../README.md?raw";
+import readmeEn from "../README.en.md?raw";
 import shortInstallDocument from "../docs/install-short-prompt.md?raw";
 import shortInstallDocumentEn from "../docs/install-short-prompt.en.md?raw";
-import { AgentHelpDialog, Documents, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
+import { AgentHelpDialog, Documents, getInstallPrompt, INSTALL_PROMPT, INSTALL_PROMPT_WITH_FAQ, WorkBuddyDownloadDialog } from "./Documents";
 import { InstallAction } from "./HeaderPanels";
 
 describe("installation copy payload", () => {
+  it("verifies upgraded MCP tools in the actual client without requiring a Plugin card", () => {
+    for (const language of ["zh", "en"] as const) {
+      const payload = getInstallPrompt(language);
+      for (const name of ["trlr_list_folders", "trlr_list_folder_photos", "trlr_get_storage_usage"]) {
+        expect(payload).toContain(name);
+      }
+      expect(payload).toContain("tonerelay-lightroom");
+      expect(payload).toContain("https://learn.chatgpt.com/docs/extend/mcp");
+    }
+    expect(getInstallPrompt("zh")).toContain("不要求必须出现完整 Plugin 卡片");
+    expect(getInstallPrompt("en")).toContain("a full Plugin card is optional");
+  });
+
   it("keeps both short entries limited to the two official MCP repositories", () => {
     for (const [document, suffix] of [[shortInstallDocument, ""], [shortInstallDocumentEn, ".en"]]) {
-      const prompt = document.match(/```text\n([\s\S]*?)\n```/)?.[1];
+      const prompt = document.match(/```text\r?\n([\s\S]*?)\r?\n```/)?.[1];
       expect(prompt).toBeDefined();
       expect(prompt!.match(/https:\/\/[^\s]+/g)).toEqual([
         "https://github.com/ReefRuan/tonerelay-lightroom-mcp",
@@ -36,10 +53,45 @@ describe("installation copy payload", () => {
   it("copies the standalone installation prompt and complete FAQ", () => {
     expect(INSTALL_PROMPT).toBe(installDocument.trim());
     expect(INSTALL_PROMPT_WITH_FAQ).toBe(`${installDocument.trim()}\n\n${faqDocument.trim()}`);
-    expect(INSTALL_PROMPT).toContain("仅新增客户端时");
+    expect(INSTALL_PROMPT).toContain("已有较旧版本即使健康也要更新");
     expect(INSTALL_PROMPT).toContain("不执行 `prepare` 或 Runtime `install`");
     expect(INSTALL_PROMPT_WITH_FAQ).toContain("换客户端还要重装吗？");
     expect(INSTALL_PROMPT_WITH_FAQ).not.toContain("请卸载 ToneRelay");
+  });
+
+  it("directs missing tools in the installation conversation to a new conversation without a duplicate FAQ", () => {
+    const question = "安装完成后，Agent 提示当前会话没有 ToneRelay 工具，无法继续验证或绑定怎么办？";
+    const questionEn = "After installation, why does the Agent say this conversation has no ToneRelay tools and cannot continue verification or Catalog binding?";
+    const html = renderToStaticMarkup(createElement(Documents));
+    expect(faqDocument.split(`## ${question}\n`)).toHaveLength(2);
+    expect(faqDocumentEn.split(`## ${questionEn}\n`)).toHaveLength(2);
+    expect(faqDocument).not.toContain("## 新会话里看不到 ToneRelay 工具？");
+    expect(faqDocumentEn).not.toContain("## Why can't I see ToneRelay tools in a new session?");
+    expect(html).toContain(question);
+    expect(html).toContain("先在同一个 Agent 客户端新建一个会话");
+    expect(html).toContain("连接器已启用并信任时");
+    expect(html).toContain("不需要因此重复安装");
+    expect(getInstallPrompt("zh")).toContain(faqDocument.trim());
+    expect(getInstallPrompt("en")).toContain(faqDocumentEn.trim());
+    expect(getInstallPrompt("en")).toContain("Start a new conversation in the same Agent client");
+  });
+
+  it("resolves latest main on every execution in both languages and all copy entry points", () => {
+    for (const document of [getInstallPrompt("zh"), getInstallPrompt("en"), shortInstallDocument, shortInstallDocumentEn, readme, readmeEn]) {
+      expect(document).toContain("main");
+      expect(document).not.toMatch(/\b[a-f0-9]{40}\b/);
+    }
+    expect(getInstallPrompt("zh")).toContain("默认每次执行本提示词都重新查询");
+    expect(getInstallPrompt("en")).toContain("Each execution must query the latest full commit");
+    expect(getInstallPrompt("zh")).toContain("不得在不同阶段重新取 main 而混装组件");
+    expect(getInstallPrompt("en")).toContain("Do not repeatedly fetch main at different stages and mix components");
+    expect(getInstallPrompt("zh")).toContain("## 已经安装，怎么更新到最新代码？");
+    expect(getInstallPrompt("en")).toContain("## Already installed? How do I update to the latest code?");
+    const html = renderToStaticMarkup(createElement(Documents));
+    expect(html).toContain("复制安装与更新提示词");
+    expect(html).toContain("执行时查询最新提交");
+    expect(html).toContain(`<code>${installTarget.branch}</code>`);
+    expect(html).toContain(`/blob/${installTarget.branch}/INSTALL.md`);
   });
 
   it("shows the concise tool introduction without a separate installation section", () => {
@@ -80,8 +132,8 @@ describe("installation copy payload", () => {
     expect(html).toContain('class="install-start-hint" aria-hidden="true">');
     expect(html).toContain('d="M24 28 C 15 23, 31 16, 22 5"');
     expect(html).toContain("立即开始使用");
-    expect(html).toContain("复制安装提示词");
-    expect(html).toContain('aria-label="展开安装提示词"');
+    expect(html).toContain("安装 / 更新提示词");
+    expect(html).toContain('aria-label="展开安装与更新提示词"');
   });
 
   it("uses the provided WorkBuddy poster with a close control and direct-link fallback", () => {

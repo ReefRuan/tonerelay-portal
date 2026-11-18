@@ -135,8 +135,8 @@ describe("independent slow-loading installation fallback", () => {
   it("extracts only the copyable short prompt rather than its document commentary", () => {
     expect(extractShortPrompt("# Explanation\n\n```text\nInstall ToneRelay.\nRead INSTALL-PROMPT.md.\n```\n\nNot part of the prompt."))
       .toBe("Install ToneRelay.\nRead INSTALL-PROMPT.md.");
-    expect(extractShortPrompt(chinesePromptDocument)).toContain("先只读检查已有安装");
-    expect(extractShortPrompt(englishPromptDocument)).toContain("Check existing installations read-only first");
+    expect(extractShortPrompt(chinesePromptDocument)).toContain("先只读检查：");
+    expect(extractShortPrompt(englishPromptDocument)).toContain("Check the existing installation read-only first");
     expect(() => extractShortPrompt("No fenced installation instructions.")).toThrow();
   });
 
@@ -146,7 +146,16 @@ describe("independent slow-loading installation fallback", () => {
     expect(html).toMatch(/\bid="boot-fallback"[^>]*\bhidden\b/);
     for (const [source, suffix] of [[chinesePromptDocument, ""], [englishPromptDocument, ".en"]]) {
       const prompt = extractShortPrompt(source);
-      for (const line of prompt.split("\n").filter(Boolean)) expect(html).toContain(line);
+      const language = suffix ? "en" : "zh";
+      const field = html.match(new RegExp(`<textarea[^>]*id="boot-prompt-${language}"[^>]*>([\\s\\S]*?)</textarea>`))?.[1];
+      expect(field).toBeDefined();
+      const visiblePrompt = field!
+        .replace(/&#39;/g, "'")
+        .replace(/&quot;/g, '"')
+        .replace(/&gt;/g, ">")
+        .replace(/&lt;/g, "<")
+        .replace(/&amp;/g, "&");
+      expect(visiblePrompt).toBe(prompt);
       for (const host of ["github.com", "gitee.com"]) {
         expect(html).toContain(`https://${host}/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL-PROMPT${suffix}.md`);
       }
