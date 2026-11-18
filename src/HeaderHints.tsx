@@ -74,6 +74,7 @@ interface HintPosition {
 
 const HINT_GAP = 30;
 const HINT_MIN_EDGE = 12;
+const HINT_MIN_WIDTH = 200;
 const HINT_MAX_WIDTH = 320;
 const ARROW_WIDTH = 46;
 
@@ -81,13 +82,19 @@ const ARROW_WIDTH = 46;
 function measureHint(anchor: HTMLElement | null): HintPosition | null {
   if (!anchor || typeof window === "undefined") return null;
   const rect = anchor.getBoundingClientRect();
-  const width = Math.min(HINT_MAX_WIDTH, window.innerWidth - HINT_MIN_EDGE * 2);
+  // Start at the Star button rather than overlapping the installation hint
+  // to its left; wrap the copy when the right edge leaves less room.
+  const width = Math.min(
+    HINT_MAX_WIDTH,
+    window.innerWidth - HINT_MIN_EDGE * 2,
+    Math.max(HINT_MIN_WIDTH, window.innerWidth - rect.left - HINT_MIN_EDGE),
+  );
   const center = rect.left + rect.width / 2;
   const left = Math.min(
-    Math.max(center - width / 2, HINT_MIN_EDGE),
+    Math.max(rect.left, HINT_MIN_EDGE),
     Math.max(window.innerWidth - width - HINT_MIN_EDGE, HINT_MIN_EDGE),
   );
-  const arrowCenter = Math.min(Math.max(center - left, ARROW_WIDTH / 2 + 6), width - ARROW_WIDTH / 2 - 6);
+  const arrowCenter = Math.min(Math.max(center - left, HINT_MIN_EDGE), width - HINT_MIN_EDGE);
   return {
     top: rect.bottom + HINT_GAP,
     left,

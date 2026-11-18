@@ -22,6 +22,7 @@ import { Documents, ARTICLE_URL, getInstallPrompt, getUninstallPrompt, type Port
 
 import { copyText } from "./clipboard";
 import { ManualCopyDialog } from "./ManualCopyDialog";
+import { HeaderHint, useOnboardingHints } from "./HeaderHints";
 import { InstallAction, PrivacyAction } from "./HeaderPanels";
 import { IntroSignature } from "./IntroSignature";
 import { GenerationGallery } from "./GenerationGallery";
@@ -114,7 +115,9 @@ export default function App() {
   const detailPanelRef = useRef<HTMLElement | null>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
+  const starAnchorRef = useRef<HTMLAnchorElement | null>(null);
   const reducedMotion = useReducedMotion();
+  const hints = useOnboardingHints(page === "experience", detailBackdropActive || !!manualCopy);
 
   useEffect(() => {
     const title = t("ToneRelay｜Lightroom Classic MCP 与风格画廊", "ToneRelay — Lightroom MCP Style and Effects Gallery");
@@ -474,12 +477,15 @@ export default function App() {
           <PrivacyAction />
           <InstallAction onCopy={copyInstallPrompt} />
           <div className="header-star-group">
-            <a className="header-action header-star-link header-star-glow" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title={t("在 GitHub 给 Lightroom MCP 点 Star", "Star Lightroom MCP on GitHub")}><Icon name="star" />Star MCP</a>
+            <a ref={starAnchorRef} className="header-action header-star-link header-star-glow" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp" target="_blank" rel="noreferrer" title={t("在 GitHub 给 Lightroom MCP 点 Star", "Star Lightroom MCP on GitHub")} onClick={() => hints.resolve("star", "done")}><Icon name="star" />Star MCP</a>
             <a className="header-action header-source-link" href="https://github.com/ReefRuan/tonerelay-portal" target="_blank" rel="noreferrer" title={t("查看本页面源码", "View this page's source code")}><Icon name="external" />{t("本页面源码", "Page source")}</a>
           </div>
         </div>}
         <LanguageSwitch className="header-language" />
       </header>
+
+      {/* Unmount immediately on close or navigation to a background tab. */}
+      {hints.active && <HeaderHint id={hints.active} anchor={starAnchorRef.current} onDismiss={() => hints.dismiss("star")} />}
 
       {page === "gallery" ? <main className="catalog-main" inert={detailBackdropActive} aria-hidden={detailBackdropActive || undefined}>
         <section className="intro" aria-labelledby="page-title">
