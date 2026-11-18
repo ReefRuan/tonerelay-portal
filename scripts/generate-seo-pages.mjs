@@ -329,14 +329,14 @@ const mcpBody = `<p class="eyebrow">ToneRelay · MCP 工具说明</p><h1>Lightro
 <div class="actions"><a class="button primary" href="${absolute("#experience")}">开始安装与使用</a><a class="button" href="${absolute("#gallery")}">浏览风格与效果</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.md">安装步骤与要求</a></div>
 <article class="prose">${renderMarkdown(mcpMarkdown)}</article>${installationCallout()}`;
 const mcpAlternates = { zh: absolute("lightroom-classic-mcp/"), en: absolute("en/lightroom-classic-mcp/") };
-await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案。", canonical: mcpAlternates.zh, type: "article", body: mcpBody, stylesheet: "../seo.css", alternates: mcpAlternates }));
+await writePage("lightroom-classic-mcp", page({ title: "Lightroom MCP 工具｜ToneRelay for Lightroom Classic", description: "ToneRelay 是连接 Agent 与 Lightroom Classic 的本地 MCP 工具套件。用对话选片、调整显影参数和主体蒙版，查看真实渲染预览，比较多种调色方案；云版 Lightroom 走实验性控制器通道，限制见安装说明。", canonical: mcpAlternates.zh, type: "article", body: mcpBody, stylesheet: "../seo.css", alternates: mcpAlternates }));
 
 const mcpMarkdownEn = await readText("docs/lightroom-classic-mcp.en.md");
 const mcpBodyEn = `<p class="eyebrow">ToneRelay · MCP toolkit guide</p><h1>Lightroom MCP: select and edit photos through conversation</h1>
 <p class="lead">Describe the result you want, inspect photos actually rendered by Lightroom, then continue adjusting. Discover how ToneRelay connects an Agent to Lightroom Classic.</p>
 <div class="actions"><a class="button primary" href="${absolute("?lang=en#experience")}">Start installation & use</a><a class="button" href="${absolute("?lang=en#gallery")}">Browse styles & effects</a><a class="button" href="https://github.com/ReefRuan/tonerelay-lightroom-mcp/blob/main/INSTALL.en.md">Installation steps and requirements</a></div>
 <article class="prose">${renderMarkdown(mcpMarkdownEn, { language: "en" })}</article>${installationCallout("en")}`;
-await writePage("en/lightroom-classic-mcp", page({ title: "Lightroom MCP Toolkit | ToneRelay for Lightroom Classic", description: "ToneRelay is a local MCP toolkit connecting an Agent to Lightroom Classic. Select photos, adjust Develop settings and subject masks, inspect actual renders, and compare color treatments.", canonical: mcpAlternates.en, type: "article", body: mcpBodyEn, stylesheet: "../../seo.css", language: "en", alternates: mcpAlternates }));
+await writePage("en/lightroom-classic-mcp", page({ title: "Lightroom MCP Toolkit | ToneRelay for Lightroom Classic", description: "ToneRelay is a local MCP toolkit connecting an Agent to Lightroom Classic. Select photos, adjust Develop settings and subject masks, inspect actual renders, and compare color treatments; cloud Lightroom is covered by an experimental controller path, with its limits listed in the install guide.", canonical: mcpAlternates.en, type: "article", body: mcpBodyEn, stylesheet: "../../seo.css", language: "en", alternates: mcpAlternates }));
 
 const homepageLinks = [
   ...publicStyles.map((pack) => `<li><a href="${pack.url}">${escapeHtml(pack.title)} 风格包</a>：${escapeHtml(shortDescription(pack.summary, 85))}</li>`),
